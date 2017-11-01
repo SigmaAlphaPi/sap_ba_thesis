@@ -1,14 +1,9 @@
 \section{State-of-the-Art}
 \label{sec:sota}
 
+Vereinfacht kann jede Straße/Fahrspur als Aneinanderreihung vieler Zellen (Grid) gesehen werden. Eine Simulation in dieser gridbasierten Umwelt hat den Vorteil, dass die Erkenntnisse auf die reale Welt skaliert werden können. In \cite{na-sch} wird von einer Zelllänge von 7,5 m ausgegangen, was ungefähr dem beanspruchten Platz eines Pkw in einer Stausituation entspricht (Fahrzeuglänge + Abstand). Eine Durchschittsgeschwindigkeit von 4,5 Zellen/Zeitschritt entspricht etwa der einer Geschwindigkeit von 120 km/h.
 
-Hier ist ein CITE: \cite{nagel92} \pk{Ich glaube, das funktioniert nicht.}
-
-
-
-Vereinfacht kann jede Straße/Fahrspur als Aneinanderreihung vieler Zellen (Grid) gesehen werden. Eine Simulation in dieser gridbasierten Umwelt hat den Vorteil, dass die Erkenntnisse auf die reale Welt skaliert werden können. In [Nagel92] wird von einer Zelllänge von 7,5 m ausgegangen, was ungefähr dem beanspruchten Platz eines Pkw in einer Stausituation entspricht (Fahrzeuglänge + Abstand). Eine Durchschittsgeschwindigkeit von 4,5 Zellen/Zeitschritt entspricht etwa der einer Geschwindigkeit von 120 km/h.
-
-In [Nagel92] war es erstmals gelungen, Wechselwirkungen zwischen Fahrzeugen im Einspurfall darzustellen und u.a. das Entstehen von Staus zu modellieren. Mit drei Regeln, die auf jedes Fahrzeug gleichzeitig und gleichermaßen anzuwenden waren, wurde ein realistischer Verkehrsfluss generiert. Die Regeln für die heute als "Nagel-Schreckenberg-Modell" bekannte Modellierung waren: 
+In \cite{na-sch} war es erstmals gelungen, Wechselwirkungen zwischen Fahrzeugen im Einspurfall darzustellen und u.a. das Entstehen von Staus zu modellieren. Mit drei Regeln, die auf jedes Fahrzeug gleichzeitig und gleichermaßen anzuwenden waren, wurde ein realistischer Verkehrsfluss generiert. Die Regeln für die heute als "Nagel-Schreckenberg-Modell" bekannte Modellierung waren: 
 
 \begin{itemize}
 \item Beschleunigung: hat ein Fahrzeug nicht seine max. Geschwindigkeit $v$ (Zellen/Zeitschritt) erreicht und ist das vorausfahrende Fahrzeug weiter als $v+1$ Zellen entfernt, dann erhöhe die Geschwindigkeit um $1$, $v \rightarrow v+1$;
@@ -20,11 +15,11 @@ Diese Regeln sichern die Kollisionsfreiheit.
 
 Das ursprüngliche Modell von Nagel und Schreckenberg wurde durch das zu Beginn zufällige Setzen von Fahrzeugen in einem geschlossenen Kreis (ähnlich einer Autorennstrecke) simuliert. Allerdings wurde auch, bei der Simulation einer Fahrbahnverengung, eine Alternative Simulationsmöglichkeit beschrieben. Eine Gridlänge von bis zu 10000 Zellen wurde getestet (Bewegungsrichtung von links nach rechts), die Fahrzeuge in die am weitesten links befindliche Zelle gesetzt, so diese frei war und die Fahrzeuge in den sechs am weitesten rechts befindlichen Zellen (bei $v_{max}=5$) gelöscht. Letzteres Vorgehen sorgt für eine offene Grenze für den abfließenden Verkehr.
 
-Dehnt man dieses Modell aber auf mehrere Fahrspuren aus, stößt es an seine Grenzen, weil die Modellierung von Überholvorgängen, genannt "Ausscheren" und "Einscheren", nicht Teil des ursprünglichen Modells ist. [Wagner96] liefert eine 'multi-lane'-Betrachtung, wobei die ursprünglichen Regeln durch weitere ergänzt werden, die zum einen das Auffahren auf den die Spur wechselnden und des die Spur wechselnden nach dem Spurwechsel verhindern. \\
+Dehnt man dieses Modell aber auf mehrere Fahrspuren aus, stößt es an seine Grenzen, weil die Modellierung von Überholvorgängen, genannt "Ausscheren" und "Einscheren", nicht Teil des ursprünglichen Modells ist. \cite{multi-lane} liefert eine 'multi-lane'-Betrachtung, wobei die ursprünglichen Regeln durch weitere ergänzt werden, die zum einen das Auffahren auf den die Spur wechselnden und des die Spur wechselnden nach dem Spurwechsel verhindern. \\
 In der Betrachtung, ob die Aktualisierung der Fahrzeuge parallel oder sequentiell erfolgen soll, wurde erkannt, dass dies für das entwickelte Modell nur geringe Unterschiede macht, da die Rate der Spurwechsel mit den festgelegten Regeln eher gering ist. \\
 Gleichzeitung wurde auch beobachtet, dass Fahrzeuge nicht wieder von der Überholspur in die Normalspur wechselten. Dies wurde mit weiteren Regeln und einer Spurwechselwahrscheinlichkeit abgestellt. Eine weitere Kalibrierung des Modells wurde in einer Folgearbeit durchgeführt. \\
 Durch die Konstanthaltung der Anzahl generierter Fahrzeuge und die Veränderung der Systemgröße konnten verschiedene Verkehrsdichten simuliert werden. 
 
-In [Tran17] wurde für die Simulation der Spurwechsel eine "Social Forces"-Berechnung in Verbindung mit einer "Fitness Proportionate Selection"-Komponente erweitert. Durch gezielte Beachtung des umgebenden Verkehrs und dem Bewerten der zur Wahl stehenden Alternativen soll es möglich sein, das menschliche Verhalten besser als bisher abzubilden. \\
+In \cite{dat-ba} wurde für die Simulation der Spurwechsel eine "Social Forces"-Berechnung in Verbindung mit einer "Fitness Proportionate Selection"-Komponente erweitert. Durch gezielte Beachtung des umgebenden Verkehrs und dem Bewerten der zur Wahl stehenden Alternativen soll es möglich sein, das menschliche Verhalten besser als bisher abzubilden. \\
 "Social Forces" ist eine Simulationsmöglichkeit, die aus der Betrachtung von Menschenansammlungen kommt. Das Verhalten des Entscheiders Mensch, was auch im Straßenverkehr eine Rolle spielt, aber bisher in diesem Zusammenhang eher als eine Art "Black Box" betrachtet wurde, kann hiermit simuliert werden, um z.B. Evakuierungs- oder Panikszenarios zu veranschaulichen.\\
 Der Hang zum Wechsel oder zur Beibehaltung der Spur wird hier nunmehr nicht nur durch eine fest vorgegebene Wahrscheinlichkeit simuliert, sondern durch eine individuell für jedes Fahrzeug zu jedem Zeitschritt berechnete "Kräfte", deren 'Entscheidung', durch entsprechende berechnete Wahrscheinlichkeiten getragen, mehr oder weniger häufig zur Ausführung kommen. 
