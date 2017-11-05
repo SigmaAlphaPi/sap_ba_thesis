@@ -88,15 +88,15 @@ Die Festlegung einer Wahrscheinlichkeit für das Zurückwechseln von der linken 
 
 In \cite{dat-ba} wurde mit dem "Social-Force-Vehicle-Modell" ein weiterer Ansatz entwickelt.
 Auch hier wird eine Grid-Umgebung verwendet.
-Im Gegensatz zur ursprünglichen Nutzung der "Social Forces" für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. Die Kräfte der Zellen werden für jedes Fahrzeug zu jedem Zeitschritt $t$ berechnet, da seine Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt.
+Im Gegensatz zur ursprünglichen Nutzung der "Social Forces" für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. Die Kräfte der Zellen, siehe \ref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$ berechnet, da seine Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt.
 Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
 
-.\sa{evtl. Grafik Zellenbetrachtung aus DAT, Abb. 17}
+\begin{figure}[hptb]
+ \centering
+ \includegraphics[width=0.75\textwidth]{social-forces}
+ \caption["Social Forces" für Grid-Zellen]{Vorschlag der "Social Forces" für Grid-Zellen, aus \cite{dat-ba}}
+ \label{figure:social-forces}
+\end{figure}
 
 Die letztendliche Auswahl der Zielzelle wird mittels "Fitness-proportionate Selection" durchgeführt.
-
-
-In \cite{dat-ba} wurde für die Simulation der Spurwechsel eine "Social Forces"-Berechnung in Verbindung mit einer "Fitness Proportionate Selection"-Komponente erweitert. 
-Durch gezielte Beachtung des umgebenden Verkehrs und dem Bewerten der zur Wahl stehenden Alternativen soll es möglich sein, das menschliche Verhalten besser als bisher abzubilden.\sa{Das hier ist eine Vermutung, also genau Deine Forschungsfrage das zu beweisen, kommt also ins nächste Kapitel} \\
-Das Verhalten des Entscheiders Mensch, was auch im Straßenverkehr eine Rolle spielt, aber bisher in diesem Zusammenhang eher als eine Art "Black Box" betrachtet wurde, kann hiermit simuliert werden, um z.B. Evakuierungs- oder Panikszenarios zu veranschaulichen.\\
-Der Hang zum Wechsel oder zur Beibehaltung der Spur wird hier nunmehr nicht nur durch eine fest vorgegebene Wahrscheinlichkeit simuliert, sondern durch eine individuell für jedes Fahrzeug zu jedem Zeitschritt berechnete "Kräfte", deren 'Entscheidung', durch entsprechende berechnete Wahrscheinlichkeiten getragen, mehr oder weniger häufig zur Ausführung kommen. 
+Entgegen des Zwangs zum Ausscheren und einer fest vorgegebenen Wahrscheinlichkeit wird eine stochastische Möglichkeit der Simulation der Spurwechselvorgänge aufgezeigt.
