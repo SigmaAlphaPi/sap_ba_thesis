@@ -12,7 +12,7 @@ Die Fahrzeuge wurden mit $v=0$ in die am weitesten links befindliche Zelle, so d
 Letzteres Vorgehen sorgte für eine offene Grenze für den abfließenden Verkehr.
 
 Für eine fortlaufende Simulation ist die zweite Möglichkeit ungeeignet. Auch in \cite{multi-lane} wird von einer Nutzung von Periodische Randbedingung gesprochen. 
-Dies lässt darauf schließen, dass, wie in \cite{peri-rand}, Abb. 1.5 für die Umgebung von Pixeln beschrieben, die Fahrzeuge am 'Ende' der Gridstrecke am 'Anfang' wieder eingesetzt wurden und somit der zuerst beschriebene Kreis einsteht.
+Dies lässt darauf schließen, dass, wie in \cite{peri-rand}, Abb. 1.5 für die Umgebung von Pixeln beschrieben, die Fahrzeuge am \enquote*{Ende} der Gridstrecke am \enquote*{Anfang} wieder eingesetzt wurden und somit der zuerst beschriebene Kreis einsteht.
 Dieses Verhalten ist zu bevorzugen.
 
 Vorteil der geschlossenen Strecke ist, dass man bei konstanter Fahrzeuganzahl $N$ (bei \cite{multi-lane} $N = 10^{3}$) durch die Veränderung der Systemgröße eine unterschiedliche Fahrzeugdichte erreicht werden kann. 
@@ -22,4 +22,5 @@ Die generierten Simulationsdaten wurden über $T_{sample} = 300$ Zeitschritte un
 
 .\sa{hier beschreibst Du den Übergang von normalen Modell zu dem Multilane Verfahren, das ist aber nicht klar für den Leser, denn ich habe mir die Frage gestellt, \glqq Warum auf einmal ein Kreis\grqq\ oder \glqq Warum auf einmal 1000 Zellen\grqq , besser $\Rightarrow$ Das Nagel-Schreckenberg Modell wurde ebenfalls zu einem Multilane Modell erweitert. Dieser Erweiterung basiert auf X und grenzt sich so zu Basismodell ab...} 
 
-.\pk{Nein \dots NaSch zeigten es ursprünglich mit der "Kreisdarstellung". Im gleichen Artikel sprechen sie aber von einem "quasi aufgebogenen" Einspurmodell. Die einspurige Führung kann als Beginn einer Fahrbahnverengung gesehen werden. Das Ende wird durch das Löschen der Fahrzeuge x Schritte vor dem Ende der Simulationsstrecke als offenes Ende simuliert, sprich die Verengung ist zu Ende und die Fahrzeuge können/würden sich wieder auf mehrere Spuren verteilen.}
+.\pk{Nein \dots NaSch zeigten es ursprünglich mit der \enquote{Kreisdarstellung}. Im gleichen Artikel sprechen sie aber von einem \enquote{quasi aufgebogenen} Einspurmodell. Die einspurige Führung kann als Beginn einer Fahrbahnverengung gesehen werden. Das Ende wird durch das Löschen der Fahrzeuge x Schritte vor dem Ende der Simulationsstrecke als offenes Ende simuliert. 
+Die Verengung ist zu Ende und die Fahrzeuge können/würden sich wieder auf mehrere Spuren verteilen.}
