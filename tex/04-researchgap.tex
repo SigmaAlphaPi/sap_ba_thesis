@@ -11,7 +11,7 @@ Ein Fahrer kann z. B. vorsichtiger sein als ein anderer und, trotz des gleichen 
 In \cite{dat-ba} wird der Hang zum Wechsel oder zur Beibehaltung der Spur wird nicht nur durch fest vorgegebene Wahrscheinlichkeiten simuliert, sondern durch individuell für jedes Fahrzeug zu jedem Zeitschritt berechnete \enquote{Kräfte}, deren \enquote*{Entscheidung}, durch entsprechende berechnete Wahrscheinlichkeiten getragen, mehr oder weniger häufig zur Ausführung kommen. 
 Durch die gezielte Beachtung des umgebenden Verkehrs und dem Bewerten der zur Wahl stehenden Alternativen soll es nun möglich sein, das menschliche Verhalten besser als bisher abzubilden.
 
-Das Hauptaugenmerk von \cite{dat-ba} lag auf der theoretischen Modellentwicklung/Modellierung. 
+Das Hauptaugenmerk von \cite{dat-ba} lag auf der theoretischen Modellentwicklung/"-Modellie"-rung. 
 Eine praktische Umsetzung und somit die Kontrolle des Erdachten und natürlich die Möglichkeit eines Vergleichs zwischen dem neuen Ansatz und bereits existierenden Modellierungen, z.B. dem Mehrspurmodell aus \cite{multi-lane}, ist bisher nicht durchgeführt worden. 
 Dies ist Ziel dieser Arbeit.
 
@@ -30,13 +30,13 @@ Auch wenn Verkehrsunfälle in der realen Welt durchaus vorkommen, sollte man sie
  \label{figure:problem-beispiel}
 \end{figure}
 
-In \ref{figure:problem-beispiel} wird dem Fahrzeug \textbf{CIRCLE} nach dem Multi-Lane-Modell aus \cite{multi-lane} das Ausscheren vorgegeben, denn die linke Spur bietet mehr Platz als die rechte. 
-Das Fahrzeug $\blacktriangle$ ist drei Felder vor \textbf{CIRCLE}.
-Ein Abbremsen von \textbf{CIRCLE} auf $v=2$ würde veranlasst.
+In \cref{figure:problem-beispiel} wird dem Fahrzeug $\bullet$ nach dem Multi-Lane-Modell aus \cite{multi-lane} das Ausscheren vorgegeben, denn die linke Spur bietet mehr Platz als die rechte. 
+Das Fahrzeug $\blacktriangle$ ist drei Felder vor $\bullet$.
+Ein Abbremsen von $\bullet$ auf $v_{\bullet}=2$ würde veranlasst.
 Dass $\blacktriangle$ gleichzeitig um $1$ beschleunigen könnte, spielt keine Rolle. \\
-Nach dem \enquote{Social-Force-Modell} würde dem Fahrzeug \textbf{CIRCLE} wahrscheinlich eine höhere Kraft der entsprechenden Zelle und somit Wahrscheinlichkeit für das Ausscheren berechnet werden.
+Nach dem \enquote{Social-Force-Modell} würde dem Fahrzeug $\bullet$ wahrscheinlich eine höhere Kraft der entsprechenden Zelle und somit Wahrscheinlichkeit für das Ausscheren berechnet werden.
 Dies muss aber nicht zur Entscheidung in Richtung Spurwechsel führen.
-$\blacksquare$ kann im aktuellen Zeitschritt max. auf $v=2$ beschleunigen, $\blacktriangle$ max. auf $v=1$.
-Da das Fahrzeug \textbf{CIRCLE} seine Geschwindigkeit aber nur durch die Zufallsgröße \enquote{Trödeln} um $1$ reduzieren kann, würde es beim Setzen/Fahren auf das gleiche Grid-Feld oder gar davor gesetzt werden. \\
+$\blacksquare$ kann im aktuellen Zeitschritt max. auf $v_{\blacksquare}=2$ beschleunigen, $\blacktriangle$ max. auf $v_{\blacktriangle}=1$.
+Da das Fahrzeug $\bullet$ seine Geschwindigkeit aber nur durch die Zufallsgröße \enquote{Trödeln} um max. $1$ reduzieren kann, würde es beim Setzen/Fahren auf das gleiche Grid-Feld oder gar davor gesetzt werden. \\
 Da ein solches Szenario insbesondere an Stauenden auftreten dürfte, wären dort Auffahrunfälle unvermeidbar. 
 Das \enquote{Social-Force-Modell} wird im normalen Verkehrsfluss einen Teil der möglichen Unfallszenarien durch Ausweichen verhindern, aber bei \enquote*{Auswahl} der weniger wahrscheinlichen Alternative geradeaus zu fahren, wird sich das fehlende \enquote*{Bremsen} bemerkbar machen.

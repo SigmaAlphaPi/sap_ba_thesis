@@ -39,13 +39,14 @@ $6$ & 45 & 162 \\ \hline
 
 Die beobachtete Durchschittsgeschwindigkeit von 4,5 Zellen/Zeitschritt, der als eine Sekunde angenommen wird, entspricht etwa der einer Geschwindigkeit von 120 km/h\footnote{\cite{na-sch}, S. 2227}. 
 
-In \cite{na-sch} war es erstmals gelungen, Wechselwirkungen zwischen Fahrzeugen im Einspurfall darzustellen \sa{...auf der Basis einen theoretischen Modells zu entwickeln... $\Rightarrow$ mit 1-2 Sätzen die Kernaussagen der Arbeit von Dat beschreiben} und u.a. das Entstehen von Staus zu modellieren. 
+In \cite{na-sch} war es erstmals gelungen, Wechselwirkungen zwischen Fahrzeugen im Einspurfall darzustellen %\sa{...auf der Basis einen theoretischen Modells zu entwickeln... $\Rightarrow$ mit 1-2 Sätzen die Kernaussagen der Arbeit von Dat beschreiben} 
+und u.a. das Entstehen von Staus zu modellieren. 
 Mit drei Regeln, die auf jedes Fahrzeug gleichzeitig und gleichermaßen anzuwenden waren, wurde ein realistischer Verkehrsfluss generiert. 
 Die folgenden Regeln, die die Kollisionsfreiheit sichern, sind die Grundlage für die heute als \enquote{Nagel-Schreckenberg-Modell} bekannte Modellierung:\pk{Hier ist kein Schritt von Dat zu NaSch} 
 
 \begin{itemize}
-\item Beschleunigung: Solange ein Fahrzeug nicht seine max. Geschwindigkeit $v$ (Zellen/Zeitschritt) erreicht hat und ein vorausfahrendes Fahrzeug weit genug entfernt ist, dann erhöhe die Geschwindigkeit um $1$, $v \rightarrow v+1$;
-\item Abbremsen: Hat ein Fahrzeug ein anderes Fahrzeug $j$ Schritte vor sich, dann reduziert es die Geschwindigkeit auf $j-1$, $v \rightarrow j-1$;
+\item Beschleunigung: Solange ein Fahrzeug nicht seine max. Geschwindigkeit $v_{max}$ (Zellen/"-Zeitschritt) erreicht hat und ein vorausfahrendes Fahrzeug weit genug entfernt ist, dann erhöhe die Geschwindigkeit um $1$, $v \rightarrow v+1$;
+\item Abbremsen: Hat ein Fahrzeug ein anderes Fahrzeug $j$ Zellen vor sich, dann reduziert es die Geschwindigkeit auf $j-1$, $v \rightarrow j-1$;
 \item Zufallsgröße, auch \enquote*{Trödelwahrscheinlichkeit}: Mit einer Wahrscheinlichkeit $p$ wird die Geschwindigkeit ($v > 0$) eines Fahrzeuges um $1$ reduziert, $v \rightarrow v-1$
 \end{itemize}
 
@@ -88,7 +89,7 @@ Die Festlegung einer Wahrscheinlichkeit für das Zurückwechseln von der linken 
 
 In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein weiterer Ansatz entwickelt.
 Auch hier wird eine Grid-Umgebung verwendet.
-Im Gegensatz zur ursprünglichen Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. Die Kräfte der Zellen, siehe \ref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$ berechnet, da seine Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt.
+Im Gegensatz zur ursprünglichen Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$ berechnet, da seine Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt.
 Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
 
 \begin{figure}[hptb]
