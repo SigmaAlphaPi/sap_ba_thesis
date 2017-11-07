@@ -1,9 +1,9 @@
 \section{Vorläufige Realisierung}
 \label{sec:realisierung}
 
-.\sa{hier vermischst Du \cref{sec:sota} mit \cref{sec:realisierung}, hier geht es darum, wi Du konkret arbeiten willst um die Sachen unter \cref{sec:researchgap} zu beweisen oder zu belegen, evtl macht es Sinn diese Punkte mit in \cref{sec:sota} zu ziehen, Du kannst dann einfach, wenn Du es brauchst Verweise setzen}
+%.\sa{hier vermischst Du \cref{sec:sota} mit \cref{sec:realisierung}, hier geht es darum, wi Du konkret arbeiten willst um die Sachen unter \cref{sec:researchgap} zu beweisen oder zu belegen, evtl macht es Sinn diese Punkte mit in \cref{sec:sota} zu ziehen, Du kannst dann einfach, wenn Du es brauchst Verweise setzen}
 
-Die in \cite{dat-ba} vorgeschlagene Struktur ist zu implementieren und in entsprechend vergleichbarer Umgebung simulatorisch zu testen. Dabei sind die folgenden Größen zu erheben und in entsprechend statistisch auszuwerten: Verkehrsdichte, Verkehrsfluss, Spurwechselfrequenz und Spurnutzung links/rechts.
+Die in \cite{dat-ba} vorgeschlagene Struktur ist zu implementieren und in entsprechend vergleichbarer Umgebung simulatorisch zu testen. Dabei sind die folgenden Größen zu erheben und in entsprechend statistisch auszuwerten: Verkehrsdichte, Verkehrsfluss, Spurwechselfrequenz und Spurnutzung links/rechts (ggf. weitere).
 
 Das ursprüngliche Modell von Nagel und Schreckenberg wurde in \cite{na-sch} durch das zu Beginn zufällige Platzieren von Fahrzeugen in einem geschlossenen Kreis mit $L$ Zellen (ähnlich einer Autorennstrecke) simuliert. \\
 Allerdings wurde auch, bei der Simulation einer Fahrbahnverengung, eine Alternative Simulationsmöglichkeit beschrieben. 
@@ -15,8 +15,8 @@ Für eine fortlaufende Simulation ist die zweite Möglichkeit ungeeignet. Auch i
 Dies lässt darauf schließen, dass, wie in \cite{peri-rand}, Abb. 1.5 für die Umgebung von Pixeln beschrieben, die Fahrzeuge vom \enquote*{Ende} der Gridstrecke am \enquote*{Anfang} wieder eingesetzt wurden und somit der zuerst beschriebene Kreis einsteht.
 Dieses Verhalten ist zu bevorzugen.
 
-Vorteil der geschlossenen Kreisstrecke ist, dass man bei konstanter Fahrzeuganzahl $N$ (bei \cite{multi-lane} $N = 10^{3}$) durch die Veränderung der Systemgröße eine unterschiedliche Fahrzeugdichte erreicht werden kann. 
-Jeder Dichtewert wurde für $T = 10^{5}$ Zeitschritte simuliert, wobei die erste Hälfte verworfen wurde, um Störungen ausklingen zu lassen. 
+Vorteil der geschlossenen Kreisstrecke ist, dass man bei konstanter Fahrzeuganzahl $N$ (bei \cite{multi-lane} waren dies $N = 10^{3}$) durch die Veränderung der Systemgröße eine unterschiedliche Fahrzeugdichte erreicht werden kann. 
+Jeder Dichtewert wurde für $T = 10^{5}$ Zeitschritte simuliert, wobei die erste Hälfte verworfen wurde, um mögliche Störeffekte ausklingen zu lassen. 
 Die generierten Simulationsdaten wurden über $T_{sample} = 300$ Zeitschritte und eine Wegstrecke von 133 Zellen, was etwa 1 km Länge in der realen Welt entspricht, gemittelt, um statistische Schwankungen zu reduzieren.
 
 
