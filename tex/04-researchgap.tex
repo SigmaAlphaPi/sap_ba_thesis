@@ -3,22 +3,22 @@
 
 In der Multi-Lane-Version der Nagel-Schreckenberg-Modells (siehe \cite{multi-lane}) geben die Regeln einen Zwang zum Einleiten des Überholvorganges, wenn sich die Möglichkeit dazu ergibt, vor. Ebenso wurde für den Rückwechsel auf die Normalspur eine Wahrscheinlichkeit festgelegt.
 
-Das Verhalten des Entscheiders Mensch, was auch im Straßenverkehr eine große Rolle spielt, wurde bisher eher als eine Art \enquote{Black Box}\sa{Black Box ist nicht der richtige Ausdruck. \#think"-think"-think} betrachtet. 
+Das Verhalten des Entscheiders Mensch, was auch im Straßenverkehr eine große Rolle spielt, wurde bisher eher als eine Art \enquote{Black Box} betrachtet. 
 Jeder Fahrzeugführer trifft zu jedem Zeitpunkt unter gleichen Voraussetzungen die gleiche Entscheidung. 
 Dies ist aber in der Realität nicht so. 
 Ein Fahrer kann z. B. vorsichtiger sein als ein anderer und, trotz des gleichen Abstands und der gleichen Geschwindigkeiten, auf ein Überholmanöver verzichten, weil er seine Umwelt anders einschätzt.
 
 In \cite{dat-ba} wird der Hang zum Wechsel oder zur Beibehaltung der Spur nicht nur durch fest vorgegebene Wahrscheinlichkeiten simuliert, sondern durch individuell für jedes Fahrzeug zu jedem Zeitschritt berechnete \enquote{Kräfte}, deren \enquote*{Entscheidung}, durch entsprechende berechnete Wahrscheinlichkeiten getragen, mehr oder weniger häufig zur Ausführung kommen. 
-Durch die gezielte Beachtung des umgebenden Verkehrs und dem Bewerten der zur Wahl stehenden Alternativen soll es nun möglich sein, das menschliche Verhalten besser als bisher abzubilden.
+Durch die gezielte Beachtung des umgebenden Verkehrs und das Bewerten der zur Wahl stehenden Alternativen soll es nun möglich sein, das menschliche Verhalten besser als bisher abzubilden.
 
-Das Hauptaugenmerk von \cite{dat-ba} lag auf der theoretischen Modellentwicklung/"-Modellie"-rung. 
+Das Hauptaugenmerk von \cite{dat-ba} lag auf der theoretischen Modellentwicklung/""Modellie"-rung. 
 Eine praktische Umsetzung und somit die Kontrolle des Erdachten und natürlich die Möglichkeit eines Vergleichs zwischen dem neuen Ansatz und bereits existierenden Modellierungen, z.B. dem Mehrspurmodell aus \cite{multi-lane}, ist bisher nicht durchgeführt worden. 
 Dies ist Ziel dieser Arbeit.
 
 \subsection*{Mögliches Problem}
 \addcontentsline{toc}{subsection}{Mögliches Problem}
 
-In der Art und Weise, wie der Ansatz in das ursprüngliche Modell nach \cite{na-sch} (und nicht in die Mehrspurvariante nach \cite{multi-lane}) integriert wurde, sehe ich\sa{keine Ich Formulierung} ein Problem.
+Aus der Art und Weise, wie der Ansatz in das ursprüngliche Modell nach \cite{na-sch} (und nicht in die Mehrspurvariante nach \cite{multi-lane}) integriert wurde, könnte ein Problem entstehen.
 Eine der drei Regeln, die die Kollisionsfreiheit sichern sollen - das Abbremsen - wurde entfernt und durch das \enquote{Social-Force-Modell} ersetzt (siehe \cite{dat-ba}, S. 21 \& Abb. 16, bzw. Vortragsfolien S. 7).
 Dies kann dazu führen, dass in der Simulation ein Auffahrunfall unausweichlich ist.
 Auch wenn Verkehrsunfälle in der realen Welt durchaus vorkommen, sollte man sie in der Simulation nicht provozieren.

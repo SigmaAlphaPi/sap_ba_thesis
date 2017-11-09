@@ -3,9 +3,17 @@
 
 %.\sa{hier vermischst Du \cref{sec:sota} mit \cref{sec:realisierung}, hier geht es darum, wi Du konkret arbeiten willst um die Sachen unter \cref{sec:researchgap} zu beweisen oder zu belegen, evtl macht es Sinn diese Punkte mit in \cref{sec:sota} zu ziehen, Du kannst dann einfach, wenn Du es brauchst Verweise setzen}
 
-Die in \cite{dat-ba} vorgeschlagene Struktur ist zu implementieren und in entsprechend vergleichbarer Umgebung simulatorisch zu testen. Dabei sind die folgenden Größen zu erheben und in entsprechend statistisch auszuwerten: Verkehrsdichte, Verkehrsfluss, Spurwechselfrequenz und Spurnutzung links/rechts (ggf. weitere)\sa{das ggf weg lassen und ne Itemlist machen, damit sieht es nach mehr auf und die Liste lockert den Lesefluß}.
+Die in \cite{dat-ba} vorgeschlagene Struktur ist zu implementieren und in entsprechend vergleichbarer Umgebung simulatorisch zu testen. 
+Dabei sind die folgenden Größen zu erheben und in entsprechend statistisch auszuwerten: 
 
-Das ursprüngliche Modell von Nagel und Schreckenberg wurde in \cite{na-sch} durch das zu Beginn zufällige Platzieren von Fahrzeugen in einem geschlossenen Kreis mit $L$ Zellen (ähnlich einer Autorennstrecke) simuliert. \\
+\begin{itemize}
+\item Verkehrsdichte
+\item Verkehrsfluss
+\item Spurwechselfrequenz
+\item Spurnutzung links/rechts
+\end{itemize}
+
+Das Testszenario wurde in \cite{na-sch} durch das zu Beginn zufällige Platzieren von Fahrzeugen in einem geschlossenen Kreis mit $L$ Zellen (ähnlich einer Autorennstrecke) simuliert. \\
 Allerdings wurde auch, bei der Simulation einer Fahrbahnverengung, eine Alternative Simulationsmöglichkeit beschrieben. 
 Eine Gridgerade von bis zu 10000 Zellen Länge wurde getestet - Bewegungsrichtung von links nach rechts. 
 Die Fahrzeuge wurden mit $v=0$ in die am weitesten links befindliche Zelle, so diese frei war, gesetzt und die Fahrzeuge in den sechs am weitesten rechts befindlichen Zellen (bei $v_{max}=5$) gelöscht. 
@@ -17,9 +25,8 @@ Dieses Verhalten ist zu bevorzugen.
 
 Vorteil der geschlossenen Kreisstrecke ist, dass man bei konstanter Fahrzeuganzahl $N$ (bei \cite{multi-lane} waren dies $N = 10^{3}$) durch die Veränderung der Systemgröße eine unterschiedliche Fahrzeugdichte erreicht werden kann. 
 Jeder Dichtewert wurde für $T = 10^{5}$ Zeitschritte simuliert, wobei die erste Hälfte verworfen wurde, um mögliche Störeffekte ausklingen zu lassen. 
-Die generierten Simulationsdaten wurden über $T_{sample} = 300$ Zeitschritte und eine Wegstrecke von 133 Zellen, was etwa 1 km Länge in der realen Welt entspricht, gemittelt, um statistische Schwankungen zu reduzieren.\sa{Hier kannst Du als Möglichkeit \link{https://lightjason.github.io/news/2017-09-workshop/} anführen, das ist eine gerade Straße kein Kreis mit beliebig vielen Lanes und beliebiger Länge}
+Die generierten Simulationsdaten wurden über $T_{sample} = 300$ Zeitschritte und eine Wegstrecke von 133 Zellen, was etwa 1 km Länge in der realen Welt entspricht, gemittelt, um statistische Schwankungen zu reduzieren.
 
-
-%.\sa{hier beschreibst Du den Übergang von normalen Modell zu dem Multilane Verfahren, das ist aber nicht klar für den Leser, denn ich habe mir die Frage gestellt, \glqq Warum auf einmal ein Kreis\grqq\ oder \glqq Warum auf einmal 1000 Zellen\grqq , besser $\Rightarrow$ Das Nagel-Schreckenberg Modell wurde ebenfalls zu einem Multilane Modell erweitert. Dieser Erweiterung basiert auf X und grenzt sich so zu Basismodell ab...} 
-
-%.\pk{Nein \dots NaSch zeigten es ursprünglich mit der \enquote{Kreisdarstellung}. Im gleichen Artikel sprechen sie aber von einem \enquote{quasi aufgebogenen} Einspurmodell. Die einspurige Führung kann als Beginn einer Fahrbahnverengung gesehen werden. Das Ende wird durch das Löschen der Fahrzeuge x Schritte vor dem Ende der Simulationsstrecke als offenes Ende simuliert. Die Verengung ist zu Ende und die Fahrzeuge können/würden sich wieder auf mehrere Spuren verteilen.}
+Ein mögliches Simulationstool ist das \enquote{Traffic Simulation Game}\footnote{\link{https://lightjason.github.io/news/2017-09-workshop/}}. 
+In der Grundkonfiguration erzeugt dieses eine beliebig lange, gerade Straße mit beliebig vielen Fahrspuren. 
+Es ist zu prüfen, ob die Software auf die gewünschte Verhaltensweise angepasst werden kann.
