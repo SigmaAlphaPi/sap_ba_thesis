@@ -25,18 +25,18 @@ Auch wenn Verkehrsunfälle in der realen Welt durchaus vorkommen, sollte man sie
 
 \begin{figure}[hptb]
  \centering
- \includegraphics[width=0.75\textwidth]{problem-beispiel}
+ \includegraphics[width=0.6\textwidth]{problem-beispiel}
  \caption[Problem-Beispiel]{Beispiel für ein Problem-Szenario, drei Fahrzeuge und deren Geschwindigkeiten}
  \label{figure:problem-beispiel}
 \end{figure}
 
-In \cref{figure:problem-beispiel} wird dem Fahrzeug $\bullet$ nach dem Multi-Lane-Modell aus \cite{multi-lane} das Ausscheren vorgegeben, denn die linke Spur bietet mehr Platz als die rechte. 
-Das Fahrzeug $\blacktriangle$ ist $j=3$ Felder vor $\bullet$.
+In \cref{figure:problem-beispiel} würde dem Fahrzeug $\bullet$ nach dem Multi-Lane-Modell aus \cite{multi-lane} das Ausscheren vorgegeben, denn die linke Spur bietet mehr Platz als die rechte und es gibt keinen nachfolgenden Verkehr auf der anderen Spur. 
+Fahrzeug $\blacktriangle$ ist $j=3$ Felder vor $\bullet$.
 Ein Abbremsen von $\bullet$ auf $v_{\bullet}=j-1=2$ würde veranlasst.
 Dass $\blacktriangle$ gleichzeitig um $1$ beschleunigen könnte, spielt keine Rolle. \\
-Nach dem \enquote{Social-Force-Modell} würde dem Fahrzeug $\bullet$ wahrscheinlich eine höhere Kraft der entsprechenden Zelle und somit Wahrscheinlichkeit für das Ausscheren berechnet werden.
+Nach dem \enquote{Social-Force-Modell} würde für das Fahrzeug $\bullet$ wahrscheinlich eine höhere Kraft der entsprechenden Zelle und somit Wahrscheinlichkeit für das Ausscheren berechnet werden.
 Dies muss aber nicht zur Entscheidung in Richtung Spurwechsel führen.
 $\blacksquare$ kann im aktuellen Zeitschritt max. auf $v_{\blacksquare}=2$ beschleunigen, $\blacktriangle$ max. auf $v_{\blacktriangle}=1$.
-Da das Fahrzeug $\bullet$ seine Geschwindigkeit aber nur durch die Zufallsgröße \enquote{Trödeln} um max. $1$ reduzieren kann, würde es beim Setzen/Fahren auf das gleiche Grid-Feld oder gar davor gesetzt werden. \\
+Da Fahrzeug $\bullet$ seine Geschwindigkeit aber nur durch die Zufallsgröße \enquote{Trödeln} um max. $1$ reduzieren kann, würde es beim Simulationsschritt \enquote{Fahren} auf das gleiche Grid-Feld oder gar davor gesetzt werden. \\
 Da ein solches Szenario insbesondere bei Stockungen und an Stauenden auftreten dürfte, wären dort Auffahrunfälle unvermeidbar. 
 Das \enquote{Social-Force-Modell} wird im normalen Verkehrsfluss einen Teil der möglichen Unfallszenarien durch Ausweichen verhindern, aber bei \enquote*{Auswahl} der weniger wahrscheinlichen Alternative geradeaus zu fahren, wird sich das fehlende \enquote*{Bremsen} bemerkbar machen.
