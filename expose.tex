@@ -18,7 +18,6 @@
 \newcommand*{\sa}[1]{\todo[color=yellow]{\footnotesize\textbf{@Sven:} #1}}
 \newcommand*{\pk}[1]{\todo[color=green]{\footnotesize\textbf{@Phil:} #1}}
 
-
 \crefname{figure}{Abbildung}{Abbildungen}
 \crefname{section}{Kapitel}{Kapitel}
 
@@ -44,16 +43,10 @@
     %\listoftodos
     
     \include{tex/01-title}
-    \begingroup
-    \let\clearpage\relax
-    \include{tex/02-problemstellung}
-    \endgroup
+    \input{tex/02-problemstellung}
     \include{tex/03-sota} 
-    \begingroup
-    \let\clearpage\relax
-    \include{tex/04-researchgap}
+    \input{tex/04-researchgap}
     \include{tex/05-realisierung}
-    \endgroup
     
     \bibliography{references}
 
