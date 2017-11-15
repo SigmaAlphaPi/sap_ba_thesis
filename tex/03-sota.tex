@@ -6,15 +6,16 @@ Außerdem gab es ab den 1980er Jahren auch boolsche Simulationsmodelle, die mit 
 Anfang der 1990er wurde von Kai Nagel und Michael Schreckenberg in \cite{na-sch} ein Verfahren vorgestellt, welches Autobahnverkehr basierend auf Zellularautomaten modelliert. 
 
 \begin{quote}
-Ein zellulärer Automat ist eine regelmäßige Annordnung von Zellen. Jede Zelle kann eine endliche Zahl von Werten / Zuständen annehmen und hat eine  begrenzte Zahl von Nachbarzellen, die sie beeinflussen können. Das Muster des gesamten zellulären Automaten ändert sich in einzelnen Schritten, die durch eine Reihe von Übergangsregeln bestimmt werden, die für alle Zellen gelten.\footnote{aus \cite{cell-autom}}
+Ein zellulärer Automat ist eine regelmäßige Annordnung von Zellen. Jede Zelle kann eine endliche Zahl von Werten / Zuständen annehmen und hat eine  begrenzte Zahl von Nachbarzellen, die sie beeinflussen können. Das Muster des gesamten zellulären Automaten ändert sich in einzelnen Schritten, die durch eine Reihe von Übergangsregeln bestimmt werden, die für alle Zellen gelten. (aus \cite{cell-autom})
 \end{quote}
 
+\noindent
 Vereinfacht kann eine Fahrspur einer Straße als Aneinanderreihung vieler solcher Zellen gesehen werden. 
 Dies führt schließlich zu einer gridbasierten Simulationsumgebung. 
 In \cite{na-sch} wird die Rechenumgebung als eindimensionales Array mit $L$ Zellen definiert. 
 Jede der Zellen kann entweder von einem Fahrzeug belegt oder frei sein. 
 Eine Simulation in dieser Grid-Welt hat den Vorteil, dass die Erkenntnisse auf die reale Welt skaliert werden können. 
-Es wird von einer Zelllänge von 7,5 m ausgegangen\footnote{\cite{na-sch}, S. 2227}, was ungefähr dem beanspruchten Platz eines Pkw - von Fahrzeugfront zu Fahrzeugfront - in einer Stausituation entspricht (Fahrzeuglänge + Abstand). 
+Es wird eine Zelllänge von 7,5\nolinebreak[4] m angenommen (vgl. \cite[S. 2227]{na-sch}), was ungefähr dem beanspruchten Platz eines Pkw - von Fahrzeugfront zu Fahrzeugfront - in einer Stausituation entspricht (Fahrzeuglänge + Abstand). 
 Jedes Fahrzeug hat eine ganzzahlige Geschwindigkeit zwischen null und $v_{max}$.
 
 \begin{table}[ht]
@@ -23,7 +24,7 @@ Jedes Fahrzeug hat eine ganzzahlige Geschwindigkeit zwischen null und $v_{max}$.
 {\renewcommand{\arraystretch}{1.2}% for the vertical padding
 \begin{tabular}{| c | c | c |}
 \hline 
-$v^{sim}$ in $\frac{Zellen}{Zeitschritt}$ & $\widehat{=}$ $v^{real}$ in $\frac{m}{s}$ & $\frac{km}{h}$ \\ \hline 
+$v^{sim}$ in $\frac{Zellen}{Zeitschritt}$ & $\widehat{=}$ $v^{real}$ in $\frac{m}{s}$ & $=$ in $\frac{km}{h}$ \\ \hline 
 $1$ & 7,5 & 27 \\ \hline
 $2$ & 15 & 54 \\ \hline
 $3$ & 22,5 & 81 \\ \hline
@@ -37,23 +38,24 @@ $6$ & 45 & 162 \\ \hline
 \label{tab:umrechnung-zelle-kmh}
 \end{table}
 
-Die beobachtete Durchschittsgeschwindigkeit von 4,5 Zellen/Zeitschritt, der als eine Sekunde angenommen wird, entspricht etwa der einer Geschwindigkeit von 120 km/h\footnote{\cite{na-sch}, S. 2227}. 
+\noindent
+Die beobachtete Durchschittsgeschwindigkeit von 4,5 Zellen/Zeitschritt, der als eine Sekunde angenommen wird, entspricht etwa der einer Geschwindigkeit von 120 km/h (vgl. \cite[S. 2227]{na-sch}). 
 
-In \cite{na-sch} war es erstmals gelungen, Wechselwirkungen zwischen Fahrzeugen im Einspurfall darzustellen %\sa{...auf der Basis einen theoretischen Modells zu entwickeln... $\Rightarrow$ mit 1-2 Sätzen die Kernaussagen der Arbeit von Dat beschreiben} 
-und u.a. das Entstehen von Staus, ohne dass ein Grund dafür vorlag, zu modellieren. 
+In \cite{na-sch} war es erstmals gelungen, Wechselwirkungen zwischen Fahrzeugen im Einspurfall darzustellen und u. a. das Entstehen von Staus, ohne dass ein Grund dafür vorlag, zu modellieren. 
 Mit drei Regeln, die auf jedes Fahrzeug gleichzeitig und gleichermaßen anzuwenden waren, wurde ein realistischer Verkehrsfluss generiert. 
 Die folgenden Regeln, die die Kollisionsfreiheit sichern, sind die Grundlage für die, heute als \enquote{Nagel-Schreckenberg-Modell} bekannte, Modellierung:
 
 \begin{itemize}
-\item \textit{Beschleunigung}: Solange ein Fahrzeug nicht seine max. Geschwindigkeit $v_{max}$ (Zellen/""Zeitschritt) erreicht hat und ein vorausfahrendes Fahrzeug weit genug entfernt ist, dann erhöht es die Geschwindigkeit um $1$, $v \rightarrow v+1$;
+\item \textit{Beschleunigung}: Solange ein Fahrzeug nicht seine max. Geschwindigkeit $v_{max}$ (Zellen/""Zeitschritt) erreicht hat und ein vorausfahrendes Fahrzeug weit genug entfernt ist, erhöht es die Geschwindigkeit um $1$, $v \rightarrow v+1$;
 \item \textit{Abbremsen}: Hat ein Fahrzeug ein anderes Fahrzeug $j$ Zellen vor sich, dann reduziert es die Geschwindigkeit auf $j-1$, $v \rightarrow j-1$;
 \item Zufallsgröße, auch \textit{\enquote*{Trödelwahrscheinlichkeit}}: Mit einer Wahrscheinlichkeit $p$ wird die Geschwindigkeit ($v > 0$) eines Fahrzeuges um $1$ reduziert, $v \rightarrow v-1$
 \end{itemize}
 
+\noindent
 Die Anweisungen werden in der angegebenen Reihenfolge - für alle Fahrzeuge gleichzeitig - ausgeführt und jedes Fahrzeug um die entsprechende Anzahl Zellen weiter gesetzt.
 
-Dehnt man dieses Modell aber auf mehrere Fahrspuren aus, stößt es an seine Grenzen, weil die Modellierung von Überholvorgängen, genannt \enquote{Ausscheren} und \enquote{Einscheren}, nicht Teil des ursprünglichen Modells ist. 
-\cite{multi-lane} liefert eine \enquote*{multi-lane}-Betrachtung, wobei die ursprünglichen Regeln durch weitere ergänzt werden, die zum einen einen Auffahrunfall des Nachfolgeverkehrs auf der Spurwechsler und zum anderen auch des die Spur wechselnden auf vorausfahrende Fahrzeuge verhindern. \\
+Dehnt man dieses Modell aber auf mehrere Fahrspuren aus, stößt es an seine Grenzen, weil die Modellierung von Überholvorgängen, bzw. genauer gesagt für das \enquote{Ausscheren} und \enquote{Einscheren}, nicht Teil des ursprünglichen Modells ist. 
+\cite{multi-lane} liefert eine \enquote*{multi-lane}-Betrachtung, wobei die ursprünglichen drei Regeln durch weitere ergänzt wurden, die zum einen ein Auffahren des Nachfolgeverkehrs auf den Spurwechsler und zum anderen auch des die Spur wechselnden auf vorausfahrende Fahrzeuge verhindern. \\
 In der Betrachtung, ob die Aktualisierung der Fahrzeuge parallel oder sequentiell erfolgen soll, wurde erkannt, dass dies für das entwickelte Modell nur geringe Unterschiede macht, da die Rate der Spurwechsel mit den festgelegten Regeln eher gering ist. \\
 Gleichzeitig wurde auch beobachtet, dass Fahrzeuge nicht wieder von der Überholspur in die Normalspur wechselten. Dies wurde mit weiteren Regeln und einer Spurwechselwahrscheinlichkeit abgestellt. Eine weitere Kalibrierung des Modells wurde in einer Folgearbeit durchgeführt. \\
 Durch die Konstanthaltung der Anzahl generierter Fahrzeuge und die Veränderung der Systemgröße konnten verschiedene Verkehrsdichten simuliert werden.
@@ -64,41 +66,44 @@ Die Simulation ergab, dass der Punkt, an dem beide Spuren gleichermaßen benutzt
 
 \begin{figure}[hptb]
  \centering
- \includegraphics[width=0.6\textwidth]{verkehrsfluss-spurnutzung}
+ \includegraphics[width=0.7\textwidth]{verkehrsfluss-spurnutzung}
  \caption[Verkehrsfluss und Spurnutzung als Funktion der Verkehrsdichte]{Verkehrsfluss und Spurnutzung als Funktion der Verkehrsdichte, aus \cite{multi-lane}}
  \label{figure:verkehrsfluss-spurnutzung}
 \end{figure}
 
+\noindent
 Ein weiteres Resultat der Simulation ist eine mehrfache Umkehr der Nutzung der Fahrspuren abhängig von der Verkehrsdichte, wenn andere Parameter konstant gehalten werden, siehe \cref{figure:verkehrsfluss}.
 
 \begin{figure}[hptb]
  \centering
- \includegraphics[width=0.6\textwidth]{verkehrsfluss}
+ \includegraphics[width=0.7\textwidth]{verkehrsfluss}
  \caption[Verkehrsfluss als Funktion der durchschnittlichen Verkehrsdichte]{Verkehrsfluss auf den Fahrspuren als Funktion der durchschnittlichen Verkehrsdichte, aus \cite{multi-lane}}
  \label{figure:verkehrsfluss}
 \end{figure}
 
+\noindent
 Die Festlegung einer Wahrscheinlichkeit für das Zurückwechseln von der linken auf die rechte Fahrspur führte zu einer unterschiedlichen Spurwechselfrequenz, siehe \cref{figure:spurwechselfrequenz}.
 
 \begin{figure}[hptb]
  \centering
- \includegraphics[width=0.6\textwidth]{spurwechselfrequenz}
+ \includegraphics[width=0.7\textwidth]{spurwechselfrequenz}
  \caption[Spurwechselfrequenz als Funktion der Verkehrsdichte]{Spurwechselfrequenz als Funktion der Verkehrsdichte für verschiedene Spurwechselwahrscheinlichkeiten, aus \cite{multi-lane}}
  \label{figure:spurwechselfrequenz}
 \end{figure}
 
 \pagebreak
-In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein weiterer Ansatz entwickelt.
+In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Ansatz für die Simulation von Spurwechseln entwickelt.
 Auch hier wird eine Grid-Umgebung verwendet.
-Im Gegensatz zur ursprünglichen Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$ berechnet, da seine Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt.
+Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$ berechnet, da seine Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt.
 Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
 
 \begin{figure}[hptb]
  \centering
- \includegraphics[width=0.6\textwidth]{social-forces}
+ \includegraphics[width=0.7\textwidth]{social-forces}
  \caption[\enquote{Social Forces} für Grid-Zellen]{Vorschlag der \enquote{Social Forces} für Grid-Zellen, aus \cite{dat-ba}}
  \label{figure:social-forces}
 \end{figure}
 
+\noindent
 Die letztendliche Auswahl der Zielzelle wird mittels \enquote{Fitness-proportionate Selection} durchgeführt.
 Entgegen des Zwangs zum Ausscheren und einer fest vorgegebenen Wahrscheinlichkeit wird eine stochastische Simulationsmöglichkeit der Neigung zum Spurwechsel aufgezeigt.
