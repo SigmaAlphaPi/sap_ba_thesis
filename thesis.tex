@@ -1,0 +1,56 @@
+\documentclass{tucplain}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage[capitalise, noabbrev]{cleveref}
+\usepackage[nolist]{acronym}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{csquotes, titling}
+
+
+\usetikzlibrary{arrows}
+\graphicspath{{images/}}
+\bibliographystyle{alpha}
+\newgeometry{left=2cm,right=3cm,top=0.5cm,bottom=0.5cm,includeheadfoot}
+
+
+\newcommand*{\sa}[1]{\todo[color=yellow]{\footnotesize\textbf{@Sven:} #1}}
+\newcommand*{\pk}[1]{\todo[color=green]{\footnotesize\textbf{@Phil:} #1}}
+
+\crefname{figure}{Abbildung}{Abbildungen}
+\crefname{section}{Kapitel}{Kapitel}
+
+\setlength{\parskip}{0.5em}
+
+\begin{acronym}
+    \acro{NaSch-Modell}{Nagel-Schreckenberg-Modell}
+    \acro{MAS}{Multi-Agenten System}
+    \acro{MASSIM}{Multi-Agenten Simulation}
+\end{acronym}
+
+
+\title{\textbf{Empirischer Vergleich des Multi-Lane-Nagel-Schreckenberg-Fahrzeugfolgemodells mit einem heuristisch basierten Ansatz}}
+\author{Sven Albert-Pedersen}
+\date{\today}
+
+
+\begin{document}
+    % wir nutzen nicht \ref sondern \cref für Referenzen, hier muss man aber etwas tricksen
+    % https://ctan.org/pkg/cleveref
+    \let\ref\cref
+    
+    
+    %\listoftodos
+    
+    \include{tex/thesis/00-title}
+    \include{tex/thesis/01-einleitung}
+    \input{tex/thesis/02-problemstellung}
+    \include{tex/thesis/03-sota} 
+    \input{tex/thesis/04-researchgap}
+    \include{tex/thesis/05-realisierung}
+    
+    \bibliography{references}
+
+\end{document}
+
