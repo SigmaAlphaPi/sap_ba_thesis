@@ -2,7 +2,28 @@
 \label{sec:sota}
 
 
+Straßenverkehr theoretisch darzustellen ist fächerübergreifend eine große Herausforderung in der Forschung.
+Hier ergeben sich u. a. Aufgaben im Bereich der Mathematik (Routenplanung z. B. durch graphentheoretische Ansätze), Psychologie (Erforschung menschlichen Verhaltens) und nicht zuletzt Informatik (Simulationen).
 
+Die Simulation von Fahrverhalten ist aufgrund des unsicheren Faktors Mensch, der als Haupt"-entscheider nur durch Wahlmöglichkeiten mit vorgegebenen unterschiedlich hohen Wahrscheinlichkeiten modelliert werden kann, ein Bereich in dem seit mehr als sechs Jahrzehnten geforscht wird.
+
+Verschiedene Ansätze, Verkehrsflüsse zu simulieren, wurden in dieser Zeit verfolgt - Strö"-mungs"-dy"-na"-mik, boolsche Simulation, Zellularautomaten. Letztere werden seit etwa 25 Jahren für die Verkehrssimulation verwendet.
+
+Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahrzeugführers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss realistisch darstellte \cite{na-sch}.
+Erstmals konnte das Entstehen von \enquote{Stau aus dem Nichts} und das Vorhandensein von \enquote{Stauwellen}, die sich rückwärts durch einen solchen Stau bewegen, simulatorisch dargestellt werden.
+
+Im Jahr 1995 gelang es mit Hilfe des \enquote{Nagel-Schreckenberg-Modells}, so der heute verwandte und bekannte Name, das gesamte deutsche Autobahnnetz in Echtzeit zu simulieren. 
+%Ebenso wird das Modell im Rahmen des Programmes TRANSIMS zur Simulation des Straßenverkehrs der Schweiz eingesetzt. (vgl. \cite{spahn-da})
+1996 folgte eine Ausdehnung des Modells auf Mehrspurigkeit \cite{multi-lane}. 
+
+Was dieser Modellierung fehlt, ist die Berücksichtigung von irregulären Verhaltensweisen - Unsicherheiten (z. B. Fehleinschätzungen oder Ängste), Ablenkungen (z. B. Suche im Handschuhfach, Telefonieren oder die fallen gelassene Zigarette). 
+
+Zudem ist die Bremswirkung \enquote{überdimensioniert}. 
+Vollbremsungen aus Höchstgeschwindigkeit sind auf kürzester Distanz möglich.
+Eine weitere fehlende Komponente der Realität ergibt sich daraus.
+Denn auch Unfälle gehören zum Verkehrsgeschehen.
+
+Bisher gibt es keine Möglichkeit, Unfälle simulatorisch so zu provozieren, dass diese mit einer gewissen Zufälligkeit, bzw. überhaupt auftreten, da die Flussmodelle auf Kollisionsfreiheit ausgerichtet sind.
 
 
 
