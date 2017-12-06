@@ -1,34 +1,40 @@
 \section{Vorläufige Realisierung}
 \label{sec:realisierung}
 
-%.\sa{hier vermischst Du \cref{sec:sota} mit \cref{sec:realisierung}, hier geht es darum, wi Du konkret arbeiten willst um die Sachen unter \cref{sec:researchgap} zu beweisen oder zu belegen, evtl macht es Sinn diese Punkte mit in \cref{sec:sota} zu ziehen, Du kannst dann einfach, wenn Du es brauchst Verweise setzen}
 
-\noindent
-Die in \cite{dat-ba} vorgeschlagene Struktur ist zu implementieren und in vergleichbarer Umgebung simulatorisch zu testen. 
-Dabei sind die folgenden Größen zu erheben und entsprechend statistisch auszuwerten: 
 
-\begin{itemize}
-\item Verkehrsdichte
-\item Verkehrsfluss
-\item Spurwechselfrequenz
-\item Spurnutzung links/rechts
-\end{itemize}
 
-Das Testszenario wurde in \cite{na-sch} durch das zu Beginn zufällige Platzieren von Fahrzeugen in einem geschlossenen Kreis mit $L$ Zellen (ähnlich einer Autorennstrecke) simuliert. \\
-Allerdings wurde auch, bei der Simulation einer Fahrbahnverengung, eine Alternative Simulationsmöglichkeit beschrieben. 
-Eine Gridgerade von bis zu 10000 Zellen Länge wurde getestet - Bewegungsrichtung von links nach rechts. 
-Die Fahrzeuge wurden mit $v=0$ in die am weitesten links befindliche Zelle, so diese frei war, gesetzt und die Fahrzeuge in den sechs am weitesten rechts befindlichen Zellen (bei systemweiter $v_{max}=5$) gelöscht. 
-Letzteres Vorgehen sorgte für eine offene Grenze für den abfließenden Verkehr.
 
-Für eine kontinuierliche Simulation ist die zweite Möglichkeit ungeeignet. 
-Auch in \cite{multi-lane} wird von der Nutzung periodischer Randbedingungen gesprochen. 
-Dies lässt darauf schließen, dass, wie in \cite[Abb. 1.5]{peri-rand} für die Umgebung von Pixeln beschrieben, die Fahrzeuge vom \enquote*{Ende} der Gridstrecke am \enquote*{Anfang} wieder eingesetzt wurden und somit der zuerst beschriebene Kreis einsteht.
-Dieses Verhalten ist zu bevorzugen.
 
-Vorteil der geschlossenen Kreisstrecke ist, dass man bei konstanter Fahrzeuganzahl $N$ (bei \cite{multi-lane} waren dies $N = 10^{3}$) durch die Veränderung der Systemgröße eine unterschiedliche Fahrzeugdichte erreicht werden kann. 
-Jeder Dichtewert wurde für $T = 10^{5}$ Zeitschritte simuliert, wobei die erste Hälfte verworfen wurde, um mögliche Störeffekte ausklingen zu lassen. 
-Die generierten Simulationsdaten wurden über $T_{sample} = 300$ Zeitschritte und eine Wegstrecke von 133 Zellen, was etwa 1 km Länge in der realen Welt entspricht, gemittelt, um statistische Schwankungen zu reduzieren.
 
-Ein mögliches Simulationstool ist das \enquote{Traffic Simulation Game}\footnote{\link{https://lightjason.github.io/news/2017-09-workshop/}}. 
-In der Grundkonfiguration erzeugt dieses eine beliebig lange, gerade Straße mit beliebig vielen Fahrspuren. 
+%%.\sa{hier vermischst Du \cref{sec:sota} mit \cref{sec:realisierung}, hier geht es darum, wi Du konkret arbeiten willst um die Sachen unter \cref{sec:researchgap} zu beweisen oder zu belegen, evtl macht es Sinn diese Punkte mit in \cref{sec:sota} zu ziehen, Du kannst dann einfach, wenn Du es brauchst Verweise setzen}
+%
+%\noindent
+%Die in \cite{dat-ba} vorgeschlagene Struktur ist zu implementieren und in vergleichbarer Umgebung simulatorisch zu testen. 
+%Dabei sind die folgenden Größen zu erheben und entsprechend statistisch auszuwerten: 
+%
+%\begin{itemize}
+%\item Verkehrsdichte
+%\item Verkehrsfluss
+%\item Spurwechselfrequenz
+%\item Spurnutzung links/rechts
+%\end{itemize}
+%
+%Das Testszenario wurde in \cite{na-sch} durch das zu Beginn zufällige Platzieren von Fahrzeugen in einem geschlossenen Kreis mit $L$ Zellen (ähnlich einer Autorennstrecke) simuliert. \\
+%Allerdings wurde auch, bei der Simulation einer Fahrbahnverengung, eine Alternative Simulationsmöglichkeit beschrieben. 
+%Eine Gridgerade von bis zu 10000 Zellen Länge wurde getestet - Bewegungsrichtung von links nach rechts. 
+%Die Fahrzeuge wurden mit $v=0$ in die am weitesten links befindliche Zelle, so diese frei war, gesetzt und die Fahrzeuge in den sechs am weitesten rechts befindlichen Zellen (bei systemweiter $v_{max}=5$) gelöscht. 
+%Letzteres Vorgehen sorgte für eine offene Grenze für den abfließenden Verkehr.
+%
+%Für eine kontinuierliche Simulation ist die zweite Möglichkeit ungeeignet. 
+%Auch in \cite{multi-lane} wird von der Nutzung periodischer Randbedingungen gesprochen. 
+%Dies lässt darauf schließen, dass, wie in \cite[Abb. 1.5]{peri-rand} für die Umgebung von Pixeln beschrieben, die Fahrzeuge vom \enquote*{Ende} der Gridstrecke am \enquote*{Anfang} wieder eingesetzt wurden und somit der zuerst beschriebene Kreis einsteht.
+%Dieses Verhalten ist zu bevorzugen.
+%
+%Vorteil der geschlossenen Kreisstrecke ist, dass man bei konstanter Fahrzeuganzahl $N$ (bei \cite{multi-lane} waren dies $N = 10^{3}$) durch die Veränderung der Systemgröße eine unterschiedliche Fahrzeugdichte erreicht werden kann. 
+%Jeder Dichtewert wurde für $T = 10^{5}$ Zeitschritte simuliert, wobei die erste Hälfte verworfen wurde, um mögliche Störeffekte ausklingen zu lassen. 
+%Die generierten Simulationsdaten wurden über $T_{sample} = 300$ Zeitschritte und eine Wegstrecke von 133 Zellen, was etwa 1 km Länge in der realen Welt entspricht, gemittelt, um statistische Schwankungen zu reduzieren.
+%
+%Ein mögliches Simulationstool ist das \enquote{Traffic Simulation Game}\footnote{\link{https://lightjason.github.io/news/2017-09-workshop/}}. 
+%In der Grundkonfiguration erzeugt dieses eine beliebig lange, gerade Straße mit beliebig vielen Fahrspuren. 
 Es ist zu prüfen, ob die Software auf die gewünschte Verhaltensweise angepasst werden kann.
