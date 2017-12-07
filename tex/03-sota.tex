@@ -2,28 +2,66 @@
 \label{sec:sota}
 
 
-Straßenverkehr theoretisch darzustellen ist fächerübergreifend eine große Herausforderung in der Forschung.
+Den Straßenverkehr theoretisch abzubilden, ist fachübergreifend eine große Herausforderung in der Forschung.
 Hier ergeben sich u. a. Aufgaben im Bereich der Mathematik (Routenplanung z. B. durch graphentheoretische Ansätze), Psychologie (Erforschung menschlichen Verhaltens) und nicht zuletzt Informatik (Simulationen).
 
 Die Simulation von Fahrverhalten ist aufgrund des unsicheren Faktors Mensch, der als Haupt"-entscheider nur durch Wahlmöglichkeiten mit vorgegebenen unterschiedlich hohen Wahrscheinlichkeiten modelliert werden kann, ein Bereich in dem seit mehr als sechs Jahrzehnten geforscht wird.
 
-Verschiedene Ansätze, Verkehrsflüsse zu simulieren, wurden in dieser Zeit verfolgt - Strö"-mungs"-dy"-na"-mik, boolsche Simulation, Zellularautomaten. Letztere werden seit etwa 25 Jahren für die Verkehrssimulation verwendet.
+Verschiedene Ansätze, Verkehrsflüsse zu simulieren, die auch unterschiedliche Sichtweisen verfolgen - mikro- makro- und mesoskopisch, wurden in dieser Zeit verfolgt - Strö"-mungs"-dy"-na"-mik, boolsche Simulation, Zellularautomaten. Letztere werden seit etwa 25 Jahren für die Verkehrssimulation verwendet.
 
-Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahrzeugführers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss realistisch darstellte \cite{na-sch}.
+Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahrzeugführers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für Autobahnverkehr realistisch darstellte \cite{na-sch}.
 Erstmals konnte das Entstehen von \enquote{Stau aus dem Nichts} und das Vorhandensein von \enquote{Stauwellen}, die sich rückwärts durch einen solchen Stau bewegen, simulatorisch dargestellt werden.
 
-Im Jahr 1995 gelang es mit Hilfe des \enquote{Nagel-Schreckenberg-Modells}, so der heute verwandte und bekannte Name, das gesamte deutsche Autobahnnetz in Echtzeit zu simulieren. 
+Vereinfacht kann eine Fahrspur einer Straße als Aneinanderreihung vieler Zellen gesehen werden und damit durch den Zellularautomaten abgebildet werden. 
+Dies führt schließlich zu einer gridbasierten Simulationsumgebung. 
+Die Rechenumgebung wurde als eindimensionales Array mit $L$ Zellen definiert. 
+Jede der Zellen kann entweder von einem Fahrzeug belegt oder frei sein. 
+Eine Simulation in dieser Grid-Welt hat den Vorteil, dass die Erkenntnisse auf die reale Welt skaliert werden können. 
+Es wurde eine Zelllänge von 7,5\nolinebreak[4] m angenommen (vgl. \cite[S. 2227]{na-sch}), was ungefähr dem beanspruchten Platz eines Pkw - von Fahrzeugfront zu Fahrzeugfront - in einer Stausituation entspricht (Fahrzeuglänge + Abstand). 
+Jedes Fahrzeug hat eine ganzzahlige Geschwindigkeit zwischen null und $v_{max}$.
+
+%Im Jahr 1995 wurde dann mit Hilfe des \enquote{Nagel-Schreckenberg-Modells}, so der heute verwandte und bekannte Name, das gesamte deutsche Autobahnnetz in Echtzeit simuliert. 
 %Ebenso wird das Modell im Rahmen des Programmes TRANSIMS zur Simulation des Straßenverkehrs der Schweiz eingesetzt. (vgl. \cite{spahn-da})
 1996 folgte eine Ausdehnung des Modells auf Mehrspurigkeit \cite{multi-lane}. 
+Das Originalmodell wurde um Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sichern Spurwechsel ermöglichen, erweitert. 
+Wenn es die festgelegten Sicherheitskriterien zulassen, erfolgt der Spurwechsel auf die linke Spur immer, da dieser nicht an eine Wahrscheinlichkeit geknüpft ist.
+Lediglich um die Überbevölkerung der Überholspur zu vermeiden, wurde eine Wahrscheinlichkeit $p_{l2r}$ für das zurück wechseln eingeführt.
 
-Was dieser Modellierung fehlt, ist die Berücksichtigung von irregulären Verhaltensweisen - Unsicherheiten (z. B. Fehleinschätzungen oder Ängste), Ablenkungen (z. B. Suche im Handschuhfach, Telefonieren oder die fallen gelassene Zigarette). 
+Was dieser Modellierung fehlt, ist die Berücksichtigung irregulärer Verhaltensweisen der Fahrer - Unsicherheiten (z. B. Fehleinschätzungen oder Ängste), Ablenkungen (z. B. Gespräche mit anderen Fahrzeuginsassen, Telefonieren, Suche im Handschuhfach oder nach der fallen gelassenen Zigarette). 
 
 Zudem ist die Bremswirkung \enquote{überdimensioniert}. 
-Vollbremsungen aus Höchstgeschwindigkeit sind auf kürzester Distanz möglich.
-Eine weitere fehlende Komponente der Realität ergibt sich daraus.
-Denn auch Unfälle gehören zum Verkehrsgeschehen.
+Vollbremsungen aus Höchstgeschwindigkeit sind innerhalb kürzester Distanz möglich \cite{acc-free}.
+Daraus ergibt sich eine weitere fehlende Komponente der Realität.
+Denn auch Unfälle gehören zum Verkehrsgeschehen. \\
+Studien zufolge sind drei Viertel der Autofahrer abgelenkt, wenn sie am Steuer sitzen. 
+Jeder zehnte Verkehrsunfall in Deutschland wird durch unaufmerksame Autofahrer verursacht. 
+In Österreich und der Schweiz geht man, aufgrund der Einordnung in eine eigene Kategorie für diese Art Unfälle, von einer Rate von etwa 30\% der Unfälle mit Personenschäden oder gar Toten aus. (vgl. \cite{dvr-studie})
 
-Bisher gibt es keine Möglichkeit, Unfälle simulatorisch so zu provozieren, dass diese mit einer gewissen Zufälligkeit, bzw. überhaupt auftreten, da die Flussmodelle auf Kollisionsfreiheit ausgerichtet sind.
+Laut Statistischem Bundesamt gab es 2016 auf Autobahnen 21193 Unfälle, davon 1435 innerhalb von Baustellen \cite{unf2016}. 
+Bei den etwa 13000 km Autobahn \cite{autob2016} entspricht dies durchschnittlich etwa einem Unfall pro 200 km Strecke pro Tag. 
+In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittswert überschreiten.
+
+Es gibt inzwischen Ansätze, die das mikroskopische Verhalten der Fahrzeugführer aus Realdaten  stochastisch modelliert haben \cite{stoch-carfollow}. 
+In den aggregierten Daten wurde eine Laplace-Verteilung der Beschleunigungswerte erkannt. 
+Das daraus entwickelte Modell wurde getestet. 
+Die Reproduktion der Sicherheitsmaßnahmen\sa{anderen Begriff finden}, wie Zeit bis zur Kollision (TTC, time to collision) und der Bremsrate um einen Unfall zu verhindern (DRAC, deceleration rate to avoid crash) gelang. 
+Allerdings konnte das Fundamentaldiagramm nicht nachgestellt werden.
+
+\cite{multi-fuzzy} integriert den Ansatz der Mehrspurigkeit in einem Multiagenten-Fuzzy-System. 
+Die Spuren werden als Vereinigung mehrerer miteinander kommunizierender einspuriger Zellularautomaten (\enquote{continuous cellular automata}) beschrieben. 
+Diese Kommunikation zwischen den Spuren beschränkt sich auf die Sicherheitskriterien, wenn ein Fahrzeug die Spur wechseln möchte. 
+Intentionen zum Wechsel zwischen den Spuren werden durch fortwährend aktualisierte \enquote{Stresslevel} je Fahrzeug beeinflusst, die Wahrscheinlichkeiten dafür durch einen Bernoulli-Prozess berechnet.
+Dieser Ansatz arbeitet mit Gridzellen und achtet auf Kollisionsfreiheit.
+
+In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Vorschlag für die Simulation von Spurwechseln entwickelt. 
+Das Modell orientiert sich bei den Fahrzeugbewegungen an den Grundlagen des Nagel-Schreckenberg-Modells, vermeidet Unfälle aber in erster Linie durch ausweichen, also Spurwechsel. 
+Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen, wie sie in \cite{na-sch} vorkommen, angewandt und wirken als eine Art \enquote{Anziehungskraft}. 
+Die Kräfte der Zellen %, siehe \cref{figure:social-forces}, 
+werden für jedes Fahrzeug zu jedem Zeitschritt $t$, da dessen Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt, über eine Exponentialfunktion berechnet.
+Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
+Die letztendliche Auswahl der Zielzelle für einen \enquote{Impuls zur Spurwahl} wird mittels \enquote{Fitness-proportionate Selection} durchgeführt.
+Entgegen des Zwangs zum Ausscheren oder einer fest vorgegebenen Wahrscheinlichkeit wird eine stochastische Simulationsmöglichkeit der Neigung zum Spurwechsel aufgezeigt.
+
 
 
 
