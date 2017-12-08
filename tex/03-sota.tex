@@ -23,9 +23,9 @@ Jedes Fahrzeug hat eine ganzzahlige Geschwindigkeit zwischen null und $v_{max}$.
 %Im Jahr 1995 wurde dann mit Hilfe des \enquote{Nagel-Schreckenberg-Modells}, so der heute verwandte und bekannte Name, das gesamte deutsche Autobahnnetz in Echtzeit simuliert. 
 %Ebenso wird das Modell im Rahmen des Programmes TRANSIMS zur Simulation des Straßenverkehrs der Schweiz eingesetzt. (vgl. \cite{spahn-da})
 1996 folgte eine Ausdehnung des Modells auf Mehrspurigkeit \cite{multi-lane}. 
-Das Originalmodell wurde um Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sichern Spurwechsel ermöglichen, erweitert. 
+Das Originalmodell wurde um Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil kollisionsfreien, Spurwechsel ermöglichen, erweitert. 
 Wenn es die festgelegten Sicherheitskriterien zulassen, erfolgt der Spurwechsel auf die linke Spur immer, da dieser nicht an eine Wahrscheinlichkeit geknüpft ist.
-Lediglich um die Überbevölkerung der Überholspur zu vermeiden, wurde eine Wahrscheinlichkeit $p_{l2r}$ für das zurück wechseln eingeführt.
+Lediglich um die Überbevölkerung der Überholspur zu vermeiden, wurde eine Wahrscheinlichkeit $p_{l2r}$ für das zurückwechseln eingeführt.
 
 Was dieser Modellierung fehlt, ist die Berücksichtigung irregulärer Verhaltensweisen der Fahrer - Unsicherheiten (z. B. Fehleinschätzungen oder Ängste), Ablenkungen (z. B. Gespräche mit anderen Fahrzeuginsassen, Telefonieren, Suche im Handschuhfach oder nach der fallen gelassenen Zigarette). 
 
@@ -44,7 +44,7 @@ In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittsw
 Es gibt inzwischen Ansätze, die das mikroskopische Verhalten der Fahrzeugführer aus Realdaten  stochastisch modelliert haben \cite{stoch-carfollow}. 
 In den aggregierten Daten wurde eine Laplace-Verteilung der Beschleunigungswerte erkannt. 
 Das daraus entwickelte Modell wurde getestet. 
-Die Reproduktion der Sicherheitsmaßnahmen\sa{anderen Begriff finden}, wie Zeit bis zur Kollision (TTC, time to collision) und der Bremsrate um einen Unfall zu verhindern (DRAC, deceleration rate to avoid crash) gelang. 
+Die Reproduktion der Sicherheitsparameter, wie Zeit bis zur Kollision (TTC, time to collision) und der Bremsrate um einen Unfall zu verhindern (DRAC, deceleration rate to avoid crash) gelang. 
 Allerdings konnte das Fundamentaldiagramm nicht nachgestellt werden.
 
 \cite{multi-fuzzy} integriert den Ansatz der Mehrspurigkeit in einem Multiagenten-Fuzzy-System. 
@@ -54,7 +54,7 @@ Intentionen zum Wechsel zwischen den Spuren werden durch fortwährend aktualisie
 Dieser Ansatz arbeitet mit Gridzellen und achtet auf Kollisionsfreiheit.
 
 In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Vorschlag für die Simulation von Spurwechseln entwickelt. 
-Das Modell orientiert sich bei den Fahrzeugbewegungen an den Grundlagen des Nagel-Schreckenberg-Modells, vermeidet Unfälle aber in erster Linie durch ausweichen, also Spurwechsel. 
+Das Modell orientiert sich bei den Fahrzeugbewegungen an den Grundlagen des Nagel-Schreckenberg-Modells, vermeidet Unfälle aber in erster Linie nicht durch Abbremsen, sondern durch Ausweichen, also Spurwechsel. 
 Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen, wie sie in \cite{na-sch} vorkommen, angewandt und wirken als eine Art \enquote{Anziehungskraft}. 
 Die Kräfte der Zellen %, siehe \cref{figure:social-forces}, 
 werden für jedes Fahrzeug zu jedem Zeitschritt $t$, da dessen Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt, über eine Exponentialfunktion berechnet.
