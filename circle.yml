@@ -2,45 +2,7 @@ version: 2
 
 jobs:
     build:
-        working_directory: ~/document
-        docker:
-            - image: flashpixx/texlive:latest
-
-
         branches:
             ignore:
+                - master
                 - /dev-.*/
-
-
-        environment:
-            TZ: "/usr/share/zoneinfo/Europe/Berlin"
-
-        steps:
-            - restore_cache:
-                keys:
-                    - TeX-Userdata-2017-12-10-18-00
-            - run:
-                name: TUC Draft Installation
-                command: if [ ! -d /root/texmf/tex/latex/tuc ]; then git clone https://mecdev.rz-housing.tu-clausthal.de/gitlab/tuc/tex-vorlagen.git /root/texmf/tex/latex/tuc; mkdir -p /root/texmf/bibtex/bst; cd /root/texmf/bibtex/bst; ln -s ../../tex/latex/tuc/externalpublication/llcns/splncs03.bst .; ln -s ../../tex/latex/mec/tuc/externalpublication/aamas/ACM-Reference-Format.bst .; fi   
-            - save_cache:
-                key: TeX-Userdata-2017-12-10-18-00
-                paths:
-                    - /root/texmf
-            - checkout
-            - run:
-                name: Git Clean
-                command: git clean -xdf
-            - run:
-                name: Git Remove Unused Branches
-                command: git fetch -p
-            - run:
-                name: Git Prune
-                command: git gc --prune=now
-            - run:
-                name: Build Document
-                command: latexmk
-            - store_artifacts:
-                path: expose.pdf
-            - run:
-                name: Github Release
-                command: if [ ! -z "$GITHUBTOKEN" ]; then go get -u github.com/tcnksm/ghr; ghr -t $GITHUBTOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -c $CIRCLE_SHA1 -b "$(git log -1 $CIRCLE_SHA1 --pretty=format:%s)" $CIRCLE_BRANCH-v$((CIRCLE_BUILD_NUM / 1000)).$((CIRCLE_BUILD_NUM / 100 % 10)).$((CIRCLE_BUILD_NUM % 100)) expose.pdf; fi

@@ -1,1 +1,1 @@
-# Bachelorthesis - Exposé
+# Bachelorthesis
