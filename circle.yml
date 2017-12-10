@@ -2,53 +2,30 @@ version: 2
 
 jobs:
     build:
-        machine:
-            image: circleci/classic:latest
+        working_directory: ~/document
+        docker:
+            - image: flashpixx/texlive:latest
 
 
         branches:
             ignore:
                 - /dev-.*/
 
-        shell: /bin/bash
-
 
         environment:
             TZ: "/usr/share/zoneinfo/Europe/Berlin"
 
-            # install current texlive and run update (installation scheme: full, medium, small, basic, minimal)
-            TEXINSTALL: "selected_scheme scheme-full\\nTEXDIR /home/circleci/.bin/texlive/\\nTEXMFLOCAL /home/circleci/.bin/texlive/texmf-local\\nTEXMFSYSCONFIG /home/circleci/.bin/texlive/texmf-config\\nTEXMFSYSVAR /home/circleci/.bin//texlive/texmf-var\\nTEXMFHOME ~/texmf\nTEXMFCONFIG ~/.texlive/texmf-config\\nTEXMFVAR ~/.texlive/texmf-var\\nbinary_x86_64-linux 1\\ninstopt_adjustpath 1\\ninstopt_adjustrepo 1\\ninstopt_letter 1\\ninstopt_portable 0\\ninstopt_write18_restricted 1\\ntlpdbopt_autobackup 1\\ntlpdbopt_backupdir tlpkg/backups\\ntlpdbopt_create_formats 1\\ntlpdbopt_desktop_integration 0\\ntlpdbopt_file_assocs 1\\ntlpdbopt_generate_updmap 0\\ntlpdbopt_install_docfiles 0\\ntlpdbopt_install_srcfiles 0\\ntlpdbopt_post_code 1\\ntlpdbopt_sys_bin /tmp\\ntlpdbopt_sys_info /tmp\\ntlpdbopt_sys_man /tmp\\ntlpdbopt_w32_multi_user 1\\n"
-
-
         steps:
             - restore_cache:
                 keys:
-                    - TeX-Installation-2017-10-31-16-00
-                    - TeX-Userdata-2017-10-31-16-00
-            - run: 
-                name: Expand Path
-                command: echo 'export PATH=$PATH:~/.bin/texlive/bin/x86_64-linux' >> $BASH_ENV        
-            - run:
-                name: Download LaTeX Installation
-                command: if [ ! -d ~/.bin/texlive ]; then mkdir -p /tmp/tex && curl -L http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz | tar xz --strip 1 -C /tmp/tex; fi
-            - run:
-                name: LaTeX Installation
-                command: if [ ! -d ~/.bin/texlive ]; then echo -e "$TEXINSTALL" > /tmp/texinstall.profile; /tmp/tex/install-tl -profile /tmp/texinstall.profile; fi
+                    - TeX-Userdata-2017-12-10-18-00
             - run:
                 name: TUC Draft Installation
-                command: if [ ! -d ~/texmf ]; then git clone https://mecdev.rz-housing.tu-clausthal.de/gitlab/tuc/tex-vorlagen.git ~/texmf/tex/latex/tuc; mkdir -p ~/texmf/bibtex/bst; cd ~/texmf/bibtex/bst; ln -s ../../tex/latex/tuc/externalpublication/llcns/splncs03.bst .; ln -s ../../tex/latex/mec/tuc/externalpublication/aamas/ACM-Reference-Format.bst .; fi   
-            - run:
-                name: LaTeX Update
-                command: tlmgr update --self --all --reinstall-forcibly-removed                
+                command: if [ ! -d /root/texmf/tex/latex/tuc ]; then git clone https://mecdev.rz-housing.tu-clausthal.de/gitlab/tuc/tex-vorlagen.git /root/texmf/tex/latex/tuc; mkdir -p /root/texmf/bibtex/bst; cd /root/texmf/bibtex/bst; ln -s ../../tex/latex/tuc/externalpublication/llcns/splncs03.bst .; ln -s ../../tex/latex/mec/tuc/externalpublication/aamas/ACM-Reference-Format.bst .; fi   
             - save_cache:
-                key: TeX-Installation-2017-10-31-16-00
+                key: TeX-Userdata-2017-12-10-18-00
                 paths:
-                    - ~/.bin/texlive
-            - save_cache:
-                key: TeX-Userdata-2017-10-31-16-00
-                paths:
-                    - ~/texmf
-                    - ~/.texlive
+                    - /root/texmf
             - checkout
             - run:
                 name: Git Clean
@@ -61,9 +38,9 @@ jobs:
                 command: git gc --prune=now
             - run:
                 name: Build Document
-                command: latexmk -f expose.tex
+                command: latexmk
             - store_artifacts:
                 path: expose.pdf
             - run:
                 name: Github Release
-                command: if [ ! -z "$GITHUBTOKEN" ]; then go get -u github.com/tcnksm/ghr; ghr -t $GITHUBTOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -c $CIRCLE_SHA1 -b "$(git log -1 $CIRCLE_SHA1 --pretty=format:%s)" v$((CIRCLE_BUILD_NUM / 1000)).$((CIRCLE_BUILD_NUM / 100 % 10)).$((CIRCLE_BUILD_NUM % 100)) expose.pdf; fi    
+                command: if [ ! -z "$GITHUBTOKEN" ]; then go get -u github.com/tcnksm/ghr; ghr -t $GITHUBTOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -c $CIRCLE_SHA1 -b "$(git log -1 $CIRCLE_SHA1 --pretty=format:%s)" v$((CIRCLE_BUILD_NUM / 1000)).$((CIRCLE_BUILD_NUM / 100 % 10)).$((CIRCLE_BUILD_NUM % 100)) expose.pdf; fi
