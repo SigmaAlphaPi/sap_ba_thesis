@@ -9,6 +9,7 @@ jobs:
         branches:
             ignore:
                 - master
+                - expose
                 - thesis
                 - /dev-.*/
 
