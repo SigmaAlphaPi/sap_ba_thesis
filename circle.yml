@@ -43,4 +43,4 @@ jobs:
                 path: expose.pdf
             - run:
                 name: Github Release
-                command: if [ ! -z "$GITHUBTOKEN" ]; then go get -u github.com/tcnksm/ghr; ghr -t $GITHUBTOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -c $CIRCLE_SHA1 -b "$(git log -1 $CIRCLE_SHA1 --pretty=format:%s)" v$((CIRCLE_BUILD_NUM / 1000)).$((CIRCLE_BUILD_NUM / 100 % 10)).$((CIRCLE_BUILD_NUM % 100)) expose.pdf; fi
+                command: if [ ! -z "$GITHUBTOKEN" ]; then go get -u github.com/tcnksm/ghr; ghr -t $GITHUBTOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -c $CIRCLE_SHA1 -b "$(git log -1 $CIRCLE_SHA1 --pretty=format:%s)" $CIRCLE_BRANCH-v$((CIRCLE_BUILD_NUM / 1000)).$((CIRCLE_BUILD_NUM / 100 % 10)).$((CIRCLE_BUILD_NUM % 100)) expose.pdf; fi
