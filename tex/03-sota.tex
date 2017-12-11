@@ -5,31 +5,150 @@
 Den Straßenverkehr theoretisch abzubilden, ist fachübergreifend eine große Herausforderung in der Forschung.
 Hier ergeben sich u. a. Aufgaben im Bereich der Mathematik (Routenplanung z. B. durch graphentheoretische Ansätze), Psychologie (Erforschung menschlichen Verhaltens) und nicht zuletzt Informatik (Simulationen).
 
-Die Simulation von Fahrverhalten ist aufgrund des unsicheren Faktors Mensch, der als Haupt"-entscheider nur durch Wahlmöglichkeiten mit vorgegebenen unterschiedlich hohen Wahrscheinlichkeiten modelliert werden kann, ein Bereich in dem seit mehr als sechs Jahrzehnten geforscht wird.
+Die Simulation von Fahrverhalten ist aufgrund des unsicheren Faktors Mensch, der als Haupt"-entscheider nur durch Wahlmöglichkeiten mit vorgegebenen unterschiedlich hohen Wahrscheinlichkeiten modelliert werden kann, ein Bereich in dem seit den 1930er Jahren geforscht wird.
 
-Verschiedene Ansätze, Verkehrsflüsse zu simulieren, die auch unterschiedliche Sichtweisen verfolgen - mikro- makro- und mesoskopisch, wurden in dieser Zeit verfolgt - Strö"-mungs"-dy"-na"-mik, boolsche Simulation, Zellularautomaten. Letztere werden seit etwa 25 Jahren für die Verkehrssimulation verwendet.
+\cite{genealogy} gibt einen umfassenden Überblick über die verschiedenen Ansätze (siehe \cref{figure:family-tree}), die seit den ursprünglichen Annahmen der \enquote{fundamental relation} von Bruce D. Greenshields (1934/35), dass es einen Zusammenhang zwischen dem Abstand zwischen Fahrzeugen ($s$, genauer zweier Fahrzeugfronten) und deren Geschwindigkeit ($v$) geben muss, verfolgt wurden. 
+\begin{figure}[hptb]
+ \centering
+ \includegraphics[width=0.9\textwidth]{family-tree}
+ \caption[Überblick über die Entwicklung der Verkehrsflussmodelle]
+ 		{\enquote{Stammbaum} der Verkehrsflussmodelle, aus \cite{genealogy}}
+ \label{figure:family-tree}
+\end{figure}
+\noindent
+Die Fundamentalrelation, heute bekannt als Fundamentaldiagramm, kann aber auch mit Hilfe anderer Variablen, wie z. B. der Verkehrsdichte ($\rho$, der durchschnittlichen Anzahl von Fahrzeugen auf einer bestimmten Strecke) und dem Verkehrsfluss ($q$, der durchschnittlichen Anzahl von Fahrzeugen pro Zeiteinheit) wiedergegeben werden, siehe \cref{figure:fundamental-relations}. 
+\begin{figure}[hptb]
+ \centering
+ \includegraphics[width=0.9\textwidth]{fundamental-relations}
+ \caption[Fundamentalrelationen in verschiedenen Ebenen]
+ 		{Fundamentalrelationen in verschiedenen Ebenen, aus \cite{genealogy}}
+ \label{figure:fundamental-relations}
+\end{figure}
 
-Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahrzeugführers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für Autobahnverkehr realistisch darstellte \cite{na-sch}.
+Verschiedene Ansätze, Verkehrsflüsse zu simulieren, die auch unterschiedliche Sichtweisen auf Verkehr und Verkehrsteilnehmer verfolgen, %- mikro- makro- und mesoskopisch, 
+wurden und werden verfolgt, vgl. \cite{dingding}.
+\begin{itemize}
+	\item \textit{Mikroskopische Modelle} simulieren einzelne Fahrzeug-Fahrer-Einheiten, basierend auf dem Fahrerverhalten. Zwei Modellierungsansätze können hier unterschieden werden: das Fahrzeugfolgemodell (\enquote{car-following model}) und das Zellularautomatenmodell. Zu letzterem später mehr.
+	\item \textit{Makroskopische Modelle}  konzentrieren sich auf Charakteristiken des Verkehrsflusses, wie mittlere Geschwindigkeit (\enquote{average velocity}), Verkehrsdichte, -fluss und Durchschnittsgeschwindigkeit des Verkehrsstromes (\enquote{mean speed of a traffic stream}).
+	\item \textit{Mesoskopische Modelle} kombinieren die beiden vorgenannten Modelle, simulieren die Fahrzeuge einzeln, nutzen aber die makroskopische Sicht, um deren Aktivitäten und Interaktionen zu beschreiben. Ein klassischer Vertreter ist das gaskinetische Modell.
+\end{itemize}
+
+
+
+\subsection*{Zellularautomaten}
+\addcontentsline{toc}{subsection}{Zellularautomaten}
+\label{sec:ca}
+
+Zellularautomaten werden seit etwa 25-30 Jahren für die Verkehrssimulation verwendet.
+
+\begin{quote}
+Ein zellulärer Automat ist eine regelmäßige Annordnung von Zellen. Jede Zelle kann eine endliche Zahl von Werten / Zuständen annehmen und hat eine  begrenzte Zahl von Nachbarzellen, die sie beeinflussen können. Das Muster des gesamten zellulären Automaten ändert sich in einzelnen Schritten, die durch eine Reihe von Übergangsregeln bestimmt werden, die für alle Zellen gelten. (aus \cite{cell-autom})
+\end{quote} 
+
+\noindent
+Vereinfacht kann eine Fahrspur einer Straße als Aneinanderreihung vieler Zellen gesehen werden(siehe \cref{figure:grid-umgebung}) und damit durch den Zellularautomaten abgebildet werden. 
+\begin{figure}[hptb]
+ \centering
+ \includegraphics[width=0.9\textwidth]{grid-umgebung}
+ \caption[Beispiel für eine Griddarstellung einer Straße]
+ 		{symbolische Griddarstellung einer Straße mit zwei Fahrspuren mit Fahrzeugen, aus \cite{multi-lane}}
+ \label{figure:grid-umgebung}
+\end{figure} \sa{einspurig croppen, obere Zeile und Richtungspfeil belassen}
+Dies führt schließlich zu einer gridbasierten Simulationsumgebung. 
+
+
+
+\subsubsection*{Das Nagel-Schreckenberg-Modell}
+\addcontentsline{toc}{subsubsection}{Das Nagel-Schreckenberg-Modell}
+\label{sec:na-sch}
+
+Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahrzeugführers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für Autobahnverkehr realistisch darstellte. 
+Jedes Fahrzeug durchläuft in jedem Zeitschritt die folgenden Übergangsregeln, vgl. \cite{na-sch}. 
+
+\begin{enumerate}
+	\item \textit{Beschleunigung}: Solange ein Fahrzeug nicht seine max. Geschwindigkeit $v_{max}$ (Zellen/""Zeitschritt) erreicht hat und ein vorausfahrendes Fahrzeug weit genug entfernt ist, erhöht es die Geschwindigkeit um $1$, $v \rightarrow v+1$;
+	\item \textit{Abbremsen}: Hat ein Fahrzeug ein anderes Fahrzeug $j$ Zellen vor sich, dann reduziert es die Geschwindigkeit auf $j-1$, $v \rightarrow j-1$;
+	\item Zufallsgröße, auch \textit{\enquote*{Trödelwahrscheinlichkeit}}: Mit einer Wahrscheinlichkeit $p$ wird die Geschwindigkeit ($v > 0$) eines Fahrzeuges um $1$ reduziert, $v \rightarrow v-1$;
+	\item \textit{Fahrzeugbewegung}: Jedes Fahrzeug wird um $v$ Zellen nach vorn gesetzt.
+\end{enumerate}
+
+\noindent
 Erstmals konnte das Entstehen von \enquote{Stau aus dem Nichts} und das Vorhandensein von \enquote{Stauwellen}, die sich rückwärts durch einen solchen Stau bewegen, simulatorisch dargestellt werden.
 
-Vereinfacht kann eine Fahrspur einer Straße als Aneinanderreihung vieler Zellen gesehen werden und damit durch den Zellularautomaten abgebildet werden. 
-Dies führt schließlich zu einer gridbasierten Simulationsumgebung. 
-Die Rechenumgebung wurde als eindimensionales Array mit $L$ Zellen definiert. 
+Die Rechenumgebung wurde als eindimensionales Array mit $L$ Zellen definiert, $L$ ist dabei eine ganze Zahl. 
 Jede der Zellen kann entweder von einem Fahrzeug belegt oder frei sein. 
 Eine Simulation in dieser Grid-Welt hat den Vorteil, dass die Erkenntnisse auf die reale Welt skaliert werden können. 
 Es wurde eine Zelllänge von 7,5\nolinebreak[4] m angenommen (vgl. \cite[S. 2227]{na-sch}), was ungefähr dem beanspruchten Platz eines Pkw - von Fahrzeugfront zu Fahrzeugfront - in einer Stausituation entspricht (Fahrzeuglänge + Abstand). 
 Jedes Fahrzeug hat eine ganzzahlige Geschwindigkeit zwischen null und $v_{max}$.
 
-%Im Jahr 1995 wurde dann mit Hilfe des \enquote{Nagel-Schreckenberg-Modells}, so der heute verwandte und bekannte Name, das gesamte deutsche Autobahnnetz in Echtzeit simuliert. 
-%Ebenso wird das Modell im Rahmen des Programmes TRANSIMS zur Simulation des Straßenverkehrs der Schweiz eingesetzt. (vgl. \cite{spahn-da})
-1996 folgte eine Ausdehnung des Modells auf Mehrspurigkeit \cite{multi-lane}. 
-Das Originalmodell wurde um Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil kollisionsfreien, Spurwechsel ermöglichen, erweitert. 
-Wenn es die festgelegten Sicherheitskriterien zulassen, erfolgt der Spurwechsel auf die linke Spur immer, da dieser nicht an eine Wahrscheinlichkeit geknüpft ist.
+\begin{table}[ht]
+\begin{center}
+\setlength{\tabcolsep}{0.5em} % for the horizontal padding
+{\renewcommand{\arraystretch}{1.2}% for the vertical padding
+\begin{tabular}{| c | c | c |}
+\hline 
+$v^{sim}$ in $\frac{\text{Zellen}}{\text{Zeitschritt}}$ & $\widehat{=}$ $v^{real}$ in $\frac{m}{s}$ & $=$ in $\frac{km}{h}$ \\ \hline 
+$1$ & 7,5 & 27 \\ \hline
+$2$ & 15 & 54 \\ \hline
+$3$ & 22,5 & 81 \\ \hline
+$4$ & 30 & 108 \\ \hline
+$5$ & 37,5 & 135 \\ \hline
+$6$ & 45 & 162 \\ \hline
+\end{tabular}
+}
+\caption{Umrechnung Geschwindigkeiten Gridwelt $\rightarrow$ reale Welt}
+\end{center}
+\label{tab:umrechnung-zelle-kmh}
+\end{table}
+
+Zu Beginn eines Simulationslaufes wurden $N$ Fahrzeuge zufällig auf die $L$ Zellen verteilt.
+Dies führte dazu, dass über den Durchlauf hinweg eine konstante Fahrzeugdichte $\rho$ im System garantiert werden konnte:
+\begin{equation}
+\rho = \dfrac{N}{L} = \dfrac{\text{Anzahl der Fahrzeuge im System}}{\text{Anzahl der Zellen des Systems}}
+\nonumber
+\end{equation}
+
+\noindent
+Die Simulation erfolgte unter Nutzung periodischer Randbedingungen. 
+Wie in \cite[Abb. 1.5]{peri-rand} für die Umgebung von Pixeln beschrieben, werden die Fahrzeuge somit vom \enquote*{Ende} der Gridstrecke am \enquote*{Anfang} wieder eingesetzt. 
+Damit einstand die Möglichkeit einer kontinuierlich arbeitenden Simulationsumgebung, siehe \cref{figure:traffic-simulation}.
+\begin{figure}[hptb]
+ \centering
+ \includegraphics[width=0.75\textwidth]{traffic-simulation}
+ \caption[Darstellung des Verkehrs in einem geschlossenen System]
+ 		{Symbolbild: Verkehr in einem Kreis (geschlossenes System), Screenshot \url{http://traffic-simulation.de}}
+ \label{figure:traffic-simulation}
+\end{figure} 
+
+
+
+\subsubsection*{Erweiterung auf Mehrspurigkeit}
+\addcontentsline{toc}{subsubsection}{Erweiterung auf Mehrspurigkeit}
+\label{sec:multi-lane}
+
+Um Verkehr auf mehrspurigen Fahrbahnen zu simulieren, war das Originalmodell nicht geeignet. 
+1996 folgte deswegen eine Ausdehnung auf Mehrspurigkeit \cite{multi-lane} - zwei Spuren. 
+Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil kollisionsfreien, und nicht behindernden Spurwechsel ermöglichen, wurden hinzugefügt. Die Regeln 1-3 wurden übernommen. Nach Simulationsläufen, die unerwünschtes Verhalten zeigten, waren die finalen Regeln wie folgt:
+
+\textit{Hinweis:} $\Delta x$ $\widehat{=}$ dem Abstand zum vorausfahrenden Fahrzeug, die Indizes $b$ (\enquote*{behind} - für rückwärtigen Verkehr) und $o$ (\enquote*{other} - für Verkehr auf der Spur auf die gewechselt werden soll) können auch kombiniert werden. 
+
+\begin{itemize}
+	\item \textit{Sicherheitsbedingung}: die Geschwindigkeit des Fahrzeugs auf der Spur auf die gewechselt werden soll, darf nicht größer als der Abstand des Fahrzeugs sein (keine Behinderung des Nachfolgeverkehrs), $v^{o,b} \leq \Delta x^{o,b}-1$;
+	\item \textit{Intention zum Spurwechsel}: Fahrzeug kann nicht so schnell fahren, wie es möchte, $v_{max} > \Delta x-1$ \\
+	UND\\
+	die andere Spur ist nicht schlechter als die aktuelle Spur, $\Delta x^{o} \geq \Delta x$
+	\item \textit{nach dem Spurwechsel}: diese Regeln werden mit einer gewissen Wahrscheinlichkeit $p_{l2r}$ (\enquote{Zurückwechselwahrscheinlichkeit}) ausgeführt, \\
+	ausreichend großer Abstand zum hinteren Fahrzeug auf der rechten Spur, $v^{o,b}_{max} \leq \Delta x^{o,b}-1$ \\
+	UND \\
+	ausreichend Platz auf der rechten Spur, $v \leq \Delta x^{o}-1$
+\end{itemize}
+
+Wenn es die festgelegten Kriterien zulassen, erfolgt der Spurwechsel auf die linke Spur immer, da dieser nicht an eine Wahrscheinlichkeit geknüpft ist.
 Lediglich um die Überbevölkerung der Überholspur zu vermeiden, wurde eine Wahrscheinlichkeit $p_{l2r}$ für das zurückwechseln eingeführt.
 
 Was dieser Modellierung fehlt, ist die Berücksichtigung irregulärer Verhaltensweisen der Fahrer - Unsicherheiten (z. B. Fehleinschätzungen oder Ängste), Ablenkungen (z. B. Gespräche mit anderen Fahrzeuginsassen, Telefonieren, Suche im Handschuhfach oder nach der fallen gelassenen Zigarette). 
 
-Zudem ist die Bremswirkung \enquote{überdimensioniert}. 
+Zusätzlich ist die Bremswirkung, wie auch im ursprünglichen Nagel-Schreckenberg-Modell, \enquote{über\-di\-men\-sio\-niert}. 
 Vollbremsungen aus Höchstgeschwindigkeit sind innerhalb kürzester Distanz möglich \cite{acc-free}.
 Daraus ergibt sich eine weitere fehlende Komponente der Realität.
 Denn auch Unfälle gehören zum Verkehrsgeschehen. \\
@@ -40,6 +159,12 @@ In Österreich und der Schweiz geht man, aufgrund der Einordnung in eine eigene 
 Laut Statistischem Bundesamt gab es 2016 auf Autobahnen 21193 Unfälle, davon 1435 innerhalb von Baustellen \cite{unf2016}. 
 Bei den etwa 13000 km Autobahn \cite{autob2016} entspricht dies durchschnittlich etwa einem Unfall pro 200 km Strecke pro Tag. 
 In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittswert überschreiten.
+
+
+
+\subsubsection*{Stochastische Ansätze}
+\addcontentsline{toc}{subsubsection}{Stochastische Ansätze}
+\label{sec:stochastic-approaches}
 
 Es gibt inzwischen Ansätze, die das mikroskopische Verhalten der Fahrzeugführer aus Realdaten  stochastisch modelliert haben \cite{stoch-carfollow}. 
 In den aggregierten Daten wurde eine Laplace-Verteilung der Beschleunigungswerte erkannt. 
@@ -53,11 +178,35 @@ Diese Kommunikation zwischen den Spuren beschränkt sich auf die Sicherheitskrit
 Intentionen zum Wechsel zwischen den Spuren werden durch fortwährend aktualisierte \enquote{Stresslevel} je Fahrzeug beeinflusst, die Wahrscheinlichkeiten dafür durch einen Bernoulli-Prozess berechnet.
 Dieser Ansatz arbeitet mit Gridzellen und achtet auf Kollisionsfreiheit.
 
+
+
+\subsubsection*{Das Social-Force-Vehicle-Modell}
+\addcontentsline{toc}{subsubsection}{Das Social-Force-Vehicle-Modell}
+\label{sec:social-force-vm}
+
 In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Vorschlag für die Simulation von Spurwechseln entwickelt. 
 Das Modell orientiert sich bei den Fahrzeugbewegungen an den Grundlagen des Nagel-Schreckenberg-Modells, vermeidet Unfälle aber in erster Linie nicht durch Abbremsen, sondern durch Ausweichen, also Spurwechsel. 
-Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen, wie sie in \cite{na-sch} vorkommen, angewandt und wirken als eine Art \enquote{Anziehungskraft}. 
-Die Kräfte der Zellen %, siehe \cref{figure:social-forces}, 
-werden für jedes Fahrzeug zu jedem Zeitschritt $t$, da dessen Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt, über eine Exponentialfunktion berechnet.
+
+Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen, die in \cref{sec:na-sch} beschrieben wurden, angewandt und wirken als eine Art \enquote{Anziehungskraft}. 
+\begin{figure}[hptb]
+ \centering
+ \includegraphics[width=0.7\textwidth]{social-forces}
+ \caption[\enquote{Social Forces} für Grid-Zellen]{Vorschlag der \enquote{Social Forces} für Grid-Zellen, aus \cite{dat-ba}}
+ \label{figure:social-forces}
+\end{figure}
+\noindent
+Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$, da dessen Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt, über verschiedene Funktionen berechnet:
+\begin{itemize}
+	\item auf der Hauptspur \\
+	\begin{equation}
+f_{1}(a,v,\lambda) = \e^{\lambda(1-\dfrac{a}{v+xi})}
+f_{2}(a,v,\lambda) = \dfrac{a}{\lambda(v+xi)}
+f_{3} = 0
+\nonumber
+\end{equation}
+	\item $\e^{x}$ auch als $\exp{x}$
+\end{itemize}
+
 Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
 Die letztendliche Auswahl der Zielzelle für einen \enquote{Impuls zur Spurwahl} wird mittels \enquote{Fitness-proportionate Selection} durchgeführt.
 Entgegen des Zwangs zum Ausscheren oder einer fest vorgegebenen Wahrscheinlichkeit wird eine stochastische Simulationsmöglichkeit der Neigung zum Spurwechsel aufgezeigt.
