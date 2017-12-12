@@ -57,10 +57,10 @@ Vereinfacht kann eine Fahrspur einer Straße als Aneinanderreihung vieler Zellen
 Dies führt schließlich zu einer gridbasierten Simulationsumgebung. 
 
 
-
-\subsubsection*{Das Nagel-Schreckenberg-Modell}
-\addcontentsline{toc}{subsubsection}{Das Nagel-Schreckenberg-Modell}
-\label{sec:na-sch}
+\subparagraph{Das Nagel-Schreckenberg-Modell}
+%\subsubsection*{Das Nagel-Schreckenberg-Modell}
+%\addcontentsline{toc}{subsubsection}{Das Nagel-Schreckenberg-Modell}
+%\label{sec:na-sch}
 
 Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahrzeugführers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für Autobahnverkehr realistisch darstellte. 
 Jedes Fahrzeug durchläuft in jedem Zeitschritt die folgenden Übergangsregeln, vgl. \cite{na-sch}. 
@@ -122,9 +122,10 @@ Damit einstand die Möglichkeit einer kontinuierlich arbeitenden Simulationsumge
 
 
 
-\subsubsection*{Erweiterung auf Mehrspurigkeit}
-\addcontentsline{toc}{subsubsection}{Erweiterung auf Mehrspurigkeit}
-\label{sec:multi-lane}
+\subparagraph{Erweiterung auf Mehrspurigkeit}
+%\subsubsection*{Erweiterung auf Mehrspurigkeit}
+%\addcontentsline{toc}{subsubsection}{Erweiterung auf Mehrspurigkeit}
+%\label{sec:multi-lane}
 
 Um Verkehr auf mehrspurigen Fahrbahnen zu simulieren, war das Originalmodell nicht geeignet. 
 1996 folgte deswegen eine Ausdehnung auf Mehrspurigkeit \cite{multi-lane} - zwei Spuren. 
@@ -162,8 +163,8 @@ In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittsw
 
 
 
-\subsubsection*{Stochastische Ansätze}
-\addcontentsline{toc}{subsubsection}{Stochastische Ansätze}
+\subsection*{Stochastische Ansätze}
+\addcontentsline{toc}{subsection}{Stochastische Ansätze}
 \label{sec:stochastic-approaches}
 
 Es gibt inzwischen Ansätze, die das mikroskopische Verhalten der Fahrzeugführer aus Realdaten  stochastisch modelliert haben \cite{stoch-carfollow}. 
@@ -180,35 +181,71 @@ Dieser Ansatz arbeitet mit Gridzellen und achtet auf Kollisionsfreiheit.
 
 
 
-\subsubsection*{Das Social-Force-Vehicle-Modell}
-\addcontentsline{toc}{subsubsection}{Das Social-Force-Vehicle-Modell}
+\subsection*{Das Social-Force-Vehicle-Modell}
+\addcontentsline{toc}{subsection}{Das Social-Force-Vehicle-Modell}
 \label{sec:social-force-vm}
 
 In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Vorschlag für die Simulation von Spurwechseln entwickelt. 
 Das Modell orientiert sich bei den Fahrzeugbewegungen an den Grundlagen des Nagel-Schreckenberg-Modells, vermeidet Unfälle aber in erster Linie nicht durch Abbremsen, sondern durch Ausweichen, also Spurwechsel. 
 
-Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen, die in \cref{sec:na-sch} beschrieben wurden, angewandt und wirken als eine Art \enquote{Anziehungskraft}. 
+Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt, wirken als eine Art \enquote{Anziehungskraft} und liefern bei Auswahl einen Impuls für die Beibehaltung oder Änderung der Fahrspur. 
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.7\textwidth]{social-forces}
- \caption[\enquote{Social Forces} für Grid-Zellen]{Vorschlag der \enquote{Social Forces} für Grid-Zellen, aus \cite{dat-ba}}
+ \caption[\enquote{Social Forces} für Grid-Zellen]{Vorschlag der \enquote{Social Forces} für Grid-Zellen (Fahrzeug auf Normalspur), aus \cite{dat-ba}}
  \label{figure:social-forces}
 \end{figure}
 \noindent
-Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$, da dessen Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt, über verschiedene Funktionen berechnet:
+Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
+
+Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$, da dessen Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt, über verschiedene Funktionen berechnet. Das betrachtete Fahrzeug (Ego) befindet sich:
 \begin{itemize}
-	\item auf der Hauptspur \\
-	\begin{equation}
-f_{1}(a,v,\lambda) = \e^{\lambda(1-\dfrac{a}{v+xi})}
-f_{2}(a,v,\lambda) = \dfrac{a}{\lambda(v+xi)}
-f_{3} = 0
-\nonumber
-\end{equation}
-	\item $\e^{x}$ auch als $\exp{x}$
+	\item auf der Hauptspur 
+	\begin{itemize}
+		\item $f_{1}(a,v,\lambda) = \e^{\lambda(1-\frac{a}{v+\xi})}$ 
+		\item $f_{2}(a,v,\lambda) = \frac{a}{\lambda(v+0,1)}$ 
+		\item $f_{3} = 0$ 
+	\end{itemize}
+Hierbei ist $a$ der Abstand zum vorausfahrenden Fahrzeug, $v$ die relative Geschwindigkeit zwischen Ego und dem vorausfahrenden Fahrzeug und $\lambda$ ein Skalierungsfaktor. $\xi$ ist ein sehr kleiner positiver Wert, der die Durchführbarkeit der Division im Falle von $v=0$ sicherstellen soll. Für $f_{3}$ gibt es keinen Wert zu berechnen, da sich dort der Standstreifen befindet, der nicht befahren werden kann.
+	\item auf der Überholspur 
+	\begin{itemize}
+		\item $h_{1} = 0$ 
+		\item $h_{2}(a^{\prime},v^{\prime},\lambda) = \frac{v^{\prime}}{\lambda(a^{\prime}+0,1)}$ 
+		\item $h_{3}(a^{\prime},v^{\prime},\lambda) = \e^{\lambda(1-\frac{v^{\prime}}{a^{\prime}+\omega})}$ 
+	\end{itemize}
+Hierbei ist $a^{\prime}$ der relative Abstand zum vorausfahrenden Fahrzeug auf der Hauptspur, $v^{\prime}$ die relative Geschwindigkeit zwischen Ego und dem vorausfahrenden Fahrzeug auf der Hauptspur und $\lambda$ auch hier der Skalierungsfaktor. $\omega$ entspricht $\xi$, im Fall dass $v^{\prime}=0$. Für $h_{1}$ wird kein Wert berechnet, da sich bei Betrachtung einer zweispurigen Fahrbahn in dieser Richtung keine weitere Spur in Fahrtrichtung befindet.
 \end{itemize}
 
-Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
 Die letztendliche Auswahl der Zielzelle für einen \enquote{Impuls zur Spurwahl} wird mittels \enquote{Fitness-proportionate Selection} durchgeführt.
+
+%%%%%
+
+\subparagraph{\enquote{Fitness-proportionate Selection} oder \enquote{Roulette-wheel sampling}}
+
+Die \enquote{Fitness-proportionate Selection} kommt aus dem Bereich der genetischen Algorithmen. 
+Einem Individuum mit besserem Fitnesswert ist eine höhere Chance der Vermehrung und somit für die Weitergabe seiner Gene zu geben. 
+
+Ein einfacher Weg \textit{Fitness-proportionate Selection} zu veranschaulichen ist \textit{Roulette-wheel sampling}. 
+Jedem Individuum wird ein Bereich (Slot) auf einem runden Rouletterad zugewiesen, welcher von der Größe her seinem Fitnesswert entspricht. 
+Dann wird das Rouletterad gedreht und die Kugel kommt in einem Bereich (Form eines Tortenstücks) zu liegen. 
+Das entsprechende Individuum wird ausgewählt.
+
+Als Beispiel (angelehnt an \sa{Genetic algorithms PDF Ebook}) nehmen wir eine Population der Größe $N=4$ an. 
+Die Individuen haben folgende Fitnesswerte $F_{i}$: 
+\begin{itemize}
+	\item A: $F_{A}=2$
+	\item B: $F_{B}=6$
+	\item C: $F_{C}=1$
+	\item D: $F_{D}=3$
+\end{itemize}
+
+Idividuum A erhält einen Slot der Größe 2, B der Größe 6, C der Größe 1 und D der Größe 3. 
+Das Rad hat also insgesamt eine \enquote{Größe}, die der Summe der Fitnesswerte ($\sum F_{n}$) entspricht - hier 12. 
+Es ist leicht zu erkennen, dass die Wahrscheinlichkeit dafür, dass ein bestimmtes Individuum gewählt wird, bei $\frac{F_{i}}{\sum F_{n}}$ liegt. 
+Für das Beispiel sind die Wahrscheinlichkeiten $p(A)=\frac{2}{12}=\frac{1}{6}$, $p(B)=\frac{6}{12}=\frac{1}{2}$, $p(C)=\frac{1}{12}$ und $p(D)=\frac{3}{12}=\frac{1}{4}$.
+
+%%%%%
+
 Entgegen des Zwangs zum Ausscheren oder einer fest vorgegebenen Wahrscheinlichkeit wird eine stochastische Simulationsmöglichkeit der Neigung zum Spurwechsel aufgezeigt.
 
 
