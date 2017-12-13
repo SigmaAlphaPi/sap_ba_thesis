@@ -1,7 +1,6 @@
 *.*
 !.gitignore
 !circle.yml
-!latexmkrc
 
 !*.md
 !*.tex
