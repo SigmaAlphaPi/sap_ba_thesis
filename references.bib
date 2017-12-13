@@ -27,7 +27,6 @@ journal = {Physical Review E}
 }
 @article{acc-free,
 title = "From existing accident-free car-following models to colliding vehicles exploration and assessment",
-abstract = "The study explores the specifications of microscopic traffic models that could capture congestion dynamics and model accident-prone behaviors on a highway section in greater realism than existing models currently used in practice (commercial software). A comparative assessment of several major acceleration models is conducted, especially for congestion formation and incident modeling. On the basis of this assessment, alternative specifications for car-following and lane-changing models are developed and implemented in a microscopic simulation framework. The models are calibrated and compared for resulting vehicle trajectories and macroscopic flow-density relationships. Experiments are conducted with the models under different degrees of relaxation of the safety constraints typically applied in conjunction with simulation codes used in practice. The ability of the proposed specifications to capture traffic behavior in extreme situations is examined. The results suggest that these specifications offer an improved basis for microscopic traffic simulation for situations that do not require an accident-free environment. As such, the same basic behavior model structure could accommodate both extreme situations (evacuation scenarios, oversaturated networks) as well as normal daily traffic conditions.",
 author = "Hamdar, {Samer H.} and Mahmassani, {Hani S.}",
 year = "2008",
 doi = "10.3141/2088-06",
@@ -48,13 +47,6 @@ number = "2088",
             year = {2016},
         keywords = {traffic Simulation; car following models; traffic safety},
              url = {http://elib.dlr.de/104667/},
-        abstract = {Car-following models are an essential part of microscopic traffic simulations. For research regarding traffic safety, traffic simulations need to simulate traffic safety related aspects realistically. That means, for example, accidents and near accidents shall occur in the same quantity and in the same way as in reality. Such simulations can be used to make statements about traffic safety with respect to traffic influencing factors and conditions. However, most car-following models are deterministic and do not incorporate uncertainty and fluctuations of perception and behavior. Also, they are explicitly conflict free. Therefore, they are unsuitable for simulating traffic in the desired way. For that reason, a car following model fulfilling the requirements above was developed.
-
-Inspired by [1], our car-following model is nondeterministic and data-driven. It is based on the data set of the Intelligent Cruise Control Field Operational Test [2], in which instrumented vehicles have been used by 108 voluntary drivers for several weeks yielding trajectories of approximately 88,000 driving kilometres. In our model, the acceleration a of a vehicle depends on the following input: -v, the velocity of the vehicle, -∆v, the difference between the velocity of the preceding vehicle and its own velocity, -g, the gap between the vehicle and the preceding vehicle and -aL, the acceleration of the preceding vehicle. The acceleration a underlies a probability distribution that depends on v, ∆v, g and aL. That means, if v*, ∆v*, g* and aL* are the current values for v, ∆v, g and aL, then there exist a probability distribution F(v*,∆v*,g*,aL*) and the actual acceleration a will be drawn from F(v*,∆v*,g*,aL*). For each tuple (v,∆v,g,aL), the probability distribution F(v,∆v,g,aL) was determined by the data of the FOT. For that, the data of velocity, velocity difference, gap and acceleration of the preceding vehicle were binned, and for each tuple (v,∆v,g,aL) of binned values, the expected acceleration, the variance and the type of distribution were computed and stored in look-up tables. During a simulation, the probability distribution F(v,∆v,g,aL) to a given tuple (v,∆v,g,aL) can be recovered by these look-up tables.
-
-To achieve probability distributions that result in a well behaving car-following model, the data had to be corrected (due to erroneous sensor data) and filtered (due to situations in which the driver reacted to other influences besides the preceding vehicle, e.g. red traffic lights) in numerous steps.
-
-Here, we will present the mentioned correction and filtering steps in detail. Further, we will discuss the derived probability distributions and the calibration of the model. Finally, the model will be evaluated and compared to other existing car-following models in several scenarios with respect to various criteria, e.g. the number of accidents, the distribution of surrogate safety measures, and the fundamental diagram.}
 }
 @article{multi-fuzzy,
   author    = {{\"{O}}znur Yeldan and Alberto Colorni and Alessandro Luè and Emanuele Rodaro},
@@ -64,6 +56,37 @@ Here, we will present the mentioned correction and filtering steps in detail. Fu
   volume    = {54},
   pages     = {1350--1359}
   
+}
+@Article{genealogy,
+author={van Wageningen-Kessels, Femke
+and van Lint, Hans
+and Vuik, Kees
+and Hoogendoorn, Serge},
+title={Genealogy of traffic flow models},
+journal={EURO Journal on Transportation and Logistics},
+year={2015},
+month={Dec},
+day={01},
+volume={4},
+number={4},
+pages={445--473},
+issn={2192-4384},
+doi={10.1007/s13676-014-0045-5},
+url={https://doi.org/10.1007/s13676-014-0045-5}
+}
+@article{fitn-prop-sel,
+  author    = {Adam Lipowski and
+               Dorota Lipowska},
+  title     = {Roulette-wheel selection via stochastic acceptance},
+  journal   = {CoRR},
+  volume    = {abs/1109.3627},
+  year      = {2011},
+  url       = {http://arxiv.org/abs/1109.3627},
+  archivePrefix = {arXiv},
+  eprint    = {1109.3627},
+  timestamp = {Wed, 07 Jun 2017 14:40:24 +0200},
+  biburl    = {http://dblp.org/rec/bib/journals/corr/abs-1109-3627},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
 }
 
 
@@ -83,6 +106,15 @@ Here, we will present the mentioned correction and filtering steps in detail. Fu
 	school={Technische Universität Clausthal},
 	year={2017},
 	type={Bachelorarbeit}
+}
+@mastersthesis{dingding,
+	author={Ding Ding},
+	title={Modeling and simulation of highway traffic using a cellular automaton approach},
+	school={Uppsala Universitet},
+	year={2011},
+	type={Examensarbete},
+	journal={U.U.D.M. Project Report},
+	volume = {25}
 }
 
 
