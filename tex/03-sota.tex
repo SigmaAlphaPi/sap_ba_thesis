@@ -35,8 +35,8 @@ wurden und werden verfolgt, vgl. \cite{dingding}.
 
 
 
-\subsection*{Zellularautomaten}
-\addcontentsline{toc}{subsection}{Zellularautomaten}
+\subsection{Zellularautomaten}
+%\addcontentsline{toc}{subsection}{Zellularautomaten}
 \label{sec:ca}
 
 Zellularautomaten werden seit etwa 25-30 Jahren für die Verkehrssimulation verwendet.
@@ -62,7 +62,7 @@ Dies führt schließlich zu einer gridbasierten Simulationsumgebung.
 %\addcontentsline{toc}{subsubsection}{Das Nagel-Schreckenberg-Modell}
 %\label{sec:na-sch}
 
-Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahrzeugführers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für Autobahnverkehr realistisch darstellte. 
+Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahr\-zeug\-füh\-rers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für Autobahnverkehr realistisch darstellte. 
 Jedes Fahrzeug durchläuft in jedem Zeitschritt die folgenden Übergangsregeln, vgl. \cite{na-sch}. 
 
 \begin{enumerate}
@@ -163,8 +163,8 @@ In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittsw
 
 
 
-\subsection*{Stochastische Ansätze}
-\addcontentsline{toc}{subsection}{Stochastische Ansätze}
+\subsection{Stochastische Ansätze}
+% \addcontentsline{toc}{subsection}{Stochastische Ansätze}
 \label{sec:stochastic-approaches}
 
 Es gibt inzwischen Ansätze, die das mikroskopische Verhalten der Fahrzeugführer aus Realdaten  stochastisch modelliert haben \cite{stoch-carfollow}. 
@@ -181,8 +181,8 @@ Dieser Ansatz arbeitet mit Gridzellen und achtet auf Kollisionsfreiheit.
 
 
 
-\subsection*{Das Social-Force-Vehicle-Modell}
-\addcontentsline{toc}{subsection}{Das Social-Force-Vehicle-Modell}
+\subsection{Das Social-Force-Vehicle-Modell}
+% \addcontentsline{toc}{subsection}{Das Social-Force-Vehicle-Modell}
 \label{sec:social-force-vm}
 
 In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Vorschlag für die Simulation von Spurwechseln entwickelt. 
@@ -216,39 +216,67 @@ Hierbei ist $a$ der Abstand zum vorausfahrenden Fahrzeug, $v$ die relative Gesch
 Hierbei ist $a^{\prime}$ der relative Abstand zum vorausfahrenden Fahrzeug auf der Hauptspur, $v^{\prime}$ die relative Geschwindigkeit zwischen Ego und dem vorausfahrenden Fahrzeug auf der Hauptspur und $\lambda$ auch hier der Skalierungsfaktor. $\omega$ entspricht $\xi$, im Fall dass $v^{\prime}=0$. Für $h_{1}$ wird kein Wert berechnet, da sich bei Betrachtung einer zweispurigen Fahrbahn in dieser Richtung keine weitere Spur in Fahrtrichtung befindet.
 \end{itemize}
 
-Die letztendliche Auswahl der Zielzelle für einen \enquote{Impuls zur Spurwahl} wird mittels \enquote{Fitness-proportionate Selection} durchgeführt.
+Die letztendliche Auswahl der Zielzelle für einen \enquote{Impuls zur Spurwahl} wird mittels \enquote{Fit\-ness-proportionate Selection} durchgeführt.
 
 %%%%%
 
 \subparagraph{\enquote{Fitness-proportionate Selection} oder \enquote{Roulette-wheel sampling}}
 
-Die \enquote{Fitness-proportionate Selection} kommt aus dem Bereich der genetischen Algorithmen. 
-Einem Individuum mit besserem Fitnesswert ist eine höhere Chance der Vermehrung und somit für die Weitergabe seiner Gene zu geben. 
+Die Konzept der \enquote{Fitness-proportionate Selection} kommt aus dem Bereich der genetischen Algorithmen. 
+\cite{gen-algo} beschreibt es in einem Beispiel anhand einer Population von $n=4$ Strings, die man repräsentativ auch als Individuen oder Wahlmöglichkeiten ansehen kann. 
+Jedem dieser Strings ist ein Funktionswert $f$ (Fitnesswert), ein Maß für Profit, Nutzwert oder Güte zugeordnet, den es zu maximieren gilt. 
+Strings mit einem höheren Fitnesswert haben eine höhere Wahrscheinlichkeit, einen oder mehrere Nachkommen für die Folgegeneration beizutragen.
+Demnach ist dies eine künstliche Version des Darwin'schen \enquote{Survival of the Fittest}.
+
+\begin{table}[ht]
+\begin{center}
+\setlength{\tabcolsep}{0.5em} % for the horizontal padding
+{\renewcommand{\arraystretch}{1.2}% for the vertical padding
+\begin{tabular}{| l  c  c |}
+\hline 
+No. & Fitnesswert $f$ & \% von Gesamt \\ \hline 
+1 & 169 & 14,4 \\ 
+2 & 576 & 49,2 \\ 
+3 & 64 & 5,5 \\ 
+4 & 361 & 30,9 \\ \hline
+Gesamt & 1170 & 100,0 \\ \hline
+\end{tabular}
+}
+\caption{Beispiel nach \cite[Table 1.1]{gen-algo}}
+\label{tab:beispiel-tabelle-roulette}
+\end{center}
+\end{table}
 
 Ein einfacher Weg \textit{Fitness-proportionate Selection} zu veranschaulichen ist \textit{Roulette-wheel sampling}. 
-Jedem Individuum wird ein Bereich (Slot) auf einem runden Rouletterad zugewiesen, welcher von der Größe her seinem Fitnesswert entspricht. 
-Dann wird das Rouletterad gedreht und die Kugel kommt in einem Bereich (Form eines Tortenstücks) zu liegen. 
-Das entsprechende Individuum wird ausgewählt.
+Dabei wird jeder Option ein Bereich (Slot) auf einem Rouletterad zugewiesen, welcher von der Größe her deren Fitnesswert entspricht, siehe \cref{figure:meta-chart}. 
 
-Als Beispiel (angelehnt an \sa{Genetic algorithms PDF Ebook}) nehmen wir eine Population der Größe $N=4$ an. 
-Die Individuen haben folgende Fitnesswerte $F_{i}$: 
-\begin{itemize}
-	\item A: $F_{A}=2$
-	\item B: $F_{B}=6$
-	\item C: $F_{C}=1$
-	\item D: $F_{D}=3$
-\end{itemize}
+\begin{figure}[hptb]
+ \centering
+ \includegraphics[width=0.7\textwidth]{meta-chart}
+ \caption[gewichtetes Roulette-Rad (fitness-proportionate selection]
+ 		{schematische Darstellung eines gewichteten Rouletterades für der Beispiel in \cref{tab:beispiel-tabelle-roulette}}
+ \label{figure:meta-chart}
+\end{figure}
 
-Idividuum A erhält einen Slot der Größe 2, B der Größe 6, C der Größe 1 und D der Größe 3. 
-Das Rad hat also insgesamt eine \enquote{Größe}, die der Summe der Fitnesswerte ($\sum F_{n}$) entspricht - hier 12. 
-Es ist leicht zu erkennen, dass die Wahrscheinlichkeit dafür, dass ein bestimmtes Individuum gewählt wird, bei $\frac{F_{i}}{\sum F_{n}}$ liegt. 
-Für das Beispiel sind die Wahrscheinlichkeiten $p(A)=\frac{2}{12}=\frac{1}{6}$, $p(B)=\frac{6}{12}=\frac{1}{2}$, $p(C)=\frac{1}{12}$ und $p(D)=\frac{3}{12}=\frac{1}{4}$.
+Benötigt man z. B. auch in der Nachfolgegeneration vier Strings, würde das Rouletterad viermal gedreht.
+Das Individuum in dessen Slot die Kugel liegen bleibt, würde ausgewählt.
+
+Aufgrund der Größe der Slots von String 2 und String 4 ist es z. B. möglich, dass String 2 für die Kindgeneration zweimal und String 4 gar nicht ausgewählt wird.
 
 %%%%%
 
-Entgegen des Zwangs zum Ausscheren oder einer fest vorgegebenen Wahrscheinlichkeit wird eine stochastische Simulationsmöglichkeit der Neigung zum Spurwechsel aufgezeigt.
+\subparagraph{Verwendung im Social-Force-Vehicle-Modell}
 
+Im Social-Force-Vehicle-Modell gibt es zwei Möglichkeiten, aus denen gewählt werden kann. 
+Zum einen jeweils das Geradeausfahren, zum anderen die Möglichkeit aus- respektive einzuscheren.
+Für die Wahl der Alternative ist nur eine Entscheidung zwischen den jeweils zwei Möglichkeiten nötig.
 
+Entgegen des Zwangs zum Ausscheren oder einer vorgegebenen Wahrscheinlichkeit für das Einscheren in der mehrspurigen Version des Nagel-Schreckenberg-Modells wird eine stochastische Simulationsmöglichkeit der Neigung zum Spurwechsel aufgezeigt.
+Es entsteht eine Ungewissheit, ob die wahrscheinlichste Alternative ausgewählt wird oder ob die andere, weniger wahrscheinliche, das Verhalten bestimmen wird. 
+
+\subparagraph{Möglichkeit von Kollisionen im Social-Force-Vehicle-Modell}
+
+Da Kollisionen im Modell durch Ausweichen verhindert werden sollen, aber die \enquote{Bremskomponente} aus dem Ursprungsmodell entfernt wurde, ist in bestimmten Situationen ein Auffahrunfall denkbar.
 
 
 
