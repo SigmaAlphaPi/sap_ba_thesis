@@ -6,6 +6,7 @@
 !*.java
 !*.yml
 !*.asl
+!*.properties
 
 !src/analysis/**/*.xml
 !src/analysis/**/*.txt
