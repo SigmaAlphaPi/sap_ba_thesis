@@ -2,7 +2,7 @@ version: 2
 
 jobs:
     build:
-        working_directory: ~/example
+        working_directory: ~/exampe
         docker:
             - image: lightjason/examples:latest
 

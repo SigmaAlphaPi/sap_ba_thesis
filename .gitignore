@@ -4,7 +4,6 @@
 !circle.yml
 !pom.xml
 !*.java
-!*.properties
 !*.yml
 !*.asl
 
