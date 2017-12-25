@@ -1,0 +1,6 @@
+units:
+    cellsize_in_meter: 7.5
+    time_in_minutes: 1.25
+
+environment:
+    maximum_speed: 50

@@ -33,7 +33,7 @@ public enum EUnit
      */
     EUnit()
     {
-        m_cellsize = EConfiguration.INSTANCE.getOrDefault( 3.5, "units", "cellsize_in_meter" );
+        m_cellsize = EConfiguration.INSTANCE.getOrDefault( 7.5, "units", "cellsize_in_meter" );
         m_timestep = EConfiguration.INSTANCE.getOrDefault( 1.25, "units", "time_in_minutes" ) * 60D;
         m_celltimestep = KMHINMS * m_timestep / m_cellsize;
     }
