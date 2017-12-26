@@ -1,13 +1,18 @@
 package bachelorthesis.trafficsimulation.common;
 
+import org.lightjason.agentspeak.action.IAction;
+import org.lightjason.agentspeak.common.CCommon;
 import org.pmw.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import javax.annotation.Nonnull;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 
 /**
@@ -17,6 +22,12 @@ public enum EConfiguration implements ITree
 {
     INSTANCE;
 
+    /**
+     * agent actions
+     */
+    public static final Set<IAction> ACTIONS = Collections.unmodifiableSet(
+        CCommon.actionsFromPackage().collect( Collectors.toSet() )
+    );
     /**
      * configuration data
      */

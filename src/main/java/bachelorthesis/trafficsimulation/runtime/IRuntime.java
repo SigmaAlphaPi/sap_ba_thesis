@@ -1,6 +1,6 @@
 package bachelorthesis.trafficsimulation.runtime;
 
-import bachelorthesis.trafficsimulation.agent.IVehicle;
+import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 
 import java.util.Set;
 import java.util.function.BiConsumer;
