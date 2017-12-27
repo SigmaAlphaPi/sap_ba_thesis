@@ -1,13 +1,11 @@
 package bachelorthesis.trafficsimulation.elements.environment;
 
-import bachelorthesis.trafficsimulation.elements.IObject;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tobject.ObjectMatrix2D;
 import cern.colt.matrix.tobject.impl.SparseObjectMatrix2D;
 
 import javax.annotation.Nonnull;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 
@@ -52,13 +50,6 @@ public final class CEnvironment implements IEnvironment
         return true;
     }
 
-    /**
-     * moves the vehicle
-     *
-     * @param p_vehicle vehicle
-     * @return moving has been done
-     * @bug lane clipping missing
-     */
     @Override
     public final boolean move( @Nonnull final IVehicle p_vehicle )
     {
@@ -67,17 +58,15 @@ public final class CEnvironment implements IEnvironment
 
         final Number l_ypos = l_position.get( 0 );
         final Number l_xposstart = l_position.get( 1 );
-        final Number l_xposend = l_target.get( 1 ) % m_grid.columns();
+        final Number l_xposend = l_target.get( 1 );
 
         synchronized ( this )
         {
             // test free direction
-            if ( IntStream.rangeClosed(
-                Math.max( 0, Math.min( l_xposstart.intValue(), l_xposend.intValue() ) ),
-                Math.min( m_grid.columns() - 1, Math.max( l_xposstart.intValue(), l_xposend.intValue() ) )
-            )
+            if ( IntStream.rangeClosed( l_xposstart.intValue(), l_xposend.intValue() )
                           .parallel()
                           .boxed()
+                          .map( i -> i % l_xposend.intValue() )
                           .map( i -> m_grid.getQuick( l_ypos.intValue(), i ) )
                           .anyMatch( i -> ( i != null ) && ( !i.equals( p_vehicle ) ) )
                 )
@@ -85,8 +74,8 @@ public final class CEnvironment implements IEnvironment
 
             // object moving
             m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
-            m_grid.setQuick( l_ypos.intValue(), l_xposend.intValue(), p_vehicle );
-            p_vehicle.position().setQuick( 1, l_xposend.intValue() );
+            m_grid.setQuick( l_ypos.intValue(), l_xposend.intValue() % l_xposend.intValue(), p_vehicle );
+            p_vehicle.position().setQuick( 1, l_xposend.intValue() % l_xposend.intValue() );
             return true;
         }
     }

@@ -2,10 +2,9 @@ package bachelorthesis.trafficsimulation.elements.vehicle;
 
 import bachelorthesis.trafficsimulation.common.CMath;
 import bachelorthesis.trafficsimulation.common.EDirection;
-import bachelorthesis.trafficsimulation.common.EUnit;
 import bachelorthesis.trafficsimulation.elements.IBaseObject;
 import bachelorthesis.trafficsimulation.elements.IObject;
-import bachelorthesis.trafficsimulation.elements.environment.IEnvironment;
+import bachelorthesis.trafficsimulation.elements.scenario.IScenario;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
 import com.google.common.util.concurrent.AtomicDouble;
@@ -63,9 +62,9 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private static final String FUNCTOR = "vehicle";
     /**
-     * environment
+     * scenario
      */
-    private final IEnvironment m_environment;
+    private final IScenario m_scenario;
     /**
      * accelerate speed in m/sec^2
      * @warning must be in (0, infinity)
@@ -111,8 +110,8 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      * @param p_acceleration accelerate speed
      * @param p_deceleration decelerate speed
      */
-    private CVehicle( @Nonnull final IAgentConfiguration<IVehicle> p_configuration, @Nonnull final String p_id,
-                      @Nonnull final IEnvironment p_environment, @Nonnull final DoubleMatrix1D p_start,
+    private CVehicle( @Nonnull final IAgentConfiguration<IVehicle> p_configuration, @Nonnull final IScenario p_scenario,
+                      @Nonnull final String p_id, @Nonnull final DoubleMatrix1D p_start,
                       @Nonnegative final double p_maximumspeed, @Nonnegative final double p_acceleration, @Nonnegative final double p_deceleration
     )
     {
@@ -128,7 +127,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             throw new RuntimeException( "deceleration should be greater or equal than acceleration" );
 
 
-        m_environment = p_environment;
+        m_scenario = p_scenario;
 
         m_lane.set( p_start.getQuick( 0 ) );
         m_position = p_start;
@@ -139,15 +138,15 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
 
         m_backwardview = new CEnvironmentView(
             Collections.unmodifiableSet(
-                CMath.cellangle( EUnit.INSTANCE.metertocell( BACKWARDDISTANCE ), 135, 225 ).collect( Collectors.toSet() )
+                CMath.cellangle( m_scenario.unit().metertocell( BACKWARDDISTANCE ), 135, 225 ).collect( Collectors.toSet() )
             )
         );
 
         m_forwardview = new CEnvironmentView(
             Collections.unmodifiableSet(
                 Stream.concat(
-                    CMath.cellangle( EUnit.INSTANCE.metertocell( FORWARDDISTANCE ), 0, 60 ),
-                    CMath.cellangle( EUnit.INSTANCE.metertocell( FORWARDDISTANCE ), 300, 359.99 )
+                    CMath.cellangle( m_scenario.unit().metertocell( FORWARDDISTANCE ), 0, 60 ),
+                    CMath.cellangle( m_scenario.unit().metertocell( FORWARDDISTANCE ), 300, 359.99 )
                 ).collect( Collectors.toSet() )
             )
         );
@@ -178,7 +177,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         return EDirection.FORWARD.position(
             this.position(),
             new DenseDoubleMatrix1D( new double[]{this.position().get( 0 ), l_goal} ),
-            EUnit.INSTANCE.speedtocell( this.speed() ).doubleValue()
+            m_scenario.unit().speedtocell( this.speed() ).doubleValue()
         );
     }
 
@@ -188,7 +187,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         return Stream.of(
             CLiteral.from( "lane", CRawTerm.from( this.position().get( 0 ) + 1 ) ),
             CLiteral.from( "speed", CRawTerm.from( m_speed.get() ) ),
-            CLiteral.from( "distance", CRawTerm.from( EUnit.INSTANCE.celltometer( CMath.distance( this.position(), p_object.position() ) ) ) )
+            CLiteral.from( "distance", CRawTerm.from( m_scenario.unit().celltometer( CMath.distance( this.position(), p_object.position() ) ) ) )
         );
     }
 
@@ -234,7 +233,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         super.call();
 
         // give environment the data if it is a user car
-        if ( !m_environment.move( this ) )
+        if ( !m_scenario.environment().move( this ) )
             this.oncollision();
 
         return this;
@@ -259,7 +258,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @IAgentActionName( name = "vehicle/accelerate" )
     private void accelerate( final Number p_strength )
     {
-        final double l_value = m_speed.get() + EUnit.INSTANCE.accelerationtospeed(
+        final double l_value = m_speed.get() + m_scenario.unit().accelerationtospeed(
             m_accelerate * Math.max( 0, Math.min( 1, p_strength.doubleValue() ) )
         ).doubleValue();
 
@@ -276,7 +275,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @IAgentActionName( name = "vehicle/decelerate" )
     private void decelerate( final Number p_strength )
     {
-        final double l_value = m_speed.get() - EUnit.INSTANCE.accelerationtospeed(
+        final double l_value = m_speed.get() - m_scenario.unit().accelerationtospeed(
             m_decelerate * Math.max( 0, Math.min( 1, p_strength.doubleValue() ) )
         ).doubleValue();
 
@@ -294,7 +293,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     private void pullout()
     {
         final Number l_lane = this.position().get( 0 ) - 1;
-        if ( !m_environment.lanechange( this, l_lane ) )
+        if ( !m_scenario.environment().lanechange( this, l_lane ) )
             this.oncollision();
         else
             m_lane.set( l_lane.intValue() );
@@ -308,7 +307,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     private void pullin()
     {
         final Number l_lane = this.position().get( 0 ) + 1;
-        if ( !m_environment.lanechange( this, l_lane ) )
+        if ( !m_scenario.environment().lanechange( this, l_lane ) )
             this.oncollision();
         else
             m_lane.set( l_lane.intValue() );
@@ -357,8 +356,8 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         {
             return new CVehicle(
                 m_configuration,
+                (IScenario) p_data[0],
                 MessageFormat.format( "{0}{1}", m_name, COUNTER.getAndIncrement() ),
-                (IEnvironment) p_data[0],
 
                 (DoubleMatrix1D) p_data[1],
                 ( (Number) p_data[2] ).doubleValue(),
