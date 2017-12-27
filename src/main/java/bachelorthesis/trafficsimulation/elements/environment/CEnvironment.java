@@ -21,21 +21,19 @@ public final class CEnvironment implements IEnvironment
      */
     private static final long serialVersionUID = -4598520582091540701L;
     /**
-     * set elements
-     */
-    private final Map<String, IObject<?>> m_elements;
-    /**
      * grid
      */
-    private ObjectMatrix2D m_grid = new SparseObjectMatrix2D( 0, 0 );
+    private final ObjectMatrix2D m_grid;
 
     /**
      * ctor
-     * @param p_elements objects
+     *
+     * @param p_length length of the street
+     * @param p_lanes number of lanes
      */
-    private CEnvironment( @Nonnull final Map<String, IObject<?>> p_elements )
+    private CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes )
     {
-        m_elements = p_elements;
+        m_grid = new SparseObjectMatrix2D( p_lanes.intValue(), p_length.intValue() );
     }
 
     @Override
@@ -69,14 +67,7 @@ public final class CEnvironment implements IEnvironment
 
         final Number l_ypos = l_position.get( 0 );
         final Number l_xposstart = l_position.get( 1 );
-        final Number l_xposend = l_target.get( 1 );
-
-        if ( ( l_xposend.intValue() >= m_grid.columns() ) || ( l_xposend.intValue() < 0 ) )
-            synchronized ( this )
-            {
-                m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
-            }
-
+        final Number l_xposend = l_target.get( 1 ) % m_grid.columns();
 
         synchronized ( this )
         {
