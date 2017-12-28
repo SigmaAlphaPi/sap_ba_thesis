@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 /**
  * interface of the environment
  */
-public interface IEnvironment
+public interface IEnvironment extends Runnable
 {
 
     /**

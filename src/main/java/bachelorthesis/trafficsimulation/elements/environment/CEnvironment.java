@@ -1,6 +1,7 @@
 package bachelorthesis.trafficsimulation.elements.environment;
 
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
+import bachelorthesis.trafficsimulation.statistic.IStatistic;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tobject.ObjectMatrix2D;
 import cern.colt.matrix.tobject.impl.SparseObjectMatrix2D;
@@ -22,6 +23,10 @@ public final class CEnvironment implements IEnvironment
      * grid
      */
     private final ObjectMatrix2D m_grid;
+    /**
+     * statistic
+     */
+    private final IStatistic m_statistic;
 
     /**
      * ctor
@@ -29,9 +34,10 @@ public final class CEnvironment implements IEnvironment
      * @param p_length length of the street in cells
      * @param p_lanes number of lanes
      */
-    public CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes )
+    public CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes, @Nonnull final IStatistic p_statistic )
     {
         m_grid = new SparseObjectMatrix2D( p_lanes.intValue(), p_length.intValue() );
+        m_statistic = p_statistic;
     }
 
     @Override
@@ -105,5 +111,13 @@ public final class CEnvironment implements IEnvironment
             p_vehicle.position().setQuick( 0, p_lane.doubleValue() );
             return true;
         }
+    }
+
+    @Override
+    public final void run()
+    {
+        IntStream.range( 0, m_grid.rows() )
+                 .parallel()
+                 .forEach( i -> m_statistic.accept( "lanedensity-" + i, (double) m_grid.viewRow( i ).cardinality() / m_grid.columns() ) );
     }
 }

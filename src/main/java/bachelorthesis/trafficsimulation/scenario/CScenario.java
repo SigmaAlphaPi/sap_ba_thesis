@@ -41,7 +41,8 @@ public final class CScenario implements IScenario
         );
         m_environment = new CEnvironment(
             m_unit.kilometertocell( p_configuration.getOrDefault( 1, "environment", "length_in_km" ) ),
-            p_configuration.getOrDefault( 1, "environment", "lanes" )
+            p_configuration.getOrDefault( 1, "environment", "lanes" ),
+            m_statistic
         );
     }
 
