@@ -1,4 +1,4 @@
-package bachelorthesis.trafficsimulation.elements.scenario;
+package bachelorthesis.trafficsimulation.scenario;
 
 /**
  * inter of the unit definition

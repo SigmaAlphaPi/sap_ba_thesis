@@ -1,6 +1,7 @@
-package bachelorthesis.trafficsimulation.elements.scenario;
+package bachelorthesis.trafficsimulation.scenario;
 
 import bachelorthesis.trafficsimulation.elements.environment.IEnvironment;
+import bachelorthesis.trafficsimulation.statistic.IStatistic;
 
 import javax.annotation.Nonnull;
 
@@ -25,5 +26,12 @@ public interface IScenario
      */
     @Nonnull
     IUnit unit();
+
+    /**
+     * returns the statistic definition
+     *
+     * @return statistic
+     */
+    IStatistic statistic();
 
 }

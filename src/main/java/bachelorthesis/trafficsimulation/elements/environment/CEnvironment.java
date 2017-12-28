@@ -26,10 +26,10 @@ public final class CEnvironment implements IEnvironment
     /**
      * ctor
      *
-     * @param p_length length of the street
+     * @param p_length length of the street in cells
      * @param p_lanes number of lanes
      */
-    private CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes )
+    public CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes )
     {
         m_grid = new SparseObjectMatrix2D( p_lanes.intValue(), p_length.intValue() );
     }

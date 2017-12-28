@@ -1,4 +1,4 @@
-package bachelorthesis.trafficsimulation.elements.scenario;
+package bachelorthesis.trafficsimulation.scenario;
 
 import javax.annotation.Nonnegative;
 

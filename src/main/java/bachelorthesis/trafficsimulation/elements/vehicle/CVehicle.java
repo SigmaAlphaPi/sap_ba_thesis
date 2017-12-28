@@ -4,7 +4,7 @@ import bachelorthesis.trafficsimulation.common.CMath;
 import bachelorthesis.trafficsimulation.common.EDirection;
 import bachelorthesis.trafficsimulation.elements.IBaseObject;
 import bachelorthesis.trafficsimulation.elements.IObject;
-import bachelorthesis.trafficsimulation.elements.scenario.IScenario;
+import bachelorthesis.trafficsimulation.scenario.IScenario;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
 import com.google.common.util.concurrent.AtomicDouble;
