@@ -313,6 +313,20 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             m_lane.set( l_lane.intValue() );
     }
 
+    /**
+     * adds a statistic value to the
+     * scenario statistic
+     *
+     * @param p_name statistic name
+     * @param p_value statistic value
+     */
+    @IAgentActionFilter
+    @IAgentActionName( name = "scneario/statistic" )
+    private void statistic( final String p_name, final Number p_value )
+    {
+        m_scenario.statistic().accept( p_name, p_value );
+    }
+
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
     /**
