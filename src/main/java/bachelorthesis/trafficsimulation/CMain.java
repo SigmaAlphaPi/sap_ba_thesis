@@ -1,9 +1,17 @@
 package bachelorthesis.trafficsimulation;
 
+import bachelorthesis.trafficsimulation.runtime.ERuntime;
+import bachelorthesis.trafficsimulation.scenario.CScenario;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
+import org.apache.commons.io.FileUtils;
+
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 
 /**
@@ -26,7 +34,7 @@ public final class CMain
     {
         final Options l_clioptions = new Options();
         l_clioptions.addOption( "help", false, "shows this information" );
-        l_clioptions.addOption( "generate", false, "generates example files" );
+        l_clioptions.addOption( "generate", false, "generates example files in the current directory" );
         l_clioptions.addOption( "scenario", true, "scneario configuration file" );
 
         final CommandLine l_cli;
@@ -51,6 +59,29 @@ public final class CMain
             return;
         }
 
+        if ( l_cli.hasOption( "generate" ) )
+        {
+            Stream.of(
+                "scenario.yml",
+                "vehicle.asl"
+            ).forEach( i ->
+            {
+                try
+                {
+                    FileUtils.copyInputStreamToFile(
+                        CMain.class.getResourceAsStream( "/" + i ),
+                        Paths.get( i ).toFile()
+                    );
+                }
+                catch ( final IOException l_exception )
+                {
+                    throw new UncheckedIOException( l_exception );
+                }
+            } );
+            return;
+        }
+
+        ERuntime.INSTANCE.accept( new CScenario( l_cli.getOptionValue( "scenario" ) ) );
     }
 
 }

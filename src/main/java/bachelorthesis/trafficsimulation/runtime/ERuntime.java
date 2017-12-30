@@ -15,7 +15,7 @@ public enum ERuntime implements IRuntime
     INSTANCE;
 
     @Override
-    public void accept( final Integer p_iteration, final IScenario p_scenario )
+    public void accept( final IScenario p_scenario )
     {
         LongStream.range( 0, p_scenario.iterations() )
                   .forEach( i ->

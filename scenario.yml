@@ -1,0 +1,19 @@
+main:
+    statistic: "summary"
+    simulationtime_in_minutes: 60
+    units:
+        cellsize_in_meter: 7.5
+        time_in_minutes: 1
+
+environment:
+    lanes: 4
+    length_in_km: 25
+    maximum_speed: 50
+
+agent:
+    constant:
+        MaxCount: 5
+
+    source:
+        vehicle.asl: 50
+
