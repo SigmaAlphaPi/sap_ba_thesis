@@ -1,8 +1,10 @@
 package bachelorthesis.trafficsimulation.runtime;
 
-import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
+import bachelorthesis.trafficsimulation.scenario.IScenario;
+import org.pmw.tinylog.Logger;
 
-import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.stream.LongStream;
 
 
 /**
@@ -13,8 +15,32 @@ public enum ERuntime implements IRuntime
     INSTANCE;
 
     @Override
-    public void accept( final Integer p_iteration, final Set<IVehicle> p_vehicle )
+    public void accept( final Integer p_iteration, final IScenario p_scenario )
     {
+        LongStream.range( 0, p_scenario.iterations() )
+                  .forEach( i ->
+                  {
+                      p_scenario.environment().run();
+                      p_scenario.vehicles()
+                                .parallel()
+                                .forEach( this::execute );
+                  } );
+    }
 
+    /**
+     * execute callable with log
+     *
+     * @param p_callable callable
+     */
+    private void execute( final Callable<?> p_callable )
+    {
+        try
+        {
+            p_callable.call();
+        }
+        catch ( final Exception l_exception )
+        {
+            Logger.trace( l_exception );
+        }
     }
 }

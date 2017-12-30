@@ -18,6 +18,7 @@ import org.lightjason.agentspeak.language.CLiteral;
 import org.lightjason.agentspeak.language.CRawTerm;
 import org.lightjason.agentspeak.language.ILiteral;
 import org.lightjason.agentspeak.language.ITerm;
+import org.lightjason.agentspeak.language.execution.IVariableBuilder;
 import org.lightjason.agentspeak.language.instantiable.IInstantiable;
 import org.lightjason.agentspeak.language.instantiable.plan.trigger.CTrigger;
 import org.lightjason.agentspeak.language.instantiable.plan.trigger.ITrigger;
@@ -351,9 +352,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
          * @param p_stream stream
          * @throws Exception on any error
          */
-        public CGenerator( @Nonnull final InputStream p_stream, @Nonnull final String p_name ) throws Exception
+        public CGenerator( @Nonnull final InputStream p_stream, @Nonnull final String p_name,
+                           @Nonnull final IVariableBuilder p_variablebuilder ) throws Exception
         {
-            super( p_stream, CVehicle.class, new CVariableBuilder() );
+            super( p_stream, CVehicle.class, p_variablebuilder );
             m_name = p_name;
         }
 
@@ -387,15 +389,32 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     /**
      * variable builder of vehicle
      */
-    private static final class CVariableBuilder extends IBaseVariableBuilder
+    public static final class CVariableBuilder extends IBaseVariableBuilder
     {
+        /**
+         * constants
+         */
+        private final Set<IVariable<?>> m_constants;
+
+        /**
+         * ctor
+         *
+         * @param p_constants constant set
+         */
+        public CVariableBuilder( final Set<IVariable<?>> p_constants )
+        {
+            m_constants = p_constants;
+        }
 
         @Override
         public final Stream<IVariable<?>> apply( final IAgent<?> p_agent, final IInstantiable p_instance )
         {
             final IVehicle l_vehicle = p_agent.<IVehicle>raw();
             return Stream.concat(
-                super.apply( p_agent, p_instance ),
+                Stream.concat(
+                    super.apply( p_agent, p_instance ),
+                    m_constants.stream()
+                ),
                 Stream.of(
                     new CConstant<>( "CurrentSpeed", l_vehicle.speed() ),
                     new CConstant<>( "CurrentLane", l_vehicle.lane().intValue() + 1 ),

@@ -1,9 +1,11 @@
 package bachelorthesis.trafficsimulation.scenario;
 
 import bachelorthesis.trafficsimulation.elements.environment.IEnvironment;
+import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import bachelorthesis.trafficsimulation.statistic.IStatistic;
 
 import javax.annotation.Nonnull;
+import java.util.stream.Stream;
 
 
 /**
@@ -11,6 +13,20 @@ import javax.annotation.Nonnull;
  */
 public interface IScenario
 {
+    /**
+     * returns the number of iterations
+     *
+     * @return iterations
+     */
+    long iterations();
+
+    /**
+     * stream of vehicles
+     *
+     * @return vehicles
+     */
+    Stream<IVehicle> vehicles();
+
     /**
      * returns the environment of the scenario
      *

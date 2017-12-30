@@ -1,5 +1,6 @@
 main:
     statistic: "summary"
+    simulationtime_in_minutes: 60
     units:
         cellsize_in_meter: 7.5
         time_in_minutes: 1
