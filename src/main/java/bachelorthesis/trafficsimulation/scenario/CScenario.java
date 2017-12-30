@@ -136,7 +136,7 @@ public final class CScenario implements IScenario
      */
     private Stream<IVehicle> generator( @Nonnull final String p_asl, @Nonnull final IVariableBuilder p_variablebuilder, @Nonnull final Number p_generate )
     {
-        Logger.info( "reading asl file [{0}]", p_asl );
+        Logger.info( "reading asl file [{}] and generate [{}] agents", p_asl, p_generate );
         try
             (
                 final InputStream l_stream = new FileInputStream( p_asl );

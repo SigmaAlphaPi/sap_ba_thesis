@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Paths;
+import java.util.logging.LogManager;
 import java.util.stream.Stream;
 
 
@@ -19,6 +20,13 @@ import java.util.stream.Stream;
  */
 public final class CMain
 {
+    static
+    {
+        // disable default logger
+        LogManager.getLogManager().reset();
+    }
+
+
     /**
      * ctor
      */
