@@ -339,7 +339,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         /**
          * counter
          */
-        private static final AtomicLong COUNTER = new AtomicLong();
+        private final AtomicLong m_conter = new AtomicLong();
         /**
          * name of the vehicle
          */
@@ -359,13 +359,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             m_name = p_name;
         }
 
-        @Override
-        public final IGenerator<IVehicle> resetcount()
-        {
-            COUNTER.set( 0 );
-            return this;
-        }
-
         @Nullable
         @Override
         public final IVehicle generatesingle( @Nullable final Object... p_data )
@@ -373,7 +366,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             return new CVehicle(
                 m_configuration,
                 (IScenario) p_data[0],
-                MessageFormat.format( "{0}{1}", m_name, COUNTER.getAndIncrement() ),
+                MessageFormat.format( "{0}{1}", m_name, m_conter.getAndIncrement() ),
 
                 (DoubleMatrix1D) p_data[1],
                 ( (Number) p_data[2] ).doubleValue(),

@@ -44,12 +44,6 @@ public interface IObject<T extends IAgent<?>> extends IPerceiveable, IAgent<T>
      */
     interface IGenerator<T extends IObject<?>> extends IAgentGenerator<T>
     {
-        /**
-         * resets the internal counter
-         *
-         * @return self-reference
-         */
-        IGenerator<T> resetcount();
     }
 
 }
