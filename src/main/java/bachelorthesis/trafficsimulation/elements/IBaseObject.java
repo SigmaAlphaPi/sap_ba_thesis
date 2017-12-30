@@ -1,6 +1,6 @@
 package bachelorthesis.trafficsimulation.elements;
 
-import bachelorthesis.trafficsimulation.common.EConfiguration;
+import bachelorthesis.trafficsimulation.scenario.CScenario;
 import org.lightjason.agentspeak.agent.IAgent;
 import org.lightjason.agentspeak.agent.IBaseAgent;
 import org.lightjason.agentspeak.beliefbase.CBeliefbase;
@@ -145,7 +145,7 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
         {
             super(
                 p_stream,
-                Stream.concat( EConfiguration.ACTIONS.stream(), CCommon.actionsFromAgentClass( p_agentclass ) ).collect( Collectors.toSet() )
+                Stream.concat( CScenario.ACTIONS.stream(), CCommon.actionsFromAgentClass( p_agentclass ) ).collect( Collectors.toSet() )
             );
         }
 
@@ -161,7 +161,7 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
         {
             super(
                 p_stream,
-                Stream.concat( EConfiguration.ACTIONS.stream(), CCommon.actionsFromAgentClass( p_agentclass ) ).collect( Collectors.toSet() ),
+                Stream.concat( CScenario.ACTIONS.stream(), CCommon.actionsFromAgentClass( p_agentclass ) ).collect( Collectors.toSet() ),
                 p_variablebuilder
             );
         }
