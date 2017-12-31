@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -75,8 +76,7 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
         m_id = p_id;
         m_functor = p_functor;
         m_dynamicbeliefs = m_beliefbase.beliefbase().view( DYNAMICBELIEFBASE );
-        if ( m_dynamicbeliefs == null )
-            throw new RuntimeException( "dynamic beliefbase is null, cannot create object" );
+        Objects.requireNonNull( m_dynamicbeliefs, "dynamic beliefbase is null, cannot create object" );
     }
 
     @Override
@@ -150,6 +150,16 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
                 p_actions,
                 p_variablebuilder
             );
+        }
+
+        @Override
+        protected final IAgentConfiguration<T> configuration( @Nonnull final IFuzzyBundle<Boolean> p_fuzzy, @Nonnull final Collection<ILiteral> p_initalbeliefs,
+                                                              @Nonnull final Set<IPlan> p_plans, @Nonnull final Set<IRule> p_rules,
+                                                              @Nullable final ILiteral p_initialgoal,
+                                                              @Nonnull final IUnifier p_unifier, @Nonnull final IVariableBuilder p_variablebuilder
+        )
+        {
+            return new CAgentConfiguration( p_fuzzy, p_initalbeliefs, p_plans, p_rules, p_initialgoal, p_unifier, p_variablebuilder );
         }
 
         /**

@@ -46,6 +46,9 @@ agent:
             # number of generated vehicles
             count: 50
 
+            # view range in meters around a vehicle (should be greater than cell size)
+            viewrange_in_meter: 5
+
             # local constant values for this vehicle
             costant:
                 LocalValue: "Hello"

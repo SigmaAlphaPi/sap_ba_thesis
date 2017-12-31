@@ -182,8 +182,8 @@ public final class CScenario implements IScenario
     private Number randomvalue( @Nonnull final ITree p_config, final Random p_random, @Nonnull final String p_name,
                                 @Nonnull final Number p_min, @Nonnull final Number p_max )
     {
-        return p_config.<Number>getOrDefault( p_min, p_name, "min" ).doubleValue()
-            + p_random.nextDouble() * ( p_config.<Number>getOrDefault( p_max, p_name, "max" ).doubleValue()
+        return p_config.getOrDefault( p_min, p_name, "min" ).doubleValue()
+            + p_random.nextDouble() * ( p_config.getOrDefault( p_max, p_name, "max" ).doubleValue()
                                     - p_config.<Number>getOrDefault( 100, p_name, "min" ).doubleValue() );
     }
 
