@@ -15,5 +15,17 @@ agent:
         MaxCount: 5
 
     source:
-        vehicle.asl: 50
+        vehicle.asl:
+            count: 50
+            speed:
+                min: 30
+                max: 160
+            acceleration:
+                min: 3.5
+                max: 7
+            deceleration:
+                min: 8
+                max: 10
+
+
 

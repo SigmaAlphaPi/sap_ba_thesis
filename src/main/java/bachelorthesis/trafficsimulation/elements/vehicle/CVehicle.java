@@ -8,11 +8,13 @@ import bachelorthesis.trafficsimulation.scenario.IScenario;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
 import com.google.common.util.concurrent.AtomicDouble;
+import org.lightjason.agentspeak.action.IAction;
 import org.lightjason.agentspeak.action.binding.IAgentAction;
 import org.lightjason.agentspeak.action.binding.IAgentActionFilter;
 import org.lightjason.agentspeak.action.binding.IAgentActionName;
 import org.lightjason.agentspeak.agent.IAgent;
 import org.lightjason.agentspeak.beliefbase.IBeliefbaseOnDemand;
+import org.lightjason.agentspeak.common.CCommon;
 import org.lightjason.agentspeak.configuration.IAgentConfiguration;
 import org.lightjason.agentspeak.language.CLiteral;
 import org.lightjason.agentspeak.language.CRawTerm;
@@ -315,6 +317,16 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     }
 
     /**
+     * immediatly stop
+     */
+    @IAgentActionFilter
+    @IAgentActionName( name = "vehicle/stop" )
+    private void stop()
+    {
+        m_speed.set( 0 );
+    }
+
+    /**
      * adds a statistic value to the
      * scenario statistic
      *
@@ -337,9 +349,22 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     public static final class CGenerator extends IBaseGenerator<IVehicle>
     {
         /**
+         * action
+         */
+        private static final Set<IAction> ACTIONS = Collections.unmodifiableSet(
+            Stream.concat(
+                CCommon.actionsFromAgentClass( CVehicle.class ),
+                CCommon.actionsFromPackage()
+            ).collect( Collectors.toSet() )
+        );
+        /**
          * counter
          */
         private final AtomicLong m_conter = new AtomicLong();
+        /**
+         * scenario
+         */
+        private final IScenario m_scenario;
         /**
          * name of the vehicle
          */
@@ -352,11 +377,12 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
          * @param p_stream stream
          * @throws Exception on any error
          */
-        public CGenerator( @Nonnull final InputStream p_stream, @Nonnull final String p_name,
-                           @Nonnull final IVariableBuilder p_variablebuilder ) throws Exception
+        public CGenerator( @Nonnull final InputStream p_stream, @Nonnull final IScenario p_scenario,
+                           @Nonnull final String p_name, @Nonnull final IVariableBuilder p_variablebuilder ) throws Exception
         {
-            super( p_stream, CVehicle.class, p_variablebuilder );
+            super( p_stream, ACTIONS, p_variablebuilder );
             m_name = p_name;
+            m_scenario = p_scenario;
         }
 
         @Nullable
@@ -365,14 +391,14 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         {
             return new CVehicle(
                 m_configuration,
-                (IScenario) p_data[0],
+                m_scenario,
                 MessageFormat.format( "{0}{1}", m_name, m_conter.getAndIncrement() ),
 
-                (DoubleMatrix1D) p_data[1],
-                ( (Number) p_data[2] ).doubleValue(),
+                (DoubleMatrix1D) p_data[0],
+                ( (Number) p_data[1] ).doubleValue(),
 
-                ( (Number) p_data[3] ).doubleValue(),
-                ( (Number) p_data[4] ).doubleValue()
+                ( (Number) p_data[2] ).doubleValue(),
+                ( (Number) p_data[3] ).doubleValue()
             );
         }
 

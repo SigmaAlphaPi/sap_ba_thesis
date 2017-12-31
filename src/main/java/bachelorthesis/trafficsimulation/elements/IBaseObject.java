@@ -1,13 +1,12 @@
 package bachelorthesis.trafficsimulation.elements;
 
-import bachelorthesis.trafficsimulation.scenario.CScenario;
+import org.lightjason.agentspeak.action.IAction;
 import org.lightjason.agentspeak.agent.IAgent;
 import org.lightjason.agentspeak.agent.IBaseAgent;
 import org.lightjason.agentspeak.beliefbase.CBeliefbase;
 import org.lightjason.agentspeak.beliefbase.storage.CMultiStorage;
 import org.lightjason.agentspeak.beliefbase.storage.CSingleStorage;
 import org.lightjason.agentspeak.beliefbase.view.IView;
-import org.lightjason.agentspeak.common.CCommon;
 import org.lightjason.agentspeak.configuration.CDefaultAgentConfiguration;
 import org.lightjason.agentspeak.configuration.IAgentConfiguration;
 import org.lightjason.agentspeak.generator.IBaseAgentGenerator;
@@ -29,7 +28,6 @@ import javax.annotation.Nullable;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -136,46 +134,23 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
      */
     protected abstract static class IBaseGenerator<T extends IObject<?>> extends IBaseAgentGenerator<T> implements IGenerator<T>
     {
-        /**
-         * @param p_stream asl stream
-         * @param p_agentclass agent class
-         * @throws Exception thrown on any error
-         */
-        protected IBaseGenerator( @Nonnull final InputStream p_stream, @Nonnull final Class<? extends T> p_agentclass ) throws Exception
-        {
-            super(
-                p_stream,
-                Stream.concat( CScenario.ACTIONS.stream(), CCommon.actionsFromAgentClass( p_agentclass ) ).collect( Collectors.toSet() )
-            );
-        }
 
         /**
          * ctor
          * @param p_stream asl stream
-         * @param p_agentclass agent class
+         * @param p_actions actions
          * @param p_variablebuilder variable builder
          * @throws Exception thrown on any error
          */
-        protected IBaseGenerator( @Nonnull final InputStream p_stream, @Nonnull final Class<? extends T> p_agentclass,
+        protected IBaseGenerator( @Nonnull final InputStream p_stream, @Nonnull final Set<IAction> p_actions,
                                   @Nonnull final IVariableBuilder p_variablebuilder ) throws Exception
         {
             super(
                 p_stream,
-                Stream.concat( CScenario.ACTIONS.stream(), CCommon.actionsFromAgentClass( p_agentclass ) ).collect( Collectors.toSet() ),
+                p_actions,
                 p_variablebuilder
             );
         }
-
-        @Override
-        protected IAgentConfiguration<T> configuration( @Nonnull final IFuzzyBundle<Boolean> p_fuzzy, @Nonnull final Collection<ILiteral> p_initalbeliefs,
-                                                        @Nonnull final Set<IPlan> p_plans, @Nonnull final Set<IRule> p_rules,
-                                                        @Nullable final ILiteral p_initialgoal,
-                                                        @Nonnull final IUnifier p_unifier, @Nonnull final IVariableBuilder p_variablebuilder
-        )
-        {
-            return new CAgentConfiguration( p_fuzzy, p_initalbeliefs, p_plans, p_rules, p_initialgoal, p_unifier, p_variablebuilder );
-        }
-
 
         /**
          * agent configuration

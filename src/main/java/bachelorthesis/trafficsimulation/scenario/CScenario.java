@@ -7,8 +7,6 @@ import bachelorthesis.trafficsimulation.elements.vehicle.CVehicle;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import bachelorthesis.trafficsimulation.statistic.EStatistic;
 import bachelorthesis.trafficsimulation.statistic.IStatistic;
-import org.lightjason.agentspeak.action.IAction;
-import org.lightjason.agentspeak.common.CCommon;
 import org.lightjason.agentspeak.language.execution.IVariableBuilder;
 import org.lightjason.agentspeak.language.variable.CConstant;
 import org.pmw.tinylog.Logger;
@@ -31,12 +29,6 @@ import java.util.stream.Stream;
  */
 public final class CScenario implements IScenario
 {
-    /**
-     * agent actions
-     */
-    public static final Set<IAction> ACTIONS = Collections.unmodifiableSet(
-        CCommon.actionsFromPackage().collect( Collectors.toSet() )
-    );
     /**
      * unit object
      */
@@ -144,6 +136,7 @@ public final class CScenario implements IScenario
         {
             return new CVehicle.CGenerator(
                 l_stream,
+                this,
                 p_asl.toLowerCase( Locale.ROOT ).replace( ".asl", "" ),
                 p_variablebuilder
             ).generatemultiple( p_generate.intValue() );
