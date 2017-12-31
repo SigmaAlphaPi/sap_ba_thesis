@@ -7,8 +7,8 @@ import bachelorthesis.trafficsimulation.elements.vehicle.CVehicle;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import bachelorthesis.trafficsimulation.statistic.EStatistic;
 import bachelorthesis.trafficsimulation.statistic.IStatistic;
-import org.lightjason.agentspeak.language.execution.IVariableBuilder;
 import org.lightjason.agentspeak.language.variable.CConstant;
+import org.lightjason.agentspeak.language.variable.IVariable;
 import org.pmw.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
 
@@ -55,6 +55,7 @@ public final class CScenario implements IScenario
      *
      * @param p_configuration configuration
      */
+    @SuppressWarnings( "unchecked" )
     public CScenario( @Nonnull final String p_configuration )
     {
         final ITree l_configuration = load( p_configuration );
@@ -74,14 +75,13 @@ public final class CScenario implements IScenario
 
 
         // create variable builder
-        final IVariableBuilder l_variablebuilder = new CVehicle.CVariableBuilder(
+        final Set<IVariable<?>> l_globalvariables =
             Collections.unmodifiableSet(
                 l_configuration.<Map<String, Object>>getOrDefault( Collections.emptyMap(), "agent", "constant" )
                     .entrySet()
                     .parallelStream()
                     .map( i -> new CConstant<>( i.getKey(), i.getValue() ) )
                     .collect( Collectors.toSet() )
-            )
         );
 
         final String l_root = Paths.get( p_configuration ).getParent() == null ? "" : Paths.get( p_configuration ).getParent().toString();
@@ -89,7 +89,9 @@ public final class CScenario implements IScenario
             l_configuration.<Map<String, Object>>getOrDefault( Collections.emptyMap(), "agent", "source" )
                 .entrySet()
                 .parallelStream()
-                .flatMap( i -> this.generator( Paths.get( l_root, i.getKey() ).toString(), l_variablebuilder, (Number) i.getValue() ) )
+                .flatMap( i -> this.generator(
+                    Paths.get( l_root, i.getKey() ).toString(), l_globalvariables, new ITree.CTree( (Map<String, Object>) i.getValue() )
+                ) )
                 .collect( Collectors.toSet() )
         );
     }
@@ -122,13 +124,13 @@ public final class CScenario implements IScenario
      * instantiate agent generator
      *
      * @param p_asl asl file
-     * @param p_variablebuilder variable builder
-     * @param p_generate number of vehicles
+     * @param p_globalvariables variable builder
+     * @param p_config configuration of the agent
      * @return vehicle stream
      */
-    private Stream<IVehicle> generator( @Nonnull final String p_asl, @Nonnull final IVariableBuilder p_variablebuilder, @Nonnull final Number p_generate )
+    private Stream<IVehicle> generator( @Nonnull final String p_asl, @Nonnull final Set<IVariable<?>> p_globalvariables, @Nonnull final ITree p_config )
     {
-        Logger.info( "reading asl file [{}] and generate [{}] agents", p_asl, p_generate );
+        Logger.info( "reading asl file [{}] and generate {} agents", p_asl, p_config );
         try
             (
                 final InputStream l_stream = new FileInputStream( p_asl );
@@ -138,8 +140,18 @@ public final class CScenario implements IScenario
                 l_stream,
                 this,
                 p_asl.toLowerCase( Locale.ROOT ).replace( ".asl", "" ),
-                p_variablebuilder
-            ).generatemultiple( p_generate.intValue() );
+                new CVehicle.CVariableBuilder(
+                    Collections.unmodifiableSet(
+                        Stream.concat(
+                            p_globalvariables.stream(),
+                            p_config.<Map<String, Object>>getOrDefault( Collections.emptyMap(), "constant" )
+                                    .entrySet()
+                                    .parallelStream()
+                                    .map( i -> new CConstant<>( i.getKey(), i.getValue() ) )
+                        ).collect( Collectors.toSet() )
+                    )
+                )
+            ).generatemultiple( 1 );
         }
         catch ( final Exception l_exception )
         {

@@ -1,28 +1,69 @@
+# global section of configuration
 main:
+
+    # statistic result ("summary" = aggregated values, "descriptive" = aggregated & single values)
     statistic: "summary"
+
+    # simulated time
     simulationtime_in_minutes: 60
+
+    # unit of the simulation
     units:
+
+        # cell size / size of a vehicle in meter
         cellsize_in_meter: 7.5
+
+        # time of a single timestep in simulation
         time_in_minutes: 1
 
+
+# environment / street setting
 environment:
+
+    # number of lanes
     lanes: 4
+
+    # length if the lane in kilometer
     length_in_km: 25
+
+    # maximum allowed speed on the street
     maximum_speed: 50
 
-agent:
-    constant:
-        MaxCount: 5
 
+# agent vehicle configuration
+agent:
+
+    # global constants for all vehicles (constant name
+    # must start with an upper-case letter)
+    constant:
+        GlobalValue: 5
+
+    # all vehicle configuration, key is the filename of the filename
+    # AgentSpeak(L++) script relative to configuration file
     source:
         vehicle.asl:
+
+            # number of generated vehicles
             count: 50
+
+            # local constant values for this vehicle
+            costant:
+                LocalValue: "Hello"
+
+            # speed range configuration for initialize and maximum
+            # speed (maximum value will be set by random)
             speed:
                 min: 30
                 max: 160
+
+            # acceleration configuration (the value is
+            # calculated by random
             acceleration:
                 min: 3.5
                 max: 7
+
+            # decceleration configuration (the value is
+            # calculated by random
             deceleration:
                 min: 8
                 max: 10
