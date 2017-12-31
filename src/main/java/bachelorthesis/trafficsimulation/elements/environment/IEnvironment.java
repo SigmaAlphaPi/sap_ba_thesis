@@ -38,4 +38,18 @@ public interface IEnvironment extends Runnable
      */
     boolean lanechange( @Nonnull IVehicle p_vehicle, final Number p_lane );
 
+    /**
+     * returns the number of lanes
+     *
+     * @return lanes
+     */
+    Number lanes();
+
+    /**
+     * returns the number of cells
+     *
+     * @return cells
+     */
+    Number cells();
+
 }

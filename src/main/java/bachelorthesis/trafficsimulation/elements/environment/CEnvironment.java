@@ -114,6 +114,18 @@ public final class CEnvironment implements IEnvironment
     }
 
     @Override
+    public final Number lanes()
+    {
+        return m_grid.rows();
+    }
+
+    @Override
+    public final Number cells()
+    {
+        return m_grid.columns();
+    }
+
+    @Override
     public final void run()
     {
         IntStream.range( 0, m_grid.rows() )

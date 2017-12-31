@@ -19,7 +19,9 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -131,6 +133,8 @@ public final class CScenario implements IScenario
     private Stream<IVehicle> generator( @Nonnull final String p_asl, @Nonnull final Set<IVariable<?>> p_globalvariables, @Nonnull final ITree p_config )
     {
         Logger.info( "reading asl file [{}] and generate {} agents", p_asl, p_config );
+        final Random l_random = ThreadLocalRandom.current();
+
         try
             (
                 final InputStream l_stream = new FileInputStream( p_asl );
@@ -151,7 +155,11 @@ public final class CScenario implements IScenario
                         ).collect( Collectors.toSet() )
                     )
                 )
-            ).generatemultiple( 1 );
+            ).generatemultiple(
+                p_config.<Number>getOrDefault( 1, "count" ).intValue()
+
+
+            );
         }
         catch ( final Exception l_exception )
         {

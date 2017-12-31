@@ -35,8 +35,10 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -87,14 +89,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      * current speed in km/h
      */
     private final AtomicDouble m_speed = new AtomicDouble( );
-    /**
-     * lane index cache for access from variable builder
-     */
-    private final AtomicDouble m_lane = new AtomicDouble();
     /*
      * current position on lane / cell position
      */
-    private final DoubleMatrix1D m_position;
+    private final DoubleMatrix1D m_position = new DenseDoubleMatrix1D( 2 );
     /**
      * backward view
      */
@@ -109,19 +107,15 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      *
      * @param p_configuration agent configuration
      * @param p_id name of the object
-     * @param p_start start position
      * @param p_acceleration accelerate speed
      * @param p_deceleration decelerate speed
      */
     private CVehicle( @Nonnull final IAgentConfiguration<IVehicle> p_configuration, @Nonnull final IScenario p_scenario,
-                      @Nonnull final String p_id, @Nonnull final DoubleMatrix1D p_start,
-                      @Nonnegative final double p_maximumspeed, @Nonnegative final double p_acceleration, @Nonnegative final double p_deceleration
+                      @Nonnull final String p_id, @Nonnegative final double p_maximumspeed, @Nonnegative final double p_acceleration,
+                      @Nonnegative final double p_deceleration
     )
     {
         super( p_configuration, FUNCTOR, p_id );
-
-        if ( p_maximumspeed < 120 )
-            throw new RuntimeException( "maximum speed to low" );
 
         if ( ( p_acceleration < 2 ) || ( p_deceleration < 2 ) )
             throw new RuntimeException( "acceleration or deceleration is to low" );
@@ -129,11 +123,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         if ( p_deceleration <= p_acceleration )
             throw new RuntimeException( "deceleration should be greater or equal than acceleration" );
 
-
         m_scenario = p_scenario;
-
-        m_lane.set( p_start.getQuick( 0 ) );
-        m_position = p_start;
 
         m_maximumspeed = p_maximumspeed;
         m_accelerate = p_acceleration;
@@ -217,7 +207,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @Override
     public final Number lane()
     {
-        return m_lane.get();
+        return m_position.get( 0 );
     }
 
     @Override
@@ -298,8 +288,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         final Number l_lane = this.position().get( 0 ) - 1;
         if ( !m_scenario.environment().lanechange( this, l_lane ) )
             this.oncollision();
-        else
-            m_lane.set( l_lane.intValue() );
     }
 
     /**
@@ -312,8 +300,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         final Number l_lane = this.position().get( 0 ) + 1;
         if ( !m_scenario.environment().lanechange( this, l_lane ) )
             this.oncollision();
-        else
-            m_lane.set( l_lane.intValue() );
     }
 
     /**
@@ -389,17 +375,34 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         @Override
         public final IVehicle generatesingle( @Nullable final Object... p_data )
         {
-            return new CVehicle(
+            Objects.requireNonNull( p_data );
+            if ( p_data.length != 3 )
+                throw new RuntimeException( "parameter number are wrong" );
+
+            final IVehicle l_vehicle = new CVehicle(
                 m_configuration,
                 m_scenario,
                 MessageFormat.format( "{0}{1}", m_name, m_conter.getAndIncrement() ),
 
-                (DoubleMatrix1D) p_data[0],
+                ( (Number) p_data[0] ).doubleValue(),
                 ( (Number) p_data[1] ).doubleValue(),
-
-                ( (Number) p_data[2] ).doubleValue(),
-                ( (Number) p_data[3] ).doubleValue()
+                ( (Number) p_data[2] ).doubleValue()
             );
+
+            final DoubleMatrix1D l_position = new DenseDoubleMatrix1D(
+                new double[]{
+                    ThreadLocalRandom.current().nextDouble() * m_scenario.environment().lanes().doubleValue(),
+                    ThreadLocalRandom.current().nextDouble() * m_scenario.environment().cells().doubleValue(),
+                }
+            );
+
+            while ( !m_scenario.environment().set( l_vehicle, l_position ) )
+            {
+                l_position.set( 0, ThreadLocalRandom.current().nextDouble() * m_scenario.environment().lanes().doubleValue() );
+                l_position.set( 1, ThreadLocalRandom.current().nextDouble() * m_scenario.environment().cells().doubleValue() );
+            }
+
+            return l_vehicle;
         }
 
     }
