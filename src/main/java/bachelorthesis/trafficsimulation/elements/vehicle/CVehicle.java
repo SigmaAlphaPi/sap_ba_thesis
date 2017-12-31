@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -389,17 +390,18 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                 ( (Number) p_data[2] ).doubleValue()
             );
 
+            final Random l_random = ThreadLocalRandom.current();
             final DoubleMatrix1D l_position = new DenseDoubleMatrix1D(
                 new double[]{
-                    ThreadLocalRandom.current().nextDouble() * m_scenario.environment().lanes().doubleValue(),
-                    ThreadLocalRandom.current().nextDouble() * m_scenario.environment().cells().doubleValue(),
+                    l_random.nextDouble() * m_scenario.environment().lanes().doubleValue(),
+                    l_random.nextDouble() * m_scenario.environment().cells().doubleValue(),
                 }
             );
 
             while ( !m_scenario.environment().set( l_vehicle, l_position ) )
             {
-                l_position.set( 0, ThreadLocalRandom.current().nextDouble() * m_scenario.environment().lanes().doubleValue() );
-                l_position.set( 1, ThreadLocalRandom.current().nextDouble() * m_scenario.environment().cells().doubleValue() );
+                l_position.set( 0, l_random.nextDouble() * m_scenario.environment().lanes().doubleValue() );
+                l_position.set( 1, l_random.nextDouble() * m_scenario.environment().cells().doubleValue() );
             }
 
             return l_vehicle;

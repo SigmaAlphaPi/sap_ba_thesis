@@ -156,9 +156,10 @@ public final class CScenario implements IScenario
                     )
                 )
             ).generatemultiple(
-                p_config.<Number>getOrDefault( 1, "count" ).intValue()
-
-
+                p_config.<Number>getOrDefault( 1, "count" ).intValue(),
+                randomvalue( p_config, l_random, "speed", 75, 250 ),
+                randomvalue( p_config, l_random, "acceleration", 3.5, 7.5 ),
+                randomvalue( p_config, l_random, "deceleration", 8, 10 )
             );
         }
         catch ( final Exception l_exception )
@@ -166,6 +167,24 @@ public final class CScenario implements IScenario
             Logger.error( "error on reading asl file [{0}]", l_exception.getMessage() );
             throw new RuntimeException( l_exception );
         }
+    }
+
+    /**
+     * generates a random value by vehicle configuration
+     *
+     * @param p_config vehicle configuration tree
+     * @param p_random random definition
+     * @param p_name name of the configuration set
+     * @param p_min default min value
+     * @param p_max default max value
+     * @return value
+     */
+    private Number randomvalue( @Nonnull final ITree p_config, final Random p_random, @Nonnull final String p_name,
+                                @Nonnull final Number p_min, @Nonnull final Number p_max )
+    {
+        return p_config.<Number>getOrDefault( p_min, p_name, "min" ).doubleValue()
+            + p_random.nextDouble() * ( p_config.<Number>getOrDefault( p_max, p_name, "max" ).doubleValue()
+                                    - p_config.<Number>getOrDefault( 100, p_name, "min" ).doubleValue() );
     }
 
     @Override
