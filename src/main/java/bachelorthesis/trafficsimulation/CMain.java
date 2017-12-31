@@ -89,6 +89,9 @@ public final class CMain
             return;
         }
 
+        if ( !l_cli.hasOption( "scenario" ) )
+            throw new RuntimeException( "no scenario configuration is set" );
+
         ERuntime.INSTANCE.accept( new CScenario( l_cli.getOptionValue( "scenario" ) ) );
     }
 
