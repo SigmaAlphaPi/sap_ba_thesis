@@ -119,10 +119,9 @@ public final class CEnvironment implements IEnvironment
     @Nonnull
     @Override
     @SuppressWarnings( "unchecked" )
-    public final synchronized Stream<? extends IObject<?>> get( @Nonnull final Stream<DoubleMatrix1D> p_position )
+    public final Stream<? extends IObject<?>> get( @Nonnull final Stream<DoubleMatrix1D> p_position )
     {
-        return p_position.map( i -> (IObject<?>) m_grid.getQuick( (int) i.getQuick( 0 ), (int) i.getQuick( 1 ) ) )
-                         .filter( Objects::nonNull );
+        return p_position.map( i -> (IObject<?>) m_grid.getQuick( (int) i.getQuick( 0 ), (int) i.getQuick( 1 ) ) ).filter( Objects::nonNull );
     }
 
     @Override

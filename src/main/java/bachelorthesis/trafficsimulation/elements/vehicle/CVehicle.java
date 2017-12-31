@@ -4,6 +4,8 @@ import bachelorthesis.trafficsimulation.common.CMath;
 import bachelorthesis.trafficsimulation.common.EDirection;
 import bachelorthesis.trafficsimulation.elements.IBaseObject;
 import bachelorthesis.trafficsimulation.elements.IObject;
+import bachelorthesis.trafficsimulation.elements.actions.CBroadcastAction;
+import bachelorthesis.trafficsimulation.elements.actions.CSendAction;
 import bachelorthesis.trafficsimulation.scenario.IScenario;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
@@ -38,9 +40,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
@@ -149,6 +153,13 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             new DenseDoubleMatrix1D( new double[]{this.position().get( 0 ), l_goal} ),
             m_scenario.unit().speedtocell( this.speed() ).doubleValue()
         );
+    }
+
+    @Nonnull
+    @Override
+    public final Map<String, IObject<?>> neighbours()
+    {
+        return m_viewrange.m_neighbour;
     }
 
     @Override
@@ -315,8 +326,14 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
          */
         private static final Set<IAction> ACTIONS = Collections.unmodifiableSet(
             Stream.concat(
-                CCommon.actionsFromAgentClass( CVehicle.class ),
-                CCommon.actionsFromPackage()
+                Stream.of(
+                    new CBroadcastAction(),
+                    new CSendAction()
+                ),
+                Stream.concat(
+                    CCommon.actionsFromAgentClass( CVehicle.class ),
+                    CCommon.actionsFromPackage()
+                )
             ).collect( Collectors.toSet() )
         );
         /**
@@ -438,6 +455,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
          * object cache with distance and literal
          */
         private final List<ILiteral> m_cache = new CopyOnWriteArrayList<>();
+        /**
+         * neighbour objects
+         */
+        private final Map<String, IObject<?>> m_neighbour = new ConcurrentHashMap<>();
 
         /**
          * ctor
@@ -485,6 +506,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         public final void run()
         {
             m_cache.clear();
+            m_neighbour.clear();
             m_scenario.environment().get(
                 m_position.parallelStream()
                           .map( i -> new DenseDoubleMatrix1D( CVehicle.this.m_position.toArray() ).assign( i, DoubleFunctions.plus ) )
@@ -492,6 +514,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             )
                          .parallel()
                          .filter( i -> !i.equals( CVehicle.this ) )
+                         .peek( i -> m_neighbour.put( i.id(), i ) )
                          .map( i -> new ImmutablePair<>( m_scenario.unit().celltometer( CMath.distance( CVehicle.this.position(), i.position() ) ), i ) )
                          .sorted( Comparator.comparingDouble( i -> i.getLeft().doubleValue() ) )
                          .map( ImmutablePair::getRight )
