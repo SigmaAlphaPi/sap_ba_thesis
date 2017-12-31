@@ -1,5 +1,6 @@
 package bachelorthesis.trafficsimulation.elements.environment;
 
+import bachelorthesis.trafficsimulation.elements.IObject;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import bachelorthesis.trafficsimulation.statistic.IStatistic;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
@@ -7,7 +8,9 @@ import cern.colt.matrix.tobject.ObjectMatrix2D;
 import cern.colt.matrix.tobject.impl.SparseObjectMatrix2D;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 
 /**
@@ -111,6 +114,24 @@ public final class CEnvironment implements IEnvironment
             p_vehicle.position().setQuick( 0, p_lane.doubleValue() );
             return true;
         }
+    }
+
+    @Nonnull
+    @Override
+    @SuppressWarnings( "unchecked" )
+    public final synchronized Stream<? extends IObject<?>> get( @Nonnull final Stream<DoubleMatrix1D> p_position )
+    {
+        return p_position.map( i -> (IObject<?>) m_grid.getQuick( (int) i.getQuick( 0 ), (int) i.getQuick( 1 ) ) )
+                         .filter( Objects::nonNull );
+    }
+
+    @Override
+    public final boolean isinside( @Nonnull final DoubleMatrix1D p_position )
+    {
+        return ( p_position.getQuick( 0 ) >= 0 )
+               && ( p_position.getQuick( 1 ) >= 0 )
+               && ( p_position.getQuick( 0 ) < m_grid.rows() )
+               && ( p_position.getQuick( 1 ) < m_grid.columns() );
     }
 
     @Override

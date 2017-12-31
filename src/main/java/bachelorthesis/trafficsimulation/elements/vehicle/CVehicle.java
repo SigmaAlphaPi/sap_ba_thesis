@@ -7,7 +7,9 @@ import bachelorthesis.trafficsimulation.elements.IObject;
 import bachelorthesis.trafficsimulation.scenario.IScenario;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
+import cern.jet.math.tdouble.DoubleFunctions;
 import com.google.common.util.concurrent.AtomicDouble;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.lightjason.agentspeak.action.IAction;
 import org.lightjason.agentspeak.action.binding.IAgentAction;
 import org.lightjason.agentspeak.action.binding.IAgentActionFilter;
@@ -34,6 +36,7 @@ import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -56,14 +59,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private static final long serialVersionUID = 3822143462033345857L;
     /**
-     * fixed view distance forward in meter
-     */
-    private static final double FORWARDDISTANCE = 450;
-    /**
-     * fixed view distance backward in meter
-     */
-    private static final double BACKWARDDISTANCE = 150;
-    /**
      * literal functor
      */
     private static final String FUNCTOR = "vehicle";
@@ -76,12 +71,12 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      * @warning must be in (0, infinity)
      */
     @Nonnegative
-    private final double m_accelerate;
+    private final double m_acceleration;
     /**
      * decelerate speed in m/sec^2
      * @warning must be in (0, infinity)
      */
-    private final double m_decelerate;
+    private final double m_deceleration;
     /**
      * maximum speed
      */
@@ -97,11 +92,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     /**
      * backward view
      */
-    private final CEnvironmentView m_backwardview;
-    /**
-     * forward view
-     */
-    private final CEnvironmentView m_forwardview;
+    private final CEnvironmentView m_viewrange;
 
     /**
      * ctor
@@ -111,43 +102,28 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      * @param p_acceleration accelerate speed
      * @param p_deceleration decelerate speed
      */
-    private CVehicle( @Nonnull final IAgentConfiguration<IVehicle> p_configuration, @Nonnull final IScenario p_scenario,
-                      @Nonnull final String p_id, @Nonnegative final double p_maximumspeed, @Nonnegative final double p_acceleration,
-                      @Nonnegative final double p_deceleration
-    )
+    private CVehicle( @Nonnull final IAgentConfiguration<IVehicle> p_configuration, @Nonnull final IScenario p_scenario, @Nonnull final String p_id,
+                      @Nonnull @Nonnegative final Number p_maximumspeed, @Nonnull @Nonnegative final Number p_acceleration, @Nonnull@Nonnegative final Number p_deceleration,
+                      @Nonnull @Nonnegative final Number p_viewrange )
     {
         super( p_configuration, FUNCTOR, p_id );
 
-        if ( ( p_acceleration < 2 ) || ( p_deceleration < 2 ) )
-            throw new RuntimeException( "acceleration or deceleration is to low" );
+        m_scenario = p_scenario;
+        m_maximumspeed = p_maximumspeed.doubleValue();
+        m_acceleration = p_acceleration.doubleValue();
+        m_deceleration = p_deceleration.doubleValue();
 
-        if ( p_deceleration <= p_acceleration )
+        if ( ( m_acceleration < 2 ) || ( m_deceleration < 2 ) )
+            throw new RuntimeException( "acceleration or deceleration is to low" );
+        if ( m_deceleration <= m_acceleration )
             throw new RuntimeException( "deceleration should be greater or equal than acceleration" );
 
-        m_scenario = p_scenario;
-
-        m_maximumspeed = p_maximumspeed;
-        m_accelerate = p_acceleration;
-        m_decelerate = p_deceleration;
-
-        m_backwardview = new CEnvironmentView(
+        m_viewrange = new CEnvironmentView(
             Collections.unmodifiableSet(
-                CMath.cellangle( m_scenario.unit().metertocell( BACKWARDDISTANCE ), 135, 225 ).collect( Collectors.toSet() )
+                CMath.cellcircle( m_scenario.unit().metertocell( p_viewrange ) ).collect( Collectors.toSet() )
             )
         );
-
-        m_forwardview = new CEnvironmentView(
-            Collections.unmodifiableSet(
-                Stream.concat(
-                    CMath.cellangle( m_scenario.unit().metertocell( FORWARDDISTANCE ), 0, 60 ),
-                    CMath.cellangle( m_scenario.unit().metertocell( FORWARDDISTANCE ), 300, 359.99 )
-                ).collect( Collectors.toSet() )
-            )
-        );
-
-        // beliefbase
-        m_beliefbase.add( m_backwardview.create( "backward", m_beliefbase ) );
-        m_beliefbase.add( m_forwardview.create( "forward", m_beliefbase ) );
+        m_beliefbase.add( m_viewrange.create( "view", m_beliefbase ) );
     }
 
     @Nonnull
@@ -189,14 +165,14 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @Nonnegative
     public final double acceleration()
     {
-        return m_accelerate;
+        return m_acceleration;
     }
 
     @Override
     @Nonnegative
     public final double deceleration()
     {
-        return m_decelerate;
+        return m_deceleration;
     }
 
     @Override
@@ -221,8 +197,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     public final IVehicle call() throws Exception
     {
         // update beliefbase
-        m_backwardview.run();
-        m_forwardview.run();
+        m_viewrange.run();
 
         super.call();
 
@@ -253,7 +228,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     private void accelerate( final Number p_strength )
     {
         final double l_value = m_speed.get() + m_scenario.unit().accelerationtospeed(
-            m_accelerate * Math.max( 0, Math.min( 1, p_strength.doubleValue() ) )
+            m_acceleration * Math.max( 0, Math.min( 1, p_strength.doubleValue() ) )
         ).doubleValue();
 
         if (  l_value > m_maximumspeed )
@@ -270,7 +245,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     private void decelerate( final Number p_strength )
     {
         final double l_value = m_speed.get() - m_scenario.unit().accelerationtospeed(
-            m_decelerate * Math.max( 0, Math.min( 1, p_strength.doubleValue() ) )
+            m_deceleration * Math.max( 0, Math.min( 1, p_strength.doubleValue() ) )
         ).doubleValue();
 
         if (  l_value < 0 )
@@ -377,7 +352,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         public final IVehicle generatesingle( @Nullable final Object... p_data )
         {
             Objects.requireNonNull( p_data );
-            if ( p_data.length != 3 )
+            if ( p_data.length != 4 )
                 throw new RuntimeException( "parameter number are wrong" );
 
             final IVehicle l_vehicle = new CVehicle(
@@ -385,9 +360,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                 m_scenario,
                 MessageFormat.format( "{0}{1}", m_name, m_conter.getAndIncrement() ),
 
-                ( (Number) p_data[0] ).doubleValue(),
-                ( (Number) p_data[1] ).doubleValue(),
-                ( (Number) p_data[2] ).doubleValue()
+                (Number) p_data[0],
+                (Number) p_data[1],
+                (Number) p_data[2],
+                (Number) p_data[3]
             );
 
             final Random l_random = ThreadLocalRandom.current();
@@ -509,20 +485,18 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         public final void run()
         {
             m_cache.clear();
-            /*
-            m_environment.get(
+            m_scenario.environment().get(
                 m_position.parallelStream()
-                          .map( i -> new DenseDoubleMatrix1D( CVehicle.this.m_position.toArray() ).assign( i, Functions.plus ) )
-                          .filter( m_environment::isinside )
+                          .map( i -> new DenseDoubleMatrix1D( CVehicle.this.m_position.toArray() ).assign( i, DoubleFunctions.plus ) )
+                          .filter( i -> m_scenario.environment().isinside( i ) )
             )
                          .parallel()
                          .filter( i -> !i.equals( CVehicle.this ) )
-                         .map( i -> new ImmutablePair<>( EUnit.INSTANCE.celltometer( CMath.distance( CVehicle.this.position(), i.position() ) ),  i ) )
+                         .map( i -> new ImmutablePair<>( m_scenario.unit().celltometer( CMath.distance( CVehicle.this.position(), i.position() ) ), i ) )
                          .sorted( Comparator.comparingDouble( i -> i.getLeft().doubleValue() ) )
                          .map( ImmutablePair::getRight )
                          .map( i -> i.literal( CVehicle.this ) )
                          .forEachOrdered( m_cache::add );
-            */
         }
     }
 }

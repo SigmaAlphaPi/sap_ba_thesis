@@ -47,7 +47,7 @@ agent:
             count: 50
 
             # view range in meters around a vehicle (should be greater than cell size)
-            viewrange_in_meter: 5
+            viewrange_in_meter: 50
 
             # local constant values for this vehicle
             costant:

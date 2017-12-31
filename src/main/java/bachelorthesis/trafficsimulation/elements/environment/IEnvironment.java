@@ -1,9 +1,11 @@
 package bachelorthesis.trafficsimulation.elements.environment;
 
+import bachelorthesis.trafficsimulation.elements.IObject;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 
 import javax.annotation.Nonnull;
+import java.util.stream.Stream;
 
 
 /**
@@ -37,6 +39,24 @@ public interface IEnvironment extends Runnable
      * @return changing successful
      */
     boolean lanechange( @Nonnull IVehicle p_vehicle, final Number p_lane );
+
+    /**
+     * return an object stream
+     * for each position
+     *
+     * @param p_position position stream
+     * @return object stream
+     */
+    @Nonnull
+    Stream<? extends IObject<?>> get( @Nonnull final Stream<DoubleMatrix1D> p_position );
+
+    /**
+     * checks if a position is within the grid
+     *
+     * @param p_position position
+     * @return position is inside
+     */
+    boolean isinside( @Nonnull final DoubleMatrix1D p_position );
 
     /**
      * returns the number of lanes

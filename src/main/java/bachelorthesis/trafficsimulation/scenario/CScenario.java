@@ -159,7 +159,8 @@ public final class CScenario implements IScenario
                 p_config.<Number>getOrDefault( 1, "count" ).intValue(),
                 randomvalue( p_config, l_random, "speed", 75, 250 ),
                 randomvalue( p_config, l_random, "acceleration", 3.5, 7.5 ),
-                randomvalue( p_config, l_random, "deceleration", 8, 10 )
+                randomvalue( p_config, l_random, "deceleration", 8, 10 ),
+                p_config.<Number>getOrDefault( 50, "viewrange" )
             );
         }
         catch ( final Exception l_exception )
