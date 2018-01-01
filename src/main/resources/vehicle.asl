@@ -45,3 +45,9 @@
 
 // --- pull-out fails then decelerate ---
 -!vehicle/collision <- vehicle/decelerate(1).
+
+
+// --- receive message ---
++!message/receive( message(M), from(F) ) <-
+    generic/print( "get message", M, "from", F )
+.

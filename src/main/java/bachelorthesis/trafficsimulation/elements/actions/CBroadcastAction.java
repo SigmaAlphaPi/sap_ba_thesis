@@ -4,13 +4,11 @@ import bachelorthesis.trafficsimulation.elements.IObject;
 import org.lightjason.agentspeak.common.CPath;
 import org.lightjason.agentspeak.common.IPath;
 import org.lightjason.agentspeak.language.CCommon;
-import org.lightjason.agentspeak.language.CLiteral;
 import org.lightjason.agentspeak.language.CRawTerm;
 import org.lightjason.agentspeak.language.ITerm;
 import org.lightjason.agentspeak.language.execution.IContext;
 import org.lightjason.agentspeak.language.fuzzy.CFuzzyValue;
 import org.lightjason.agentspeak.language.fuzzy.IFuzzyValue;
-import org.lightjason.agentspeak.language.instantiable.plan.trigger.CTrigger;
 import org.lightjason.agentspeak.language.instantiable.plan.trigger.ITrigger;
 
 import javax.annotation.Nonnegative;
@@ -60,16 +58,13 @@ public final class CBroadcastAction extends ICommunication
         if ( l_arguments.size() < 2 )
             return CFuzzyValue.from( false );
 
-        final ITerm l_sender = CLiteral.from( FROMFUNCTOR, CRawTerm.from( p_context.agent().<IObject<?>>raw().id() ) );
+        final ITerm l_sender = sender( p_context.agent() );
         final List<ITrigger> l_trigger = l_arguments.stream()
                                                     .skip( 1 )
                                                     .parallel()
                                                     .map( ITerm::raw )
                                                     .map( CRawTerm::from )
-                                                    .map( i -> CTrigger.from(
-                                                        RECEIVETRIGGER,
-                                                        CLiteral.from( RECEIVEFUNCTOR, CLiteral.from( MESSAGEFUNCTOR, i ), l_sender )
-                                                    ) )
+                                                    .map( i -> message( l_sender, i ) )
                                                     .collect( Collectors.toList() );
 
         final Pattern l_regex = Pattern.compile( Objects.requireNonNull( l_arguments.get( 0 ).<String>raw() ) );
