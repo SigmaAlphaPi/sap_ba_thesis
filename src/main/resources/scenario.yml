@@ -26,9 +26,6 @@ environment:
     # length if the lane in kilometer
     length_in_km: 25
 
-    # maximum allowed speed on the street
-    maximum_speed: 50
-
 
 # agent vehicle configuration
 agent:
