@@ -127,7 +127,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
 
     @Nonnull
     @Override
-    public final synchronized DoubleMatrix1D position()
+    public final DoubleMatrix1D position()
     {
         return m_position;
     }
