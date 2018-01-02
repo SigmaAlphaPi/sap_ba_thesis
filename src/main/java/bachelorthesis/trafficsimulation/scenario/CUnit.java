@@ -106,7 +106,7 @@ public class CUnit implements IUnit
     @Override
     public final Number time()
     {
-        return m_timestep;
+        return m_timestep / 60D;
     }
 
     @Override

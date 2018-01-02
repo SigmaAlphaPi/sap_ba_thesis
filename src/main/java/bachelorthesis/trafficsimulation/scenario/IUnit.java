@@ -90,7 +90,7 @@ public interface IUnit
     /**
      * returns the timestep in seconds
      *
-     * @return timestep
+     * @return timestep in minutes
      */
     Number time();
 

@@ -5,18 +5,27 @@ import bachelorthesis.trafficsimulation.elements.environment.CEnvironment;
 import bachelorthesis.trafficsimulation.elements.environment.IEnvironment;
 import bachelorthesis.trafficsimulation.elements.vehicle.CVehicle;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
+import bachelorthesis.trafficsimulation.statistic.CDescriptiveStatisticSerializer;
+import bachelorthesis.trafficsimulation.statistic.CSummaryStatisticSerializer;
 import bachelorthesis.trafficsimulation.statistic.EStatistic;
 import bachelorthesis.trafficsimulation.statistic.IStatistic;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.lightjason.agentspeak.language.variable.CConstant;
 import org.lightjason.agentspeak.language.variable.IVariable;
 import org.pmw.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import javax.annotation.Nonnull;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
@@ -48,6 +57,14 @@ public final class CScenario implements IScenario
      */
     private final Set<IVehicle> m_vehicles;
     /**
+     * serializing feature of json result
+     */
+    private final SerializationFeature m_serializationfeature;
+    /**
+     * result filename
+     */
+    private final String m_resultfilename;
+    /**
      * number of execution cycles
      */
     private final long m_cycles;
@@ -62,17 +79,26 @@ public final class CScenario implements IScenario
     {
         final ITree l_configuration = load( p_configuration );
 
+        m_resultfilename = p_configuration.replace( ".yaml", "" ).replace( ".yml", "" ) + ".json";
+
         m_statistic = EStatistic.from( l_configuration.getOrDefault( "summary", "main", "statistic" ) ).build();
+
         m_unit = new CUnit(
             l_configuration.getOrDefault( 7.5, "main", "unit", "cellsize_in_meter" ),
-            l_configuration.getOrDefault( 1, "main", "unit", "time_in_minutes" )
+            l_configuration.getOrDefault( 1, "main", "unit", "timestep_in_minutes" )
         );
+
         m_environment = new CEnvironment(
             m_unit.kilometertocell( l_configuration.getOrDefault( 1, "environment", "length_in_km" ) ),
             l_configuration.getOrDefault( 1, "environment", "lanes" ),
             m_statistic
         );
+
         m_cycles = m_unit.timeinminutes( l_configuration.getOrDefault( 1, "main", "simulationtime_in_minutes" ) ).longValue();
+
+        m_serializationfeature = l_configuration.<Boolean>getOrDefault( false, "main", "prettyprint" )
+                                 ? SerializationFeature.INDENT_OUTPUT
+                                 : SerializationFeature.CLOSE_CLOSEABLE;
 
 
 
@@ -218,6 +244,37 @@ public final class CScenario implements IScenario
     public final IStatistic statistic()
     {
         return m_statistic;
+    }
+
+    @Override
+    public final void store()
+    {
+        // static configuration
+        final Map<String, Object> l_configuration = new HashMap<>();
+        l_configuration.put( "simulationtime_in_minutes", m_unit.timeinminutes( m_cycles ) );
+        l_configuration.put( "cellsize_in_meter", m_unit.cellsize() );
+        l_configuration.put( "timestep_in_minutes", m_unit.time() );
+
+        // create main object structure
+        final Map<String, Object> l_result = new HashMap<>();
+        l_result.put( "configuration", l_configuration );
+        l_result.put( "simulation", m_statistic.get() );
+
+        try
+        {
+            new ObjectMapper()
+                .enable( m_serializationfeature )
+                .registerModules(
+                    new SimpleModule().addSerializer( CDescriptiveStatisticSerializer.CLASS, new CDescriptiveStatisticSerializer() ),
+                    new SimpleModule().addSerializer( CSummaryStatisticSerializer.CLASS, new CSummaryStatisticSerializer() )
+                )
+                .writeValue( new File( m_resultfilename ), l_result );
+        }
+        catch ( final IOException l_exception )
+        {
+            Logger.error( "error on storing [{}]", l_exception.getMessage() );
+            throw new UncheckedIOException( l_exception );
+        }
     }
 
 }

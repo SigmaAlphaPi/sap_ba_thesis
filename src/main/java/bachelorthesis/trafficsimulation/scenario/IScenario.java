@@ -50,4 +50,9 @@ public interface IScenario
      */
     IStatistic statistic();
 
+    /**
+     * stores the statistic data
+     */
+    void store();
+
 }

@@ -25,6 +25,8 @@ public enum ERuntime implements IRuntime
                                 .parallel()
                                 .forEach( this::execute );
                   } );
+
+        p_scenario.store();
     }
 
     /**
