@@ -1,5 +1,6 @@
 package bachelorthesis.trafficsimulation.elements;
 
+import bachelorthesis.trafficsimulation.scenario.IScenario;
 import org.lightjason.agentspeak.action.IAction;
 import org.lightjason.agentspeak.agent.IAgent;
 import org.lightjason.agentspeak.agent.IBaseAgent;
@@ -48,6 +49,10 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
      */
     private static final long serialVersionUID = 6278806527768825298L;
     /**
+     * scenario
+     */
+    protected final IScenario m_scenario;
+    /**
      * functor definition
      */
     private final String m_functor;
@@ -66,15 +71,18 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
      * ctor
      *
      * @param p_configuration agent configuration
+     * @param p_scenario scenario defintion
      * @param p_functor functor of the object literal
      * @param p_id name of the object
      */
-    protected IBaseObject( @Nonnull final IAgentConfiguration<T> p_configuration, @Nonnull final String p_functor, @Nonnull final String p_id )
+    protected IBaseObject( @Nonnull final IAgentConfiguration<T> p_configuration, @Nonnull final IScenario p_scenario,
+                           @Nonnull final String p_functor, @Nonnull final String p_id )
     {
         super( p_configuration );
 
         m_id = p_id;
         m_functor = p_functor;
+        m_scenario = p_scenario;
         m_dynamicbeliefs = m_beliefbase.beliefbase().view( DYNAMICBELIEFBASE );
         Objects.requireNonNull( m_dynamicbeliefs, "dynamic beliefbase is null, cannot create object" );
     }
@@ -102,6 +110,12 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
                 )
             )
         );
+    }
+
+    @Override
+    public final IScenario scenario()
+    {
+        return m_scenario;
     }
 
     /**
@@ -213,7 +227,8 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
         public Stream<IVariable<?>> apply( final IAgent<?> p_agent, final IInstantiable p_instantiable )
         {
             return Stream.of(
-                new CConstant<>( "ID", p_agent.<IObject<?>>raw().id() )
+                new CConstant<>( "ID", p_agent.<IObject<?>>raw().id() ),
+                new CConstant<>( "Timestep", p_agent.<IObject<?>>raw().scenario().unit().time() )
             );
         }
     }

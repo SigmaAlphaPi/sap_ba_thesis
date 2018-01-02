@@ -1,5 +1,6 @@
 package bachelorthesis.trafficsimulation.elements;
 
+import bachelorthesis.trafficsimulation.scenario.IScenario;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import org.lightjason.agentspeak.agent.IAgent;
 import org.lightjason.agentspeak.generator.IAgentGenerator;
@@ -36,6 +37,13 @@ public interface IObject<T extends IAgent<?>> extends IPerceiveable, IAgent<T>
      */
     @Nonnull
     DoubleMatrix1D nextposition();
+
+    /**
+     * returns scenario
+     *
+     * @return scenario
+     */
+    IScenario scenario();
 
     /**
      * generator interface

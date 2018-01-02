@@ -36,7 +36,7 @@ agent:
     # global constants for all vehicles (constant name
     # must start with an upper-case letter)
     constant:
-        GlobalValue: 5
+        AllowedSpeed: 80
 
     # all vehicle configuration, key is the filename of the filename
     # AgentSpeak(L++) script relative to configuration file

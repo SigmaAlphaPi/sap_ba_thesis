@@ -67,10 +67,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private static final String FUNCTOR = "vehicle";
     /**
-     * scenario
-     */
-    private final IScenario m_scenario;
-    /**
      * accelerate speed in m/sec^2
      * @warning must be in (0, infinity)
      */
@@ -110,9 +106,8 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                       @Nonnull @Nonnegative final Number p_maximumspeed, @Nonnull @Nonnegative final Number p_acceleration, @Nonnull@Nonnegative final Number p_deceleration,
                       @Nonnull @Nonnegative final Number p_viewrange )
     {
-        super( p_configuration, FUNCTOR, p_id );
+        super( p_configuration, p_scenario, FUNCTOR, p_id );
 
-        m_scenario = p_scenario;
         m_maximumspeed = p_maximumspeed.doubleValue();
         m_acceleration = p_acceleration.doubleValue();
         m_deceleration = p_deceleration.doubleValue();
@@ -307,7 +302,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      * @param p_value statistic value
      */
     @IAgentActionFilter
-    @IAgentActionName( name = "scneario/statistic" )
+    @IAgentActionName( name = "scenario/statistic" )
     private void statistic( final String p_name, final Number p_value )
     {
         m_scenario.statistic().accept( p_name, p_value );
