@@ -3,6 +3,7 @@ package bachelorthesis.trafficsimulation.common;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra;
+import cern.colt.matrix.tdouble.algo.DoubleFormatter;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.jet.math.tdouble.DoubleFunctions;
@@ -21,6 +22,17 @@ public final class CMath
      * reference to global algebra instance
      */
     public static final DenseDoubleAlgebra ALGEBRA = DenseDoubleAlgebra.DEFAULT;
+    /**
+     * matrix formatter
+     */
+    public static final DoubleFormatter MATRIXFORMAT = new DoubleFormatter();
+
+    static
+    {
+        MATRIXFORMAT.setRowSeparator( "; " );
+        MATRIXFORMAT.setColumnSeparator( "," );
+        MATRIXFORMAT.setPrintShape( false );
+    }
 
     /**
      * pvate ctor

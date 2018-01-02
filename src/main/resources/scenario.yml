@@ -2,7 +2,7 @@
 main:
 
     # statistic result ("summary" = aggregated values, "descriptive" = aggregated & single values)
-    statistic: "summary"
+    statistic: "descriptive"
 
     # simulated time
     simulationtime_in_minutes: 60
@@ -24,10 +24,10 @@ main:
 environment:
 
     # number of lanes
-    lanes: 4
+    lanes: 1
 
     # length if the lane in kilometer
-    length_in_km: 25
+    length_in_km: 100
 
 
 # agent vehicle configuration
@@ -44,7 +44,7 @@ agent:
         vehicle.asl:
 
             # number of generated vehicles
-            count: 50
+            count: 1
 
             # view range in meters around a vehicle (should be greater than cell size)
             viewrange_in_meter: 50
