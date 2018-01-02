@@ -5,13 +5,14 @@ import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 
 import javax.annotation.Nonnull;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 
 /**
  * interface of the environment
  */
-public interface IEnvironment extends Runnable
+public interface IEnvironment extends Consumer<Number>
 {
 
     /**

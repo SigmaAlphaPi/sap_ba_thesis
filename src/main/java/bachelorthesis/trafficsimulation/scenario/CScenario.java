@@ -12,6 +12,7 @@ import bachelorthesis.trafficsimulation.statistic.IStatistic;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.lightjason.agentspeak.language.variable.CConstant;
 import org.lightjason.agentspeak.language.variable.IVariable;
 import org.pmw.tinylog.Logger;
@@ -25,6 +26,7 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -91,7 +93,7 @@ public final class CScenario implements IScenario
         m_environment = new CEnvironment(
             m_unit.kilometertocell( l_configuration.getOrDefault( 1, "environment", "length_in_km" ) ),
             l_configuration.getOrDefault( 1, "environment", "lanes" ),
-            m_statistic
+            this
         );
 
         m_cycles = m_unit.timeinminutes( l_configuration.getOrDefault( 1, "main", "simulationtime_in_minutes" ) ).longValue();
@@ -255,10 +257,48 @@ public final class CScenario implements IScenario
         l_configuration.put( "cellsize_in_meter", m_unit.cellsize() );
         l_configuration.put( "timestep_in_minutes", m_unit.time() );
 
+
+        // aggregate simulation data
+        final Map<String, Object> l_simulation = new HashMap<>();
+
+        l_simulation.put(
+            "lanedensity",
+            m_statistic.get()
+                       .entrySet()
+                       .stream()
+                       .filter( i -> i.getKey().startsWith( "lanedensity-" ) )
+                       .map( i -> new ImmutablePair<>( Integer.valueOf( i.getKey().replace( "lanedensity-", "" ) ), i.getValue() ) )
+                       .sorted( Comparator.comparingLong( ImmutablePair::getLeft ) )
+                       .map( ImmutablePair::getRight )
+                       .collect( Collectors.toList() )
+        );
+
+        l_simulation.put(
+            "speed",
+            m_statistic.get()
+                       .entrySet()
+                       .stream()
+                       .filter( i -> i.getKey().startsWith( "speed-" ) )
+                       .map( i -> new ImmutablePair<>( Long.valueOf( i.getKey().replace( "speed-", "" ) ), i.getValue() ) )
+                       .sorted( Comparator.comparingLong( ImmutablePair::getLeft ) )
+                       .map( ImmutablePair::getRight )
+                       .collect( Collectors.toList() )
+        );
+
+        l_simulation.putAll(
+            m_statistic.get()
+                       .entrySet()
+                       .parallelStream()
+                       .filter( i -> ( !i.getKey().startsWith( "lanedensity-" ) ) && ( !i.getKey().startsWith( "speed-" ) ) )
+                       .collect( Collectors.toMap( Map.Entry::getKey, Map.Entry::getValue ) )
+        );
+
+
+
         // create main object structure
         final Map<String, Object> l_result = new HashMap<>();
         l_result.put( "configuration", l_configuration );
-        l_result.put( "simulation", m_statistic.get() );
+        l_result.put( "simulation", l_simulation );
 
         try
         {

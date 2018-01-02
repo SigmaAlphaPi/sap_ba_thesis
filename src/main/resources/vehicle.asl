@@ -29,7 +29,7 @@
 !drive.
 
 // --- driving call equal to Nagel-Schreckenberg driving model, on success accelerate ---
-+!drive
++!drive <-
     CurrentSpeed < AllowedSpeed;
     !!linger;
     vehicle/accelerate(1);

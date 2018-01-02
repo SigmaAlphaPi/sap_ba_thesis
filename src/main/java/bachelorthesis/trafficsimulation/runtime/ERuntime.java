@@ -20,7 +20,7 @@ public enum ERuntime implements IRuntime
         LongStream.range( 0, p_scenario.iterations() )
                   .forEach( i ->
                   {
-                      p_scenario.environment().run();
+                      p_scenario.environment().accept( i );
                       p_scenario.vehicles()
                                 .parallel()
                                 .forEach( this::execute );

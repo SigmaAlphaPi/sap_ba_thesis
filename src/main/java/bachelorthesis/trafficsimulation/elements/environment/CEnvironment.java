@@ -2,7 +2,7 @@ package bachelorthesis.trafficsimulation.elements.environment;
 
 import bachelorthesis.trafficsimulation.elements.IObject;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
-import bachelorthesis.trafficsimulation.statistic.IStatistic;
+import bachelorthesis.trafficsimulation.scenario.IScenario;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tobject.ObjectMatrix2D;
 import cern.colt.matrix.tobject.impl.SparseObjectMatrix2D;
@@ -27,9 +27,9 @@ public final class CEnvironment implements IEnvironment
      */
     private final ObjectMatrix2D m_grid;
     /**
-     * statistic
+     * scneario
      */
-    private final IStatistic m_statistic;
+    private final IScenario m_scenario;
 
     /**
      * ctor
@@ -37,10 +37,10 @@ public final class CEnvironment implements IEnvironment
      * @param p_length length of the street in cells
      * @param p_lanes number of lanes
      */
-    public CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes, @Nonnull final IStatistic p_statistic )
+    public CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes, @Nonnull final IScenario p_scenario )
     {
         m_grid = new SparseObjectMatrix2D( p_lanes.intValue(), p_length.intValue() );
-        m_statistic = p_statistic;
+        m_scenario = p_scenario;
     }
 
     @Override
@@ -146,10 +146,16 @@ public final class CEnvironment implements IEnvironment
     }
 
     @Override
-    public final void run()
+    public final void accept( final Number p_number )
     {
         IntStream.range( 0, m_grid.rows() )
                  .parallel()
-                 .forEach( i -> m_statistic.accept( "lanedensity-" + i, (double) m_grid.viewRow( i ).cardinality() / m_grid.columns() ) );
+                 .forEach( i -> m_scenario.statistic().accept( "lanedensity-" + i, (double) m_grid.viewRow( i ).cardinality() / m_grid.columns() ) );
+
+        m_scenario.vehicles()
+                  .parallel()
+                  .forEach( i -> m_scenario.statistic().accept( "speed-" + p_number.longValue(), i.speed() ) );
+
     }
+
 }
