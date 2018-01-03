@@ -108,6 +108,14 @@ public interface IUnit
      * @param p_step step number
      * @return time in minutes
      */
-    Number timeinminutes( final Number p_step );
+    Number steptimeinminutes( final Number p_step );
+
+    /**
+     * returns the number of steps based for the minutes
+     *
+     * @param p_time time in minutes
+     * @return number of steps
+     */
+    Number timeminutesinsteps( final Number p_time );
 
 }

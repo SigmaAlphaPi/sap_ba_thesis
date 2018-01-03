@@ -21,6 +21,7 @@
  *      Acceleration        acceleration in m/sec^2
  *      Deceleration        deceleration in m/sec^2
  *      Timestep            time of a single timestep in minutes
+ *      LaneNumber          number of lanes in the simultion
  */
 
 

@@ -96,7 +96,7 @@ public final class CScenario implements IScenario
             this
         );
 
-        m_cycles = m_unit.timeinminutes( l_configuration.getOrDefault( 1, "main", "simulationtime_in_minutes" ) ).longValue();
+        m_cycles = m_unit.timeminutesinsteps( l_configuration.getOrDefault( 1, "main", "simulationtime_in_minutes" ) ).longValue();
 
         m_serializationfeature = l_configuration.<Boolean>getOrDefault( false, "main", "prettyprint" )
                                  ? SerializationFeature.INDENT_OUTPUT
@@ -213,7 +213,7 @@ public final class CScenario implements IScenario
     {
         return p_config.getOrDefault( p_min, p_name, "min" ).doubleValue()
             + p_random.nextDouble() * ( p_config.getOrDefault( p_max, p_name, "max" ).doubleValue()
-                                    - p_config.<Number>getOrDefault( 100, p_name, "min" ).doubleValue() );
+                                    - p_config.<Number>getOrDefault( p_min, p_name, "min" ).doubleValue() );
     }
 
     @Override
@@ -253,7 +253,7 @@ public final class CScenario implements IScenario
     {
         // static configuration
         final Map<String, Object> l_configuration = new HashMap<>();
-        l_configuration.put( "simulationtime_in_minutes", m_unit.timeinminutes( m_cycles ) );
+        l_configuration.put( "simulationtime_in_minutes", m_unit.steptimeinminutes( m_cycles ) );
         l_configuration.put( "cellsize_in_meter", m_unit.cellsize() );
         l_configuration.put( "timestep_in_minutes", m_unit.time() );
 

@@ -228,7 +228,8 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
         {
             return Stream.of(
                 new CConstant<>( "ID", p_agent.<IObject<?>>raw().id() ),
-                new CConstant<>( "Timestep", p_agent.<IObject<?>>raw().scenario().unit().time() )
+                new CConstant<>( "Timestep", p_agent.<IObject<?>>raw().scenario().unit().time() ),
+                new CConstant<>( "LaneNumber", p_agent.<IObject<?>>raw().scenario().environment().lanes() )
             );
         }
     }

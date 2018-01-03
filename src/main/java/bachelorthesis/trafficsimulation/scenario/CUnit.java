@@ -116,8 +116,14 @@ public class CUnit implements IUnit
     }
 
     @Override
-    public final Number timeinminutes( final Number p_step )
+    public final Number steptimeinminutes( final Number p_step )
     {
         return this.time( p_step ).doubleValue() / 60D;
+    }
+
+    @Override
+    public final Number timeminutesinsteps( final Number p_time )
+    {
+        return p_time.doubleValue() * 60D / m_timestep;
     }
 }
