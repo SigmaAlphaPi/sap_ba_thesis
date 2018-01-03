@@ -88,7 +88,7 @@ public interface IUnit
     Number speedtodistance( final Number p_speed );
 
     /**
-     * returns the timestep in seconds
+     * returns the timestep in minutes
      *
      * @return timestep in minutes
      */

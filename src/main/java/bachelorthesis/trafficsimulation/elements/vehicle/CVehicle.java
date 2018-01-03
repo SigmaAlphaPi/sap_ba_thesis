@@ -1,7 +1,6 @@
 package bachelorthesis.trafficsimulation.elements.vehicle;
 
 import bachelorthesis.trafficsimulation.common.CMath;
-import bachelorthesis.trafficsimulation.common.EDirection;
 import bachelorthesis.trafficsimulation.elements.IBaseObject;
 import bachelorthesis.trafficsimulation.elements.IObject;
 import bachelorthesis.trafficsimulation.elements.actions.CBroadcastAction;
@@ -112,6 +111,8 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         m_acceleration = p_acceleration.doubleValue();
         m_deceleration = p_deceleration.doubleValue();
 
+        if ( p_scenario.unit().accelerationtospeed( m_acceleration ).doubleValue() > m_maximumspeed )
+            throw new RuntimeException( "maximum acceleration is higher than maximum speed" );
         if ( ( m_acceleration < 2 ) || ( m_deceleration < 2 ) )
             throw new RuntimeException( "acceleration or deceleration is to low" );
         if ( m_deceleration <= m_acceleration )
@@ -142,11 +143,8 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @Override
     public final DoubleMatrix1D nextposition()
     {
-        final double l_goal = 1;
-        return EDirection.FORWARD.position(
-            this.position(),
-            new DenseDoubleMatrix1D( new double[]{this.position().get( 0 ), l_goal} ),
-            m_scenario.unit().speedtocell( this.speed() ).doubleValue()
+        return new DenseDoubleMatrix1D(
+            new double[]{this.position().get( 0 ), this.position().get( 1 ) + m_scenario.unit().speedtocell( this.speed() ).doubleValue()  }
         );
     }
 
@@ -206,8 +204,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         m_viewrange.run();
 
         super.call();
-
-        // give environment the data if it is a user car
         if ( !m_scenario.environment().move( this ) )
             this.oncollision();
 
@@ -237,10 +233,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             m_acceleration * Math.max( 0, Math.min( 1, p_strength.doubleValue() ) )
         ).doubleValue();
 
-        if (  l_value > m_maximumspeed )
-            throw new RuntimeException( MessageFormat.format( "cannot increment speed: {0}", this ) );
-
-        m_speed.set( l_value );
+        m_speed.set( l_value > m_maximumspeed ? m_maximumspeed : l_value );
     }
 
     /**
@@ -254,10 +247,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             m_deceleration * Math.max( 0, Math.min( 1, p_strength.doubleValue() ) )
         ).doubleValue();
 
-        if (  l_value < 0 )
-            throw new RuntimeException( MessageFormat.format( "cannot decrement speed: {0}", this ) );
-
-        m_speed.set( l_value );
+        m_speed.set( l_value < 0 ? 0 : l_value );
     }
 
     /**

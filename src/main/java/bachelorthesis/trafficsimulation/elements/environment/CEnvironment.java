@@ -9,6 +9,7 @@ import cern.colt.matrix.tobject.impl.SparseObjectMatrix2D;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -30,6 +31,10 @@ public final class CEnvironment implements IEnvironment
      * scneario
      */
     private final IScenario m_scenario;
+    /**
+     * clipping function
+     */
+    private final Function<Number, Number> m_clippingfunction;
 
     /**
      * ctor
@@ -39,8 +44,9 @@ public final class CEnvironment implements IEnvironment
      */
     public CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes, @Nonnull final IScenario p_scenario )
     {
-        m_grid = new SparseObjectMatrix2D( p_lanes.intValue(), p_length.intValue() );
         m_scenario = p_scenario;
+        m_clippingfunction = i -> i.intValue() % p_length.intValue();
+        m_grid = new SparseObjectMatrix2D( p_lanes.intValue(), p_length.intValue() );
     }
 
     @Override
@@ -75,16 +81,16 @@ public final class CEnvironment implements IEnvironment
             if ( IntStream.rangeClosed( l_xposstart.intValue(), l_xposend.intValue() )
                           .parallel()
                           .boxed()
-                          .map( i -> i % l_xposend.intValue() )
-                          .map( i -> m_grid.getQuick( l_ypos.intValue(), i ) )
+                          .map( m_clippingfunction::apply )
+                          .map( i -> m_grid.getQuick( l_ypos.intValue(), i.intValue() ) )
                           .anyMatch( i -> ( i != null ) && ( !i.equals( p_vehicle ) ) )
                 )
                 return false;
 
             // object moving
             m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
-            m_grid.setQuick( l_ypos.intValue(), l_xposend.intValue() % l_xposend.intValue(), p_vehicle );
-            p_vehicle.position().setQuick( 1, l_xposend.intValue() % l_xposend.intValue() );
+            m_grid.setQuick( l_ypos.intValue(), m_clippingfunction.apply( l_xposend ).intValue(), p_vehicle );
+            p_vehicle.position().setQuick( 1, m_clippingfunction.apply( l_xposend ).intValue() );
             return true;
         }
     }

@@ -30,7 +30,7 @@ public final class CMath
     static
     {
         MATRIXFORMAT.setRowSeparator( "; " );
-        MATRIXFORMAT.setColumnSeparator( "," );
+        MATRIXFORMAT.setColumnSeparator( " | " );
         MATRIXFORMAT.setPrintShape( false );
     }
 

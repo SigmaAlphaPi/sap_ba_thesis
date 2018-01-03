@@ -32,8 +32,7 @@
 +!drive <-
     CurrentSpeed < AllowedSpeed;
     !!linger;
-    vehicle/accelerate(1);
-    !driveright;
+    vehicle/accelerate( 0.75 );
     !drive
 .
 
@@ -47,22 +46,14 @@
 
 // --- on driving failing decelerate ---
 -!drive <-
-    vehicle/decelerate(1);
+    vehicle/decelerate( 0.5 );
     !drive
-.
-
-
-// --- try to drive-right ---
-+!driveright <-
-    L = math/statistic/randomsimple;
-    L >= 0.35;
-    vehicle/pullin
 .
 
 
 // --- collision vehicle stop immediatly ---
 +!vehicle/collision <-
-    vehicle/stop
+    vehicle/decelerate(1)
 .
 
 

@@ -42,7 +42,7 @@ public enum ERuntime implements IRuntime
         }
         catch ( final Exception l_exception )
         {
-            Logger.trace( l_exception );
+            Logger.error( l_exception );
         }
     }
 }

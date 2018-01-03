@@ -11,13 +11,13 @@ main:
     prettyprint: true
 
     # unit of the simulation
-    units:
+    unit:
 
         # cell size / size of a vehicle in meter
         cellsize_in_meter: 7.5
 
         # time of a single timestep in simulation
-        timestep_in_minutes: 1
+        timestep_in_minutes: 0.5
 
 
 # environment / street setting
@@ -36,7 +36,7 @@ agent:
     # global constants for all vehicles (constant name
     # must start with an upper-case letter)
     constant:
-        AllowedSpeed: 80
+        AllowedSpeed: 120
 
     # all vehicle configuration, key is the filename of the filename
     # AgentSpeak(L++) script relative to configuration file
@@ -56,8 +56,8 @@ agent:
             # speed range configuration for initialize and maximum
             # speed (maximum value will be set by random)
             speed:
-                min: 30
-                max: 160
+                min: 160
+                max: 260
 
             # acceleration configuration (the value is
             # calculated by random
