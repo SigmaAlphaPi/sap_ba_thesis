@@ -30,9 +30,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -161,7 +159,6 @@ public final class CScenario implements IScenario
     private Stream<IVehicle> generator( @Nonnull final String p_asl, @Nonnull final Set<IVariable<?>> p_globalvariables, @Nonnull final ITree p_config )
     {
         Logger.info( "reading asl file [{}] and generate {} agents", p_asl, p_config );
-        final Random l_random = ThreadLocalRandom.current();
 
         try
             (
@@ -185,10 +182,7 @@ public final class CScenario implements IScenario
                 )
             ).generatemultiple(
                 p_config.<Number>getOrDefault( 1, "count" ).intValue(),
-                randomvalue( p_config, l_random, "speed", 75, 250 ),
-                randomvalue( p_config, l_random, "acceleration", 3.5, 7.5 ),
-                randomvalue( p_config, l_random, "deceleration", 8, 10 ),
-                p_config.<Number>getOrDefault( 50, "viewrange" )
+                p_config
             );
         }
         catch ( final Exception l_exception )
@@ -196,24 +190,6 @@ public final class CScenario implements IScenario
             Logger.error( "error on reading asl file [{0}]", l_exception.getMessage() );
             throw new RuntimeException( l_exception );
         }
-    }
-
-    /**
-     * generates a random value by vehicle configuration
-     *
-     * @param p_config vehicle configuration tree
-     * @param p_random random definition
-     * @param p_name name of the configuration set
-     * @param p_min default min value
-     * @param p_max default max value
-     * @return value
-     */
-    private Number randomvalue( @Nonnull final ITree p_config, final Random p_random, @Nonnull final String p_name,
-                                @Nonnull final Number p_min, @Nonnull final Number p_max )
-    {
-        return p_config.getOrDefault( p_min, p_name, "min" ).doubleValue()
-            + p_random.nextDouble() * ( p_config.getOrDefault( p_max, p_name, "max" ).doubleValue()
-                                    - p_config.<Number>getOrDefault( p_min, p_name, "min" ).doubleValue() );
     }
 
     @Override

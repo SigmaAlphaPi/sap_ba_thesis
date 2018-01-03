@@ -1,6 +1,7 @@
 package bachelorthesis.trafficsimulation.elements.vehicle;
 
 import bachelorthesis.trafficsimulation.common.CMath;
+import bachelorthesis.trafficsimulation.common.ITree;
 import bachelorthesis.trafficsimulation.elements.IBaseObject;
 import bachelorthesis.trafficsimulation.elements.IObject;
 import bachelorthesis.trafficsimulation.elements.actions.CBroadcastAction;
@@ -41,11 +42,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -123,6 +122,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                 CMath.cellcircle( m_scenario.unit().metertocell( p_viewrange ) ).collect( Collectors.toSet() )
             )
         );
+
         m_beliefbase.add( m_viewrange.create( "view", m_beliefbase ) );
     }
 
@@ -354,7 +354,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         public final IVehicle generatesingle( @Nullable final Object... p_data )
         {
             Objects.requireNonNull( p_data );
-            if ( p_data.length != 4 )
+            if ( p_data.length != 1 )
                 throw new RuntimeException( "parameter number are wrong" );
 
             final IVehicle l_vehicle = new CVehicle(
@@ -362,27 +362,43 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                 m_scenario,
                 MessageFormat.format( "{0}{1}", m_name, m_conter.getAndIncrement() ),
 
-                (Number) p_data[0],
-                (Number) p_data[1],
-                (Number) p_data[2],
-                (Number) p_data[3]
+                randomvalue( (ITree) p_data[0], "speed", 75, 250 ),
+                randomvalue( (ITree) p_data[0], "acceleration", 3.5, 7.5 ),
+                randomvalue( (ITree) p_data[0], "deceleration", 8, 10 ),
+                ( (ITree) p_data[0] ).<Number>getOrDefault( 50, "viewrange" )
             );
 
-            final Random l_random = ThreadLocalRandom.current();
             final DoubleMatrix1D l_position = new DenseDoubleMatrix1D(
                 new double[]{
-                    l_random.nextDouble() * m_scenario.environment().lanes().doubleValue(),
-                    l_random.nextDouble() * m_scenario.environment().cells().doubleValue(),
+                    CMath.RANDOM.nextDouble() * m_scenario.environment().lanes().doubleValue(),
+                    CMath.RANDOM.nextDouble() * m_scenario.environment().cells().doubleValue(),
                 }
             );
 
             while ( !m_scenario.environment().set( l_vehicle, l_position ) )
             {
-                l_position.set( 0, l_random.nextDouble() * m_scenario.environment().lanes().doubleValue() );
-                l_position.set( 1, l_random.nextDouble() * m_scenario.environment().cells().doubleValue() );
+                l_position.set( 0, CMath.RANDOM.nextDouble() * m_scenario.environment().lanes().doubleValue() );
+                l_position.set( 1, CMath.RANDOM.nextDouble() * m_scenario.environment().cells().doubleValue() );
             }
 
             return l_vehicle;
+        }
+
+        /**
+         * generates a random value by vehicle configuration
+         *
+         * @param p_config vehicle configuration tree
+         * @param p_name name of the configuration set
+         * @param p_min default min value
+         * @param p_max default max value
+         * @return value
+         */
+        private static Number randomvalue( @Nonnull final ITree p_config, @Nonnull final String p_name,
+                                           @Nonnull final Number p_min, @Nonnull final Number p_max )
+        {
+            return p_config.getOrDefault( p_min, p_name, "min" ).doubleValue()
+                   + CMath.RANDOM.nextDouble() * ( p_config.getOrDefault( p_max, p_name, "max" ).doubleValue()
+                                                   - p_config.<Number>getOrDefault( p_min, p_name, "min" ).doubleValue() );
         }
 
     }

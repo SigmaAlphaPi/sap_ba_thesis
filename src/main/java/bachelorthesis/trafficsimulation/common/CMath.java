@@ -7,6 +7,9 @@ import cern.colt.matrix.tdouble.algo.DoubleFormatter;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
 import cern.jet.math.tdouble.DoubleFunctions;
+import org.apache.commons.math3.random.MersenneTwister;
+import org.apache.commons.math3.random.RandomGenerator;
+import org.apache.commons.math3.random.SynchronizedRandomGenerator;
 
 import javax.annotation.Nonnull;
 import java.util.stream.IntStream;
@@ -18,6 +21,10 @@ import java.util.stream.Stream;
  */
 public final class CMath
 {
+    /**
+     * synchronized random number generator
+     */
+    public static final RandomGenerator RANDOM = new SynchronizedRandomGenerator( new MersenneTwister() );
     /**
      * reference to global algebra instance
      */
