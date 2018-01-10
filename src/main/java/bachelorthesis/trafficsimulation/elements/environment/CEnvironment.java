@@ -9,6 +9,7 @@ import cern.colt.matrix.tobject.impl.SparseObjectMatrix2D;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -78,16 +79,26 @@ public final class CEnvironment implements IEnvironment
         synchronized ( this )
         {
             // test free direction
-            if ( IntStream.rangeClosed( l_xposstart.intValue(), l_xposend.intValue() )
-                          .parallel()
-                          .boxed()
-                          .map( m_clippingfunction::apply )
-                          .map( i -> m_grid.getQuick( l_ypos.intValue(), i.intValue() ) )
-                          .anyMatch( i -> ( i != null ) && ( !i.equals( p_vehicle ) ) )
-                )
-                return false;
+            final Optional<Number> l_checkposition = IntStream.rangeClosed( l_xposstart.intValue(), l_xposend.intValue() )
+                                                              .boxed()
+                                                              .map( m_clippingfunction::apply )
+                                                              .filter( i ->
+                                                              {
+                                                                  final Object l_object = m_grid.getQuick( l_ypos.intValue(), i.intValue() );
+                                                                  return ( l_object != null ) && ( !l_object.equals( p_vehicle ) );
+                                                              } )
+                                                              .findFirst();
+            if ( l_checkposition.isPresent() )
+            {
+                // object moving to cell befor collision exists
+                m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
+                m_grid.setQuick( l_ypos.intValue(), m_clippingfunction.apply( l_checkposition.get().intValue() - 1 ).intValue(), p_vehicle );
+                p_vehicle.position().setQuick( 1, m_clippingfunction.apply( l_checkposition.get().intValue() - 1 ).intValue() );
 
-            // object moving
+                return false;
+            }
+
+            // object moving on regular end position
             m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
             m_grid.setQuick( l_ypos.intValue(), m_clippingfunction.apply( l_xposend ).intValue(), p_vehicle );
             p_vehicle.position().setQuick( 1, m_clippingfunction.apply( l_xposend ).intValue() );
