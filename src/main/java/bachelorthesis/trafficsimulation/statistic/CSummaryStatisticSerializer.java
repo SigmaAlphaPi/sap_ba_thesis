@@ -46,6 +46,12 @@ public class CSummaryStatisticSerializer extends IBaseStatisticSerializer<Summar
 
         p_generator.writeStartObject();
         this.writejson( p_statistic, p_generator );
+
+        p_generator.writeNumberField( "populationvariance", p_statistic.getPopulationVariance() );
+        p_generator.writeNumberField( "quadraticmean", p_statistic.getQuadraticMean() );
+        p_generator.writeNumberField( "secondmoment", p_statistic.getSecondMoment() );
+        p_generator.writeNumberField( "sumoflogs", p_statistic.getSumOfLogs() );
+
         p_generator.writeEndObject();
     }
 }
