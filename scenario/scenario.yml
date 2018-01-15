@@ -1,0 +1,79 @@
+# global section of configuration
+main:
+
+    # statistic result ("summary" = aggregated values, "descriptive" = aggregated & single values)
+    statistic: "descriptive"
+
+    # simulated time
+    # 10^5 timesteps in multi-lane, roughly 166ish minutes
+    simulationtime_in_minutes: 100
+
+    # preetprint of the result json
+    prettyprint: true
+
+    # unit of the simulation
+    unit:
+
+        # cell size / size of a vehicle in meter
+        cellsize_in_meter: 7.5
+
+        # time of a single timestep in simulation
+        timestep_in_minutes: 0.01666666666666666666666666666666666666666
+
+
+# environment / street setting
+environment:
+
+    # number of lanes
+    lanes: 1
+
+    # length if the lane in kilometer
+    # 75 kms are about 10000 cells
+    length_in_km: 75
+
+
+# agent vehicle configuration
+agent:
+
+    # global constants for all vehicles (constant name
+    # must start with an upper-case letter)
+    constant:
+        # 160, was max. possible speed in multi-lane
+        AllowedSpeed: 160 
+
+    # all vehicle configuration, key is the filename of the filename
+    # AgentSpeak(L++) script relative to configuration file
+    source:
+        vehicle.asl:
+
+            # number of generated vehicles
+            # 10^3 cars in multi-lane
+            count: 500
+
+            # view range in meters around a vehicle (should be greater than cell size)
+            viewrange_in_meter: 200
+
+            # local constant values for this vehicle
+            costant:
+                LocalValue: "Hello"
+
+            # speed range configuration for initialize and maximum
+            # speed (maximum value will be set by random)
+            speed:
+                min: 80
+                max: 250
+
+            # acceleration configuration (the value is
+            # calculated by random
+            acceleration:
+                min: 3.5
+                max: 7
+
+            # decceleration configuration (the value is
+            # calculated by random
+            deceleration:
+                min: 8
+                max: 10
+
+
+

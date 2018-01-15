@@ -2,7 +2,33 @@ version: 2
 
 jobs:
     build:
+        working_directory: ~/run_simulation
+        docker:
+            - image: sigmaalphapi/simulation_scenario:latest
+
         branches:
             ignore:
                 - master
                 - /dev-.*/
+
+        environment:
+            TZ: "/usr/share/zoneinfo/Europe/Berlin"
+            JAVA_OPTS: "-XX:+AggressiveOpts -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:CMSInitiatingOccupancyFraction=45 -Xmx3686M"
+
+        steps:
+            - checkout
+            - run: 
+                name: Git Clean
+                command: git clean -xdf && git fetch -p && git gc --prune=now
+            - run:
+                name: Execute Scenario
+                command: benchmark scenario/scenario.yml
+            - store_artifacts:    
+                path: scenario/
+            - run:
+                name: Github Release
+                command: |
+                    if [ ! -z "$GITHUBTOKEN" ]; then
+                        export TAG=$((CIRCLE_BUILD_NUM / 1000)).$((CIRCLE_BUILD_NUM / 100 % 10)).$((CIRCLE_BUILD_NUM % 100))
+                        ghr -t $GITHUBTOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -c $CIRCLE_SHA1 -b "$(git log -1 $CIRCLE_SHA1 --pretty=format:%s)" $CIRCLE_BRANCH-v$TAG scenario/
+                    fi    
