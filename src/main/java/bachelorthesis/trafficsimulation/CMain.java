@@ -1,5 +1,6 @@
 package bachelorthesis.trafficsimulation;
 
+import bachelorthesis.trafficsimulation.common.CLoggerAlive;
 import bachelorthesis.trafficsimulation.runtime.ERuntime;
 import bachelorthesis.trafficsimulation.scenario.CScenario;
 import org.apache.commons.cli.CommandLine;
@@ -92,7 +93,14 @@ public final class CMain
         if ( !l_cli.hasOption( "scenario" ) )
             throw new RuntimeException( "no scenario configuration is set" );
 
-        ERuntime.INSTANCE.accept( new CScenario( l_cli.getOptionValue( "scenario" ) ) );
+        try
+        {
+            ERuntime.INSTANCE.accept( new CScenario( l_cli.getOptionValue( "scenario" ) ) );
+        }
+        catch ( final Exception l_exception )
+        {
+            CLoggerAlive.interrupt();
+        }
     }
 
 }

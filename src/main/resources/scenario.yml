@@ -10,6 +10,9 @@ main:
     # preetprint of the result json
     prettyprint: true
 
+    # time in ms for printing a message to avoid CircleCI timeout (CircleCI time can be set to 480000)
+    alive: 0
+
     # unit of the simulation
     unit:
 

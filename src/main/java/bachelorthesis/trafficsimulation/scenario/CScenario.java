@@ -1,5 +1,6 @@
 package bachelorthesis.trafficsimulation.scenario;
 
+import bachelorthesis.trafficsimulation.common.CLoggerAlive;
 import bachelorthesis.trafficsimulation.common.ITree;
 import bachelorthesis.trafficsimulation.elements.environment.CEnvironment;
 import bachelorthesis.trafficsimulation.elements.environment.IEnvironment;
@@ -41,6 +42,10 @@ import java.util.stream.Stream;
 public final class CScenario implements IScenario
 {
     /**
+     * main config section
+     */
+    private static final String SECTIONMAIN = "main";
+    /**
      * unit object
      */
     private final IUnit m_unit;
@@ -81,11 +86,11 @@ public final class CScenario implements IScenario
 
         m_resultfilename = p_configuration.replace( ".yaml", "" ).replace( ".yml", "" ) + ".json";
 
-        m_statistic = EStatistic.from( l_configuration.getOrDefault( "summary", "main", "statistic" ) ).build();
+        m_statistic = EStatistic.from( l_configuration.getOrDefault( "summary", SECTIONMAIN, "statistic" ) ).build();
 
         m_unit = new CUnit(
-            l_configuration.getOrDefault( 7.5, "main", "unit", "cellsize_in_meter" ),
-            l_configuration.getOrDefault( 1, "main", "unit", "timestep_in_minutes" )
+            l_configuration.getOrDefault( 7.5, SECTIONMAIN, "unit", "cellsize_in_meter" ),
+            l_configuration.getOrDefault( 1, SECTIONMAIN, "unit", "timestep_in_minutes" )
         );
 
         m_environment = new CEnvironment(
@@ -94,12 +99,13 @@ public final class CScenario implements IScenario
             this
         );
 
-        m_cycles = m_unit.timeminutesinsteps( l_configuration.getOrDefault( 1, "main", "simulationtime_in_minutes" ) ).longValue();
+        m_cycles = m_unit.timeminutesinsteps( l_configuration.getOrDefault( 1, SECTIONMAIN, "simulationtime_in_minutes" ) ).longValue();
 
-        m_serializationfeature = l_configuration.<Boolean>getOrDefault( false, "main", "prettyprint" )
+        m_serializationfeature = l_configuration.<Boolean>getOrDefault( false, SECTIONMAIN, "prettyprint" )
                                  ? SerializationFeature.INDENT_OUTPUT
                                  : SerializationFeature.CLOSE_CLOSEABLE;
 
+        CLoggerAlive.build( l_configuration.<Number>getOrDefault( 0, SECTIONMAIN, "alive" ).longValue() );
 
 
         // create variable builder
