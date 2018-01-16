@@ -31,7 +31,7 @@ public final class CLoggerAlive
         {
             while ( true )
             {
-                Logger.info( "benchmark is currently running" );
+                Logger.info( "simulation is currently running" );
                 try
                 {
                     Thread.sleep( p_alivetime );
