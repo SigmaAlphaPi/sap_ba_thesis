@@ -1,6 +1,7 @@
 package bachelorthesis.trafficsimulation.elements.vehicle;
 
 import bachelorthesis.trafficsimulation.common.CMath;
+import bachelorthesis.trafficsimulation.common.EDirection;
 import bachelorthesis.trafficsimulation.common.ITree;
 import bachelorthesis.trafficsimulation.elements.IBaseObject;
 import bachelorthesis.trafficsimulation.elements.IObject;
@@ -40,6 +41,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -161,7 +163,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         return Stream.of(
             CLiteral.from( "lane", CRawTerm.from( this.position().get( 0 ) + 1 ) ),
             CLiteral.from( "speed", CRawTerm.from( m_speed.get() ) ),
-            CLiteral.from( "distance", CRawTerm.from( m_scenario.unit().celltometer( CMath.distance( this.position(), p_object.position() ) ) ) )
+            CLiteral.from( "distance", CRawTerm.from( m_scenario.unit().celltometer( CMath.distance( this.position(), p_object.position() ) ) ) ),
+            CLiteral.from( "direction",
+                           CLiteral.from( EDirection.byAngle( CMath.angle( p_object.position(), this.position() ) ).toString().toLowerCase( Locale.ROOT ) )
+            )
         );
     }
 
