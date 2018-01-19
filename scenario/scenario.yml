@@ -48,7 +48,7 @@ agent:
 
             # number of generated vehicles
             # 10^3 cars in multi-lane
-            count: 500
+            count: 400
 
             # view range in meters around a vehicle (should be greater than cell size)
             viewrange_in_meter: 200
