@@ -22,7 +22,7 @@ jobs:
                 command: git clean -xdf && git fetch -p && git gc --prune=now
             - run:
                 name: Execute Scenario
-                command: benchmark scenario/scenario.yml
+                command: sim_scenario scenario/scenario.yml
             - store_artifacts:    
                 path: scenario/
             - run:
