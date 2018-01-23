@@ -20,18 +20,21 @@ import org.pmw.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -73,6 +76,10 @@ public final class CScenario implements IScenario
      * number of execution cycles
      */
     private final long m_cycles;
+    /**
+     * line break
+     */
+    private final Consumer<Number> m_linebreak;
 
     /**
      * ctor
@@ -87,6 +94,14 @@ public final class CScenario implements IScenario
         m_resultfilename = p_configuration.replace( ".yaml", "" ).replace( ".yml", "" ) + ".json";
 
         m_statistic = EStatistic.from( l_configuration.getOrDefault( "summary", SECTIONMAIN, "statistic" ) ).build();
+
+        final String l_linebreak = l_configuration.getOrDefault( "", SECTIONMAIN, "linebreak" );
+        m_linebreak = l_linebreak.isEmpty()
+                      ? ( i ->
+                      {
+
+                      } )
+                      : ( i -> System.out.println( MessageFormat.format( l_linebreak, i ) ) );
 
         m_unit = new CUnit(
             l_configuration.getOrDefault( 7.5, SECTIONMAIN, "unit", "cellsize_in_meter" ),
@@ -297,6 +312,13 @@ public final class CScenario implements IScenario
             Logger.error( "error on storing [{}]", l_exception.getMessage() );
             throw new UncheckedIOException( l_exception );
         }
+    }
+
+    @Nullable
+    @Override
+    public final Consumer<Number> linebreak()
+    {
+        return m_linebreak;
     }
 
 }

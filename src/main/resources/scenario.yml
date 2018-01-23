@@ -13,6 +13,9 @@ main:
     # time in ms for printing a message to avoid CircleCI timeout (CircleCI time can be set to 480000)
     alive: 0
 
+    # line breaker after each step
+    linebreak: "--- step {0} ----------------"
+
     # unit of the simulation
     unit:
 
