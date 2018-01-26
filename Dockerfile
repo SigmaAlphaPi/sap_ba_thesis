@@ -1,4 +1,4 @@
-FROM lightjason/examples 
+FROM lightjason/agentspeak
 
 # --- configuration section ---------------------- 
 ENV DOCKERIMAGE_BENCHMARK_VERSION simulation 
