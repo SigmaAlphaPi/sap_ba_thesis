@@ -10,4 +10,8 @@ import java.util.function.Consumer;
  */
 public interface IRuntime extends Consumer<IScenario>
 {
+    /**
+     * runtime shutdown
+     */
+    void shutdown();
 }

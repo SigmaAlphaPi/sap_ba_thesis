@@ -64,4 +64,9 @@ public final class CSynchronized extends IBaseRuntime
 
         p_scenario.store();
     }
+
+    @Override
+    public final void shutdown()
+    {
+    }
 }

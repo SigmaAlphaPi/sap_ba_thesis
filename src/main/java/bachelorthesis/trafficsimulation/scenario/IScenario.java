@@ -5,6 +5,7 @@ import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import bachelorthesis.trafficsimulation.statistic.IStatistic;
 
 import javax.annotation.Nonnull;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 
@@ -54,5 +55,13 @@ public interface IScenario extends Runnable
      * stores the statistic data
      */
     void store();
+
+    /**
+     * returns the line break consumer
+     *
+     * @return line break function
+     */
+    @Nonnull
+    Consumer<Number> linebreak();
 
 }

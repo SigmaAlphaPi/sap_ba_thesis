@@ -80,4 +80,10 @@ public final class CPool extends IBaseRuntime
                       }
                   } );
     }
+
+    @Override
+    public final void shutdown()
+    {
+        m_pool.shutdownNow();
+    }
 }
