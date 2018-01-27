@@ -13,6 +13,15 @@ main:
     # time in ms for printing a message to avoid CircleCI timeout (CircleCI time can be set to 480000)
     alive: 0
 
+    # runtime
+    runtime:
+
+        # type of the runtime, parameter is the thread number: synchronized, workstealing, fixedsize(T), cached, scheduled(T), single
+        type: "synchronized"
+
+        # number of threads of the runtime
+        threads: 1
+
     # unit of the simulation
     unit:
 

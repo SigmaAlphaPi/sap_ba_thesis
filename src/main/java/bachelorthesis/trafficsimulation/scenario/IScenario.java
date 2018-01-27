@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 /**
  * defines the scenario for execution
  */
-public interface IScenario
+public interface IScenario extends Runnable
 {
     /**
      * returns the number of iterations

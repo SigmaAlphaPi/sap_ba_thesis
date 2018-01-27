@@ -6,6 +6,8 @@ import bachelorthesis.trafficsimulation.elements.environment.CEnvironment;
 import bachelorthesis.trafficsimulation.elements.environment.IEnvironment;
 import bachelorthesis.trafficsimulation.elements.vehicle.CVehicle;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
+import bachelorthesis.trafficsimulation.runtime.ERuntime;
+import bachelorthesis.trafficsimulation.runtime.IRuntime;
 import bachelorthesis.trafficsimulation.statistic.CDescriptiveStatisticSerializer;
 import bachelorthesis.trafficsimulation.statistic.CSummaryStatisticSerializer;
 import bachelorthesis.trafficsimulation.statistic.EStatistic;
@@ -73,6 +75,10 @@ public final class CScenario implements IScenario
      * number of execution cycles
      */
     private final long m_cycles;
+    /**
+     * runtime instance
+     */
+    private final IRuntime m_runtime;
 
     /**
      * ctor
@@ -105,6 +111,9 @@ public final class CScenario implements IScenario
                                  ? SerializationFeature.INDENT_OUTPUT
                                  : SerializationFeature.CLOSE_CLOSEABLE;
 
+        m_runtime = ERuntime.from( l_configuration.getOrDefault( ERuntime.SYNCHRONIZED.toString(), SECTIONMAIN, "runtime", "type" ) )
+                            .apply( l_configuration.<Number>getOrDefault( 1, SECTIONMAIN, "runtime", "thread" ) );
+
         CLoggerAlive.build( l_configuration.<Number>getOrDefault( 0, SECTIONMAIN, "alive" ).longValue() );
 
 
@@ -128,6 +137,12 @@ public final class CScenario implements IScenario
                 ) )
                 .collect( Collectors.toSet() )
         );
+    }
+
+    @Override
+    public final void run()
+    {
+        m_runtime.accept( this );
     }
 
     /**

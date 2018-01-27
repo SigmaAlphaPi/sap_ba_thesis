@@ -1,7 +1,6 @@
 package bachelorthesis.trafficsimulation;
 
 import bachelorthesis.trafficsimulation.common.CLoggerAlive;
-import bachelorthesis.trafficsimulation.runtime.ERuntime;
 import bachelorthesis.trafficsimulation.scenario.CScenario;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
@@ -95,7 +94,7 @@ public final class CMain
 
         try
         {
-            ERuntime.INSTANCE.accept( new CScenario( l_cli.getOptionValue( "scenario" ) ) );
+            new CScenario( l_cli.getOptionValue( "scenario" ) ).run();
         }
         catch ( final Exception l_exception )
         {

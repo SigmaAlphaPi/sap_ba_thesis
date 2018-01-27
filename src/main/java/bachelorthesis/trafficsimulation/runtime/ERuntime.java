@@ -1,48 +1,68 @@
 package bachelorthesis.trafficsimulation.runtime;
 
-import bachelorthesis.trafficsimulation.scenario.IScenario;
-import org.pmw.tinylog.Logger;
-
-import java.util.concurrent.Callable;
-import java.util.stream.LongStream;
+import javax.annotation.Nonnull;
+import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.concurrent.Executors;
+import java.util.function.Function;
 
 
 /**
  * runtime
  */
-public enum ERuntime implements IRuntime
+public enum ERuntime implements Function<Number, IRuntime>
 {
-    INSTANCE;
+    SYNCHRONIZED,
+    WORKSTEALING,
+    FIXEDSIZE,
+    CACHED,
+    SCHEDULED,
+    SINGLE;
 
     @Override
-    public void accept( final IScenario p_scenario )
+    public final IRuntime apply( final Number p_number )
     {
-        LongStream.range( 0, p_scenario.iterations() )
-                  .forEach( i ->
-                  {
-                      p_scenario.environment().accept( i );
-                      p_scenario.vehicles()
-                                .parallel()
-                                .forEach( this::execute );
-                  } );
+        switch ( this )
+        {
+            case SYNCHRONIZED:
+                return new CSynchronized( this, p_number.intValue() );
 
-        p_scenario.store();
+            case WORKSTEALING:
+                return new CPool( this, p_number.intValue(), Executors.newWorkStealingPool() );
+
+            case FIXEDSIZE:
+                return new CPool( this, p_number.intValue(), Executors.newFixedThreadPool( p_number.intValue() ) );
+
+            case CACHED:
+                return new CPool( this, p_number.intValue(), Executors.newCachedThreadPool() );
+
+            case SCHEDULED:
+                return new CPool( this, p_number.intValue(), Executors.newScheduledThreadPool( p_number.intValue() ) );
+
+            case SINGLE:
+                return new CPool( this, p_number.intValue(), Executors.newSingleThreadExecutor() );
+
+            default:
+                throw new RuntimeException( MessageFormat.format( "unknown runtime definition [{0}]", this ) );
+        }
     }
+
 
     /**
-     * execute callable with log
+     * returns runtime instance of string value
      *
-     * @param p_callable callable
+     * @param p_name name
+     * @return runtime instance
      */
-    private void execute( final Callable<?> p_callable )
+    public static ERuntime from( @Nonnull final String p_name )
     {
-        try
-        {
-            p_callable.call();
-        }
-        catch ( final Exception l_exception )
-        {
-            Logger.error( l_exception );
-        }
+        return ERuntime.valueOf( p_name.toUpperCase( Locale.ROOT ) );
     }
+
+    @Override
+    public final String toString()
+    {
+        return super.toString().toLowerCase( Locale.ROOT );
+    }
+
 }
