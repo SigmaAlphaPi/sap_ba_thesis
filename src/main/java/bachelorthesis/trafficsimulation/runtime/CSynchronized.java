@@ -60,6 +60,7 @@ public final class CSynchronized extends IBaseRuntime
                       p_scenario.vehicles()
                                 .parallel()
                                 .forEach( this::execute );
+                      p_scenario.linebreak().accept( i );
                   } );
 
         p_scenario.store();

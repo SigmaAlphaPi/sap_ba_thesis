@@ -78,6 +78,7 @@ public final class CPool extends IBaseRuntime
                           Logger.error( l_exception );
                           throw new RuntimeException( l_exception );
                       }
+                      p_scenario.linebreak().accept( i );
                   } );
     }
 
