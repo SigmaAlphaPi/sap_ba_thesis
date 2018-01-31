@@ -24,54 +24,37 @@
  */
 
 
+!cruise.
 
-
-!drive.
-
-// --- driving call equal to Nagel-Schreckenberg driving model, on success accelerate ---
-+!drive <-
-    CurrentSpeed < AllowedSpeed;
-    !!linger;
-    vehicle/accelerate( 0.75 );
-    scenario/statistic( ID, CurrentSpeed );
-    // scenario/statistic( ID, CurrentLane );
-    !drive
++!cruise <-
+    !accelerate;
+    !decelerate;
+    !linger;
+    !cruise
 .
 
++!accelerate
+    : CurrentSpeed < AllowedSpeed <-
+        generic/print("accelerate");
+        vehicle/accelerate(0.5);
+        !accelerate
+.     
 
-// --- linger possibility ---
 +!linger <-
-    L = math/statistic/randomsimple;
-    L > 0.3
+	L = math/statistic/randomsimple;
+    L > 0.3;
+    vehicle/decelerate(0.85)
 .
 
++!decelerate 
+    : CurrentSpeed > AllowedSpeed <-
+        generic/print("decelerate high speed");
+        vehicle/decelerate(0.75);
+        !decelerate
 
-// --- on driving failing decelerate ---
--!drive <-
-    vehicle/decelerate( 0.5 );
-    !drive
-.
-
-
-// --- collision vehicle stop immediatly ---
-+!vehicle/collision <-
-    vehicle/decelerate( 1 );
-    generic/print( ID, "BREAKED HARD" )
-/*
-    vehicle/stop;
-    generic/print( ID, "STOPPED" )
-    // agent/sleep( 5 )
-*/
-.
-
-
-// --- wake up and go on ---
-+!wakeup <-
-    !drive
-.
-
-
-// --- receive message ---
-+!message/receive( message(M), from(F) ) <-
-    generic/print( "get message", M, "from", F )
+    : >>view/vehicle(_,_,_,D) <-
+        bool/equal( D, "forward" );
+        generic/print("vehicle in-front of -> decelerate");
+        vehicle/decelerate(0.9);
+        !decelerate
 .
