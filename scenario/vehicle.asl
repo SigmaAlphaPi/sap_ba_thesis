@@ -35,7 +35,7 @@
 
 +!accelerate
     : CurrentSpeed < AllowedSpeed <-
-        generic/print("accelerate");
+        //generic/print("accelerate");
         vehicle/accelerate(0.5);
         !accelerate
 .     
@@ -48,13 +48,12 @@
 
 +!decelerate 
     : CurrentSpeed > AllowedSpeed <-
-        generic/print("decelerate high speed");
+        //generic/print("decelerate high speed");
         vehicle/decelerate(0.75);
         !decelerate
 
-    : >>view/vehicle(_,_,_,D) <-
-        bool/equal( D, "forward" );
-        generic/print("vehicle in-front of -> decelerate");
+    : >>( view/vehicle(_,_,_,D), bool/equal( D, "forward" ) ) <-
+        //generic/print("vehicle in-front of -> decelerate");
         vehicle/decelerate(0.9);
         !decelerate
 .
