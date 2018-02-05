@@ -30,30 +30,32 @@
     !accelerate;
     !decelerate;
     !linger;
+    scenario/statistic( ID, CurrentSpeed );
     !cruise
 .
 
 +!accelerate
     : CurrentSpeed < AllowedSpeed <-
-        //generic/print("accelerate");
+        //generic/print(ID, "accelerated");
         vehicle/accelerate(0.5);
         !accelerate
 .     
 
 +!linger <-
 	L = math/statistic/randomsimple;
-    L > 0.3;
+    L > 0.1;
+    generic/print( ID, "LINGERED" );
     vehicle/decelerate(0.5)
 .
 
 +!decelerate 
     : CurrentSpeed > AllowedSpeed <-
-        //generic/print("decelerate high speed");
+        generic/print(ID, "decelerate high speed");
         vehicle/decelerate(0.25);
         !decelerate
 
     : >>( view/vehicle(_,_,_,D), bool/equal( D, "forward" ) ) <-
-        //generic/print("vehicle in-front of -> decelerate");
+        generic/print(ID, "has vehicle in-front of -> decelerate");
         vehicle/decelerate(0.9);
         !decelerate
 .
