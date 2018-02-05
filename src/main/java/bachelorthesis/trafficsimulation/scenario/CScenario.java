@@ -197,6 +197,7 @@ public final class CScenario implements IScenario
     private Stream<IVehicle> generator( @Nonnull final String p_asl, @Nonnull final Set<IVariable<?>> p_globalvariables, @Nonnull final ITree p_config )
     {
         Logger.info( "reading asl file [{}] and generate {} agents", p_asl, p_config );
+        final String[] l_name = p_asl.toLowerCase( Locale.ROOT ).replace( ".asl", "" ).split( "/" );
 
         try
             (
@@ -206,7 +207,7 @@ public final class CScenario implements IScenario
             return new CVehicle.CGenerator(
                 l_stream,
                 this,
-                p_asl.toLowerCase( Locale.ROOT ).replace( ".asl", "" ),
+                l_name[l_name.length - 1],
                 new CVehicle.CVariableBuilder(
                     Collections.unmodifiableSet(
                         Stream.concat(

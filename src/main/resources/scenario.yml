@@ -59,10 +59,10 @@ agent:
         vehicle.asl:
 
             # number of generated vehicles
-            count: 50
+            count: 1
 
             # show beliefs in each cycle
-            showbeliefs_in_cycle: true
+            showbeliefs: false
 
 
             # view range in meters around a vehicle (should be greater than cell size)

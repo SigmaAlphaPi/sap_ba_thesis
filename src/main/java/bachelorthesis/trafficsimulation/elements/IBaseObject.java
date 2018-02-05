@@ -23,10 +23,12 @@ import org.lightjason.agentspeak.language.instantiable.rule.IRule;
 import org.lightjason.agentspeak.language.unify.IUnifier;
 import org.lightjason.agentspeak.language.variable.CConstant;
 import org.lightjason.agentspeak.language.variable.IVariable;
+import org.pmw.tinylog.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
@@ -127,8 +129,8 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
     @Override
     public T call() throws Exception
     {
-        //if ( m_showbeliefs )
-        System.out.println( Arrays.toString( m_beliefbase.stream().toArray() );
+        if ( m_showbeliefs )
+            Logger.info( MessageFormat.format( "[{0}] beliefs: {1}", m_id, Arrays.toString( m_beliefbase.stream().toArray() ) ) );
 
         return super.call();
     }
