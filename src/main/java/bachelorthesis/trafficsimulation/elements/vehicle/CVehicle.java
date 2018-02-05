@@ -94,6 +94,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private final CEnvironmentView m_viewrange;
 
+
     /**
      * ctor
      *
@@ -104,9 +105,11 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private CVehicle( @Nonnull final IAgentConfiguration<IVehicle> p_configuration, @Nonnull final IScenario p_scenario, @Nonnull final String p_id,
                       @Nonnull @Nonnegative final Number p_maximumspeed, @Nonnull @Nonnegative final Number p_acceleration, @Nonnull@Nonnegative final Number p_deceleration,
-                      @Nonnull @Nonnegative final Number p_viewrange )
+                      @Nonnull @Nonnegative final Number p_viewrange, final boolean p_showbeliefs )
     {
-        super( p_configuration, p_scenario, FUNCTOR, p_id );
+        super( p_configuration, p_scenario, FUNCTOR, p_id, p_showbeliefs );
+
+
 
         m_maximumspeed = p_maximumspeed.doubleValue();
         m_acceleration = p_acceleration.doubleValue();
@@ -205,8 +208,9 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @Override
     public final IVehicle call() throws Exception
     {
-        // update beliefbase
+        // update beliefbase and print out
         m_viewrange.run();
+
 
         super.call();
         if ( !m_scenario.environment().move( this ) )
@@ -370,7 +374,9 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                 randomvalue( (ITree) p_data[0], "speed", 75, 250 ),
                 randomvalue( (ITree) p_data[0], "acceleration", 3.5, 7.5 ),
                 randomvalue( (ITree) p_data[0], "deceleration", 8, 10 ),
-                ( (ITree) p_data[0] ).<Number>getOrDefault( 50, "viewrange" )
+                ( (ITree) p_data[0] ).<Number>getOrDefault( 50, "viewrange" ),
+
+                ( (ITree) p_data[0] ).getOrDefault( false, "showbeliefs" )
             );
 
             final DoubleMatrix1D l_position = new DenseDoubleMatrix1D(

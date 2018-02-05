@@ -5,9 +5,9 @@ main:
     statistic: "descriptive"
 
     # simulated time
-    simulationtime_in_minutes: 60
+    simulationtime_in_minutes: 600
 
-    # preetprint of the result json
+    # pretty-print of the result json
     prettyprint: true
 
     # time in ms for printing a message to avoid CircleCI timeout (CircleCI time can be set to 480000)
@@ -59,7 +59,11 @@ agent:
         vehicle.asl:
 
             # number of generated vehicles
-            count: 1
+            count: 50
+
+            # show beliefs in each cycle
+            showbeliefs_in_cycle: true
+
 
             # view range in meters around a vehicle (should be greater than cell size)
             viewrange_in_meter: 50
