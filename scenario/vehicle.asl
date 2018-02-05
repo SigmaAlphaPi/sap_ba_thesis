@@ -30,6 +30,7 @@
     !accelerate;
     !decelerate;
     !linger;
+    generic/print( ID, " at ", CurrentSpeed );
     scenario/statistic( ID, CurrentSpeed );
     !cruise
 .
@@ -43,7 +44,7 @@
 
 +!linger <-
 	L = math/statistic/randomsimple;
-    L > 0.1;
+    L < 0.1;
     generic/print( ID, "LINGERED" );
     vehicle/decelerate(0.5)
 .
