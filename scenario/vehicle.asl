@@ -43,13 +43,13 @@
 +!linger <-
 	L = math/statistic/randomsimple;
     L > 0.3;
-    vehicle/decelerate(0.85)
+    vehicle/decelerate(0.5)
 .
 
 +!decelerate 
     : CurrentSpeed > AllowedSpeed <-
         //generic/print("decelerate high speed");
-        vehicle/decelerate(0.75);
+        vehicle/decelerate(0.25);
         !decelerate
 
     : >>( view/vehicle(_,_,_,D), bool/equal( D, "forward" ) ) <-
