@@ -172,10 +172,8 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                                EDirection.byAngle(
                                    CMath.angle(
                                        // view straight forward
-                                       m_position.copy().assign( new DenseDoubleMatrix1D( new double[]{0, 1} ), DoubleFunctions.plus )
-                                       // get vector in view direction
-                                                 .assign( m_position, DoubleFunctions.minus ),
-                                       // get from myself to other object
+                                       new DenseDoubleMatrix1D( new double[]{0, 1} ),
+                                       // relative direction to other vehicle
                                        p_object.position().copy().assign( m_position, DoubleFunctions.minus ) )
                                ).toString().toLowerCase( Locale.ROOT )
                            )
