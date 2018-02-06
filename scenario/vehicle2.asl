@@ -64,14 +64,14 @@
 
 // --- collision vehicle brake hardest/stop immediatly ---
 +!vehicle/collision <-
-
+/*
     vehicle/decelerate( 1 );
     generic/print( "BRA", ID, "BREAKED HARD -> collision" )
-/*
+*/
     vehicle/stop;
     generic/print( "STO", ID, "STOPPED -> collision" );
     agent/sleep( 20 )
-*/
+
 .
 
 // --- wake up and go on ---

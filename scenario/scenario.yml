@@ -6,10 +6,26 @@ main:
 
     # simulated time
     # 10^5 timesteps in multi-lane, roughly 166ish minutes
-    simulationtime_in_minutes: 100
+    # was 100
+    simulationtime_in_minutes: 30
 
     # preetprint of the result json
     prettyprint: true
+
+    # time in ms for printing a message to avoid CircleCI timeout (CircleCI time can be set to 480000)
+    alive: 0
+
+    # line breaker after each step
+    linebreak: "--- step {0} ----------------"
+
+    # runtime
+    runtime:
+
+        # type of the runtime, parameter is the thread number: synchronized, workstealing, fixedsize(T), cached, scheduled(T), single
+        type: "synchronized"
+
+        # number of threads of the runtime
+        threads: 1
 
     # unit of the simulation
     unit:
@@ -18,7 +34,9 @@ main:
         cellsize_in_meter: 7.5
 
         # time of a single timestep in simulation
-        timestep_in_minutes: 0.01666666666666666666666666666666666666666
+        # was: 0.01666666666666666666666666666666666666666
+        # 0.1 -> 6 sec, 0.05 -> 3 sec
+        timestep_in_minutes: 0.05
 
 
 # environment / street setting
@@ -29,7 +47,8 @@ environment:
 
     # length if the lane in kilometer
     # 75 kms are about 10000 cells
-    length_in_km: 75
+    # was 75
+    length_in_km: 2
 
 
 # agent vehicle configuration
@@ -48,7 +67,11 @@ agent:
 
             # number of generated vehicles
             # 10^3 cars in multi-lane
-            count: 400
+            # was 400
+            count: 2
+
+            # show beliefs in each cycle
+            showbeliefs: true
 
             # view range in meters around a vehicle (should be greater than cell size)
             viewrange_in_meter: 200
@@ -76,4 +99,38 @@ agent:
                 max: 10
 
 
+        vehicle2.asl:
+
+            # number of generated vehicles
+            # 10^3 cars in multi-lane
+            # was 400
+            count: 1
+
+            # show beliefs in each cycle
+            showbeliefs: false
+
+            # view range in meters around a vehicle (should be greater than cell size)
+            viewrange_in_meter: 200
+
+            # local constant values for this vehicle
+            costant:
+                LocalValue: "Hello"
+
+            # speed range configuration for initialize and maximum
+            # speed (maximum value will be set by random)
+            speed:
+                min: 60
+                max: 80
+
+            # acceleration configuration (the value is
+            # calculated by random
+            acceleration:
+                min: 3.5
+                max: 7
+
+            # decceleration configuration (the value is
+            # calculated by random
+            deceleration:
+                min: 8
+                max: 10
 
