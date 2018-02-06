@@ -77,7 +77,7 @@ public final class CMath
 
         return ( l_first == 0 ) || ( l_second == 0 )
                ? Double.NaN
-               : Math.toDegrees( Math.acos( ALGEBRA.mult( p_first, p_second ) / ( Math.sqrt( l_first ) * Math.sqrt( l_second ) ) ) );
+               : Math.toDegrees( Math.acos( ALGEBRA.mult( p_first, p_second ) / ( l_first * l_second ) ) );
     }
 
 

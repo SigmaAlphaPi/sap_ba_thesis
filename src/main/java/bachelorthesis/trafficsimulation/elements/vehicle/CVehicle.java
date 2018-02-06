@@ -168,7 +168,17 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             CLiteral.from( "speed", CRawTerm.from( m_speed.get() ) ),
             CLiteral.from( "distance", CRawTerm.from( m_scenario.unit().celltometer( CMath.distance( this.position(), p_object.position() ) ) ) ),
             CLiteral.from( "direction",
-                           CLiteral.from( EDirection.byAngle( CMath.angle( p_object.position(), this.position() ) ).toString().toLowerCase( Locale.ROOT ) )
+                           CLiteral.from(
+                               EDirection.byAngle(
+                                   CMath.angle(
+                                       // view straight forward
+                                       m_position.copy().assign( new DenseDoubleMatrix1D( new double[]{0, 1} ), DoubleFunctions.plus )
+                                       // get vector in view direction
+                                                 .assign( m_position, DoubleFunctions.minus ),
+                                       // get from myself to other object
+                                       p_object.position().copy().assign( m_position, DoubleFunctions.minus ) )
+                               ).toString().toLowerCase( Locale.ROOT )
+                           )
             )
         );
     }
