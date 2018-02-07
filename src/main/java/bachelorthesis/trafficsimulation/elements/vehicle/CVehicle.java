@@ -31,6 +31,7 @@ import org.lightjason.agentspeak.language.instantiable.plan.trigger.CTrigger;
 import org.lightjason.agentspeak.language.instantiable.plan.trigger.ITrigger;
 import org.lightjason.agentspeak.language.variable.CConstant;
 import org.lightjason.agentspeak.language.variable.IVariable;
+import org.pmw.tinylog.Logger;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -84,7 +85,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     /**
      * current speed in km/h
      */
-    private final AtomicDouble m_speed = new AtomicDouble( );
+    private final AtomicDouble m_speed = new AtomicDouble();
     /*
      * current position on lane / cell position
      */
@@ -105,11 +106,9 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private CVehicle( @Nonnull final IAgentConfiguration<IVehicle> p_configuration, @Nonnull final IScenario p_scenario, @Nonnull final String p_id,
                       @Nonnull @Nonnegative final Number p_maximumspeed, @Nonnull @Nonnegative final Number p_acceleration, @Nonnull@Nonnegative final Number p_deceleration,
-                      @Nonnull @Nonnegative final Number p_viewrange, final boolean p_showbeliefs )
+                      @Nonnull @Nonnegative final Number p_viewrange, final boolean p_log )
     {
-        super( p_configuration, p_scenario, FUNCTOR, p_id, p_showbeliefs );
-
-
+        super( p_configuration, p_scenario, FUNCTOR, p_id, p_log );
 
         m_maximumspeed = p_maximumspeed.doubleValue();
         m_acceleration = p_acceleration.doubleValue();
@@ -220,8 +219,17 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         // update beliefbase and print out
         m_viewrange.run();
 
-
         super.call();
+        if ( m_log )
+            Logger.info(
+                "[{}] information data: position {} speed {} maximum speed {} acceleration {} deceleration {}",
+                CMath.MATRIXFORMAT.toString( m_position ),
+                m_speed,
+                m_maximumspeed,
+                m_acceleration,
+                m_deceleration
+            );
+
         if ( !m_scenario.environment().move( this ) )
             this.oncollision();
 
@@ -385,7 +393,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                 randomvalue( (ITree) p_data[0], "deceleration", 8, 10 ),
                 ( (ITree) p_data[0] ).<Number>getOrDefault( 50, "viewrange" ),
 
-                ( (ITree) p_data[0] ).getOrDefault( false, "showbeliefs" )
+                ( (ITree) p_data[0] ).getOrDefault( false, "showlog" )
             );
 
             final DoubleMatrix1D l_position = new DenseDoubleMatrix1D(
