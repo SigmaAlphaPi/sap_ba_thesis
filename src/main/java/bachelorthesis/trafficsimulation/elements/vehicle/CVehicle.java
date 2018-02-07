@@ -162,6 +162,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     {
         return Stream.of(
             CLiteral.from( "lane", CRawTerm.from( this.position().get( 0 ) + 1 ) ),
+            CLiteral.from( "cell", CRawTerm.from( this.position().get( 1 ) + 1 ) ),
             CLiteral.from( "speed", CRawTerm.from( m_speed.get() ) ),
             CLiteral.from( "distance", CRawTerm.from( m_scenario.unit().celltometer( CMath.distance( this.position(), p_object.position() ) ) ) ),
             CLiteral.from( "direction",
