@@ -109,8 +109,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     {
         super( p_configuration, p_scenario, FUNCTOR, p_id, p_showbeliefs );
 
-
-
         m_maximumspeed = p_maximumspeed.doubleValue();
         m_acceleration = p_acceleration.doubleValue();
         m_deceleration = p_deceleration.doubleValue();
@@ -142,7 +140,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      * returns the next position of the vehicle
      *
      * @return next position
-     * @bug calculation with l_goal is incomplete
      */
     @Nonnull
     @Override
@@ -174,7 +171,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                                        // view straight forward
                                        new DenseDoubleMatrix1D( new double[]{0, 1} ),
                                        // relative direction to other vehicle
-                                       p_object.position().copy().assign( m_position, DoubleFunctions.minus ) )
+                                       p_object.position().copy().assign( m_position, DoubleFunctions.minus ),
+                                       // distance based on cell number, so scale with cell size
+                                       m_scenario.unit().cellsize()
+                                   )
                                ).toString().toLowerCase( Locale.ROOT )
                            )
             )
@@ -218,7 +218,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     {
         // update beliefbase and print out
         m_viewrange.run();
-
 
         super.call();
         if ( !m_scenario.environment().move( this ) )

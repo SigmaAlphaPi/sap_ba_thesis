@@ -80,6 +80,27 @@ public final class CMath
                : Math.toDegrees( Math.acos( ALGEBRA.mult( p_first, p_second ) / ( l_first * l_second ) ) );
     }
 
+    /**
+     * returns the angel
+     *
+     * @param p_first first vector
+     * @param p_second second vector
+     * @param p_scale scaling value
+     * @return pair of angel in degree or NaN on error
+     */
+    public static Number angle( final DoubleMatrix1D p_first, final DoubleMatrix1D p_second, final Number p_scale )
+    {
+        final DoubleMatrix1D l_firstvec = p_first.assign( DoubleFunctions.mult( p_scale.doubleValue() ) );
+        final DoubleMatrix1D l_secondvec = p_first.assign( DoubleFunctions.mult( p_scale.doubleValue() ) );
+
+        final double l_first = ALGEBRA.norm2( l_firstvec );
+        final double l_second = ALGEBRA.norm2( l_secondvec );
+
+        return ( l_first == 0 ) || ( l_second == 0 )
+               ? Double.NaN
+               : Math.toDegrees( Math.acos( ( ALGEBRA.mult( l_firstvec, l_secondvec ) ) / ( l_first * l_second ) ) );
+    }
+
 
     /**
      * returns the distance between to points
