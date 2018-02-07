@@ -62,7 +62,7 @@ agent:
             count: 1
 
             # show beliefs and static log information
-            showlog: false
+            showlog: true
 
 
             # view range in meters around a vehicle (should be greater than cell size)

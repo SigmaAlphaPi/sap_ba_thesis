@@ -28,7 +28,6 @@ import org.pmw.tinylog.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.InputStream;
-import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
@@ -132,7 +131,7 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
     public T call() throws Exception
     {
         if ( m_log )
-            Logger.info( MessageFormat.format( "[{}] beliefs: {}", m_id, Arrays.toString( m_beliefbase.stream().toArray() ) ) );
+            Logger.info( "[{}] beliefs: {}", m_id, Arrays.toString( m_beliefbase.stream().toArray() ) );
 
         return super.call();
     }
