@@ -77,12 +77,12 @@ public enum EDirection
     public static EDirection byAngle( @Nonnull final Number p_angle )
     {
         return EDirection.values()[
-            (int) (
+            ((int) (
                 p_angle.doubleValue() < 0
                 ? 360 + p_angle.doubleValue()
                 : p_angle.doubleValue()
-            ) / 45
-            ];
+            ) / 45 ) % EDirection.values().length
+        ];
     }
 
     /**
