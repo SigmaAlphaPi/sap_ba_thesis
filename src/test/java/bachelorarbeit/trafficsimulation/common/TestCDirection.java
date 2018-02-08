@@ -67,26 +67,4 @@ public final class TestCDirection
         );
     }
 
-    /**
-     * scaling and angle
-     */
-    @Test
-    public final void directionanglescale()
-    {
-        final DoubleMatrix1D l_first = new DenseDoubleMatrix1D( new double[]{0, 12} );
-        final DoubleMatrix1D l_viewfirst = new DenseDoubleMatrix1D( new double[]{0, 15} );
-
-        final DoubleMatrix1D l_second = new DenseDoubleMatrix1D( new double[]{0, 5} );
-
-        System.out.println(
-            EDirection.byAngle(
-                CMath.angle(
-                    l_viewfirst.copy().assign( l_first, DoubleFunctions.minus ),
-                    l_second.copy().assign( l_first, DoubleFunctions.minus ),
-                    7.5
-                )
-            )
-        );
-    }
-
 }

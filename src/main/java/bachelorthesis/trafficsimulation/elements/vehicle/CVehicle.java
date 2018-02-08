@@ -31,6 +31,7 @@ import org.lightjason.agentspeak.language.instantiable.plan.trigger.CTrigger;
 import org.lightjason.agentspeak.language.instantiable.plan.trigger.ITrigger;
 import org.lightjason.agentspeak.language.variable.CConstant;
 import org.lightjason.agentspeak.language.variable.IVariable;
+import org.pmw.tinylog.Logger;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -84,7 +85,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     /**
      * current speed in km/h
      */
-    private final AtomicDouble m_speed = new AtomicDouble( );
+    private final AtomicDouble m_speed = new AtomicDouble();
     /*
      * current position on lane / cell position
      */
@@ -109,9 +110,9 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private CVehicle( @Nonnull final IAgentConfiguration<IVehicle> p_configuration, @Nonnull final IScenario p_scenario, @Nonnull final String p_id,
                       @Nonnull @Nonnegative final Number p_maximumspeed, @Nonnull @Nonnegative final Number p_acceleration, @Nonnull@Nonnegative final Number p_deceleration,
-                      @Nonnull @Nonnegative final Number p_viewrange, final boolean p_showbeliefs )
+                      @Nonnull @Nonnegative final Number p_viewrange, final boolean p_log )
     {
-        super( p_configuration, p_scenario, FUNCTOR, p_id, p_showbeliefs );
+        super( p_configuration, p_scenario, FUNCTOR, p_id, p_log );
 
         m_viewrangesize = p_viewrange.doubleValue();
         m_maximumspeed = p_maximumspeed.doubleValue();
@@ -157,6 +158,15 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
 
     @Nonnull
     @Override
+    public final DoubleMatrix1D worldposition()
+    {
+        return m_position.copy()
+                         .assign( DoubleFunctions.plus( 1 ) )
+                         .assign( DoubleFunctions.mult( m_scenario.unit().cellsize().doubleValue() / 2 ) );
+    }
+
+    @Nonnull
+    @Override
     public final Map<String, IObject<?>> neighbours()
     {
         return m_viewrange.m_neighbour;
@@ -174,13 +184,9 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                            CLiteral.from(
                                EDirection.byAngle(
                                    CMath.angle(
-                                       // view straight forward
-                                       new DenseDoubleMatrix1D( new double[]{0, 1} ),
-                                       // relative direction to other vehicle
-                                       p_object.position().copy().assign( m_position, DoubleFunctions.minus ),
-                                       // distance based on cell number, so scale with cell size
-                                       m_scenario.unit().cellsize()
-                                   )
+                                        this.worldmovement(),
+                                        this.worldposition().assign( p_object.worldposition(), DoubleFunctions.minus )
+                                   ).doubleValue() - 22.5D
                                ).toString().toLowerCase( Locale.ROOT )
                            )
             )
@@ -214,6 +220,16 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     }
 
     @Override
+    public final DoubleMatrix1D worldmovement()
+    {
+        final DoubleMatrix1D l_position = this.worldposition();
+        final DoubleMatrix1D l_direction = l_position.copy();
+        l_direction.setQuick( 1, l_direction.getQuick( 1 ) + m_viewrangesize );
+
+        return l_direction.assign( l_position, DoubleFunctions.minus );
+    }
+
+    @Override
     public final double speed()
     {
         return m_speed.get();
@@ -226,6 +242,18 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         m_viewrange.run();
 
         super.call();
+        if ( m_log )
+            Logger.info(
+                "[{}] information data: position {} speed {} maximum speed {} acceleration {} deceleration {} viewrange {}",
+                m_id,
+                CMath.MATRIXFORMAT.toString( m_position ),
+                m_speed,
+                m_maximumspeed,
+                m_acceleration,
+                m_deceleration,
+                m_viewrangesize
+            );
+
         if ( !m_scenario.environment().move( this ) )
             this.oncollision();
 
@@ -389,7 +417,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                 randomvalue( (ITree) p_data[0], "deceleration", 8, 10 ),
                 ( (ITree) p_data[0] ).<Number>getOrDefault( 50, "viewrange" ),
 
-                ( (ITree) p_data[0] ).getOrDefault( false, "showbeliefs" )
+                ( (ITree) p_data[0] ).getOrDefault( false, "showlog" )
             );
 
             final DoubleMatrix1D l_position = new DenseDoubleMatrix1D(

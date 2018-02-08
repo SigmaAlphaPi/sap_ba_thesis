@@ -39,6 +39,13 @@ public interface IObject<T extends IAgent<?>> extends IPerceiveable, IAgent<T>
     DoubleMatrix1D nextposition();
 
     /**
+     * position in real coordinates
+     * @return real world position
+     */
+    @Nonnull
+    DoubleMatrix1D worldposition();
+
+    /**
      * returns scenario
      *
      * @return scenario

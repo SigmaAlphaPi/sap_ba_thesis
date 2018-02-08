@@ -28,7 +28,6 @@ import org.pmw.tinylog.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.InputStream;
-import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
@@ -56,21 +55,22 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
      */
     protected final IScenario m_scenario;
     /**
+     * show log information
+     */
+    protected final boolean m_log;
+    /**
+     * id of the object
+     */
+    protected final String m_id;
+    /**
      * functor definition
      */
     private final String m_functor;
     /**
-     * id of the object
-     */
-    private final String m_id;
-    /**
      * reference to dynamic beliefbase
      */
     private final IView m_dynamicbeliefs;
-    /**
-     * show beliefs in cycle
-     */
-    private final boolean m_showbeliefs;
+
 
 
 
@@ -83,14 +83,15 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
      * @param p_id name of the object
      */
     protected IBaseObject( @Nonnull final IAgentConfiguration<T> p_configuration, @Nonnull final IScenario p_scenario,
-                           @Nonnull final String p_functor, @Nonnull final String p_id, final boolean p_showbeliefs )
+                           @Nonnull final String p_functor, @Nonnull final String p_id, final boolean p_log
+    )
     {
         super( p_configuration );
 
         m_id = p_id;
+        m_log = p_log;
         m_functor = p_functor;
         m_scenario = p_scenario;
-        m_showbeliefs = p_showbeliefs;
         m_dynamicbeliefs = m_beliefbase.beliefbase().view( DYNAMICBELIEFBASE );
         Objects.requireNonNull( m_dynamicbeliefs, "dynamic beliefbase is null, cannot create object" );
     }
@@ -129,8 +130,8 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
     @Override
     public T call() throws Exception
     {
-        if ( m_showbeliefs )
-            Logger.info( MessageFormat.format( "[{0}] beliefs: {1}", m_id, Arrays.toString( m_beliefbase.stream().toArray() ) ) );
+        if ( m_log )
+            Logger.info( "[{}] beliefs: {}", m_id, Arrays.toString( m_beliefbase.stream().toArray() ) );
 
         return super.call();
     }

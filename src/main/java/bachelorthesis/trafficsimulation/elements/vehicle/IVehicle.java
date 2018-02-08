@@ -1,6 +1,7 @@
 package bachelorthesis.trafficsimulation.elements.vehicle;
 
 import bachelorthesis.trafficsimulation.elements.IObject;
+import cern.colt.matrix.tdouble.DoubleMatrix1D;
 
 import javax.annotation.Nonnegative;
 
@@ -10,6 +11,12 @@ import javax.annotation.Nonnegative;
  */
 public interface IVehicle extends IObject<IVehicle>
 {
+    /**
+     * calculates the direction vector
+     * in real world coordinates
+     * @return movement vector
+     */
+    DoubleMatrix1D worldmovement();
 
     /**
      * get current speed in km/h
