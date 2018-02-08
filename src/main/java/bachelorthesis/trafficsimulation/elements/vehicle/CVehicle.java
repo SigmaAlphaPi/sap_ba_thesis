@@ -93,6 +93,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      * backward view
      */
     private final CEnvironmentView m_viewrange;
+    /**
+     * view range size in meter
+     */
+    private final double m_viewrangesize;
 
 
     /**
@@ -109,6 +113,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     {
         super( p_configuration, p_scenario, FUNCTOR, p_id, p_showbeliefs );
 
+        m_viewrangesize = p_viewrange.doubleValue();
         m_maximumspeed = p_maximumspeed.doubleValue();
         m_acceleration = p_acceleration.doubleValue();
         m_deceleration = p_deceleration.doubleValue();
@@ -122,7 +127,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
 
         m_viewrange = new CEnvironmentView(
             Collections.unmodifiableSet(
-                CMath.cellcircle( m_scenario.unit().metertocell( p_viewrange ) ).collect( Collectors.toSet() )
+                CMath.cellcircle( m_scenario.unit().metertocell( m_viewrangesize ) ).collect( Collectors.toSet() )
             )
         );
 
