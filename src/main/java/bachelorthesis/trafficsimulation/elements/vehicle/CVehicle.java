@@ -98,6 +98,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      * view range size in meter
      */
     private final double m_viewrangesize;
+    /**
+     * view range size in cells as vector
+     */
+    private final DoubleMatrix1D m_viewragngesizecells;
 
 
     /**
@@ -118,6 +122,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         m_maximumspeed = p_maximumspeed.doubleValue();
         m_acceleration = p_acceleration.doubleValue();
         m_deceleration = p_deceleration.doubleValue();
+        m_viewragngesizecells = new DenseDoubleMatrix1D( new double[]{0, m_scenario.unit().metertocell( m_viewrangesize ).intValue() } );
 
         if ( p_scenario.unit().accelerationtospeed( m_acceleration ).doubleValue() > m_maximumspeed )
             throw new RuntimeException( "maximum acceleration is higher than maximum speed" );
@@ -191,6 +196,17 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                            )
             )
         );
+    }
+
+    private DoubleMatrix1D clippedforwardposition( final DoubleMatrix1D p_position )
+    {
+        final DoubleMatrix1D l_view = this.position().copy().assign( m_viewragngesizecells, DoubleFunctions.plus );
+        final DoubleMatrix1D l_position = p_position.copy().assign(  )
+
+        return
+
+               < m_scenario.environment().cells()
+               ?
     }
 
     @Override
