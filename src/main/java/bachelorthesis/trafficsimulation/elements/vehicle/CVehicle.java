@@ -487,7 +487,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                 ),
                 Stream.of(
                     new CConstant<>( "CurrentSpeed", l_vehicle.speed() ),
-                    new CConstant<>( "CurrentCell", l_vehicle.position().get( 0 ) + 1 ),
+                    new CConstant<>( "CurrentCell", l_vehicle.position().get( 1 ) + 1 ),
                     new CConstant<>( "CurrentLane", l_vehicle.lane().intValue() + 1 ),
                     new CConstant<>( "Acceleration", l_vehicle.acceleration() ),
                     new CConstant<>( "Deceleration", l_vehicle.deceleration() )
