@@ -89,10 +89,10 @@ public final class CMath
      */
     public static Number distance( final DoubleMatrix1D p_first, final DoubleMatrix1D p_second )
     {
-        return Math.sqrt( ALGEBRA.norm2(
+        return ALGEBRA.norm2(
             new DenseDoubleMatrix1D( p_second.toArray() )
                 .assign( p_first, DoubleFunctions.minus )
-        ) );
+        );
     }
 
     /**
