@@ -307,7 +307,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @IAgentActionName( name = "vehicle/pullout" )
     private void pullout()
     {
-        final Number l_lane = this.position().get( 0 ) - 1;
+        final Number l_lane = this.position().get( 0 ) + 1;
         if ( !m_scenario.environment().lanechange( this, l_lane ) )
             this.oncollision();
     }
@@ -319,7 +319,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @IAgentActionName( name = "vehicle/pullin" )
     private void pullin()
     {
-        final Number l_lane = this.position().get( 0 ) + 1;
+        final Number l_lane = this.position().get( 0 ) - 1;
         if ( !m_scenario.environment().lanechange( this, l_lane ) )
             this.oncollision();
     }
