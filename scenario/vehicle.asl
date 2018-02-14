@@ -22,6 +22,11 @@
  *      Acceleration        acceleration in m/sec^2
  *      Deceleration        deceleration in m/sec^2
  *      Timestep            time of a single timestep in minutes
+ *
+ *
+ * order belieflist
+ *
+ *      lane - cell - speed - distance - direction
  */
 
 
@@ -30,11 +35,13 @@
 +!cruise <-
     
 	generic/print( ID, "-> BELIEFLIST", agent/belieflist );
-	
+		
     !accelerate;
     !decelerate;
     !linger;
-//    generic/print( "   ", ID, "@", CurrentSpeed, "kph", "in lane", CurrentLane, "in cell", CurrentCell );
+	!pullout;
+	!pullin;
+    generic/print( "   ", ID, "@", CurrentSpeed, "kph", "in lane", CurrentLane, "in cell", CurrentCell );
     scenario/statistic( ID, CurrentCell );
     !cruise
 .
@@ -58,19 +65,31 @@
         generic/print( "MAX", ID, "decelerated -> high speed");
         vehicle/decelerate(0.25);
         !decelerate
+.
 
-//	: >>( view/vehicle(_,_,_,D), bool/equal( D, "forward" ) ) <-
-	: >>( view/vehicle( _, data( _, static( A, B, C, D, E ) ) ), 
-	      bool/anymatch( "direction[forward[]]", generic/type/tostring(A), 
+// --- attempt/execute pull-out ---
++!pullout
+	: CurrentLane == 1 && 
+	  >>( view/vehicle( _, data( _, static( _, _, _, _, E ) ) ), 
+	      bool/equal( E, generic/type/tostring(E) ) ) <-
+        generic/print( "POA", ID, "has vehicle in-front of -> Pull-out attempt");
+        vehicle/pullout;
+        !pullout
+.
+
+// --- attempt/execute pull-in ---
++!pullin
+	: CurrentLane == 2 && 
+	  >>( view/vehicle( _, data( _, static( A, B, C, D, E ) ) ), 
+	      ~bool/anymatch( "direction[backward[]]", generic/type/tostring(A), 
 		                                         generic/type/tostring(B), 
 												 generic/type/tostring(C), 
 												 generic/type/tostring(D), 
 												 generic/type/tostring(E) ) ) <-
-        generic/print( "TFC", ID, "has vehicle in-front of -> decelerate");
-        vehicle/decelerate(0.9);
-        !decelerate
-		.
-
+        generic/print( "PIA", ID, "has no vehicle behind -> Pull-in attempt");
+        vehicle/pullin;
+        !pullin
+.
 
 // --- collision vehicle brake hardest/stop immediatly ---
 +!vehicle/collision <-
