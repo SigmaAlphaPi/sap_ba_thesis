@@ -7,7 +7,9 @@ main:
     # simulated time
     # 10^5 timesteps in multi-lane, roughly 166ish minutes
     # was 100
-    simulationtime_in_minutes: 30
+    
+    #was 120
+    simulationtime_in_minutes: 240
 
     # preetprint of the result json
     prettyprint: true
@@ -36,7 +38,7 @@ main:
         # time of a single timestep in simulation
         # was: 0.01666666666666666666666666666666666666666
         # 0.1 -> 6 sec, 0.05 -> 3 sec
-        timestep_in_minutes: 0.05
+        timestep_in_minutes: 0.1
 
 
 # environment / street setting
@@ -48,7 +50,7 @@ environment:
     # length if the lane in kilometer
     # 75 kms are about 10000 cells
     # was 75
-    length_in_km: 2
+    length_in_km: 10
 
 
 # agent vehicle configuration
@@ -58,7 +60,7 @@ agent:
     # must start with an upper-case letter)
     constant:
         # 160, was max. possible speed in multi-lane
-        AllowedSpeed: 160 
+        AllowedSpeed: 100 
 
     # all vehicle configuration, key is the filename of the filename
     # AgentSpeak(L++) script relative to configuration file
@@ -68,13 +70,15 @@ agent:
             # number of generated vehicles
             # 10^3 cars in multi-lane
             # was 400
-            count: 2
+            
+            #was 12
+            count: 12
 
             # show beliefs in each cycle
-            showbeliefs: true
+            showlog: false
 
             # view range in meters around a vehicle (should be greater than cell size)
-            viewrange_in_meter: 200
+            viewrange: 100
 
             # local constant values for this vehicle
             costant:
@@ -104,13 +108,13 @@ agent:
             # number of generated vehicles
             # 10^3 cars in multi-lane
             # was 400
-            count: 1
+            count: 0
 
             # show beliefs in each cycle
-            showbeliefs: false
+            showlog: false
 
             # view range in meters around a vehicle (should be greater than cell size)
-            viewrange_in_meter: 200
+            viewrange: 100
 
             # local constant values for this vehicle
             costant:
