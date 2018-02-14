@@ -22,15 +22,30 @@
  *      Acceleration        acceleration in m/sec^2
  *      Deceleration        deceleration in m/sec^2
  *      Timestep            time of a single timestep in minutes
+ *
+ *
+ * HOW TO ADDRESS THE STATIC VALUES IN VEHICLE VIEW
+
+    >>view/vehicle( _, data( _, static( lane( LN ), cell( CLL ), speed( SPD ), distance( DSTNC ), direction( DRCTN ) ) ) );
+    generic/print( "LN ist", LN, generic/type/type( LN ) ); // double
+    generic/print( "CLL ist", CLL, generic/type/type (CLL) ); // double
+    generic/print( "SPD ist", SPD, generic/type/type (SPD) ); // double
+    generic/print( "DSTNC ist", DSTNC, generic/type/type(DSTNC) ); // double
+    generic/print( "DRCTN ist", DRCTN, generic/type/type(DRCTN) ); // literal - cast to string
+    generic/print( "bool/equal", bool/equal( generic/type/tostring( DRCTN ), "forward[]" ) )
  */
+
+
 
 
 !cruise.
 
+
+// --- start all other plans ---
 +!cruise <-
     
-	generic/print( ID, "-> BELIEFLIST", agent/belieflist );
-	
+    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
+    
     !accelerate;
     !decelerate;
     !linger;
@@ -39,6 +54,8 @@
     !cruise
 .
 
+
+// --- acceleration ---
 +!accelerate
     : CurrentSpeed < AllowedSpeed <-
         // generic/print(ID, "accelerated");
@@ -46,30 +63,30 @@
         !accelerate
 .     
 
+
+// --- lingering ---
 +!linger <-
-	L = math/statistic/randomsimple;
+    L = math/statistic/randomsimple;
     L < 0.1;
     generic/print( "LIN", ID, "LINGERED" );
     vehicle/decelerate(0.75)
 .
 
+
+// --- deceleration if max. allowed speed / traffic ahead ---
 +!decelerate 
     : CurrentSpeed > AllowedSpeed <-
         generic/print( "MAX", ID, "decelerated -> high speed");
         vehicle/decelerate(0.25);
         !decelerate
 
-//	: >>( view/vehicle(_,_,_,D), bool/equal( D, "forward" ) ) <-
-	: >>( view/vehicle( _, data( _, static( A, B, C, D, E ) ) ), 
-	      bool/anymatch( "direction[forward[]]", generic/type/tostring(A), 
-		                                         generic/type/tostring(B), 
-												 generic/type/tostring(C), 
-												 generic/type/tostring(D), 
-												 generic/type/tostring(E) ) ) <-
+    : >>( view/vehicle( _, data( _, static( _, _, _, _, direction( DRCTN ) ) ) ), 
+            bool/equal( generic/type/tostring( DRCTN ), "forward[]" ) ) <-
         generic/print( "TFC", ID, "has vehicle in-front of -> decelerate");
         vehicle/decelerate(0.9);
         !decelerate
-		.
+.
+
 
 
 // --- collision vehicle brake hardest/stop immediatly ---
