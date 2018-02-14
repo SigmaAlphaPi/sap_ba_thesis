@@ -17,7 +17,7 @@ public enum EDirection
 {
     FORWARD( 0 ),
     BACKWARD( 180 );
-    
+
     /**
      * 8 sectors (divide by 45 instead of 180)
      *
