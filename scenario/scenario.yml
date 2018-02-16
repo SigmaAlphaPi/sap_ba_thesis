@@ -50,8 +50,6 @@ environment:
     # length if the lane in kilometer
     # 75 kms are about 10000 cells
     # was 75
-    
-    #was 10
     length_in_km: 1
 
 
@@ -80,7 +78,7 @@ agent:
             showlog: false
 
             # view range in meters around a vehicle (should be greater than cell size)
-            viewrange: 100
+            viewrange: 250
 
             # local constant values for this vehicle
             costant:
@@ -116,7 +114,7 @@ agent:
             showlog: false
 
             # view range in meters around a vehicle (should be greater than cell size)
-            viewrange: 100
+            viewrange: 250
 
             # local constant values for this vehicle
             costant:

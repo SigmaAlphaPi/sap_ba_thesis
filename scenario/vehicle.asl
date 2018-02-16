@@ -27,84 +27,187 @@
  * order belieflist
  *
  *      lane - cell - speed - distance - direction
+ *
+ * how to address the static values in view/vehicle
+
+    >>view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) );
+    generic/print( "Lane ist", Lane, generic/type/type( Lane ), "floored Lane", math/floor(Lane) ); // double
+    generic/print( "Cell ist", Cell, generic/type/type (Cell) ); // double
+    generic/print( "Speed ist", Speed, generic/type/type (Speed) ); // double
+    generic/print( "Dist ist", Dist, generic/type/type(Dist) ); // double
+    generic/print( "Dir ist", Dir, generic/type/type(Dir) ); // literal - cast to string
+    generic/print( "bool/equal", bool/equal( generic/type/tostring( Dir ), "forward[]" ) )
+ *
+ *
+ * "status"messages (no broadcast)
+ *
+ *      +dynamic/state("drunk");    -   public
+ *      +state("sober");            -   private
+ *
  */
 
 
 !cruise.
 
+
+
+// --- start all other plans ---
 +!cruise <-
+    !!check4traffic;
     
-	generic/print( ID, "-> BELIEFLIST", agent/belieflist );
-		
+    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
+    
     !accelerate;
     !decelerate;
     !linger;
-	!pullout;
-	!pullin;
+    !pullout;
+    !pullin;
+    
     generic/print( "   ", ID, "@", CurrentSpeed, "kph", "in lane", CurrentLane, "in cell", CurrentCell );
     scenario/statistic( ID, CurrentCell );
+
     !cruise
 .
 
+
+
+// --- check if traffic in sight or not
++!check4traffic
+    // if nothing is in sight, set belief to 0 and vice versa
+    : ~>>view/vehicle(_,_) <- 
+//        generic/print( "NOVIEW", ID ); 
+        +trafficInSight(0); 
+        -trafficInSight(1)
+    
+    : >>view/vehicle(_,_) <- 
+//        generic/print( "VIEW", ID ); 
+        +trafficInSight(1); 
+        -trafficInSight(0)
+.
+
+
+
+// --- acceleration ---
 +!accelerate
     : CurrentSpeed < AllowedSpeed <-
         // generic/print(ID, "accelerated");
         vehicle/accelerate(0.5);
         !accelerate
-.     
+.
 
+
+
+// --- lingering ---
 +!linger <-
-	L = math/statistic/randomsimple;
+    L = math/statistic/randomsimple;
     L < 0.1;
     generic/print( "LIN", ID, "LINGERED" );
     vehicle/decelerate(0.75)
 .
 
+
+
+// --- pull-out, change lane to overtake ---
+// --- (maybe add "relative speed" condition ---
+// --- (overtaker speed (CurrentSpeed) must be higher than overtakee speed) ---
++!pullout 
+    : CurrentLane == 1 &&
+        >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
+            bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
+            && math/floor(Lane) == 1
+            && Dist < 200
+        ) <-
+        generic/print("POA", ID, " -> Pull-out attempt");
+        vehicle/pullout
+.
+
+
+
+// --- pull-in, change lane after overtake is finished
++!pullin
+
+    // --- PI attempt alternative #1 ---
+    // --- no visible traffic at all ---
+    // --- (maybe add random) ---
+    : ( CurrentLane == 2 
+        && ~>>view/vehicle( _, _ )
+        ) <- 
+        generic/print( "PIA1", ID, "sees no traffic at all -> Pull-in"); 
+        vehicle/pullin
+    
+    // --- PI attempt alternative #2 ---
+    // --- forward traffic lane to pull into > 200m
+    // --- backward traffic lane to pull into > 100m
+    : >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
+                bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
+                && math/floor(Lane) == CurrentLane-1
+                && Dist > 200
+            )
+        && >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
+                bool/equal( generic/type/tostring( Dir ), "backward[]" ) 
+                && math/floor(Lane) == CurrentLane-1
+                && Dist > 100 
+            )
+        <- 
+        generic/print( "PIA2", ID, "forward > 200, backward > 100 -> Pull-in"); 
+        vehicle/pullin
+    
+    // --- PI attempt alternative #3 ---
+    // --- no forward traffic lane to pull into
+    // --- backward traffic lane to pull into > 100m
+    : >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
+                bool/equal( generic/type/tostring( Dir ), "backward[]" ) 
+                && math/floor(Lane) == CurrentLane-1
+                && Dist > 100 
+            )
+        && ~>>( view/vehicle( _, data( _, static( lane( Lane ), _, _, _, direction( Dir ) ) ) ), 
+                bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
+                && math/floor(Lane) == CurrentLane-1
+         )
+         <- 
+        generic/print( "PIA3", ID, "no forward, backward > 100 -> Pull-in"); 
+        vehicle/pullin
+.
+
+
+
+// --- deceleration if max. allowed speed / traffic ahead ---
 +!decelerate 
     : CurrentSpeed > AllowedSpeed <-
         generic/print( "MAX", ID, "decelerated -> high speed");
         vehicle/decelerate(0.25);
         !decelerate
+    
+    // --- starts to brake, when distance < 100m 
+    // --- (maybe add distance dependent on CurrentSpeed ---
+    // --- (braking distance is ca. (speed/10)^2) ---
+    // --- (maybe add strength dependent on distance ---
+    : >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
+            bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
+            && math/floor(Lane) == CurrentLane 
+            && Dist < 100
+        ) <-
+        generic/print( "TFC100", ID, "has vehicle in-front of -> decelerate");
+        vehicle/decelerate(0.9);
+        !decelerate
 .
 
-// --- attempt/execute pull-out ---
-+!pullout
-	: CurrentLane == 1 && 
-	  >>( view/vehicle( _, data( _, static( _, _, _, _, E ) ) ), 
-	      bool/equal( E, generic/type/tostring(E) ) ) <-
-        generic/print( "POA", ID, "has vehicle in-front of -> Pull-out attempt");
-        vehicle/pullout;
-        !pullout
-.
 
-// --- attempt/execute pull-in ---
-+!pullin
-	: CurrentLane == 2 && 
-	  >>( view/vehicle( _, data( _, static( A, B, C, D, E ) ) ), 
-	      ~bool/anymatch( "direction[backward[]]", generic/type/tostring(A), 
-		                                         generic/type/tostring(B), 
-												 generic/type/tostring(C), 
-												 generic/type/tostring(D), 
-												 generic/type/tostring(E) ) ) <-
-        generic/print( "PIA", ID, "has no vehicle behind -> Pull-in attempt");
-        vehicle/pullin;
-        !pullin
-.
 
 // --- collision vehicle brake hardest/stop immediatly ---
 +!vehicle/collision <-
-
     vehicle/decelerate( 1 );
     generic/print( "COB", ID, "BREAKED HARD -> collision" )
 /*
     vehicle/stop;
-    // generic/print( "COS", ID, "STOPPED -> collision" )/*;
-    agent/sleep( 20 )
+    generic/print( "COS", ID, "STOPPED -> collision" )/*;
+    agent/sleep( 15 )
 */
 .
+
+
 
 // --- wake up and go on ---
 +!wakeup <-
     !cruise
 .
-
