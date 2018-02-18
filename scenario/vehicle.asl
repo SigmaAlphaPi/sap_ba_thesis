@@ -89,11 +89,18 @@
 
 // --- acceleration ---
 +!accelerate
-    : CurrentSpeed < AllowedSpeed <-
-        // generic/print(ID, "accelerated");
+    // --- accelerate only, if not traffic ahead ---
+    // --- otherwise you have to brake against the acceleration ---
+    // --- resulting in too long braking distances
+    : CurrentSpeed < AllowedSpeed
+        && ~>>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ),
+                bool/equal( generic/type/tostring( Dir ), "forward[]" )
+            )
+        <-
+//        generic/print( "   ", ID, "accelerated");
         vehicle/accelerate(0.5);
         !accelerate
-.
+.     
 
 
 
