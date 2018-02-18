@@ -55,15 +55,15 @@
 +!cruise <-
     !!check4traffic;
     
-    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
+//    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
-    !pullout;
+//    !pullout;
     !pullin;
     
-    generic/print( "   ", ID, "@", CurrentSpeed, "kph", "in lane", CurrentLane, "in cell", CurrentCell );
+    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentCell );
 
     !cruise
@@ -72,15 +72,15 @@
 
 
 // --- check if traffic in sight or not
+// --- if nothing is in sight, set belief to 0/cancel 1 and vice versa ---
 +!check4traffic
-    // if nothing is in sight, set belief to 0 and vice versa
     : ~>>view/vehicle(_,_) <- 
 //        generic/print( "NOVIEW", ID ); 
         +trafficInSight(0); 
         -trafficInSight(1)
     
     : >>view/vehicle(_,_) <- 
-//        generic/print( "VIEW", ID ); 
+        generic/print( "VIEW  ", ID ); 
         +trafficInSight(1); 
         -trafficInSight(0)
 .
@@ -98,26 +98,32 @@
 
 
 // --- lingering ---
+// --- L is probability to linger ---
 +!linger <-
     L = math/statistic/randomsimple;
     L < 0.1;
-    generic/print( "LIN", ID, "LINGERED" );
+    generic/print( "LIN   ", ID, "LINGERED" );
     vehicle/decelerate(0.75)
 .
 
 
 
 // --- pull-out, change lane to overtake ---
+// --- min. CurrentSpeed must be walking speed (ca. 7 kph)
 // --- (maybe add "relative speed" condition ---
 // --- (overtaker speed (CurrentSpeed) must be higher than overtakee speed) ---
 +!pullout 
-    : CurrentLane == 1 &&
-        >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
-            bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
-            && math/floor(Lane) == 1
-            && Dist < 200
+    : CurrentLane == 1 
+        && CurrentSpeed > 7
+        && >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
+                bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
+                && math/floor(Lane) == 1
+                && Dist < 200
         ) <-
-        generic/print("POA", ID, " -> Pull-out attempt");
+        generic/print( "POA   ", ID, " -> Pull-out attempt", "Dist", Dist );
+        PO = math/statistic/randomsimple;
+        PO < 0.5;
+        generic/print( "OUT   ", ID, " -> pulls out (attempt successful)", PO );
         vehicle/pullout
 .
 
@@ -128,11 +134,16 @@
 
     // --- PI attempt alternative #1 ---
     // --- no visible traffic at all ---
+    // --- min. CurrentSpeed must be walking speed (ca. 7 kph)
     // --- (maybe add random) ---
-    : ( CurrentLane == 2 
+    : ( CurrentLane > 1 
+        && CurrentSpeed > 7
         && ~>>view/vehicle( _, _ )
         ) <- 
-        generic/print( "PIA1", ID, "sees no traffic at all -> Pull-in"); 
+        generic/print( "PIA1  ", ID, "sees no traffic at all -> Pull-in attempt"); 
+        PI = math/statistic/randomsimple;
+        PI < 0.5;
+        generic/print( "IN    ", ID, "--> pulls in (attempt successful)", PI );
         vehicle/pullin
     
     // --- PI attempt alternative #2 ---
@@ -149,7 +160,10 @@
                 && Dist > 100 
             )
         <- 
-        generic/print( "PIA2", ID, "forward > 200, backward > 100 -> Pull-in"); 
+        generic/print( "PIA2  ", ID, "forward > 200, backward > 100 -> Pull-in attempt"); 
+        PI = math/statistic/randomsimple;
+        PI < 0.5;
+        generic/print( "IN    ", ID, "--> pulls in (attempt successful)", PI );
         vehicle/pullin
     
     // --- PI attempt alternative #3 ---
@@ -165,7 +179,10 @@
                 && math/floor(Lane) == CurrentLane-1
          )
          <- 
-        generic/print( "PIA3", ID, "no forward, backward > 100 -> Pull-in"); 
+        generic/print( "PIA3  ", ID, "no forward, backward > 100 -> Pull-in attempt"); 
+        PI = math/statistic/randomsimple;
+        PI < 0.5;
+        generic/print( "IN    ", ID, "--> pulls in (attempt successful)", PI );
         vehicle/pullin
 .
 
@@ -173,22 +190,46 @@
 
 // --- deceleration if max. allowed speed / traffic ahead ---
 +!decelerate 
+    // --- deceleration intensity dependent on violation heaviness ---
     : CurrentSpeed > AllowedSpeed <-
-        generic/print( "MAX", ID, "decelerated -> high speed");
-        vehicle/decelerate(0.25);
+        Violation = math/ceil(CurrentSpeed)-AllowedSpeed;
+        ViolationHeaviness = Violation*math/pow(-1,AllowedSpeed);
+        ViolationFactor = 5*ViolationHeaviness;
+        DecelerationFactor = math/min( ViolationFactor, 0.5 );
+        generic/print( "MAX   ", ID, "decelerated -> high speed", "ViolationHeaviness:", ViolationHeaviness, "DecelerationFactor", DecelerationFactor );
+        vehicle/decelerate(DecelerationFactor);
         !decelerate
     
     // --- starts to brake, when distance < 100m 
     // --- (maybe add distance dependent on CurrentSpeed ---
     // --- (braking distance is ca. (speed/10)^2) ---
-    // --- (maybe add strength dependent on distance ---
     : >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
             bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
             && math/floor(Lane) == CurrentLane 
             && Dist < 100
         ) <-
-        generic/print( "TFC100", ID, "has vehicle in-front of -> decelerate");
-        vehicle/decelerate(0.9);
+        RelativeSpeed = CurrentSpeed-Speed;
+        RelativeSpeedFactor = math/pow(-1,10)*math/ceil(RelativeSpeed);
+        DistFactor = math/pow(-1,200)*math/ceil(Dist);
+        CombinedFactor = RelativeSpeedFactor+DistFactor;
+        DecelerationFactor = math/max( math/min( CombinedFactor, 1 ), 0 );
+        generic/print( "      ", "RelativeSpeedFactor", RelativeSpeedFactor, "DistFactor", DistFactor, "CombinedFactor", CombinedFactor, "DecelerationFactor", DecelerationFactor );
+        generic/print( "TFC100", ID, "has vehicle in-front of -> decelerate", DecelerationFactor);
+        vehicle/decelerate(DecelerationFactor);
+        !decelerate
+    
+    // --- no overtaking to the right ---
+    // --- http://www.zeit.de/mobilitaet/2017-06/ueberholverbot-verkehrsregel-autobahn-tempo-strafe ---
+    // --- §7 (2, 2a) StVO ---
+    : >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
+            bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
+            && math/floor(Lane) > CurrentLane
+            && Speed < CurrentSpeed
+            && Dist < 50
+        ) <-
+        RelativeSpeed = CurrentSpeed-Speed;
+        generic/print( "TFCLEF", ID, "no overtake to the right -> decelerate", "RelativeSpeed", RelativeSpeed, "Dist", Dist );
+        CurrentSpeed > 80 ? vehicle/decelerate(0.9) : vehicle/accelerate(0.5);
         !decelerate
 .
 
@@ -197,10 +238,11 @@
 // --- collision vehicle brake hardest/stop immediatly ---
 +!vehicle/collision <-
     vehicle/decelerate( 1 );
-    generic/print( "COB", ID, "BREAKED HARD -> collision" )
+    generic/print( "COB   ", ID, "BREAKED HARD -> collision" )
 /*
     vehicle/stop;
-    generic/print( "COS", ID, "STOPPED -> collision" )/*;
+    generic/print( "COS   ", ID, "STOPPED -> collision" )/*;
+    // --- sleep causes trouble ---
     agent/sleep( 15 )
 */
 .

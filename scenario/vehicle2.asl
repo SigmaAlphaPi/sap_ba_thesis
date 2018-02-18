@@ -90,7 +90,7 @@
 
     
 
-    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
+//    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
 
     
 
@@ -100,7 +100,7 @@
 
     !linger;
 
-    generic/print( "   ", ID, "@", CurrentSpeed, "kph", "in lane", CurrentLane, "in cell", CurrentCell );
+    generic/print( "      ", ID, "in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
 
     scenario/statistic( ID, CurrentCell );
 
@@ -138,7 +138,7 @@
 
     L < 0.1;
 
-    generic/print( "LIN", ID, "LINGERED" );
+    generic/print( "LIN   ", ID, "LINGERED" );
 
     vehicle/decelerate(0.75)
 
@@ -149,30 +149,26 @@
 
 
 // --- deceleration if max. allowed speed / traffic ahead ---
-
 +!decelerate 
-
     : CurrentSpeed > AllowedSpeed <-
-
-        generic/print( "MAX", ID, "decelerated -> high speed");
-
+        generic/print( "MAX   ", ID, "decelerated -> high speed");
         vehicle/decelerate(0.25);
-
         !decelerate
-
-
-
-    : >>( view/vehicle( _, data( _, static( _, _, _, _, direction( DRCTN ) ) ) ), 
-
-            bool/equal( generic/type/tostring( DRCTN ), "forward[]" ) ) <-
-
-        generic/print( "TFC", ID, "has vehicle in-front of -> decelerate");
-
+    
+    // --- starts to brake, when distance < 100m 
+    // --- (maybe add distance dependent on CurrentSpeed ---
+    // --- (braking distance is ca. (speed/10)^2) ---
+    // --- (maybe add strength dependent on distance ---
+    : >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
+            bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
+            && math/floor(Lane) == CurrentLane 
+            && Dist < 100
+        ) <-
+        generic/print( "TFC100", ID, "has vehicle in-front of -> decelerate");
         vehicle/decelerate(0.9);
-
         !decelerate
-
 .
+
 
 
 
@@ -188,13 +184,13 @@
 
     vehicle/decelerate( 1 );
 
-    generic/print( "COB", ID, "BREAKED HARD -> collision" )
+    generic/print( "COB   ", ID, "BREAKED HARD -> collision" )
 
 /*
 
     vehicle/stop;
 
-    // generic/print( "COS", ID, "STOPPED -> collision" )/*;
+    // generic/print( "COS   ", ID, "STOPPED -> collision" )/*;
 
     agent/sleep( 20 )
 
