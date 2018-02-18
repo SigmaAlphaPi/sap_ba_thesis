@@ -60,7 +60,7 @@
     !accelerate;
     !decelerate;
     !linger;
-//    !pullout;
+    !pullout;
     !pullin;
     
     generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
@@ -89,9 +89,28 @@
 
 // --- acceleration ---
 +!accelerate
-    : CurrentSpeed < AllowedSpeed <-
-        // generic/print(ID, "accelerated");
+    // --- accelerate only, if no traffic ahead ---
+    // --- otherwise you have to brake against the acceleration ---
+    // --- resulting in too long braking distances
+    : CurrentSpeed < AllowedSpeed
+        && ~>>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ),
+                bool/equal( generic/type/tostring( Dir ), "forward[]" )
+                && math/floor(Lane) >= CurrentLane
+            )
+        <-
+        generic/print( "ACC   ", ID, "accelerated");
         vehicle/accelerate(0.5);
+        !accelerate
+    
+    : CurrentSpeed < AllowedSpeed
+        && >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ),
+                bool/equal( generic/type/tostring( Dir ), "forward[]" )
+                && CurrentSpeed < Speed
+                && math/floor(Lane) >= CurrentLane
+            )
+        <-
+        generic/print( "ACCSLO", ID, "accelerated slowly (faster traffic is ahead)" );
+        Dist < 100 ? vehicle/accelerate(0.125) : vehicle/accelerate(0.25);
         !accelerate
 .
 
@@ -123,7 +142,7 @@
         generic/print( "POA   ", ID, " -> Pull-out attempt", "Dist", Dist );
         PO = math/statistic/randomsimple;
         PO < 0.5;
-        generic/print( "OUT   ", ID, " -> pulls out (attempt successful)", PO );
+        generic/print( "PULOUT", ID, " -> pulls out (attempt successful)", PO, "#####     PULL-OUT     #####" );
         vehicle/pullout
 .
 
@@ -143,7 +162,7 @@
         generic/print( "PIA1  ", ID, "sees no traffic at all -> Pull-in attempt"); 
         PI = math/statistic/randomsimple;
         PI < 0.5;
-        generic/print( "IN    ", ID, "--> pulls in (attempt successful)", PI );
+        generic/print( "PULLIN", ID, "--> pulls in (attempt successful)", PI, "#####     PULL-IN     #####" );
         vehicle/pullin
     
     // --- PI attempt alternative #2 ---
@@ -163,7 +182,7 @@
         generic/print( "PIA2  ", ID, "forward > 200, backward > 100 -> Pull-in attempt"); 
         PI = math/statistic/randomsimple;
         PI < 0.5;
-        generic/print( "IN    ", ID, "--> pulls in (attempt successful)", PI );
+        generic/print( "PULLIN", ID, "--> pulls in (attempt successful)", PI, "#####     PULL-IN     #####" );
         vehicle/pullin
     
     // --- PI attempt alternative #3 ---
@@ -182,7 +201,7 @@
         generic/print( "PIA3  ", ID, "no forward, backward > 100 -> Pull-in attempt"); 
         PI = math/statistic/randomsimple;
         PI < 0.5;
-        generic/print( "IN    ", ID, "--> pulls in (attempt successful)", PI );
+        generic/print( "PULLIN", ID, "--> pulls in (attempt successful)", PI, "#####     PULL-IN     #####" );
         vehicle/pullin
 .
 
@@ -190,15 +209,17 @@
 
 // --- deceleration if max. allowed speed / traffic ahead ---
 +!decelerate 
+/*
     // --- deceleration intensity dependent on violation heaviness ---
     : CurrentSpeed > AllowedSpeed <-
         Violation = math/ceil(CurrentSpeed)-AllowedSpeed;
         ViolationHeaviness = Violation*math/pow(-1,AllowedSpeed);
         ViolationFactor = 5*ViolationHeaviness;
         DecelerationFactor = math/min( ViolationFactor, 0.5 );
-        generic/print( "MAX   ", ID, "decelerated -> high speed", "ViolationHeaviness:", ViolationHeaviness, "DecelerationFactor", DecelerationFactor );
+        generic/print( "MAXSPD", ID, "decelerated -> high speed", "ViolationHeaviness:", ViolationHeaviness, "DecelerationFactor", DecelerationFactor );
         vehicle/decelerate(DecelerationFactor);
         !decelerate
+*/
     
     // --- starts to brake, when distance < 100m 
     // --- (maybe add distance dependent on CurrentSpeed ---
@@ -210,26 +231,38 @@
         ) <-
         RelativeSpeed = CurrentSpeed-Speed;
         RelativeSpeedFactor = math/pow(-1,10)*math/ceil(RelativeSpeed);
-        DistFactor = math/pow(-1,200)*math/ceil(Dist);
+        DistFactor = math/pow(-1,300)*math/ceil(Dist);
         CombinedFactor = RelativeSpeedFactor+DistFactor;
         DecelerationFactor = math/max( math/min( CombinedFactor, 1 ), 0 );
-        generic/print( "      ", "RelativeSpeedFactor", RelativeSpeedFactor, "DistFactor", DistFactor, "CombinedFactor", CombinedFactor, "DecelerationFactor", DecelerationFactor );
+        generic/print( "TFC100", ID, "Dist", Dist );
+        generic/print( "TFC100", ID, "RelativeSpeedFactor", RelativeSpeedFactor, "DistFactor", DistFactor, "CombinedFactor", CombinedFactor, "DecelerationFactor", DecelerationFactor );
         generic/print( "TFC100", ID, "has vehicle in-front of -> decelerate", DecelerationFactor);
         vehicle/decelerate(DecelerationFactor);
         !decelerate
     
     // --- no overtaking to the right ---
     // --- http://www.zeit.de/mobilitaet/2017-06/ueberholverbot-verkehrsregel-autobahn-tempo-strafe ---
-    // --- §7 (2, 2a) StVO ---
+    // --- 7 (2, 2a) StVO ---
     : >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
             bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
             && math/floor(Lane) > CurrentLane
             && Speed < CurrentSpeed
-            && Dist < 50
+            && Dist < 100
         ) <-
         RelativeSpeed = CurrentSpeed-Speed;
-        generic/print( "TFCLEF", ID, "no overtake to the right -> decelerate", "RelativeSpeed", RelativeSpeed, "Dist", Dist );
-        CurrentSpeed > 80 ? vehicle/decelerate(0.9) : vehicle/accelerate(0.5);
+        RelativeSpeedFactor = math/pow(-1,50)*math/ceil(RelativeSpeed);
+        DistFactor = math/pow(-1,300)*math/ceil(Dist);
+        CombinedFactor = RelativeSpeedFactor+DistFactor;
+        DecelerationFactor = math/max( math/min( CombinedFactor, 1 ), 0 );
+        generic/print( "NOOVRI", ID, "Dist", Dist );
+        generic/print( "NOOVRI", ID, "RelativeSpeedFactor", RelativeSpeedFactor, "DistFactor", DistFactor, "CombinedFactor", CombinedFactor, "DecelerationFactor", DecelerationFactor );
+        generic/print( "NOOVRI", ID, "no overtake to the right -> decelerate", DecelerationFactor);
+        vehicle/decelerate(DecelerationFactor);
+/*
+        generic/print( "      ", Dir, "Dist", Dist );
+        generic/print( "NOOVRI", ID, "no overtake to the right -> decelerate", "RelativeSpeed", RelativeSpeed, "Dist", Dist );
+        CurrentSpeed > 80 ? vehicle/decelerate(0.9) : vehicle/decelerate(0.5);
+*/
         !decelerate
 .
 
@@ -237,11 +270,12 @@
 
 // --- collision vehicle brake hardest/stop immediatly ---
 +!vehicle/collision <-
-    vehicle/decelerate( 1 );
-    generic/print( "COB   ", ID, "BREAKED HARD -> collision" )
 /*
+    vehicle/decelerate( 1 );
+    generic/print( "COLBRK", ID, "BREAKED HARD -> collision" )
+*/
     vehicle/stop;
-    generic/print( "COS   ", ID, "STOPPED -> collision" )/*;
+    generic/print( "COLSTP", ID, "STOPPED -> collision" )/*;
     // --- sleep causes trouble ---
     agent/sleep( 15 )
 */

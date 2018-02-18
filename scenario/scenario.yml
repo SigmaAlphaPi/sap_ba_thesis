@@ -38,19 +38,20 @@ main:
         # time of a single timestep in simulation
         # was: 0.01666666666666666666666666666666666666666
         # 0.1 -> 6 sec, 0.05 -> 3 sec
-        timestep_in_minutes: 0.1
+        timestep_in_minutes: 0.05
 
 
 # environment / street setting
 environment:
 
     # number of lanes
-    lanes: 1
+    lanes: 2
 
     # length if the lane in kilometer
     # 75 kms are about 10000 cells
+    
     # was 75
-    length_in_km: 1
+    length_in_km: 10
 
 
 # agent vehicle configuration
@@ -72,7 +73,7 @@ agent:
             # was 400
             
             #was 12
-            count: 1
+            count: 12
 
             # show beliefs in each cycle
             showlog: false
@@ -108,7 +109,7 @@ agent:
             # number of generated vehicles
             # 10^3 cars in multi-lane
             # was 400
-            count: 1
+            count: 0
 
             # show beliefs in each cycle
             showlog: false
