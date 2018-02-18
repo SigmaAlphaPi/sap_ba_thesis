@@ -26,13 +26,13 @@
  *
  * HOW TO ADDRESS THE STATIC VALUES IN VEHICLE VIEW
 
-    >>view/vehicle( _, data( _, static( lane( LN ), cell( CLL ), speed( SPD ), distance( DSTNC ), direction( DRCTN ) ) ) );
-    generic/print( "LN ist", LN, generic/type/type( LN ) ); // double
-    generic/print( "CLL ist", CLL, generic/type/type (CLL) ); // double
-    generic/print( "SPD ist", SPD, generic/type/type (SPD) ); // double
-    generic/print( "DSTNC ist", DSTNC, generic/type/type(DSTNC) ); // double
-    generic/print( "DRCTN ist", DRCTN, generic/type/type(DRCTN) ); // literal - cast to string
-    generic/print( "bool/equal", bool/equal( generic/type/tostring( DRCTN ), "forward[]" ) )
+    >>view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) );
+    generic/print( "Lane ist", Lane, generic/type/type( Lane ) ); // double
+    generic/print( "Cell ist", Cell, generic/type/type (Cell) ); // double
+    generic/print( "Speed ist", Speed, generic/type/type (Speed) ); // double
+    generic/print( "Dist ist", Dist, generic/type/type(Dist) ); // double
+    generic/print( "Dir ist", Dir, generic/type/type(Dir) ); // literal - cast to string
+    generic/print( "bool/equal", bool/equal( generic/type/tostring( Dir ), "forward[]" ) )
  */
 
 
@@ -44,12 +44,12 @@
 // --- start all other plans ---
 +!cruise <-
     
-    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
+    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
-//    generic/print( "   ", ID, "@", CurrentSpeed, "kph", "in lane", CurrentLane, "in cell", CurrentCell );
+    generic/print( "   ", ID, "@", CurrentSpeed, "kph", "in lane", CurrentLane, "in cell", CurrentCell );
     scenario/statistic( ID, CurrentCell );
     !cruise
 .
@@ -57,11 +57,19 @@
 
 // --- acceleration ---
 +!accelerate
-    : CurrentSpeed < AllowedSpeed <-
-        // generic/print(ID, "accelerated");
+    // --- accelerate only, if not traffic ahead ---
+    // --- otherwise you have to brake against the acceleration ---
+    // --- resulting in too long braking distances
+    : CurrentSpeed < AllowedSpeed
+        && ~>>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ),
+                bool/equal( generic/type/tostring( Dir ), "forward[]" )
+            )
+        <-
+//        generic/print( "   ", ID, "accelerated");
         vehicle/accelerate(0.5);
         !accelerate
 .     
+
 
 
 // --- lingering ---
@@ -80,8 +88,8 @@
         vehicle/decelerate(0.25);
         !decelerate
 
-    : >>( view/vehicle( _, data( _, static( _, _, _, _, direction( DRCTN ) ) ) ), 
-            bool/equal( generic/type/tostring( DRCTN ), "forward[]" ) ) <-
+    : >>( view/vehicle( _, data( _, static( _, _, _, _, direction( Dir ) ) ) ), 
+            bool/equal( generic/type/tostring( Dir ), "forward[]" ) ) <-
         generic/print( "TFC", ID, "has vehicle in-front of -> decelerate");
         vehicle/decelerate(0.9);
         !decelerate
