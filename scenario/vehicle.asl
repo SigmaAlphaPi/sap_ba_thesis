@@ -110,6 +110,7 @@
 // --- pull-out, change lane to overtake ---
 // --- (maybe add "relative speed" condition ---
 // --- (overtaker speed (CurrentSpeed) must be higher than overtakee speed) ---
+// --- (NEED: how to get max lane from scenario? ---
 +!pullout 
     : CurrentLane == 1 &&
         >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
@@ -129,7 +130,7 @@
     // --- PI attempt alternative #1 ---
     // --- no visible traffic at all ---
     // --- (maybe add random) ---
-    : ( CurrentLane == 2 
+    : ( CurrentLane > 1 
         && ~>>view/vehicle( _, _ )
         ) <- 
         generic/print( "PIA1", ID, "sees no traffic at all -> Pull-in"); 
@@ -201,6 +202,7 @@
 /*
     vehicle/stop;
     generic/print( "COS", ID, "STOPPED -> collision" )/*;
+    // --- sleep causes trouble ---
     agent/sleep( 15 )
 */
 .
