@@ -303,8 +303,8 @@ public final class CScenario implements IScenario
 
 
         // aggregate vehicle data
-        final Map<String, Object> l_vehicleData = new HashMap<>();
-        l_vehicleData.putAll(
+        final Map<String, Object> l_vehicledata = new HashMap<>();
+        l_vehicledata.putAll(
             m_statistic.get()
                        .entrySet()
                        .parallelStream()
@@ -318,7 +318,7 @@ public final class CScenario implements IScenario
         final Map<String, Object> l_result = new HashMap<>();
         l_result.put( "configuration", l_configuration );
         l_result.put( "simulation", l_simulation );
-        l_result.put( "vehicles", l_vehicleData );
+        l_result.put( "vehicles", l_vehicledata );
 
         try
         {
