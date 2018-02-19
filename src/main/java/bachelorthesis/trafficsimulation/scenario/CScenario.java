@@ -269,6 +269,7 @@ public final class CScenario implements IScenario
         // static configuration
         final Map<String, Object> l_configuration = new HashMap<>();
         l_configuration.put( "simulationtime_in_minutes", m_unit.steptimeinminutes( m_cycles ) );
+        l_configuration.put( "simulationtime_in_timesteps", m_cycles );
         l_configuration.put( "cellsize_in_meter", m_unit.cellsize() );
         l_configuration.put( "timestep_in_minutes", m_unit.time() );
 
@@ -300,7 +301,10 @@ public final class CScenario implements IScenario
                        .collect( Collectors.toList() )
         );
 
-        l_simulation.putAll(
+
+        // aggregate vehicle data
+        final Map<String, Object> l_vehicleData = new HashMap<>();
+        l_vehicleData.putAll(
             m_statistic.get()
                        .entrySet()
                        .parallelStream()
@@ -314,6 +318,7 @@ public final class CScenario implements IScenario
         final Map<String, Object> l_result = new HashMap<>();
         l_result.put( "configuration", l_configuration );
         l_result.put( "simulation", l_simulation );
+        l_result.put( "vehicles", l_vehicleData );
 
         try
         {
