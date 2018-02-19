@@ -50,8 +50,8 @@ environment:
     # length if the lane in kilometer
     # 75 kms are about 10000 cells
     
-    # was 75
-    length_in_km: 10
+    # was 25
+    length_in_km: 1
 
 
 # agent vehicle configuration
@@ -73,7 +73,7 @@ agent:
             # was 400
             
             #was 12
-            count: 12
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
@@ -109,7 +109,7 @@ agent:
             # number of generated vehicles
             # 10^3 cars in multi-lane
             # was 400
-            count: 0
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
