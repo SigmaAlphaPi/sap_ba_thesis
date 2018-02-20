@@ -1,0 +1,45 @@
+
+deceleration INTENSITY 0.5
+--- step 140 ----------------
+LIN   vehicle0   LINGERED
+         vehicle0    in lane   1   in cell   91.0   @   70.65594475747024   kph
+ACC   vehicle0   accelerated
+--- step 141 ----------------
+ACC   vehicle0   accelerated
+         vehicle0    in lane   1   in cell   94.0   @   69.49177746881767   kph
+
+         0.4
+--- step 112 ----------------
+ACC   vehicle0   accelerated
+         vehicle0    in lane   1   in cell   126.0   @   69.79012665959861   kph
+LIN   vehicle0   LINGERED
+--- step 113 ----------------
+ACC   vehicle0   accelerated
+         vehicle0    in lane   1   in cell   129.0   @   69.00710477227076   kph
+
+         0.3
+--- step 62 ----------------
+ACC   vehicle0   accelerated
+         vehicle0    in lane   1   in cell   21.0   @   70.34795882110502   kph
+LIN   vehicle0   LINGERED
+--- step 63 ----------------
+ACC   vehicle0   accelerated
+         vehicle0    in lane   1   in cell   24.0   @   70.52897199419104   kph
+
+         0.32
+--- step 101 ----------------
+LIN   vehicle0   LINGERED
+ACC   vehicle0   accelerated
+         vehicle0    in lane   1   in cell   71.0   @   70.1366390778924   kph
+--- step 102 ----------------
+ACC   vehicle0   accelerated
+         vehicle0    in lane   1   in cell   74.0   @   69.82979091963253   kph
+
+         0.31
+--- step 107 ----------------
+ACC   vehicle0   accelerated
+         vehicle0    in lane   1   in cell   124.0   @   69.52783113921815   kph
+LIN   vehicle0   LINGERED
+--- step 108 ----------------
+ACC   vehicle0   accelerated
+         vehicle0    in lane   1   in cell   127.0   @   69.06816817454335   kph
