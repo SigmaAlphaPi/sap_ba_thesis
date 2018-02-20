@@ -9,7 +9,7 @@ main:
     # was 100
     
     #was 120
-    simulationtime_in_minutes: 120
+    simulationtime_in_minutes: 30
 
     # preetprint of the result json
     prettyprint: true
@@ -50,7 +50,7 @@ environment:
     # 75 kms are about 10000 cells
     
     # was 25
-    length_in_km: 25
+    length_in_km: 10
 
 
 # agent vehicle configuration
@@ -72,7 +72,7 @@ agent:
             # was 400
             
             #was 15
-            count: 13
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
@@ -107,7 +107,7 @@ agent:
         vehicle2.asl:
 
             # number of generated vehicles
-            count: 0
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
