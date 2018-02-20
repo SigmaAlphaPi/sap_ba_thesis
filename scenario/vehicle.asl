@@ -39,7 +39,6 @@
 !cruise.
 
 
-
 // --- start all other plans ---
 +!cruise <-
 //    !!check4traffic;
@@ -51,10 +50,10 @@
     !linger;
     !pullout;
     !pullin;
-    
-    generic/print( "   ", ID, "@", CurrentSpeed, "kph", "in lane", CurrentLane, "in cell", CurrentCell );
+    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
+    scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
-
+    scenario/statistic( ID, CurrentSpeed );
     !cruise
 .
 
