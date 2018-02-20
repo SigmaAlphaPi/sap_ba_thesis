@@ -28,21 +28,6 @@
  *      Timestep            time of a single timestep in minutes
  *
  *
- * order belieflist
- *
- *      lane - cell - speed - distance - direction
- *
- * how to address the static values in view/vehicle
-
-    >>view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) );
-    generic/print( "Lane ist", Lane, generic/type/type( Lane ), "floored Lane", math/floor(Lane) ); // double
-    generic/print( "Cell ist", Cell, generic/type/type (Cell) ); // double
-    generic/print( "Speed ist", Speed, generic/type/type (Speed) ); // double
-    generic/print( "Dist ist", Dist, generic/type/type(Dist) ); // double
-    generic/print( "Dir ist", Dir, generic/type/type(Dir) ); // literal - cast to string
-    generic/print( "bool/equal", bool/equal( generic/type/tostring( Dir ), "forward[]" ) )
- *
- *
  * "status"messages (no broadcast)
  *
  *      +dynamic/state("drunk");    -   public
@@ -57,7 +42,7 @@
 
 // --- start all other plans ---
 +!cruise <-
-    !!check4traffic;
+//    !!check4traffic;
     
     generic/print( ID, "-> BELIEFLIST", agent/belieflist );
     
