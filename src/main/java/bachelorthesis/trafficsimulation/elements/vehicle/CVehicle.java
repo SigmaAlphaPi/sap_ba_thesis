@@ -201,7 +201,12 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     private DoubleMatrix1D clippedforwardposition( final DoubleMatrix1D p_position )
     {
         final DoubleMatrix1D l_view = this.position().copy().assign( m_viewragngesizecells, DoubleFunctions.plus );
-        final DoubleMatrix1D l_position = p_position.copy().assign(  )
+        if ( l_view.getQuick( 1 ) < m_scenario.environment().cells().intValue() )
+            return p_position;
+
+
+        final DoubleMatrix1D l_position = p_position.copy();
+        l_position.setQuick( 1, l_position );
 
         return
 
