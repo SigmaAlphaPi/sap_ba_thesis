@@ -48,22 +48,24 @@
 // --- start all other plans ---
 +!cruise <-
     
-    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
+//    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
-    generic/print( "   ", ID, "@", CurrentSpeed, "kph", "in lane", CurrentLane, "in cell", CurrentCell );
+    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
+    scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
+    scenario/statistic( ID, CurrentSpeed );
     !cruise
 .
 
 
 // --- acceleration ---
 +!accelerate
-    // --- accelerate only, if not traffic ahead ---
+    // --- accelerate only, if no traffic ahead ---
     // --- otherwise you have to brake against the acceleration ---
-    // --- resulting in too long braking distances
+    // --- resulting in too long braking distances ---
     : CurrentSpeed < AllowedSpeed
         && ~>>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ),
                 bool/equal( generic/type/tostring( Dir ), "forward[]" )
@@ -92,10 +94,16 @@
         vehicle/decelerate(0.25);
         !decelerate
 
-    : >>( view/vehicle( _, data( _, static( _, _, _, _, direction( Dir ) ) ) ), 
-            bool/equal( generic/type/tostring( Dir ), "forward[]" ) ) <-
+    // --- if traffic is ahead only decelerate if CurrentSpeed ---
+    // --- is higher than speed of traffic ahead ---
+    // --- (this avoids unnecessary breaking down to 0 kph) ---
+    : >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
+            bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
+            && Speed < CurrentSpeed
+            && Dist > 100
+        ) <-
         generic/print( "TFC", ID, "has vehicle in-front of -> decelerate");
-        vehicle/decelerate(0.9);
+        vehicle/decelerate(1);
         !decelerate
 .
 
@@ -103,12 +111,12 @@
 
 // --- collision vehicle brake hardest/stop immediatly ---
 +!vehicle/collision <-
-
+/*
     vehicle/decelerate( 1 );
     generic/print( "COB", ID, "BREAKED HARD -> collision" )
-/*
+*/
     vehicle/stop;
-    // generic/print( "COS", ID, "STOPPED -> collision" )/*;
+    generic/print( "COS", ID, "STOPPED -> collision" )/*;
     agent/sleep( 20 )
 */
 .

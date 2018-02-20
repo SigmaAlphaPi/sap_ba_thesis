@@ -9,7 +9,7 @@ main:
     # was 100
     
     #was 120
-    simulationtime_in_minutes: 15
+    simulationtime_in_minutes: 120
 
     # preetprint of the result json
     prettyprint: true
@@ -37,8 +37,8 @@ main:
 
         # time of a single timestep in simulation
         # was: 0.01666666666666666666666666666666666666666
-        # 0.1 -> 6 sec, 0.05 -> 3 sec
-        timestep_in_minutes: 0.1
+        # 0.1 -> 6 sec, 0.05 -> 3 sec, 0.025 -> 1.5 sec
+        timestep_in_minutes: 0.025
 
 
 # environment / street setting
@@ -49,8 +49,9 @@ environment:
 
     # length if the lane in kilometer
     # 75 kms are about 10000 cells
-    # was 75
-    length_in_km: 1
+    
+    # was 25
+    length_in_km: 25
 
 
 # agent vehicle configuration
@@ -71,8 +72,8 @@ agent:
             # 10^3 cars in multi-lane
             # was 400
             
-            #was 12
-            count: 1
+            #was 15
+            count: 13
 
             # show beliefs in each cycle
             showlog: false
@@ -108,7 +109,7 @@ agent:
             # number of generated vehicles
             # 10^3 cars in multi-lane
             # was 400
-            count: 1
+            count: 0
 
             # show beliefs in each cycle
             showlog: false
@@ -123,8 +124,8 @@ agent:
             # speed range configuration for initialize and maximum
             # speed (maximum value will be set by random)
             speed:
-                min: 60
-                max: 80
+                min: 40
+                max: 60
 
             # acceleration configuration (the value is
             # calculated by random
