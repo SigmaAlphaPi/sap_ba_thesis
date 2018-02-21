@@ -215,7 +215,7 @@
     // --- backward traffic lane to pull into > 150m
     :   
         CurrentLane > 1 
-        && >>( >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
+        && >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
                 bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
                 && math/floor(FwdLane) == CurrentLane-1
                 && FwdDist > 200
