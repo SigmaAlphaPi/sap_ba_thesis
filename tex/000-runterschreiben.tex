@@ -23,7 +23,7 @@ Für die Simulation musste ein Wert gefunden werden, der dieses Verhalten annäh
 Im Laufe mehrerer Testdurchgänge schien eine Intensität der Verzögerung von $0,3$ die getätigte Beschleunigung am besten zu egalisieren. 
 Hierbei ist noch die Streuung der Beschleunigungs- und Verzögerungswerte zu beachten, sodass das Trödeln unterschiedliche Effekte haben kann.
 
-Für das Abbremsen kann das Trödeln positiv auf den Bremsweg auswirken.
+Für das Abbremsen in der Agentensimulation kann sich das Trödeln positiv auf den Bremsweg auswirken.
 
 
 
@@ -58,11 +58,12 @@ Die Simulationsumgebung hatte für das Sichtfeld der Fahrzeuge eine Unterteilung
   \label{figure:car-view-sectors}
 \end{figure}
 
-Eine solch feine ... war nicht nötig.
-Es sollte genügen, feststellen zu können, ob sich ein anderes Fahrzeug relativ zu \enquote{Ego} vorn oder hinten befindet. 
+Eine solch feine Unterscheidung war nicht nötig.
+Es sollte genügen, feststellen zu können, ob sich ein anderes Fahrzeug relativ zu \enquote{Ego} im vorwärtigen oder rückwärtigen Raum befindet. 
+Die Abdeckung sollte ohne Unterbrechung sein.
 Für die Simulation nach dem Einspurmodell von Nagel-Schreckenberg funktionierte dies ohne Probleme.
 Bei einem Testlauf des Mehrspurmodells mit vier Fahrzeugen kam es zur Kollision zweier Fahrzeuge. 
-Bei ... stellte sich heraus, dass ein Fahrzeug (vehicle0), welches sich auf der Überholspur (lane 2) befand, ein anderes Fahrzeug (vehicle20) direkt neben sich nicht \enquote*{sah} und daraufhin, so wie es der Plan vorsah, zum nächsten Schritt in die Hauptspur fährt. 
+Bei der anschließenden Kontrolle stellte sich heraus, dass ein Fahrzeug (vehicle0), welches sich auf der Überholspur (lane 2) befand, ein anderes Fahrzeug (vehicle20) direkt neben sich nicht \enquote*{sah} und daraufhin, so wie es der Plan vorsah, zum nächsten Schritt in die Hauptspur fährt. 
 Im nachfolgenden Zeitschritt kam es dann zur Kollision.
 
 \begin{verbatim}
