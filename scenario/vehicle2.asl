@@ -41,11 +41,17 @@
     !accelerate;
     !decelerate;
     !linger;
+    !pullin;
     generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
     scenario/statistic( ID, CurrentSpeed );
     !cruise
+.
+
++!pullin 
+    : CurrentLane > 1 <-
+        vehicle/pullin
 .
 
 

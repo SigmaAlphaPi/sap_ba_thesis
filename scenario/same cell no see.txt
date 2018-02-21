@@ -1,0 +1,17 @@
+--- step 365 ----------------
+         vehicle20    in lane   1   in cell   333.0   @   74.21582362319865   kph
+         vehicle2    in lane   1   in cell   282.0   @   129.99324819683062   kph
+         vehicle0    in lane   2   in cell   333.0   @   99.94723620551235   kph
+PIA1   vehicle0   sees no traffic at all -> Pull-in
+MAX   vehicle1   decelerated -> high speed
+         vehicle1    in lane   1   in cell   90.0   @   130.8321253026147   kph
+--- step 366 ----------------
+         vehicle20    in lane   1   in cell   4.0   @   74.21582362319865   kph
+         vehicle2    in lane   1   in cell   289.0   @   131.11124225593747   kph
+MAX   vehicle2   decelerated -> high speed
+         vehicle0    in lane   1   in cell   3.0   @   100.80986539456516   kph
+TFC100   vehicle0   has vehicle in-front of -> decelerate
+COS   vehicle0   STOPPED -> collision
+OUT   vehicle0    -> Pull-out attempt successful
+MAX   vehicle1   decelerated -> high speed
+         vehicle1    in lane   1   in cell   97.0   @   130.64144521630223   kph
