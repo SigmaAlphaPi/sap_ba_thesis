@@ -16,9 +16,9 @@ import java.util.Locale;
 public enum EDirection
 {
     FORWARD( 0 ),
-    LEFT( 90 ),
+    RIGHT( 90 ),
     BACKWARD( 180 ),
-    RIGHT( 270 );
+    LEFT( 270 );
 
     /**
      * 8 sectors (divide by 45 instead of 180)
