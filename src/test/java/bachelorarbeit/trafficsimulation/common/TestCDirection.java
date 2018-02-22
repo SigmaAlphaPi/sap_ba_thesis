@@ -80,14 +80,14 @@ public final class TestCDirection
         final Number l_viewrange = 250;
         final Number l_cellsize = 7.5;
 
-        final DoubleMatrix1D l_first = new DenseDoubleMatrix1D( new double[]{1.1648149842553779, 78} );
-        final DoubleMatrix1D l_second = new DenseDoubleMatrix1D( new double[]{2.6260191036324505, 77} );
+        final DoubleMatrix1D l_first = new DenseDoubleMatrix1D( new double[]{1.1648149842553779, 78} ); // was
+        final DoubleMatrix1D l_second = new DenseDoubleMatrix1D( new double[]{2.6260191036324505, 77} ); // was
 
         Assert.assertEquals(
             EDirection.byAngle(
                 CMath.angle(
-                    worldmovement( l_first,l_cellsize, l_viewrange ),
-                    worldposition( l_first, l_cellsize ).assign( worldposition( l_second, l_cellsize ), DoubleFunctions.minus )
+                    worldmovement( l_first, l_cellsize, l_viewrange ),
+                    worldposition( l_second, l_cellsize ).assign( worldposition( l_first, l_cellsize ), DoubleFunctions.minus )
                 ).doubleValue() + 45.0D
             ),
 
