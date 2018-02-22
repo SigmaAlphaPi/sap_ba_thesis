@@ -44,7 +44,7 @@ main:
 environment:
 
     # number of lanes
-    lanes: 3
+    lanes: 2
 
     # length if the lane in kilometer
     # 75 kms are about 10000 cells
@@ -72,7 +72,7 @@ agent:
             # was 400
             
             #was 15
-            count: 3
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
@@ -89,7 +89,7 @@ agent:
             # speed (maximum value will be set by random)
             speed:
                 min: 80
-                max: 250
+                max: 150
 
             # acceleration configuration (the value is
             # calculated by random)

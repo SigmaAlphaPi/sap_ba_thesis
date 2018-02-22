@@ -44,7 +44,7 @@
 // --- start all other plans ---
 +!cruise <-
     
-//    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
+    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
@@ -146,7 +146,7 @@
                 && BwdSpeed > CurrentSpeed 
                 )
 */
-        <-
+    <-
         generic/print("OUT", ID, " -> Pull-out attempt successful");
         vehicle/pullout
 .
