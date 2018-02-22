@@ -42,7 +42,7 @@
     !decelerate;
     !linger;
 //    !pullout;
-    !pullin;
+//    !pullin;
     generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
@@ -50,6 +50,7 @@
     !cruise
 .
 
+// --- just for testing to force car to lane ---
 +!pullout : CurrentLane < Lanes <- vehicle/pullout.
 +!pullin : CurrentLane > 1 <- vehicle/pullin.
 

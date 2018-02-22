@@ -72,7 +72,7 @@ agent:
             # was 400
             
             #was 15
-            count: 5
+            count: 20
 
             # show beliefs in each cycle
             showlog: false
@@ -88,8 +88,9 @@ agent:
             # speed range configuration for initialize and maximum
             # speed (maximum value will be set by random)
             speed:
-                min: 80
-                max: 150
+                # was 80 150
+                min: 100
+                max: 130
 
             # acceleration configuration (the value is
             # calculated by random)
