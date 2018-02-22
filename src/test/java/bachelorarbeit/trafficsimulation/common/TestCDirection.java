@@ -3,10 +3,14 @@ package bachelorarbeit.trafficsimulation.common;
 import bachelorthesis.trafficsimulation.common.CMath;
 import bachelorthesis.trafficsimulation.common.EDirection;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
+import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
 import cern.jet.math.tdouble.DoubleFunctions;
 import org.junit.Assert;
 import org.junit.Test;
+
+import javax.annotation.Nonnull;
+import java.util.Locale;
 
 
 /**
@@ -65,6 +69,62 @@ public final class TestCDirection
             ),
             EDirection.BACKWARD
         );
+    }
+
+    /**
+     * test direction with vehicle
+     */
+    @Test
+    public final void directionvehicle()
+    {
+        final Number l_viewrange = 250;
+        final Number l_cellsize = 7.5;
+
+        final DoubleMatrix1D l_first = new DenseDoubleMatrix1D( new double[]{1.1648149842553779, 78} );
+        final DoubleMatrix1D l_second = new DenseDoubleMatrix1D( new double[]{2.6260191036324505, 77} );
+
+        Assert.assertEquals(
+            EDirection.byAngle(
+                CMath.angle(
+                    worldmovement( l_first,l_cellsize, l_viewrange ),
+                    worldposition( l_first, l_cellsize ).assign( worldposition( l_second, l_cellsize ), DoubleFunctions.minus )
+                ).doubleValue() + 45.0D
+            ),
+
+            EDirection.LEFT
+        );
+
+    }
+
+    /**
+     * calculates the world position
+     *
+     * @param p_cellposition cell position
+     * @param p_cellsize cell size
+     * @return world vector
+     */
+    private static DoubleMatrix1D worldposition( @Nonnull final DoubleMatrix1D p_cellposition, @Nonnull final Number p_cellsize )
+    {
+        return p_cellposition.copy()
+                             .assign( DoubleFunctions.plus( 1 ) )
+                             .assign( DoubleFunctions.mult( p_cellsize.doubleValue() / 2 ) );
+    }
+
+    /**
+     * calculate the movement vector
+     *
+     * @param p_cellposition cell position
+     * @param p_cellsize cell size
+     * @param p_viewrangesize view range
+     * @return movement vector
+     */
+    private static DoubleMatrix1D worldmovement( @Nonnull final DoubleMatrix1D p_cellposition, @Nonnull final Number p_cellsize, @Nonnull Number p_viewrangesize )
+    {
+        final DoubleMatrix1D l_position = worldposition( p_cellposition, p_cellsize );
+        final DoubleMatrix1D l_direction = l_position.copy();
+        l_direction.setQuick( 1, l_direction.getQuick( 1 ) + p_viewrangesize.doubleValue() );
+
+        return l_direction.assign( l_position, DoubleFunctions.minus );
     }
 
 }
