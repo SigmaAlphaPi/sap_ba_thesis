@@ -3,14 +3,12 @@ package bachelorarbeit.trafficsimulation.common;
 import bachelorthesis.trafficsimulation.common.CMath;
 import bachelorthesis.trafficsimulation.common.EDirection;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
-import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
 import cern.jet.math.tdouble.DoubleFunctions;
 import org.junit.Assert;
 import org.junit.Test;
 
 import javax.annotation.Nonnull;
-import java.util.Locale;
 
 
 /**
@@ -88,7 +86,7 @@ public final class TestCDirection
                 CMath.angle(
                     worldmovement( l_first, l_cellsize, l_viewrange ),
                         worldposition( l_first, l_cellsize ).assign( worldposition( l_second, l_cellsize ), DoubleFunctions.minus )
-                ).doubleValue() * ( l_first.get(0) > l_second.get(0) ? -1 : 1 ) + 45.0D
+                ).doubleValue() * ( l_first.get( 0 ) > l_second.get( 0 ) ? -1 : 1 ) + 45.0D
             ),
 
             EDirection.RIGHT
@@ -118,7 +116,7 @@ public final class TestCDirection
      * @param p_viewrangesize view range
      * @return movement vector
      */
-    private static DoubleMatrix1D worldmovement( @Nonnull final DoubleMatrix1D p_cellposition, @Nonnull final Number p_cellsize, @Nonnull Number p_viewrangesize )
+    private static DoubleMatrix1D worldmovement( @Nonnull final DoubleMatrix1D p_cellposition, @Nonnull final Number p_cellsize, @Nonnull final Number p_viewrangesize )
     {
         final DoubleMatrix1D l_position = worldposition( p_cellposition, p_cellsize );
         final DoubleMatrix1D l_direction = l_position.copy();

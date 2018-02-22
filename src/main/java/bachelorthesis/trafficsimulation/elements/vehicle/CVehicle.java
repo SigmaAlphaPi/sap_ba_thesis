@@ -186,7 +186,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                                    CMath.angle(
                                         this.worldmovement(),
                                         this.worldposition().assign( p_object.worldposition(), DoubleFunctions.minus )
-                                   ).doubleValue() * ( l_first.get(0) > l_second.get(0) ? -1 : 1 ) + 45.0D
+                                   ).doubleValue() * ( l_first.get( 0 ) > l_second.get( 0 ) ? -1 : 1 ) + 45.0D
                                ).toString().toLowerCase( Locale.ROOT )
                            )
             )
