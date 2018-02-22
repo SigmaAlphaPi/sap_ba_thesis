@@ -23,26 +23,11 @@
  *      CurrentSpeed        current speed in km/h
  *      CurrentLane         current lane in [1,n]
  *      CurrentCell         current cell in [0,n]
- *      Lanes               no of lanes in scenario
- *      Cells               no of cells in scenario
+ *      Lanes               overall lane count from scenario
+ *      Cells               overall cell count from scenario
  *      Acceleration        acceleration in m/sec^2
  *      Deceleration        deceleration in m/sec^2
  *      Timestep            time of a single timestep in minutes
- *
- *
- * order belieflist
- *
- *      lane - cell - speed - distance - direction
- *
- * how to address the static values in view/vehicle
-
-    >>view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) );
-    generic/print( "Lane ist", Lane, generic/type/type( Lane ), "floored Lane", math/floor(Lane) ); // double
-    generic/print( "Cell ist", Cell, generic/type/type (Cell) ); // double
-    generic/print( "Speed ist", Speed, generic/type/type (Speed) ); // double
-    generic/print( "Dist ist", Dist, generic/type/type(Dist) ); // double
-    generic/print( "Dir ist", Dir, generic/type/type(Dir) ); // literal - cast to string
-    generic/print( "bool/equal", bool/equal( generic/type/tostring( Dir ), "forward[]" ) )
  *
  *
  * "status"messages (no broadcast)
@@ -56,40 +41,21 @@
 !cruise.
 
 
-
 // --- start all other plans ---
 +!cruise <-
-    !!check4traffic;
     
-//    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
-//    generic/print( "Lanes:", Lanes, "Cells:", Cells );
+    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
     !pullout;
     !pullin;
-    
     generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
+    scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
-
+    scenario/statistic( ID, CurrentSpeed );
     !cruise
-.
-
-
-
-// --- check if traffic in sight or not
-// --- if nothing is in sight, set belief to 0/cancel 1 and vice versa ---
-+!check4traffic
-    : ~>>view/vehicle(_,_) <- 
-//        generic/print( "NOVIEW", ID ); 
-        +trafficInSight(0); 
-        -trafficInSight(1)
-    
-    : >>view/vehicle(_,_) <- 
-        generic/print( "VIEW  ", ID ); 
-        +trafficInSight(1); 
-        -trafficInSight(0)
 .
 
 

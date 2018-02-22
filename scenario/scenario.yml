@@ -9,7 +9,7 @@ main:
     # was 100
     
     #was 120
-    simulationtime_in_minutes: 15
+    simulationtime_in_minutes: 45
 
     # preetprint of the result json
     prettyprint: true
@@ -36,9 +36,8 @@ main:
         cellsize_in_meter: 7.5
 
         # time of a single timestep in simulation
-        # was: 0.01666666666666666666666666666666666666666
-        # 0.1 -> 6 sec, 0.05 -> 3 sec
-        timestep_in_minutes: 0.05
+        # 0.1 -> 6 sec, 0.05 -> 3 sec, 0.025 -> 1.5 sec
+        timestep_in_minutes: 0.025
 
 
 # environment / street setting
@@ -51,7 +50,7 @@ environment:
     # 75 kms are about 10000 cells
     
     # was 25
-    length_in_km: 1
+    length_in_km: 2.5
 
 
 # agent vehicle configuration
@@ -61,7 +60,7 @@ agent:
     # must start with an upper-case letter)
     constant:
         # 160, was max. possible speed in multi-lane
-        AllowedSpeed: 100 
+        AllowedSpeed: 130 
 
     # all vehicle configuration, key is the filename of the filename
     # AgentSpeak(L++) script relative to configuration file
@@ -72,33 +71,34 @@ agent:
             # 10^3 cars in multi-lane
             # was 400
             
-            #was 12
+            #was 15
             count: 1
 
             # show beliefs in each cycle
             showlog: false
 
-            # view range in meters around a vehicle (should be greater than cell size)
+            # view range in meters around a vehicle 
+            # (should be greater than cell size)
             viewrange: 250
 
             # local constant values for this vehicle
             costant:
-                LocalValue: "Hello"
+                LocalValue: "nothing"
 
             # speed range configuration for initialize and maximum
             # speed (maximum value will be set by random)
             speed:
                 min: 80
-                max: 250
+                max: 150
 
             # acceleration configuration (the value is
-            # calculated by random
+            # calculated by random)
             acceleration:
                 min: 3.5
                 max: 7
 
             # decceleration configuration (the value is
-            # calculated by random
+            # calculated by random)
             deceleration:
                 min: 8
                 max: 10
@@ -107,34 +107,33 @@ agent:
         vehicle2.asl:
 
             # number of generated vehicles
-            # 10^3 cars in multi-lane
-            # was 400
             count: 1
 
             # show beliefs in each cycle
             showlog: false
 
-            # view range in meters around a vehicle (should be greater than cell size)
+            # view range in meters around a vehicle 
+            # (should be greater than cell size)
             viewrange: 250
 
             # local constant values for this vehicle
             costant:
-                LocalValue: "Hello"
+                LocalValue: "nothing"
 
             # speed range configuration for initialize and maximum
             # speed (maximum value will be set by random)
             speed:
-                min: 60
-                max: 80
+                min: 70
+                max: 90
 
             # acceleration configuration (the value is
-            # calculated by random
+            # calculated by random)
             acceleration:
                 min: 3.5
                 max: 7
 
             # decceleration configuration (the value is
-            # calculated by random
+            # calculated by random)
             deceleration:
                 min: 8
                 max: 10
