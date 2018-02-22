@@ -16,18 +16,26 @@ import java.util.Locale;
 public enum EDirection
 {
     /**
-     * 8 sectors (divide by 45 in line 90)
      * 4 sectors (divide by 90)
-     * 2 sectors (divide by 180)
      */
     FORWARD( 0 ),
-    FORWARDLEFT( 45 ),
     LEFT( 90 ),
-    BACKWARDLEFT( 135 ),
     BACKWARD( 180 ),
-    BACKWARDRIGHT( 225 ),
-    RIGHT( 270 ),
-    FORWARDRIGHT( 315 );
+    RIGHT( 270 );
+
+    /**
+     * 8 sectors (divide by 45)
+     * 2 sectors (divide by 180)
+     *
+     FORWARD( 0 ),
+     FORWARDLEFT( 45 ),
+     LEFT( 90 ),
+     BACKWARDLEFT( 135 ),
+     BACKWARD( 180 ),
+     BACKWARDRIGHT( 225 ),
+     RIGHT( 270 ),
+     FORWARDRIGHT( 315 );
+     */
 
     /**
      * rotation-matrix for the direction vector
@@ -87,7 +95,7 @@ public enum EDirection
                     ? 360 + l_angle
                     : l_angle
                 )
-                / 180
+                / 90
         ];
     }
 
