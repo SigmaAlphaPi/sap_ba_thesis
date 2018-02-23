@@ -1,33 +1,36 @@
-install.packages("jsonlite")
+# install.packages("jsonlite")
 
-// setwd("~/Schreibtisch/BA SIM")
+# setwd("~/Schreibtisch/BA SIM")
 setwd("~/Sven/Uni/BA/sap_ba_thesis/scenario")
 
 # read JSON file
 scenarioRawData <- jsonlite::read_json("scenario.json")
 
-# extract the data node
+# --- extract the data node ---
 vehicleData <- scenarioRawData[["vehicles"]]
 configurationData <- scenarioRawData[["configuration"]]
 
-# set drop of data time(steps) (first 10 minutes or half of duration)
-if (configurationData$simulationtime_in_minutes <= 15) beginWithTimestep = 0.5*configurationData$simulationtime_in_minutes/configurationData$timestep_in_minutes
-if (configurationData$simulationtime_in_minutes > 15) beginWithTimestep = 10/configurationData$timestep_in_minutes
+# --- set drop of data time(steps) (first 10 minutes or half of duration) ---
+if (configurationData$simulationtime_in_minutes <= 20) beginWithTimestep = 0.5*configurationData$simulationtime_in_minutes/configurationData$timestep_in_minutes
+if (configurationData$simulationtime_in_minutes > 20) beginWithTimestep = 15/configurationData$timestep_in_minutes
 
-# set measuring distance
-laneLength = 25
-if (laneLength <= 1) measuringDistance = floor(0.5*laneLength)
-if (laneLength > 1) measuringDistance = 1
+# --- calculate measuring distance in cells ---
+laneLength = 7.5
+# if (laneLength <= 2) 
+measuringDistance = floor(0.5*laneLength)
+# if (laneLength > 2) measuringDistance = 1
 measuringDistanceLastCell = floor(1000*measuringDistance / configurationData$cellsize_in_meter)
 
-
+# --- init multiple lists ---
 vehicleDataList <- list()
 fundamentalDiagramList <- vector("list", configurationData$simulationtime_in_timesteps) 
-for (x in 1:length(fundamentalDiagramList)) {
-  fundamentalDiagramList[[x]] <- vector("integer", 2)
+for (i in 1:length(fundamentalDiagramList)) {
+  fundamentalDiagramList[[i]] <- vector("integer", 2)
 }
 statisticsList <- list()
-carsGoBy = 0
+statisticsList[[1]] <- list()
+names(statisticsList) <- c("fundamental")
+
 
 for (i in 1:length(vehicleData)){
   k0=0 # index for numbering the elements
@@ -63,81 +66,67 @@ for (i in 1:length(vehicleData)){
   
   vehicleDataList[[i]] <- buildList
   
-  print("#####")
-  print(i)
-  print(beginWithTimestep)
   
-  for (m in beginWithTimestep:length(buildList3)){
+  # --- gather data for fundamental diagram ---
+  for (m in beginWithTimestep:length(buildList3)) {
     if (buildList3[[m]] < buildList3[[m-1]]){
-      print("-----")
-      print(buildList3[[m]])
-      print(buildList3[[m-1]])
-      fundamentalDiagramList[[m]][[1]] +1
+      # drives through beginning of lane
+      # print("-----")
+      # print(m)
+      # print(buildList3[[m]])
+      # print(buildList3[[m-1]])
+      fundamentalDiagramList[[m]][1] <- fundamentalDiagramList[[m]][1]+1
     }
-    # if (buildList3[[m]] <= measuringDistanceLastCell){
-    #   print("*****")
-    #   fundamentalDiagramList[[m]][[2]] +1
-    # }
+    if (buildList3[[m]] <= measuringDistanceLastCell){
+      # is in first x cells of lane
+      # print("*****")
+      fundamentalDiagramList[[m]][[2]] <- fundamentalDiagramList[[m]][2]+1
+    }
   }
-
 }
 
+# --- remove first x elements of fundamental diagram data ---
+for (i in 1:beginWithTimestep) {
+  fundamentalDiagramList[i] <- NULL
+}
 
+# --- calc intervalwidth (in timesteps) for mean values of flow and density ---
+# --- "duration" of interval in minutes ---
+duration = 1
+intervalWidth = duration/configurationData$timestep_in_minutes
+repetitions = floor(length(fundamentalDiagramList)/intervalWidth)-1
 
-fundamentalDiagramList[[1]] <- carsGoBy
+# --- mean values of flow and density ---
+# --- put data in statisticsList ---
+for (i in 1:repetitions) {
+  statisticsList[["fundamental"]][[i]] <- vector("numeric", 2)
+  trafficFlowSum = 0
+  trafficDensitySum = 0
+  for (j in i-1*intervalWidth+1:i*intervalWidth) {
+    trafficFlowSum = trafficFlowSum + fundamentalDiagramList[[j]][1]
+    trafficDensitySum = trafficDensitySum + fundamentalDiagramList[[j]][2]/measuringDistanceLastCell
+    # print("+++++")
+    # print(trafficFlowSum)
+    # print(trafficDensitySum)
+  }
+  statisticsList[["fundamental"]][[i]][1] <- trafficFlowSum/intervalWidth
+  statisticsList[["fundamental"]][[i]][2] <- trafficDensitySum/intervalWidth
+}
 
-# POSITION ('movement')
+# --- plot for FUNDAMENTAL DIAGRAM ---
+plot(0.5, 0.5, xlab="density", ylab="flow", main="my plot", ylim=c(0,0.2), xlim=c(0,0.2), type="n")
+for (i in 1:length(statisticsList[["fundamental"]])) {
+  points(statisticsList[["fundamental"]][[i]][2], statisticsList[["fundamental"]][[i]][1], pch=19, cex=0.25)
+}
+
+# --- plot for POSITION ('movement') ---
 plot(vehicleDataList[[1]][[3]], 1:configurationData$simulationtime_in_timesteps, type="n", xlab="Zellposition Fahrzeuge", ylab="Zeitschritte", ylim = rev(range(1:configurationData$simulationtime_in_timesteps)))
 for (i in 1:length(vehicleDataList)){
   lines(vehicleDataList[[i]][[3]], 1:configurationData$simulationtime_in_timesteps, type = "p", pch=19, cex=0.15, col = i)
 }
 
-# SPEED
-plot(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[2]][[1]], type="n", xlab="Zeitschritte", ylab="Geschwindigkeit der Fahrzeuge")
+# --- plot for SPEED ---
+plot(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[2]][[1]], type="n", xlab="Zeitschritte", ylab="Geschwindigkeit der Fahrzeuge", ylim=c(0,35))
 for (i in 1:length(vehicleDataList)){
   lines(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[i]][[1]], type = "l", col = i)
 }
-
-
-
-# // lane - cell - speed
-# vehicleData[[1]][["values"]][[1]]
-# 
-# 
-# vehicleData, function(x) x[["values"]][[1]]
-
-
-
-# plot(scen$simulation$vehicle0$values[[1]], 1:length(scen$simulation$vehicle0$values[[1]]), type="n", xlab="Zellposition Fahrzeuge", ylab="Zeitschritte", ylim = rev(range(1:length(scen$simulation$vehicle0$values[[1]]))))
-# lines(scen$simulation$vehicle0$values[[1]], 1:length(scen$simulation$vehicle0$values[[1]]), type = "l", col = "red")
-# lines(scen$simulation$vehicle20$values[[1]], 1:length(scen$simulation$vehicle20$values[[1]]), type = "l", col = "blue")
-# 
-# 
-# 
-# 
-# plot(scen$simulation$vehicle0$values[[1]], 1:length(scen$simulation$vehicle0$values[[1]]), type="n", xlab="Zellposition Fahrzeuge", ylab="Zeitschritte", ylim = rev(range(1:length(scen$simulation$vehicle0$values[[1]]))))
-# lines(scen$simulation$vehicle0$values[[1]], 1:length(scen$simulation$vehicle0$values[[1]]), type = "p", pch=19, cex=0.05, col = "chocolate")
-# lines(scen$simulation$vehicle1$values[[1]], 1:length(scen$simulation$vehicle1$values[[1]]), type = "p", pch=19, cex=0.05, col = "chocolate1")
-# lines(scen$simulation$vehicle2$values[[1]], 1:length(scen$simulation$vehicle2$values[[1]]), type = "p", pch=19, cex=0.05, col = "chocolate2")
-# lines(scen$simulation$vehicle3$values[[1]], 1:length(scen$simulation$vehicle3$values[[1]]), type = "p", pch=19, cex=0.05, col = "chocolate3")
-# lines(scen$simulation$vehicle4$values[[1]], 1:length(scen$simulation$vehicle4$values[[1]]), type = "p", pch=19, cex=0.05, col = "chocolate4")
-# lines(scen$simulation$vehicle5$values[[1]], 1:length(scen$simulation$vehicle5$values[[1]]), type = "p", pch=19, cex=0.05, col = "chartreuse")
-# lines(scen$simulation$vehicle6$values[[1]], 1:length(scen$simulation$vehicle6$values[[1]]), type = "p", pch=19, cex=0.05, col = "chartreuse1")
-# lines(scen$simulation$vehicle7$values[[1]], 1:length(scen$simulation$vehicle7$values[[1]]), type = "p", pch=19, cex=0.05, col = "chartreuse2")
-# lines(scen$simulation$vehicle8$values[[1]], 1:length(scen$simulation$vehicle8$values[[1]]), type = "p", pch=19, cex=0.05, col = "chartreuse3")
-# lines(scen$simulation$vehicle9$values[[1]], 1:length(scen$simulation$vehicle9$values[[1]]), type = "p", pch=19, cex=0.05, col = "chartreuse4")
-# 
-# lines(scen$simulation$vehicle10$values[[1]], 1:length(scen$simulation$vehicle10$values[[1]]), type = "p", pch=19, cex=0.05, col = "dodgerblue")
-# lines(scen$simulation$vehicle11$values[[1]], 1:length(scen$simulation$vehicle11$values[[1]]), type = "p", pch=19, cex=0.05, col = "dodgerblue1")
-# lines(scen$simulation$vehicle12$values[[1]], 1:length(scen$simulation$vehicle12$values[[1]]), type = "p", pch=19, cex=0.05, col = "dodgerblue2")
-# lines(scen$simulation$vehicle13$values[[1]], 1:length(scen$simulation$vehicle13$values[[1]]), type = "p", pch=19, cex=0.05, col = "dodgerblue3")
-# lines(scen$simulation$vehicle14$values[[1]], 1:length(scen$simulation$vehicle14$values[[1]]), type = "p", pch=19, cex=0.05, col = "dodgerblue4")
-# lines(scen$simulation$vehicle15$values[[1]], 1:length(scen$simulation$vehicle15$values[[1]]), type = "p", pch=19, cex=0.05, col = "deeppink")
-# lines(scen$simulation$vehicle16$values[[1]], 1:length(scen$simulation$vehicle16$values[[1]]), type = "p", pch=19, cex=0.05, col = "deeppink1")
-# lines(scen$simulation$vehicle17$values[[1]], 1:length(scen$simulation$vehicle17$values[[1]]), type = "p", pch=19, cex=0.05, col = "deeppink2")
-# lines(scen$simulation$vehicle18$values[[1]], 1:length(scen$simulation$vehicle18$values[[1]]), type = "p", pch=19, cex=0.05, col = "deeppink3")
-# lines(scen$simulation$vehicle19$values[[1]], 1:length(scen$simulation$vehicle19$values[[1]]), type = "p", pch=19, cex=0.05, col = "deeppink4")
-# 
-# 
-# lines(scen$simulation$vehicle20$values[[1]], scen$simulation$vehicle20$values[[1]]), type = "l", col = "seagreen")
-# lines(scen$simulation$vehicle21$values[[1]], scen$simulation$vehicle21$values[[1]]), type = "l", col = "darkmagenta")

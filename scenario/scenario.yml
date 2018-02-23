@@ -9,7 +9,7 @@ main:
     # was 100
     
     #was 120
-    simulationtime_in_minutes: 60
+    simulationtime_in_minutes: 180
 
     # preetprint of the result json
     prettyprint: true
@@ -50,7 +50,8 @@ environment:
     # 75 kms are about 10000 cells
     
     # was 25
-    length_in_km: 25
+    length_in_km: 7.5 
+    #7.5
 
 
 # agent vehicle configuration
@@ -59,8 +60,8 @@ agent:
     # global constants for all vehicles (constant name
     # must start with an upper-case letter)
     constant:
-        # 160, was max. possible speed in multi-lane
-        AllowedSpeed: 130 
+        # 130, was max. possible speed in multi-lane
+        AllowedSpeed: 30 
 
     # all vehicle configuration, key is the filename of the filename
     # AgentSpeak(L++) script relative to configuration file
@@ -72,7 +73,7 @@ agent:
             # was 400
             
             #was 15
-            count: 15
+            count: 20
 
             # show beliefs in each cycle
             showlog: false
@@ -90,6 +91,8 @@ agent:
             speed:
                 min: 100
                 max: 130
+#                min: 40
+#                max: 50
 
             # acceleration configuration (the value is
             # calculated by random)
@@ -125,6 +128,8 @@ agent:
             speed:
                 min: 70
                 max: 90
+#                min: 20
+#                max: 25
 
             # acceleration configuration (the value is
             # calculated by random)
