@@ -11,14 +11,21 @@ vehicleData <- scenarioRawData[["vehicles"]]
 configurationData <- scenarioRawData[["configuration"]]
 
 # set drop of data time(steps) (first 10 minutes or half of duration)
-if ( configurationData$simulationtime_in_minutes <= 15 ) beginWithTimestep = 0.5*configurationData$simulationtime_in_minutes/configurationData$timestep_in_minutes
-if ( configurationData$simulationtime_in_minutes > 15 ) beginWithTimestep = 10/configurationData$timestep_in_minutes
+if (configurationData$simulationtime_in_minutes <= 15) beginWithTimestep = 0.5*configurationData$simulationtime_in_minutes/configurationData$timestep_in_minutes
+if (configurationData$simulationtime_in_minutes > 15) beginWithTimestep = 10/configurationData$timestep_in_minutes
 
 # set measuring distance
-if (configurationData$)
+laneLength = 25
+if (laneLength <= 1) measuringDistance = floor(0.5*laneLength)
+if (laneLength > 1) measuringDistance = 1
+measuringDistanceLastCell = floor(1000*measuringDistance / configurationData$cellsize_in_meter)
+
 
 vehicleDataList <- list()
-fundamentalDiagramList <- list()
+fundamentalDiagramList <- vector("list", configurationData$simulationtime_in_timesteps) 
+for (x in 1:length(fundamentalDiagramList)) {
+  fundamentalDiagramList[[x]] <- vector("integer", 2)
+}
 statisticsList <- list()
 carsGoBy = 0
 
@@ -65,13 +72,17 @@ for (i in 1:length(vehicleData)){
       print("-----")
       print(buildList3[[m]])
       print(buildList3[[m-1]])
-      carsGoBy = carsGoBy+1
+      fundamentalDiagramList[[m]][[1]] +1
     }
+    # if (buildList3[[m]] <= measuringDistanceLastCell){
+    #   print("*****")
+    #   fundamentalDiagramList[[m]][[2]] +1
+    # }
   }
 
 }
 
-print(carsGoBy)
+
 
 fundamentalDiagramList[[1]] <- carsGoBy
 
