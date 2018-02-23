@@ -3,49 +3,77 @@ install.packages("jsonlite")
 // setwd("~/Schreibtisch/BA SIM")
 setwd("~/Sven/Uni/BA/sap_ba_thesis/scenario")
 
+# read JSON file
 scenarioRawData <- jsonlite::read_json("scenario.json")
 
 # extract the data node
 vehicleData <- scenarioRawData[["vehicles"]]
 configurationData <- scenarioRawData[["configuration"]]
 
-# names(vehicleData)
+# set drop of data time(steps) (first 10 minutes or half of duration)
+if ( configurationData$simulationtime_in_minutes <= 15 ) beginWithTimestep = 0.5*configurationData$simulationtime_in_minutes/configurationData$timestep_in_minutes
+if ( configurationData$simulationtime_in_minutes > 15 ) beginWithTimestep = 10/configurationData$timestep_in_minutes
+
+# set measuring distance
+if (configurationData$)
 
 vehicleDataList <- list()
+fundamentalDiagramList <- list()
+statisticsList <- list()
+carsGoBy = 0
 
 for (i in 1:length(vehicleData)){
   k0=0 # index for numbering the elements
   k1=0 # index for numbering the elements
   k2=0 # index for numbering the elements
   buildList <- list()
-  buildList0 <- list()
   buildList1 <- list()
   buildList2 <- list()
+  buildList3 <- list()
   for (j in 1:length(vehicleData[[i]][["values"]][[1]])){
     if (j%%3 == 0){
+      # --- speed ---
       k0=k0+1
-      buildList0[[k0]] <- vehicleData[[i]][["values"]][[1]][[j]][[1]]
-
+      buildList1[[k0]] <- vehicleData[[i]][["values"]][[1]][[j]][[1]]
     }
     if (j%%3 == 1){
+      # --- lane ---
       k1=k1+1
-      buildList1[[k1]] <- vehicleData[[i]][["values"]][[1]][[j]][[1]]
-      
+      buildList2[[k1]] <- vehicleData[[i]][["values"]][[1]][[j]][[1]]
     }
     if (j%%3 == 2){
+      # --- cell ---
       k2=k2+1
-      buildList2[[k2]] <- vehicleData[[i]][["values"]][[1]][[j]][[1]]
-      
+      buildList3[[k2]] <- vehicleData[[i]][["values"]][[1]][[j]][[1]]
     }
     
     # vehicleData, function(x) x[["values"]][[1]]
   }
-  buildList[[1]] <- buildList0
-  buildList[[2]] <- buildList1
-  buildList[[3]] <- buildList2
+  buildList[[1]] <- buildList1
+  buildList[[2]] <- buildList2
+  buildList[[3]] <- buildList3
+  names(buildList) <- c("speed", "lane", "cell")
   
   vehicleDataList[[i]] <- buildList
+  
+  print("#####")
+  print(i)
+  print(beginWithTimestep)
+  
+  for (m in beginWithTimestep:length(buildList3)){
+    if (buildList3[[m]] < buildList3[[m-1]]){
+      print("-----")
+      print(buildList3[[m]])
+      print(buildList3[[m-1]])
+      carsGoBy = carsGoBy+1
+    }
+  }
+
 }
+
+print(carsGoBy)
+
+fundamentalDiagramList[[1]] <- carsGoBy
 
 # POSITION ('movement')
 plot(vehicleDataList[[1]][[3]], 1:configurationData$simulationtime_in_timesteps, type="n", xlab="Zellposition Fahrzeuge", ylab="Zeitschritte", ylim = rev(range(1:configurationData$simulationtime_in_timesteps)))
