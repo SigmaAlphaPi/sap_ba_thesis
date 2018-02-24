@@ -5,7 +5,7 @@
 
 \subsection{Entwicklung des Agentenplanes + \enquote{Tuning}}
 
-Die mathematischen Gleichungen in \cite{nasch} beschreiben gut, welches Verhalten dem Agenten zu geben ist: wenn möglich beschleunigen, zufällige Reduktion der Geschwindigkeit (Trödeln) und wenn nötig abbremsen.
+Die mathematischen Gleichungen in \cite{na-sch} beschreiben gut, welches Verhalten dem Agenten zu geben ist: wenn möglich beschleunigen, zufällige Reduktion der Geschwindigkeit (Trödeln) und wenn nötig abbremsen.
 
 \subsubsection{Zustandsautomat}
 
@@ -39,13 +39,13 @@ Mit der Vergrößerung des Sichtfeldes, siehe [hier], wurde es nötig, ebenfalls
 Um einen normalen Folgeverkehr zu ermöglichen erfolgt die Ausnahme, dass beschleunigt werden darf, solange das nachfolgende Fahrzeug langsamer ist.
 
 Der \enquote{linger}-Plan modelliert das zufällige Verringern der Geschwindigkeit. 
-Mit einer Wahrscheinlichkeit von $10%$ wird das Trödeln ausgeführt.
-Die Intensität der Verzögerung wurde nach einigen Tests, siehe \cref{sec:lingersweetspot}, auf den Wert $0,3$, was $30 %$ der Bremskraft entspricht, festgelegt.
+Mit einer Wahrscheinlichkeit von $10 \%$ wird das Trödeln ausgeführt.
+Die Intensität der Verzögerung wurde nach einigen Tests, siehe \cref{sec:lingersweetspot}, auf den Wert $0,3$, was $30 \%$ der Bremskraft entspricht, festgelegt.
 
 Die Verzögerung des Agenten wird durch den \enquote{decelerate}-Plan gesteuert. 
-Dort wird das Abbremsen bei vorwärtigem Verkehr geregelt. Auch hier wurde es nach erweiterung des Sichtfeldes nötig, zusätzliche Bedingungen für die relative Geschwindigkeit und einen Abstand zwischen den Fahrzeugen einzufügen, um die Lücke nicht zu groß werden zu lassen.
+Dort wird das Abbremsen bei vorwärtigem Verkehr geregelt. Auch hier wurde es nach Erweiterung des Sichtfeldes nötig, zusätzliche Bedingungen für die relative Geschwindigkeit und einen Abstand zwischen den Fahrzeugen einzufügen, um die Lücke nicht zu groß werden zu lassen.
 
-Die realistische Modellierung der Geschwindigkeiten macht es unmöglich, dass sich die Fahrzeuge in aufeinanderfolgenden Zellen folgen.
+Die realistische Modellierung der Geschwindigkeitsänderungen macht es unmöglich, dass sich die Fahrzeuge in aufeinanderfolgenden Zellen folgen.
 Vielmehr muss, wie im realen Verkehr auch, ein gewisser Abstand, innerhalb dessen der Nachfolgeverkehr reagieren kann, eingehalten werden.
 Ein Wert von $100 m$ erscheint in der Simulation sinnvoll, um Kollisionen zu verringern. 
 Für eine Geschwindigkeit von 100 km/h entspricht diese Entfernung nach der Faustformel [https://www.jungesportal.de/fuehrerschein/faustformeln-fuer-die-theorie.php] dem Bremsweg.
@@ -76,11 +76,11 @@ Reicht der Platz nach vorn nicht aus, um das Fahrzeug entsprechend seiner Geschw
 
 Das Verhalten hierzu kann über den Agentenplan gesteuert werden.
 Zu Beginn wurde die Kollision mit einem extremen abbremsen modelliert, später dann als Totalstopp.
-Die Reduktion der Geschwindigkeit ist insofern vorteilhaft, weil der Extremausschlag nach unten im Plot der Geschwindigkeiten sichtbar ist.
+Die Reduktion der Geschwindigkeit auf Null ist insofern vorteilhaft, weil der Extremausschlag nach unten im Plot der Geschwindigkeiten sichtbar ist.
 Außerdem wird der Agent wirklich in der aktuellen Zelle gestoppt. 
-Die Simulationsplattform würde sonst über (mehrere) Zeitschritte die Geschwindigkeit abzubauen, ohne dass bei Hindernissen voraus, eine Bewegung stattfinden würde. 
+Die Simulationsplattform würde sonst über (mehrere) Zeitschritte hinweg die Geschwindigkeit abzubauen, ohne dass bei Hindernissen voraus, eine reale Bewegung stattfinden könnte. 
 
-Dieses Verhalten kann durch Reduktion der Zellgröße enquote{behoben} werden.
+Dieses Verhalten kann durch Reduktion der Zellgröße \enquote{behoben} werden.
 Eine Simulation mit reduzierten Zellgrößen führte zu einem harmonischeren Verkehrsbild.
 
 Für die weitere Entwicklung könnte für die Fahrzeuge bei der Initialisierung eine Länge generiert werden, wodurch sie dann mehrere dieser kleineren Zellen überdecken würden.
@@ -90,7 +90,7 @@ Dies würde ein diversifizierteres Fahrzeugbild zur Folge haben.
 
 \subsection{Entwicklung/Entscheidung - Festlegen der Viewrange}
 
-In der Modellierung von NaSch beträgt die Sichtweite $v_{max} \times Zellgröße$, also $5 \times 7,5 m = 37,5 m$.
+In der Modellierung von NaSch beträgt die Sichtweite $v_{max} \times Zellgr.$, also $5 \times 7,5 m = 37,5 m$.
 Für die in der Agentensimulation vorliegenden \enquote{realen} Bremsvorgänge ist diese Entfernung unzureichend. 
 In [DiplarbeitEntfernung] wurden die Sichtweiten im untersucht.
 Für den Autobahnverkehr wird dort ein Wert zwischen $210$ und $350 m$ angegeben.
