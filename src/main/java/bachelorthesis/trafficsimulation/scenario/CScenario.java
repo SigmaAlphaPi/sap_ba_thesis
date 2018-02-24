@@ -268,7 +268,7 @@ public final class CScenario implements IScenario
     {
         // static configuration
         final Map<String, Object> l_configuration = new HashMap<>();
-        l_configuration.put( "lanelength_in_kms", m_environment.cells() );
+        l_configuration.put( "lanelength_in_kms", m_unit.celltometer( m_environment.cells() ) );
         l_configuration.put( "simulationtime_in_minutes", m_unit.steptimeinminutes( m_cycles ) );
         l_configuration.put( "simulationtime_in_timesteps", m_cycles );
         l_configuration.put( "cellsize_in_meter", m_unit.cellsize() );
