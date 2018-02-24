@@ -115,7 +115,7 @@ public abstract class IBaseObject<T extends IObject<?>> extends IBaseAgent<T> im
                 CLiteral.from(
                     "data",
                     CLiteral.from( DYNAMICBELIEFBASE, m_dynamicbeliefs.stream().map( i -> i.shallowcopysuffix() ) ),
-                    CLiteral.from( "static", this.staticliteral( p_object ).sorted().sequential() )
+                    CLiteral.from( "static", this.staticliteral( p_object ) )
                 )
             )
         );

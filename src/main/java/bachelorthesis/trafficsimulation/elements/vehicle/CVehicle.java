@@ -191,7 +191,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                                    CMath.angle(
                                         this.worldmovement(),
                                         this.worldposition().assign( p_object.worldposition(), DoubleFunctions.minus )
-                                   ).doubleValue() + 22.5D
+                                   ).doubleValue() * ( this.worldposition().get( 0 ) < p_object.worldposition().get( 0 ) ? -1 : 1 ) + 45.0D
                                ).toString().toLowerCase( Locale.ROOT )
                            )
             )
@@ -328,7 +328,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @IAgentActionName( name = "vehicle/pullout" )
     private void pullout()
     {
-        final Number l_lane = this.position().get( 0 ) - 1;
+        final Number l_lane = this.position().get( 0 ) + 1;
         if ( !m_scenario.environment().lanechange( this, l_lane ) )
             this.oncollision();
     }
@@ -340,7 +340,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @IAgentActionName( name = "vehicle/pullin" )
     private void pullin()
     {
-        final Number l_lane = this.position().get( 0 ) + 1;
+        final Number l_lane = this.position().get( 0 ) - 1;
         if ( !m_scenario.environment().lanechange( this, l_lane ) )
             this.oncollision();
     }
@@ -511,7 +511,9 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                     new CConstant<>( "CurrentCell", l_vehicle.position().get( 1 ) + 1 ),
                     new CConstant<>( "CurrentLane", l_vehicle.lane().intValue() + 1 ),
                     new CConstant<>( "Acceleration", l_vehicle.acceleration() ),
-                    new CConstant<>( "Deceleration", l_vehicle.deceleration() )
+                    new CConstant<>( "Deceleration", l_vehicle.deceleration() ),
+                    new CConstant<>( "Lanes", l_vehicle.scenario().environment().lanes() ),
+                    new CConstant<>( "Cells", l_vehicle.scenario().environment().cells() )
                 )
             );
         }
