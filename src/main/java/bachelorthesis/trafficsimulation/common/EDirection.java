@@ -15,21 +15,27 @@ import java.util.Locale;
  */
 public enum EDirection
 {
+    /**
+     * 4 sectors (divide by 90)
+     */
     FORWARD( 0 ),
-    BACKWARD( 180 );
+    LEFT( 90 ),
+    BACKWARD( 180 ),
+    RIGHT( 270 );
 
     /**
-     * 8 sectors (divide by 45 instead of 180)
+     * 8 sectors (divide by 45)
+     * 2 sectors (divide by 180)
      *
-    FORWARD( 0 ),
-    FORWARDLEFT( 45 ),
-    LEFT( 90 ),
-    BACKWARDLEFT( 135 ),
-    BACKWARD( 180 ),
-    BACKWARDRIGHT( 225 ),
-    RIGHT( 270 ),
-    FORWARDRIGHT( 315 );
-*/
+     FORWARD( 0 ),
+     FORWARDLEFT( 45 ),
+     LEFT( 90 ),
+     BACKWARDLEFT( 135 ),
+     BACKWARD( 180 ),
+     BACKWARDRIGHT( 225 ),
+     RIGHT( 270 ),
+     FORWARDRIGHT( 315 );
+     */
 
     /**
      * rotation-matrix for the direction vector
@@ -58,7 +64,7 @@ public enum EDirection
      */
     public DoubleMatrix1D position( @Nonnull final DoubleMatrix1D p_position, @Nonnull final DoubleMatrix1D p_goalposition, @Nonnegative final double p_speed )
     {
-        // calculate the stright line by: current position + l * (goal position - current position)
+        // calculate the straight line by: current position + l * (goal position - current position)
         // normalize direction and rotate the normalized vector based on the direction
         // calculate the target position based by: current position + speed * rotate( normalize( goal position - current position ) )
         final DoubleMatrix1D l_view = new DenseDoubleMatrix1D( p_goalposition.toArray() );
@@ -89,7 +95,7 @@ public enum EDirection
                     ? 360 + l_angle
                     : l_angle
                 )
-                / 180
+                / 90
         ];
     }
 

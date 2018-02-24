@@ -68,7 +68,7 @@ public final class CMath
      *
      * @param p_first first vector
      * @param p_second second vector
-     * @return pair of angel in degree or NaN on error
+     * @return pair of angle in degree or NaN on error
      */
     public static Number angle( final DoubleMatrix1D p_first, final DoubleMatrix1D p_second )
     {
