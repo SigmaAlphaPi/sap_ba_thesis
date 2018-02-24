@@ -3,7 +3,18 @@
 
 
 
+\subsection{Problem - \enquote{dürftiges} Bremsverhalten}
+
+Die Simulationsplattform bietet durch realistisch modellierte Beschleunigungen und Verzögerungen den Vorteil, dass der Verkehr realistischer, feingranularer abgebildet werden kann.
+Die analog zu den Simulationen von Nagel und Schreckenberg gewählte Zellgröße von $7,5$ Metern führt allerdings dazu, dass theoretisch dargestellte Reduktionen der Geschwindigkeit nicht direkt in nächsten Zeitschritt umgesetzt werden.
+Vielmehr muss, wie auch beim losfahren, siehe \cref{sec:accelerategroove}, ein gewisser Wert unterschritten werden, damit die gezeigte Bewegung auch real kürzer gesetzt wird.
+
+Dieses Verhalten kann durch Reduktion der Zellgröße 
+
+
+
 \subsection{Problem - \enquote{Eingrooven} am Anfang der Simulation}
+\label{sec:accelerategroove}
 
 Aufgrund der vergleichbar zum NaSch-Modell gewählten Zellgröße von $7,5 m$, im Gegensatz dazu aber die Simulation realitätsnaher Beschleunigungswerte, kommt es zu Simulationsbeginn mehrere Zeitschritte lang zu einem Stillstand der Fahrzeuge.
 Da jedes Fahrzeug softwareseitig in der Mitte der belegten Zelle platziert wird (bzw. im ersten Schritt dorthin \enquote{zurückrutscht}) wird eine Geschwindigkeit von mehr als $ \frac{1}{2} \times 7,5 \frac{m}{s} = 13,5 km/h$ benötigt, um eine sichtbare Bewegung durchzuführen.
