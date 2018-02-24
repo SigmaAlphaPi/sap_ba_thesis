@@ -36,12 +36,13 @@
 // --- start all other plans ---
 +!cruise <-
     
-//    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
+    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
-//    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
+    
+    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
     scenario/statistic( ID, CurrentSpeed );
@@ -73,7 +74,7 @@
 +!linger <-
     L = math/statistic/randomsimple;
     L < 0.1;
-//    generic/print( "LIN", ID, "LINGERED" );
+    generic/print( "LIN", ID, "LINGERED" );
     vehicle/decelerate(0.3)
 .
 

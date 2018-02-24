@@ -114,10 +114,10 @@ for (i in 1:repetitions) {
 }
 
 # --- plot for FUNDAMENTAL DIAGRAM ---
-plot(0.5, 0.5, xlab="density", ylab="flow", main="my plot", ylim=c(0,0.2), xlim=c(0,0.2), type="n")
-for (i in 1:length(statisticsList[["fundamental"]])) {
-  points(statisticsList[["fundamental"]][[i]][2], statisticsList[["fundamental"]][[i]][1], pch=19, cex=0.25)
-}
+# plot(0.5, 0.5, xlab="density", ylab="flow", main="my plot", ylim=c(0,0.2), xlim=c(0,0.2), type="n")
+# for (i in 1:length(statisticsList[["fundamental"]])) {
+#   points(statisticsList[["fundamental"]][[i]][2], statisticsList[["fundamental"]][[i]][1], pch=19, cex=0.25)
+# }
 
 # --- plot for POSITION ('movement') ---
 plot(vehicleDataList[[1]][[3]], 1:configurationData$simulationtime_in_timesteps, type="n", xlab="Zellposition Fahrzeuge", ylab="Zeitschritte", ylim = rev(range(1:configurationData$simulationtime_in_timesteps)))
@@ -126,7 +126,7 @@ for (i in 1:length(vehicleDataList)){
 }
 
 # --- plot for SPEED ---
-plot(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[2]][[1]], type="n", xlab="Zeitschritte", ylab="Geschwindigkeit der Fahrzeuge", ylim=c(0,35))
+plot(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[2]][[1]], type="n", xlab="Zeitschritte", ylab="Geschwindigkeit der Fahrzeuge", ylim=c(0,105))
 for (i in 1:length(vehicleDataList)){
   lines(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[i]][[1]], type = "l", col = i)
 }

@@ -49,11 +49,12 @@
 // --- start all other plans ---
 +!cruise <-
     
-//    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
+    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
+    
     generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
