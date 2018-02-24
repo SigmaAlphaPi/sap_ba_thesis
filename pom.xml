@@ -17,13 +17,10 @@
 
     <dependencies>
 
-        <!-- agent behaviour based on my PhD framework - must installed manually into the local Maven repository
-             https://github.com/LightJason/AgentSpeak
-        -->
         <dependency>
             <groupId>org.lightjason</groupId>
             <artifactId>agentspeak</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
 
 
@@ -51,6 +48,7 @@
             <artifactId>tinylog</artifactId>
             <version>1.3.2</version>
         </dependency>
+
 
         <!-- junit test -->
         <dependency>
