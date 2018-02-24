@@ -1,6 +1,5 @@
 /*
  *  ASL file        NaSch model traffic, single lane
- *  1. try ... separate linger plan
  */
 
 /*
@@ -28,19 +27,7 @@
  *      Deceleration        deceleration in m/sec^2
  *      Timestep            time of a single timestep in minutes
  *
- *
- * HOW TO ADDRESS THE STATIC VALUES IN VEHICLE VIEW
-
-    >>view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) );
-    generic/print( "Lane ist", Lane, generic/type/type( Lane ) ); // double
-    generic/print( "Cell ist", Cell, generic/type/type (Cell) ); // double
-    generic/print( "Speed ist", Speed, generic/type/type (Speed) ); // double
-    generic/print( "Dist ist", Dist, generic/type/type(Dist) ); // double
-    generic/print( "Dir ist", Dir, generic/type/type(Dir) ); // literal - cast to string
-    generic/print( "bool/equal", bool/equal( generic/type/tostring( Dir ), "forward[]" ) )
  */
-
-
 
 
 !cruise.
@@ -68,15 +55,18 @@
     // --- accelerate only, if no traffic ahead ---
     // --- otherwise you have to brake against the acceleration ---
     // --- resulting in too long braking distances ---
-    : CurrentSpeed < AllowedSpeed
+    : 
+        CurrentSpeed < AllowedSpeed
         && ~>>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
                 bool/equal( generic/type/tostring( FwdDir ), "forward[]" )
+                && FwdSpeed < CurrentSpeed
+                && FwdDist < 100
             )
-        <-
-//        generic/print( "   ", ID, "accelerated");
+    <-
+        // generic/print( "ACC", ID, "accelerated");
         vehicle/accelerate(0.5);
         !accelerate
-.     
+.
 
 
 
@@ -85,24 +75,27 @@
     L = math/statistic/randomsimple;
     L < 0.1;
     generic/print( "LIN", ID, "LINGERED" );
-    vehicle/decelerate(0.75)
+    vehicle/decelerate(0.3)
 .
 
 
-// --- deceleration if max. allowed speed / traffic ahead ---
+
+// --- deceleration ---
 +!decelerate 
+/*
+    // --- decelerate if max. allowed speed is reached ---
     : CurrentSpeed > AllowedSpeed <-
         generic/print( "MAX", ID, "decelerated -> high speed");
         vehicle/decelerate(0.05);
         !decelerate
-
+*/
     // --- if traffic is ahead only decelerate if  ---
     // --- CurrentSpeed is higher than speed of traffic ahead ---
-    // --- (this avoids unnecessary breaking down to 0 kph) ---
+    // --- (avoids unnecessary breaking down to 0 kph) ---
     : >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ), 
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
             && FwdSpeed < CurrentSpeed
-            // && FwdDist > 100
+            && FwdDist < 100
         ) <-
         generic/print( "TFC", ID, "has vehicle in-front of -> decelerate");
         vehicle/decelerate(1);
@@ -111,13 +104,16 @@
 
 
 
-// --- collision vehicle brake hardest/stop immediatly ---
+// --- collision ---
 +!vehicle/collision <-
-/*
+
+    // --- brake as hard as possible ---
     vehicle/decelerate( 1 );
     generic/print( "COB", ID, "BREAKED HARD -> collision" )
-*/
+/*
+    // --- stop immediately ---
     vehicle/stop;
     generic/print( "COS", ID, "STOPPED -> collision" )
+*/
 .
 

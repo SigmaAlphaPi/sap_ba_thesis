@@ -11,14 +11,13 @@ vehicleData <- scenarioRawData[["vehicles"]]
 configurationData <- scenarioRawData[["configuration"]]
 
 # --- set drop of data time(steps) (first 10 minutes or half of duration) ---
-if (configurationData$simulationtime_in_minutes <= 20) beginWithTimestep = 0.5*configurationData$simulationtime_in_minutes/configurationData$timestep_in_minutes
-if (configurationData$simulationtime_in_minutes > 20) beginWithTimestep = 15/configurationData$timestep_in_minutes
+if (configurationData$simulationtime_in_minutes < 30) beginWithTimestep = 0.5*configurationData$simulationtime_in_minutes/configurationData$timestep_in_minutes
+if (configurationData$simulationtime_in_minutes >= 30) beginWithTimestep = 15/configurationData$timestep_in_minutes
 
 # --- calculate measuring distance in cells ---
-laneLength = 7.5
-# if (laneLength <= 2) 
-measuringDistance = floor(0.5*laneLength)
-# if (laneLength > 2) measuringDistance = 1
+# if (configurationData$lanelength_in_kms <= 10) 
+measuringDistance = floor(0.5*configurationData$lanelength_in_kms)
+# if (configurationData$lanelength_in_kms > 10) measuringDistance = 5
 measuringDistanceLastCell = floor(1000*measuringDistance / configurationData$cellsize_in_meter)
 
 # --- init multiple lists ---
