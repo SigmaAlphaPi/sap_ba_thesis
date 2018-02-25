@@ -175,7 +175,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @Override
     protected final Stream<ITerm> staticliteral( final IObject<?> p_object )
     {
-        final DoubleMatrix1D l_unclipped = this.clippedforwardposition( p_object.worldposition() );
+        final DoubleMatrix1D l_unclipped = this.unclip( p_object.worldposition() );
 
         return Stream.of(
             CLiteral.from( "lane", CRawTerm.from( this.position().get( 0 ) + 1 ) ),
@@ -196,12 +196,23 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     }
 
     /**
+     * unclip method for correct projection over the environment size
+     *
+     * @param p_position position
+     * @return unclipped position
+     */
+    private DoubleMatrix1D unclip( @Nonnull final DoubleMatrix1D p_position )
+    {
+        return this.unclipforward( p_position );
+    }
+
+    /**
      * clipping in-front of
      *
      * @param p_position world position of the other object
      * @return unclipped position data
      */
-    private DoubleMatrix1D clippedforwardposition( @Nonnull final DoubleMatrix1D p_position )
+    private DoubleMatrix1D unclipforward( @Nonnull final DoubleMatrix1D p_position )
     {
         // calculate the range over the end of the lane, position is less than the environment size, nothing to do
         if ( ( this.worldposition().getQuick( 1 ) + m_viewrangesize ) <= m_scenario.environment().worldposition().getQuick( 1 ) )
@@ -598,7 +609,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                          .parallel()
                          .filter( i -> !i.equals( CVehicle.this ) )
                          .peek( i -> m_neighbour.put( i.id(), i ) )
-                         .map( i -> new ImmutablePair<>( m_scenario.unit().celltometer( CMath.distance( CVehicle.this.position(), i.position() ) ), i ) )
+                         .map( i -> new ImmutablePair<>( CMath.distance( CVehicle.this.worldposition(), CVehicle.this.unclip( i.worldposition() ) ), i ) )
                          .sorted( Comparator.comparingDouble( i -> i.getLeft().doubleValue() ) )
                          .map( ImmutablePair::getRight )
                          .map( i -> i.literal( CVehicle.this ) )
