@@ -175,18 +175,20 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @Override
     protected final Stream<ITerm> staticliteral( final IObject<?> p_object )
     {
+        final DoubleMatrix1D l_unclipped = this.clippedforwardposition( p_object.worldposition() );
+
         return Stream.of(
             CLiteral.from( "lane", CRawTerm.from( this.position().get( 0 ) + 1 ) ),
             CLiteral.from( "cell", CRawTerm.from( this.position().get( 1 ) + 1 ) ),
             CLiteral.from( "speed", CRawTerm.from( m_speed.get() ) ),
-            CLiteral.from( "distance", CRawTerm.from( m_scenario.unit().celltometer( CMath.distance( this.position(), p_object.position() ) ) ) ),
+            CLiteral.from( "distance", CRawTerm.from( m_scenario.unit().celltometer( CMath.distance( this.position(), l_unclipped ) ) ) ),
             CLiteral.from( "direction",
                            CLiteral.from(
                                EDirection.byAngle(
                                    CMath.angle(
                                         this.worldmovement(),
-                                        this.worldposition().assign( p_object.worldposition(), DoubleFunctions.minus )
-                                   ).doubleValue() * ( this.worldposition().get( 0 ) < p_object.worldposition().get( 0 ) ? -1 : 1 ) + 45.0D
+                                        this.worldposition().assign( l_unclipped, DoubleFunctions.minus )
+                                   ).doubleValue() * ( this.worldposition().get( 0 ) < l_unclipped.get( 0 ) ? -1 : 1 ) + 45.0D
                                ).toString().toLowerCase( Locale.ROOT )
                            )
             )
@@ -201,46 +203,22 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private DoubleMatrix1D clippedforwardposition( @Nonnull final DoubleMatrix1D p_position )
     {
-        // calculate the range over the end of the lane
-        final double l_view = this.worldposition().getQuick( 1 ) + m_viewrangesize;
-
-        // position is less than the environment size, bothing to do
-        if ( l_view <= m_scenario.environment().worldposition().getQuick( 1 ) )
+        // calculate the range over the end of the lane, position is less than the environment size, nothing to do
+        if ( ( this.worldposition().getQuick( 1 ) + m_viewrangesize ) <= m_scenario.environment().worldposition().getQuick( 1 ) )
             return p_position;
 
-        // we nee to chack if the position is outside of the current view range
-        if ( p_position.getQuick( 0 )  )
-
-        // calculate the overlap part
-        final double l_overlap = l_view % m_scenario.environment().worldposition().getQuick( 1 );
-        if ( p_position.getQuick( 0 ) > l_overlap )
+        // if car is in-front of, nothing to do and inside the environment size
+        if ( p_position.getQuick( 1 ) >= this.worldposition().getQuick( 1 ) )
             return p_position;
 
-
-
-
-
-        final DoubleMatrix1D l_view = this.worldposition().copy();
-        l_view.setQuick( 1, l_view.getQuick( 1 ) + m_viewrangesize );
-
-        // view range is inside the lane size
-        if ( l_view.getQuick( 1 ) <= m_scenario.environment().worldposition().getQuick( 1 ) )
-            return p_position;
-
-        // car is in front of the current car
-        if ( p_position.getQuick( 1 ) > this.position().getQuick( 1 ) )
-            return p_position;
-
-        // check if other car is clipped
-        final double l_overlap = l_view.getQuick( 1 ) - m_scenario.environment().worldposition().getQuick( 1 );
-        if ( p_position.getQuick( 1 ) > l_overlap )
-            return p_position;
-
-        // car is clipped
-        final DoubleMatrix1D l_clipped = p_position.copy();
-        l_clipped.setQuick( 1, l_clipped.getQuick( 1 ) + m_scenario.environment().worldposition().getQuick( 1 ) );
-        return l_clipped;
+        // car is behind, so project car position in front-of (we know that the car is clipped)
+        final DoubleMatrix1D l_project = p_position.copy();
+        l_project.setQuick( 1, l_project.getQuick( 1 ) + m_scenario.environment().worldposition().getQuick( 1 ) );
+        return l_project;
     }
+
+
+
 
     @Override
     @Nonnegative
