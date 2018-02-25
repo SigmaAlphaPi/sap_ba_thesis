@@ -115,16 +115,21 @@ Die Dosierung der möglichen Beschleunigung bzw. Verzögerung wird im Agentenscr
 
 Für die Sichtweite ergibt sich für im NaSch-Modell der theoretische Wert von $5 \times 7,5 m$, also $37,5$ Meter.
 Für die in der Agentensimulation vorliegenden \enquote{realen} Bremsvorgänge ist diese Entfernung unzureichend. 
-Laut \cite{sichtweite} kann die Sichtweite aufgrund von physiologischen und psychologischen Gründen in drei Zonen eingeteilt werden. auf Autobahnen zwischen $210$ und $360$ Metern.
-Ein Wert von $250 m$ wurde gewählt. 
-Dieser liegt in der unteren Hälfte des Intervalls und gibt den Agenten genug Raum für Reaktionen und konnte in den Agentenplänen durch Bedingungen reduziert werden.
+Die Sichtweite im Straßenverkehr kann laut \cite{sichtweite} aufgrund von physiologischen und psychologischen Gründen in drei Zonen eingeteilt werden - \enquote{Fernorientierung/Information} auf Autobahnen etwa zwischen 600 und 360 Metern, \enquote{Bereitschaft/Entscheidung} etwa zwischen 360 und 110 Metern und \enquote{Nahorientierung/Handlung} unter 110 Metern.
+
+Durch die fehlende Reaktionsträgheit, die maßgeblich durch die menschliche Komponente auftritt, hier aber fehlt, muss nicht die Phase der Fernorientierung ausgeschöpft werden. 
+Ein Wert der Sichtweite mittig im Intervall der Entscheidung genügt, um bis zum Beginn der Handlungsphase \enquote{tätig zu werden}.
+
+Für die Sichtweite wurde der Wert 250 m gewählt.
+Dieser liegt ungefähr mittig im Intervall und gibt den Agenten genügend Raum für Reaktionen. 
+In den Agentenplänen wird schließlich die Handlung durch Bedingungen auf einen Bereich unter 110 m beschränkt.
 
 
 
 \subsection{Problem - Sichtfeld der Fahrzeuge}
 
 Um die Position eines anderen Fahrzeugs in der Umwelt festzustellen, kann die Richtung, in der dieses sich befindet, bestimmt werden.
-Die Simulationsumgebung hatte für das Sichtfeld der Fahrzeuge eine Unterteilung in acht Sektoren vorgesehen, so dass neben den Richtungen vorwärts, rückwärts, links und rechts auch Unterscheidung in Zwischenschritte möglich war, siehe \cref{figure:car-view-sectors} (a).
+Die Simulationsumgebung hatte für das Sichtfeld der Fahrzeuge eine Unterteilung in acht Sektoren vorgesehen, so dass neben den Richtungen vorwärts, rückwärts, links und rechts auch Unterscheidung in Zwischenschritte möglich war, siehe \cref{figure:car-view-sectors}(a).
 
 \begin{figure}[hptb]
   \centering 
@@ -139,9 +144,12 @@ Eine solch feine Unterscheidung war nicht nötig.
 Es sollte genügen, feststellen zu können, ob sich ein anderes Fahrzeug relativ zu \enquote{Ego} im vorwärtigen oder rückwärtigen Raum befindet. 
 Die Abdeckung sollte ohne Unterbrechung sein.
 Für die Simulation nach dem Einspurmodell von Nagel-Schreckenberg funktionierte dies ohne Probleme.
+
 Bei einem Testlauf des Mehrspurmodells mit vier Fahrzeugen kam es zur Kollision zweier Fahrzeuge. 
-Bei der anschließenden Kontrolle stellte sich heraus, dass ein Fahrzeug (vehicle0), welches sich auf der Überholspur (lane 2) befand, ein anderes Fahrzeug (vehicle20) direkt neben sich nicht \enquote*{sah} und daraufhin, so wie es der Plan vorsah, zum nächsten Schritt in die Hauptspur fährt. 
-Im nachfolgenden Zeitschritt kam es dann zur Kollision.
+Bei der anschließenden Kontrolle wurde festgestellt, dass ein Fahrzeug (vehicle0), welches sich auf der Überholspur (lane 2) befand, ein anderes Fahrzeug (vehicle20) direkt neben sich nicht \enquote*{gesehen hatte}. 
+Erkennbar in der Zeile \enquote{PIA1}, die nur ausgelöst wird, wenn sich keinerlei Verkehr im Sichtfeld des Fahrzeuges befindet.
+Daraufhin, so wie es der Plan vorsah, wurde zum nächsten Schritt (366) in die Hauptspur gewechselt. 
+Im diesem Zeitschritt kam es dann zur Kollision.
 
 \begin{verbatim}
 --- step 365 ----------------
@@ -161,4 +169,7 @@ OUT      vehicle0   -> Pull-out attempt successful
 \end{verbatim}
 
 Das Sichtfeld der Fahrzeuge wurde zu einem Vier-Sektoren-Modell abgewandelt und die Pläne für Ein- und Ausscheren, der hiervon gleichermaßen betroffen sein dürfte, angepasst.
-Es werden nun jeweils die beiden Sektoren, die die Bewegungs- bzw.Orientierungsrichtung darstellen, kontrolliert.
+Es werden nun jeweils die beiden Sektoren kontrolliert, die die Bewegungs- bzw. Orientierungsrichtung darstellen.
+
+Im Rahmen dieser Umstellung wurde festgestellt, dass es bei der Richtungsbestimmung einen Fehler im Framework gab.
+Die Berechnung lieferte für beide seitlichen Richtungen ein und denselben Wert.
