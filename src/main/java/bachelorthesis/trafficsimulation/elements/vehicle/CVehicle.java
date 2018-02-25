@@ -162,7 +162,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     {
         return m_position.copy()
                          .assign( DoubleFunctions.plus( 1 ) )
-                         .assign( DoubleFunctions.mult( m_scenario.unit().cellsize().doubleValue() / 2 ) );
+                         .assign( DoubleFunctions.mult( m_scenario.unit().cellsize().doubleValue() ) );
     }
 
     @Nonnull
