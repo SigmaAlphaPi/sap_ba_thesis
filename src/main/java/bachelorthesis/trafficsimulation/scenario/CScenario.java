@@ -127,7 +127,7 @@ public final class CScenario implements IScenario
                                  : SerializationFeature.CLOSE_CLOSEABLE;
 
         m_runtime = ERuntime.from( l_configuration.getOrDefault( ERuntime.SYNCHRONIZED.toString(), SECTIONMAIN, "runtime", "type" ) )
-                            .apply( l_configuration.<Number>getOrDefault( 1, SECTIONMAIN, "runtime", "thread" ) );
+                            .apply( l_configuration.<Number>getOrDefault( 1, SECTIONMAIN, "runtime", "threads" ) );
 
         CLoggerAlive.build( l_configuration.<Number>getOrDefault( 0, SECTIONMAIN, "alive" ).longValue() );
 
@@ -268,7 +268,7 @@ public final class CScenario implements IScenario
     {
         // static configuration
         final Map<String, Object> l_configuration = new HashMap<>();
-        l_configuration.put( "lanelength_in_kms", m_unit.celltometer( m_environment.cells() ) );
+        l_configuration.put( "lanelength_in_kms", m_unit.celltokilometer( m_environment.cells() ) );
         l_configuration.put( "simulationtime_in_minutes", m_unit.steptimeinminutes( m_cycles ) );
         l_configuration.put( "simulationtime_in_timesteps", m_cycles );
         l_configuration.put( "cellsize_in_meter", m_unit.cellsize() );
