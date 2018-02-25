@@ -33,7 +33,7 @@ main:
     unit:
 
         # cell size / size of a vehicle in meter
-        cellsize_in_meter: 2.5
+        cellsize_in_meter: 7.5
         # works fine with 1
 
         # time of a single timestep in simulation
