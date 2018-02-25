@@ -105,7 +105,7 @@ public final class TestCDirection
     {
         return p_cellposition.copy()
                              .assign( DoubleFunctions.plus( 1 ) )
-                             .assign( DoubleFunctions.mult( p_cellsize.doubleValue() / 2 ) );
+                             .assign( DoubleFunctions.mult( p_cellsize.doubleValue() ) );
     }
 
     /**
