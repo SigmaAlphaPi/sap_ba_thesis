@@ -201,6 +201,25 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private DoubleMatrix1D clippedforwardposition( @Nonnull final DoubleMatrix1D p_position )
     {
+        // calculate the range over the end of the lane
+        final double l_view = this.worldposition().getQuick( 1 ) + m_viewrangesize;
+
+        // position is less than the environment size, bothing to do
+        if ( l_view <= m_scenario.environment().worldposition().getQuick( 1 ) )
+            return p_position;
+
+        // we nee to chack if the position is outside of the current view range
+        if ( p_position.getQuick( 0 )  )
+
+        // calculate the overlap part
+        final double l_overlap = l_view % m_scenario.environment().worldposition().getQuick( 1 );
+        if ( p_position.getQuick( 0 ) > l_overlap )
+            return p_position;
+
+
+
+
+
         final DoubleMatrix1D l_view = this.worldposition().copy();
         l_view.setQuick( 1, l_view.getQuick( 1 ) + m_viewrangesize );
 
