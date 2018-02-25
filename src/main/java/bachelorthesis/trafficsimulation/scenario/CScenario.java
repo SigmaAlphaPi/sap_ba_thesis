@@ -127,7 +127,7 @@ public final class CScenario implements IScenario
                                  : SerializationFeature.CLOSE_CLOSEABLE;
 
         m_runtime = ERuntime.from( l_configuration.getOrDefault( ERuntime.SYNCHRONIZED.toString(), SECTIONMAIN, "runtime", "type" ) )
-                            .apply( l_configuration.<Number>getOrDefault( 1, SECTIONMAIN, "runtime", "thread" ) );
+                            .apply( l_configuration.<Number>getOrDefault( 1, SECTIONMAIN, "runtime", "threads" ) );
 
         CLoggerAlive.build( l_configuration.<Number>getOrDefault( 0, SECTIONMAIN, "alive" ).longValue() );
 
