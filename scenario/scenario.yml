@@ -24,10 +24,10 @@ main:
     runtime:
 
         # type of the runtime, parameter is the thread number: ->synchronized<-, workstealing, fixedsize(T), cached, scheduled(T), single
-        type: "fixedsize"
+        type: "synchronized"
 
-        # number of threads of the runtime
-        threads: 1
+        # number of threads of the runtime (fixedsize, scheduled)
+        threads: 2
 
     # unit of the simulation
     unit:
