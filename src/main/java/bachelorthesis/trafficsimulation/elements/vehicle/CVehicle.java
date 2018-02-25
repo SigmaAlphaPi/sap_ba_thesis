@@ -160,6 +160,12 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @Override
     public final DoubleMatrix1D worldposition()
     {
+        /*
+         * @todo ggf ändern zu
+        return m_position.copy()
+                         .assign( DoubleFunctions.mult( m_scenario.unit().cellsize().doubleValue() ) )
+                         .assign( DoubleFunctions.plus( m_scenario.unit().cellsize().doubleValue() / 2 ) );
+        */
         return m_position.copy()
                          .assign( DoubleFunctions.plus( 1 ) )
                          .assign( DoubleFunctions.mult( m_scenario.unit().cellsize().doubleValue() ) );
