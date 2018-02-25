@@ -23,7 +23,7 @@ main:
     # runtime
     runtime:
 
-        # type of the runtime, parameter is the thread number: synchronized, workstealing, fixedsize(T), cached, scheduled(T), single
+        # type of the runtime, parameter is the thread number: ->synchronized<-, workstealing, fixedsize(T), cached, scheduled(T), single
         type: "synchronized"
 
         # number of threads of the runtime
@@ -51,7 +51,7 @@ environment:
     # 75 kms are about 10000 cells
     
     # was 25
-    length_in_km: 7.5 
+    length_in_km: 1 
     #7.5
 
 
