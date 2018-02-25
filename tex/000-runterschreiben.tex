@@ -88,18 +88,6 @@ Dies würde ein diversifizierteres Fahrzeugbild zur Folge haben.
 
 
 
-\subsection{Entwicklung/Entscheidung - Festlegen der Viewrange}
-
-In der Modellierung von NaSch beträgt die Sichtweite $v_{max} \times Zellgr.$, also $5 \times 7,5 m = 37,5 m$.
-Für die in der Agentensimulation vorliegenden \enquote{realen} Bremsvorgänge ist diese Entfernung unzureichend. 
-In [DiplarbeitEntfernung] wurden die Sichtweiten im untersucht.
-Für den Autobahnverkehr wird dort ein Wert zwischen $210$ und $350 m$ angegeben.
-
-Ein Wert von $250 m$ wurde gewählt. 
-Dieser liegt in der unteren Hälfte des Intervalls und gibt den Agenten genug Raum für Reaktionen und konnte in den Agentenplänen durch Bedingungen reduziert werden.
-
-
-
 \subsection{Entwicklung/Entscheidung - Festlegen der Trödelparameter}
 \label{sec:lingersweetspot}
 
@@ -123,12 +111,13 @@ Durch die Möglichkeit, die Geschwindigkeit innerhalb eines einzigen Zeitschritt
 
 Die Simulationsumgebung arbeitet hier mit realen Werten zwischen $3,5$ und $7 \frac{m}{s^{2}}$ für die Beschleunigung und zwischen $8$ und $10 \frac{m}{s^{2}}$ für die Verzögerung.
 Der Wert wird für jedes Fahrzeug bei der Initialisierung im Rahmen dieser Intervalle zufällig festgelegt.
-Die Dosierung der möglichen Beschleunigung bzw. Verzögerung wird im Agent-Script festgelegt.
+Die Dosierung der möglichen Beschleunigung bzw. Verzögerung wird im Agentenscript festgelegt.
 
 Für die Sichtweite ergibt sich für im NaSch-Modell der theoretische Wert von $5 \times 7,5 m$, also $37,5$ Meter.
-Dies ist in dieser Simulation unmöglich.
-Laut [Arbeit] liegt die Sichtweite auf Autobahnen zwischen $210$ und $360$ Metern.
-Ein Wert von $250 m$ erscheint realistisch und sinnvoll und wurde gewählt.
+Für die in der Agentensimulation vorliegenden \enquote{realen} Bremsvorgänge ist diese Entfernung unzureichend. 
+Laut \cite{sichtweite} kann die Sichtweite aufgrund von physiologischen und psychologischen Gründen in drei Zonen eingeteilt werden. auf Autobahnen zwischen $210$ und $360$ Metern.
+Ein Wert von $250 m$ wurde gewählt. 
+Dieser liegt in der unteren Hälfte des Intervalls und gibt den Agenten genug Raum für Reaktionen und konnte in den Agentenplänen durch Bedingungen reduziert werden.
 
 
 
