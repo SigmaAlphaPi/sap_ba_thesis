@@ -30,7 +30,7 @@ public class CVehicleTest
         final DoubleMatrix1D l_second = new DenseDoubleMatrix1D( new double[]{1.2871727673151923, 88} );
         // was 91
 
-        final DoubleMatrix1D l_second_unclipped = this.unclip(
+        final DoubleMatrix1D l_secondunclipped = this.unclip(
                 worldposition( l_first, l_cellsize ),
                 worldposition( l_second, l_cellsize ),
                 worldposition( l_world, l_cellsize ),
@@ -38,7 +38,7 @@ public class CVehicleTest
 
         Assert.assertEquals(
                 CMath.distance(
-                        worldposition( l_first, l_cellsize ), l_second_unclipped
+                        worldposition( l_first, l_cellsize ), l_secondunclipped
                 ).doubleValue(),
                 82.50242576350624,
                 0.3
@@ -74,7 +74,7 @@ public class CVehicleTest
      * @param p_cellsize cell size
      * @return world vector
      */
-    private static DoubleMatrix1D worldposition(@Nonnull final DoubleMatrix1D p_cellposition, @Nonnull final Number p_cellsize )
+    private static DoubleMatrix1D worldposition( @Nonnull final DoubleMatrix1D p_cellposition, @Nonnull final Number p_cellsize )
     {
         return p_cellposition.copy()
                 .assign( DoubleFunctions.plus( 1 ) )
