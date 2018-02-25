@@ -1,0 +1,11 @@
+----- step 200 ----------------
+TFC   vehicle0   has vehicle in-front of -> decelerate
+vehicle0   -> BELIEFLIST   [view/vehicle[id[vehicle20], data[dynamic[], static[lane[1.2871727673151923], cell[98.0], speed[74.2536635346724], distance[82.50242576350624], direction[forward[]]]]]]
+vehicle20   -> BELIEFLIST   [view/vehicle[id[vehicle0], data[dynamic[], static[lane[1.371527242963677], cell[87.0], speed[93.09163316438965], distance[82.50242576350624], direction[backward[]]]]]]
+vehicle0    in lane   1   in cell   87.0   @   93.09163316438965   kph
+vehicle20    in lane   1   in cell   98.0   @   74.2536635346724   kph 
+----- step 201 ----------------
+vehicle20   -> BELIEFLIST   [view/vehicle[id[vehicle0], data[dynamic[], static[lane[1.371527242963677], cell[91.0], speed[89.50673433619842], distance[82.50242576350624], direction[backward[]]]]]]
+vehicle0   -> BELIEFLIST   [view/vehicle[id[vehicle20], data[dynamic[], static[lane[1.2871727673151923], cell[102.0], speed[75.2655553672286], distance[915.0002187195711], direction[backward[]]]]]]
+vehicle20    in lane   1   in cell   102.0   @   75.2655553672286   kph
+vehicle0    in lane   1   in cell   91.0   @   89.50673433619842   kph
