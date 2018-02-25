@@ -181,7 +181,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             CLiteral.from( "lane", CRawTerm.from( this.position().get( 0 ) + 1 ) ),
             CLiteral.from( "cell", CRawTerm.from( this.position().get( 1 ) + 1 ) ),
             CLiteral.from( "speed", CRawTerm.from( m_speed.get() ) ),
-            CLiteral.from( "distance", CRawTerm.from( CMath.distance( this.worldmovement(), l_unclipped ) ) ),
+            CLiteral.from( "distance", CRawTerm.from( CMath.distance( this.worldposition(), l_unclipped ) ) ),
             CLiteral.from( "direction",
                            CLiteral.from(
                                EDirection.byAngle(
