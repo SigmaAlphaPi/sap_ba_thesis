@@ -4,6 +4,7 @@ import bachelorthesis.trafficsimulation.elements.IObject;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import bachelorthesis.trafficsimulation.scenario.IScenario;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
+import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
 import cern.colt.matrix.tobject.ObjectMatrix2D;
 import cern.colt.matrix.tobject.impl.SparseObjectMatrix2D;
 
@@ -36,6 +37,10 @@ public final class CEnvironment implements IEnvironment
      * clipping function
      */
     private final Function<Number, Number> m_clippingfunction;
+    /**
+     * size of the world
+     */
+    private final DoubleMatrix1D m_size;
 
     /**
      * ctor
@@ -48,6 +53,17 @@ public final class CEnvironment implements IEnvironment
         m_scenario = p_scenario;
         m_clippingfunction = i -> i.intValue() % p_length.intValue();
         m_grid = new SparseObjectMatrix2D( p_lanes.intValue(), p_length.intValue() );
+
+        m_size = new DenseDoubleMatrix1D( 2 );
+        m_size.setQuick( 0, m_scenario.unit().celltometer( m_grid.rows() ).doubleValue() );
+        m_size.setQuick( 1, m_scenario.unit().celltometer( m_grid.columns() ).doubleValue() );
+    }
+
+    @Nonnull
+    @Override
+    public final DoubleMatrix1D worldposition()
+    {
+        return m_size;
     }
 
     @Override

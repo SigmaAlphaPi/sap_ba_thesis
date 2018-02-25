@@ -14,6 +14,12 @@ import java.util.stream.Stream;
  */
 public interface IEnvironment extends Consumer<Number>
 {
+    /**
+     * realworld size of the environment
+     * @return real world position
+     */
+    @Nonnull
+    DoubleMatrix1D worldposition();
 
     /**
      * sets avehicle inside the grid

@@ -98,10 +98,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      * view range size in meter
      */
     private final double m_viewrangesize;
-    /**
-     * view range size in cells as vector
-     */
-    private final DoubleMatrix1D m_viewragngesizecells;
 
 
     /**
@@ -122,7 +118,6 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         m_maximumspeed = p_maximumspeed.doubleValue();
         m_acceleration = p_acceleration.doubleValue();
         m_deceleration = p_deceleration.doubleValue();
-        m_viewragngesizecells = new DenseDoubleMatrix1D( new double[]{0, m_scenario.unit().metertocell( m_viewrangesize ).intValue() } );
 
         if ( p_scenario.unit().accelerationtospeed( m_acceleration ).doubleValue() > m_maximumspeed )
             throw new RuntimeException( "maximum acceleration is higher than maximum speed" );
@@ -198,20 +193,34 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         );
     }
 
-    private DoubleMatrix1D clippedforwardposition( final DoubleMatrix1D p_position )
+    /**
+     * clipping in-front of
+     *
+     * @param p_position world position of the other object
+     * @return unclipped position data
+     */
+    private DoubleMatrix1D clippedforwardposition( @Nonnull final DoubleMatrix1D p_position )
     {
-        final DoubleMatrix1D l_view = this.position().copy().assign( m_viewragngesizecells, DoubleFunctions.plus );
-        if ( l_view.getQuick( 1 ) < m_scenario.environment().cells().intValue() )
+        final DoubleMatrix1D l_view = this.worldposition().copy();
+        l_view.setQuick( 1, l_view.getQuick( 1 ) + m_viewrangesize );
+
+        // view range is inside the lane size
+        if ( l_view.getQuick( 1 ) <= m_scenario.environment().worldposition().getQuick( 1 ) )
             return p_position;
 
+        // car is in front of the current car
+        if ( p_position.getQuick( 1 ) > this.position().getQuick( 1 ) )
+            return p_position;
 
-        final DoubleMatrix1D l_position = p_position.copy();
-        l_position.setQuick( 1, l_position );
+        // check if other car is clipped
+        final double l_overlap = l_view.getQuick( 1 ) - m_scenario.environment().worldposition().getQuick( 1 );
+        if ( p_position.getQuick( 1 ) > l_overlap )
+            return p_position;
 
-        return
-
-               < m_scenario.environment().cells()
-               ?
+        // car is clipped
+        final DoubleMatrix1D l_clipped = p_position.copy();
+        l_clipped.setQuick( 1, l_clipped.getQuick( 1 ) + m_scenario.environment().worldposition().getQuick( 1 ) );
+        return l_clipped;
     }
 
     @Override
