@@ -209,7 +209,8 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private DoubleMatrix1D unclip( @Nonnull final DoubleMatrix1D p_position )
     {
-        return this.unclipforward( p_position );
+        /* return this.unclipforward( p_position ); */
+        return p_position;
     }
 
     /**
