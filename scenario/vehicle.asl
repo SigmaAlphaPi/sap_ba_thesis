@@ -106,14 +106,13 @@
 
 // --- collision ---
 +!vehicle/collision <-
-
+/*
     // --- brake as hard as possible ---
     vehicle/decelerate( 1 );
     generic/print( "COB", ID, "BREAKED HARD -> collision" )
-/*
+*/
     // --- stop immediately ---
     vehicle/stop;
     generic/print( "COS", ID, "STOPPED -> collision" )
-*/
 .
 
