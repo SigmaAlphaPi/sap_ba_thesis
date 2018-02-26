@@ -209,11 +209,14 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private DoubleMatrix1D unclip( @Nonnull final DoubleMatrix1D p_position )
     {
-        return this.unclipforward( p_position );
+        if ( this.worldposition().getQuick( 1 ) > m_scenario.environment().worldposition().getQuick( 1 ) / 2 )
+            return this.unclipforward( p_position );
+        else
+            return this.unclipbackward( p_position );
     }
 
     /**
-     * clipping in-front of
+     * clipping in front of
      *
      * @param p_position world position of the other object
      * @return unclipped position data
@@ -232,12 +235,37 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         if ( p_position.getQuick( 1 ) >= this.worldposition().getQuick( 1 ) - m_viewrangesize )
             return p_position;
 
-        // car is behind, so project car position in front-of (we know that the car is clipped)
+        // car is "behind", so project car position in front of (we know that the car is clipped)
         final DoubleMatrix1D l_project = p_position.copy();
         l_project.setQuick( 1, l_project.getQuick( 1 ) + m_scenario.environment().worldposition().getQuick( 1 ) );
         return l_project;
     }
 
+    /**
+     * clipping behind
+     *
+     * @param p_position world position of the other object
+     * @return unclipped position data
+     */
+    private DoubleMatrix1D unclipbackward( @Nonnull final DoubleMatrix1D p_position )
+    {
+        // calculate the range over the start of the lane, position is greater than 0 - nothing to do
+        if ( ( this.worldposition().getQuick( 1 ) - m_viewrangesize ) > 0 )
+            return p_position;
+
+        // if car is behind, nothing to do and inside the environment size
+        if ( p_position.getQuick( 1 ) <= this.worldposition().getQuick( 1 ) )
+            return p_position;
+
+        // if car is in front but in forward view range - nothing to do
+        if ( p_position.getQuick( 1 ) <= this.worldposition().getQuick( 1 ) + m_viewrangesize )
+            return p_position;
+
+        // car is "in front", so project car position behind (we know that the car is clipped)
+        final DoubleMatrix1D l_project = p_position.copy();
+        l_project.setQuick( 1, l_project.getQuick( 1 ) - m_scenario.environment().worldposition().getQuick( 1 ) );
+        return l_project;
+    }
 
 
 
@@ -614,7 +642,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             m_scenario.environment().get(
                 m_position.parallelStream()
                           .map( i -> new DenseDoubleMatrix1D( CVehicle.this.m_position.toArray() ).assign( i, DoubleFunctions.plus ) )
-                          .filter( i -> m_scenario.environment().isinside( i ) )
+//                          .filter( i -> m_scenario.environment().isinside( i ) )
             )
                          .parallel()
                          .filter( i -> !i.equals( CVehicle.this ) )
