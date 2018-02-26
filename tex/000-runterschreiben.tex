@@ -1,4 +1,4 @@
- \section{Runterschreiben}
+\section{Runterschreiben}
 \label{sec:rusch}
 
 
@@ -62,8 +62,9 @@ So war wiederholbar zu testen, ob das Abbremsen bei vorwärtigem Verkehr funktio
 
 
 
-\sa{own: Beide folgende Punkte am besten zu überschreiben mit \enquote{Zellgröße vs. Simulation realer Geschwindigkeit}}
-\subsection{Problem - \enquote{Eingrooven} am Anfang der Simulation}
+\subsection{Zellgröße vs. Simulation realer Beschleuningung/Verzögerung}
+
+\subsubsection{Problem - \enquote{Eingrooven} am Anfang der Simulation}
 \label{sec:accelerategroove}
 
 Aufgrund der vergleichbar zum NaSch-Modell gewählten Zellgröße von $7,5 m$, im Gegensatz dazu aber die Simulation realitätsnaher Beschleunigungswerte, kommt es zu Simulationsbeginn mehrere Zeitschritte lang zu einem Stillstand der Fahrzeuge.
@@ -74,7 +75,8 @@ Im weiteren Verlauf der Simulation fällt es nicht weiter auf, dass die Fahrzeug
 
 
 
-\subsection{Problem - \enquote{dürftiges} Bremsverhalten}
+\subsubsection{Problem - \enquote{dürftiges} Bremsverhalten}
+\label{sec:bremsverhalten}
 
 Die Simulationsplattform bietet durch realistisch modellierte Beschleunigungen und Verzögerungen den Vorteil, dass der Verkehr realistischer, feingranularer abgebildet werden kann.
 Die analog zu den Simulationen von Nagel und Schreckenberg gewählte Zellgröße von $7,5$ Metern führt allerdings dazu, dass theoretisch dargestellte Reduktionen der Geschwindigkeit nicht direkt in nächsten Zeitschritt umgesetzt werden.
@@ -93,6 +95,33 @@ Eine Simulation mit reduzierten Zellgrößen führte zu einem harmonischeren Ver
 
 Für die weitere Entwicklung könnte für die Fahrzeuge bei der Initialisierung eine Länge generiert werden, wodurch sie dann mehrere dieser kleineren Zellen überdecken würden.
 Dies würde ein diversifizierteres Fahrzeugbild zur Folge haben.
+
+
+
+\subsection{Entwicklung/Entscheidung - Festlegen der Zellgröße}
+
+Die Entwicklung der Agentenpläne wurde ausschließlich in einer Simulationsumgebung mit einer Zellgröße von 7,5 m durchgeführt.
+Als das Verhalten der Agenten zufriedenstellend war, wurde u.a. auch wegen der in \cref{sec:bremsverhalten} angemerkten Bremsprobleme, getestet, inwiefern sich die Zelllänge verkürzen lässt und welchen Einfluss dies auf die Simulation hat.
+
+Getestet wurden Zellgrößen von 5 m, 2,5 m und 1 m.
+
+[WEISS ICH NOCHT NICHT MEHR]
+Bei der Aufgrund der Parallelausführung der Simulation ergeben sich für die Entscheidungsgrundlagen der einzelnen Agenten unterschiedliche Voraussetzungen.
+Ein Fahrzeug sah z.B. regelmäßig die Position eines anderen Fahrzeugs aus dem vorangegangenen Zeitschritt und musste aufgrund dieser Informationen handeln.
+Hier konnten z.B. kritische Situationen nicht erkannt werden.
+
+
+
+\subsection{Entwicklung/Entscheidung - Festlegen der Länge der Zeitschritte}
+
+Die Länge der Zeitschritte lässt sich im Simulationstool in Minuten oder Bruchteilen davon angeben. Dies stellte sich als unpraktikabel heraus, da z.B. eine Dauer von einer Sekunde durch den Dezimalbruch für $\frac{1}{60}$ angegeben werden müsste, der aber eine Periodizität aufweist.
+
+Begonnen wurde mit einer Zeitschrittlänge von 0,1 min, was sechs Sekunden entspricht. 
+Diese Länge erwies sich als nicht sinnvoll, da zwischen den einzelen Entscheidungsmöglichkeiten eine zu lange Zeitspanne liegt.
+
+Die Entwicklung der Agentenpläne wurde mit einer Schrittlänge von  drei Sekunden, 0,05 min, durchgeführt und genügte für diesen Zweck völlig.
+Für die Tests auf Leistungsfähigkeit wurde die Schrittlänge dann auf 0.025 min, 1,5 Sekunden, reduziert.
+
 
 
 
@@ -137,7 +166,7 @@ In den Agentenplänen wird schließlich die Handlung durch Bedingungen auf einen
 \subsection{Problem - Sichtfeld der Fahrzeuge}
 
 Um die Position eines anderen Fahrzeugs in der Umwelt festzustellen, kann die Richtung, in der dieses sich befindet, bestimmt werden.
-Die Simulationsumgebung hatte für das Sichtfeld der Fahrzeuge eine Unterteilung in acht Sektoren vorgesehen, so dass neben den Richtungen vorwärts, rückwärts, links und rechts auch Unterscheidung in Zwischenschritte möglich war, siehe \cref{figure:car-view-sectors}(a).
+Die Simulationsumgebung hatte für das Sichtfeld der Fahrzeuge eine Unterteilung in acht Sektoren vorgesehen, so dass neben den Richtungen vorwärts, rückwärts, links und rechts auch Unterscheidung in Zwischenschritte links vorwärts, rechts vorwärts usw. möglich war, siehe \cref{figure:car-view-sectors}(a).
 
 \begin{figure}[hptb]
   \centering 
@@ -159,7 +188,7 @@ Erkennbar in der Zeile \enquote{PIA1}, die nur ausgelöst wird, wenn sich keiner
 Daraufhin, so wie es der Plan vorsah, wurde zum nächsten Schritt (366) in die Hauptspur gewechselt. 
 Im diesem Zeitschritt kam es dann zur Kollision.
 
-\begin{verbatim}
+\footnotesize\begin{verbatim}
 --- step 365 ----------------
          vehicle20   in lane   1   in cell   333.0   @   74.21582362319865   kph
          vehicle2   in lane   1   in cell   282.0   @   129.99324819683062   kph
@@ -175,9 +204,82 @@ COS      vehicle0   STOPPED -> collision
 OUT      vehicle0   -> Pull-out attempt successful
          vehicle1   in lane   1   in cell   97.0   @   130.64144521630223   kph
 \end{verbatim}
+\normalsize
 
-Das Sichtfeld der Fahrzeuge wurde zu einem Vier-Sektoren-Modell abgewandelt und die Pläne für Ein- und Ausscheren, der hiervon gleichermaßen betroffen sein dürfte, angepasst.
-Es werden nun jeweils die beiden Sektoren kontrolliert, die die Bewegungs- bzw. Orientierungsrichtung darstellen.
+Das Sichtfeld der Fahrzeuge wurde zu einem Vier-Sektoren-Modell abgewandelt, siehe \cref{figure:car-view-sectors}(c), und die Pläne für Ein- und Ausscheren, der hiervon gleichermaßen betroffen sein dürfte, angepasst.
+Es werden nun jeweils die beiden Sektoren kontrolliert, die die Bewegungs- bzw. Orientierungsrichtung darstellen. 
+Nach vorn und hinten wird jeweils auch auf Entfernungen geprüft, seitlich auf reine Präsenz/Nichtpräsenz von anderen Fahrzeugen.
 
 Im Rahmen dieser Umstellung wurde festgestellt, dass es bei der Richtungsbestimmung einen Fehler im Framework gab.
 Die Berechnung lieferte für beide seitlichen Richtungen ein und denselben Wert.
+
+
+
+\subsection{Problem - Simulation der Ringform der Strecke}
+
+Die Simulation der Unendlichkeit der Strecke stellte ein Schwierigkeit für die Berechnung der Abstände zwischen Fahrzeugen dar, die sich im Sichtfeld des anderen befanden.
+Es musste ein Weg gefunden werden, wie sich die Strecke virtuell um das Sichtfeld eines Fahrzeuges verlängert und dort den Verkehr vom jeweils anderen Ende der Strecke abbildet.
+
+Zu allererst ergab sich aber das Problem, dass in der Simulation Fahrzeuge, die sich folgten, sich nicht mehr sahen, sobald das vorausfahrende den hinteren Teil der Strecke verlassen und vorn wieder eingesetzt wurde.
+Nachfolgend dargestellt anhand einer Simulation mit zwei Fahrzeugen.
+\enquote{...} bezeichnet Kürzungen der Ausgabe.
+
+In Zeitschritt 315 war Fahrzeug vehicle20 gerade noch in der letzten Zelle der Fahrbahn und überschreitet diese Grenze einen Zeitschritt später.
+Die Beliefliste beider Fahrzeuge ist ab dem Schritt 316 leer.
+Erst nach vier Zeitschritten hat auch das Folgefahrzeug (vehicle0) die Grenze überschritten und ist ab Zeitschritt 320 wieder für Fahrzeug 20 sichtbar (andersherum ebenso).
+
+\footnotesize\begin{verbatim}
+----- step 315 ----------------
+      vehicle0   -> BELIEFLIST   [view/vehicle[id[vehicle20], ... direction[forward[]]]]]]
+      vehicle20   -> BELIEFLIST   [view/vehicle[id[vehicle0], ... direction[backward[]]]]]]
+      vehicle0   in lane   1   in cell   331.0   @   87.11188616490347   kph
+      vehicle20   in lane   1   in cell   400.0   @   88.65039571533352   kph
+----- step 316 ----------------
+      vehicle0   -> BELIEFLIST   []
+      vehicle20   -> BELIEFLIST   []
+      vehicle0   in lane   1   in cell   345.0   @   87.89778423377561   kph
+      vehicle20   in lane   1   in cell   14.0   @   88.65039571533352   kph
+----- step 317 ----------------
+...
+----- step 318 ----------------
+...
+----- step 319 ----------------
+      vehicle0   -> BELIEFLIST   []
+      vehicle20   -> BELIEFLIST   []
+      vehicle0   in lane   1   in cell   387.0   @   89.01152857206483   kph
+      vehicle20   in lane   1   in cell   56.0   @   88.65039571533352   kph
+----- step 320 ----------------
+      vehicle0   -> BELIEFLIST   [view/vehicle[id[vehicle20], ... direction[forward[]]]]]]
+      vehicle20   -> BELIEFLIST   [view/vehicle[id[vehicle0], ... direction[backward[]]]]]]
+      vehicle0   in lane   1   in cell   1.0   @   89.79742664093698   kph
+      vehicle20   in lane 1 in cell 70.0 @ 88.65039571533352 kph
+\end{verbatim}
+\normalsize
+
+Für die Simulation mit mehreren Fahrzeugen stellte dies insbesondere ein Problem dar, weil eine Stauwelle, die sich dem Anfang der Strecke näherte, von Fahrzeugen am Ende der Strecke nicht erkannt werden konnte.
+Dies führte zu dem Verhalten, dass Fahrzeuge vom Ende der Strecke an den Anfang gesetzt werden sollten, dort aber nicht gesetzt werden konnten.
+Die Simulationsumgebung sieht hier vor, dass das Fahrzeug auf die letzte freie Zelle hinter das jeweils letzte Fahrzeug gesetzt wird.
+
+Es ergab sich bei den Simulationsläufen ein Häufung von Positionspunkten im negativen Teil der Strecke. 
+Als Beispiel siehe [PLOT].
+
+Nach der Behebung dieses Fehlers konnten dann auch Stauwellen beobachtet werden, die sich vom Streckenanfang herüber hinaus am Streckenende fortsetzten. 
+
+
+
+\subsection{Ergänzungen/Ausblick/Erweiterungen}
+
+Im Jahr 2015 wurde bei einer Studie der London School of Economics and Political Science (LSE) im Auftrag des Reifenherstellers Goodyear, siehe \cite{fahrer-typen}, festgestellt, dass man Autofahrer in sieben Typen einteilen kann.
+
+\begin{itemize}
+	\item the \enquote{teacher}, der Lehrer: möchte, dass andere Fahrer wissen, was sie falsch gemacht haben und erwartet Anerkennung für seine Anstrenungen andere zu belehren
+	\item \enquote{the Know-it-all}, der Besserwisser: denkt, dass er von inkompetenten Schwachköpfen umgeben ist und schreit diese gelegentlich auch schon einmal an, während er sicher in seinem Auto sitzt
+	\item \enquote{the Competitor}, der Wettkämpfer: muss vor allen anderen Fahrern sein und reagiert verärgert, wenn sich diesem Ziel jemand entgegen stellt, beschleunigt evtl. falls jemand zu überholen versucht oder schließt die Lücke um ein Einfädeln unmöglich zu machen
+	\item \enquote{the Punisher}, der Bestrafer: möchte jeden anderen Fahrer für gefühltes Fehlverhalten bestrafen, steigt ggf. aus dem Auto aus, um andere Fahrer direkt zu konfrontieren
+	\item \enquote{the Philosopher}, der Philosophische: akzeptiert Fehlverhalten problemlos und versucht dieses rational zu erklären, versteht es seine Gefühle im Auto zu kontrollieren
+	\item \enquote{the Avoider}, der Vermeider: behandelt Fahrer, die sich daneben benehmen, unpersönlich, tut sie als Gefahr ab
+	\item \enquote{the Escapee}, der Flüchter: hört Musik oder spricht am Telefon, um sich zu isolieren, lenken sich mit ausgewählten sozialen Beziehungen ab, um nicht mit anderen Fahrern auf der Straße beschäftigen zu müssen, in erster Linie ist es aber eine Strategie, das Aufkommen von Frust zu vermeiden
+\end{itemize}
+
+Für zukünftige Entwicklungen der Simulation könnte man für diese oder ähnliche Fahrertypen Profile ausarbeiten und anlegen, die sich auf Abstands-, Beschleunigungs- und Verzögerungsverhalten auswirken.
+So könnte noch eine weitere Komponente mit Hinsicht auf Realitätsnähe geschaffen werden. 
