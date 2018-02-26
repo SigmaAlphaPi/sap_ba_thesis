@@ -9,7 +9,7 @@ main:
     # was 100
     
     #was 180
-    simulationtime_in_minutes: 30
+    simulationtime_in_minutes: 90
 
     # preetprint of the result json
     prettyprint: true
@@ -33,7 +33,7 @@ main:
     unit:
 
         # cell size / size of a vehicle in meter
-        cellsize_in_meter: 7.5
+        cellsize_in_meter: 2.5
         # works fine with 1
 
         # time of a single timestep in simulation
@@ -51,7 +51,7 @@ environment:
     # 75 kms are about 10000 cells
     
     # was 25
-    length_in_km: 1 
+    length_in_km: 7.5
     #7.5
 
 
@@ -74,7 +74,7 @@ agent:
             # was 400
             
             #was 15
-            count: 1
+            count: 25
 
             # show beliefs in each cycle
             showlog: false
@@ -90,7 +90,7 @@ agent:
             # speed range configuration for initialize and maximum
             # speed (maximum value will be set by random)
             speed:
-                min: 100
+                min: 80
                 max: 130
 #                min: 40
 #                max: 50
@@ -111,7 +111,7 @@ agent:
         vehicle2.asl:
 
             # number of generated vehicles
-            count: 1
+            count: 0
 
             # show beliefs in each cycle
             showlog: false
