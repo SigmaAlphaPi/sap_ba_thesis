@@ -209,8 +209,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
      */
     private DoubleMatrix1D unclip( @Nonnull final DoubleMatrix1D p_position )
     {
-        /* return this.unclipforward( p_position ); */
-        return p_position;
+        return this.unclipforward( p_position );
     }
 
     /**
@@ -227,6 +226,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
 
         // if car is in-front of, nothing to do and inside the environment size
         if ( p_position.getQuick( 1 ) >= this.worldposition().getQuick( 1 ) )
+            return p_position;
+
+        // if car is behind but in rear view range - nothing to do
+        if ( p_position.getQuick( 1 ) >= this.worldposition().getQuick( 1 ) - m_viewrangesize )
             return p_position;
 
         // car is behind, so project car position in front-of (we know that the car is clipped)
