@@ -134,7 +134,7 @@ Den nachfolgenden Ausführungen liegt das hier beschriebene Szenario zugrunde:
 	\item Anzahl Fahrzeuge: 2
 	\item max. zulässige Geschwindigkeit: 100 km/h
 \end{itemize}
-Mit dem bereits [besprochenen] Setup - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung - wurden das Verhalten der Agenten ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert) in jew. drei Durchgängen getestet.
+Mit dem bereits [besprochenen] Setup - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung ($Fzg^{S}$ = schnelleres Fahrzeug, $Fzg^{L}$ = langsameres Fahrzeug) - wurden das Verhalten der Agenten, ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert), in jew. drei Durchgängen getestet.
 
 Für die Auswertung, ob eine Zellgröße/Zeitschrittlänge-Kombination für eine Simulationsdurchführung nutzbar ist, würde der Ausdruck der Geschwindigkeiten der beiden Fahrzeuge über die Simulationszeit genutzt.
 
@@ -209,7 +209,77 @@ Die Diagramme in \cref{figure:run14-16} zeigen wiederholt, dass der Abstand, der
   \label{figure:run17-19}
 \end{figure}
 
+Die drei Durchläufe mit einer Zeitschrittlänge von 0,025 min ergaben ein uneinheitliches Bild.
+In \cref{figure:run17-19}(a) konnte das schnellere Fahrzeug wieder mit höherer Geschwindigkeit hinter dem langsameren herfahren, ohne dass ein Raumgewinn passierte.
+Der Durchgang in Diagramm (b) zeigt wieder das sägezahnähnliche Muster, wie es mit den größeren Zelldimensionen bereits der Fall war.
 
+Unerwarteterweise kam es im dritten Durchgang zu je zwei Kollisionen.
+Besonders die jeweils auslösende Kollision des ursprünglich schnelleren Fahrzeuges war nicht zu erklären, da der Geschwindigkeitsunterschied in beiden Fällen minimal gewesen war.
+
+Ein weiterer Durchlauf, siehe \cref{figure:run19a-c}(a), der einen vergleichbaren Ablauf hervorbrachte, bei dem aber die Ausgabe der Fahrzeugdaten im Kontrollfenster erfolgte, konnte das Verhalten aufklären.
+Die Bedingung im Agentenablaufplan waren so formuliert, dass das Folgefahrzeug dem vorausfahrenden folgen konnte, ohne dass ein \enquote{Sicherheitsabstand} gebildet wurde, wenn die Geschwindigkeit jenes Fahrzeuges nicht größer als die des vorausfahrenden Fahrzeuges war. 
+//
+Somit genügte, gewisse Geschwindigkeiten vorrausgesetzt, eine kleine Beschleunigung, um im nachfolgenden Zeitschritt den [Raumgewinn]\sa{own: anderes Wort} nicht umsetzen zu können.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[ursprüngliches Verhalten]{\includegraphics[width=0.3\textwidth]{speed_run19a}}\qquad 
+   \subfigure[Modifikation 1]{\includegraphics[width=0.3\textwidth]{speed_run19b}}\qquad 
+   \subfigure[Modifikation 2]{\includegraphics[width=0.3\textwidth]{speed_run19c}}
+  \caption{Simulationen mit Veränderungen in den Agentenplänen} 
+  \label{figure:run19a-c}
+\end{figure}
+
+Eine erste Modifikation führte wieder zurück zu einem Verhalten, siehe \cref{figure:run19a-c}(b), aufgrund dessen die Geschwindigkeitskomponente mit in die Verzögerungslogik eingefügt worden war. 
+\\
+Das nachfolgende Fahrzeug bremste so lange ab, bis der gewünschte Abstand erreicht war, um daraufhin mit einem \enquote{Zwischensprint} wieder auf das vorausfahrende Fahrzeug aufzuschließen.
+Durch den Geschwindigkeitsüberschuss, der abgebaut werden muss, wurde der Abstand wieder extrem verkürzt.
+
+In einigen Simulationsläufen musste die Geschwindigkeit derart massiv abgebaut werden, dass das Folgefahrzeug zum Stillstand kam.
+
+Es musste ein Weg gefunden werden, die Geschwindigkeit von \enquote{Ego} in Zusammenhang mit der Entfernung vom vorausfahrenden Fahrzeug zu bringen.
+\\
+Verschiedene Ansätze, bei denen in den Bedingungen der Logik mit den vorliegenden Werten Berechnungen durchzuführen gewesen wären, wurden von der Simulationsplattform nicht unterstützt.
+\\
+Da den Agenten sowohl die eigene Geschwindigkeit als auch die Entfernung als numerische Werte bekannt sind, werden diese nun zu einander in Beziehung gesetzt.
+
+Dies führt dazu, dass \enquote{Ego}s eigene Geschwindigkeit gleichzeitig der jeweilige Mindestabstand vom Vordermann sein muss. 
+\\
+Eine gleichwertige Bedingung wurde auch für die Simulation der Beschleunigung übernommen.
+
+\subsubsection{Zellgröße 2,5 m}
+
+Aufgrund der Veränderung in den Agentenplänen wurde die erneut verringerte Zellgröße ebenfalls mit den beiden verbliebenen Zeitschrittwerten simuliert.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run24}}\qquad 
+   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run25}}\qquad 
+   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run26}}
+  \caption{Simulationen mit Zellgröße 2,5 m und Zeitschrittlänge 0,05 min} 
+  \label{figure:run24-26}
+\end{figure}
+
+Die ersten beiden Simulationen mit 2,5 m/0,05 min zeigten ein Bild, welches nach den Veränderungen zu erwarten war.
+In der dritten Durchführung traten allerdings wieder Kollisionsereignisse auf.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run27}}\qquad 
+   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run28}}\qquad 
+%   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run29}}
+  \caption{Simulationen mit Zellgröße 2,5 m und Zeitschrittlänge 0,025 min} 
+  \label{figure:run27-29}
+\end{figure}\sa{own: eine durchführung fehlt}
+
+Die Simulationen der 2,5 m/0,025 min-Variante zeigten [ein sehr gutes Verhalten]\sa{own: anders}.
+$Fzg^{S}$ konnte ohne Kollision hinter $Fzg^{L}$ abbremsen und sich dessen Geschwindigkeit anpassen.
+Es wurden insgesamt [x]\sa{own: Anzahl} Durchgänge durchgeführt. 
+Dabei wurde keine Kollision beobachtet.
+
+\subsubsection{Zellgröße < 2,5 m}
+
+Bei vorhergehenden Tests wurde festgestellt, dass es bei einer Zellgröße von weniger als 2,5 Meter zu Inkonsistenzen in den Beliefbases der Agenten kommt.
 
 
 
