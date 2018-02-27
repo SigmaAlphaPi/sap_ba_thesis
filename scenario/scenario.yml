@@ -74,7 +74,7 @@ agent:
             # was 400
             
             #was 36
-            count: 60
+            count: 70
 
             # show beliefs in each cycle
             showlog: false

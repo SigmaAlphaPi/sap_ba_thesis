@@ -5,7 +5,7 @@ setwd("~/Sven/Uni/BA/sap_ba_thesis/scenario")
 
 # read JSON file
 scenarioRawData <- jsonlite::read_json("scenario.json")
-# scenarioRawData <- jsonlite::read_json("run19.json")
+# scenarioRawData <- jsonlite::read_json("run19c.json")
 
 # --- extract the data node ---
 vehicleData <- scenarioRawData[["vehicles"]]
@@ -127,7 +127,7 @@ for (i in 1:repetitions) {
 # }
 
 # --- plot for SPEED ---
-plot(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[2]][[1]], type="n", xlab="Zeitschritte", ylab="Geschwindigkeit der Fahrzeuge", ylim=c(0,105))
+plot(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[2]][[1]], type="n", xlab="Zeitschritte", ylab="Geschwindigkeit der Fahrzeuge", ylim=c(0, 35))
 for (i in 1:length(vehicleDataList)){
   lines(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[i]][[1]], type = "l", col = i)
 }
