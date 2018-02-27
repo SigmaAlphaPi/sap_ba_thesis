@@ -126,13 +126,53 @@ Für die Tests auf Leistungsfähigkeit wurde die Schrittlänge dann auf 0.025 mi
 
 \subsection{Entwicklung/Entscheidung - Festlegen des Setups für Tests der Multilane-Scenarios}
 
-Den nachfolgenden Ausführungen liegt das hier beschriebene Scenario zugrunde:
+Den nachfolgenden Ausführungen liegt das hier beschriebene Szenario zugrunde:
 \begin{itemize}
 	\item Anzahl Lanes: 1
-	\item 
+	\item Streckenlänge: 1 km
+	\item Simulationsdauer: 30 min
+	\item Anzahl Fahrzeuge: 2
 \end{itemize}
-Mit dem bereits [besprochenen] Setup - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung - wurden ausgehend von einer Zellgröße von 7,5 Metern und einer Zeitschrittgröße von 0,1 Minuten das Verhalten der Agenten in jew. drei Durchgängen getestet.
+Mit dem bereits [besprochenen] Setup - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung - wurden das Verhalten der Agenten ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert) in jew. drei Durchgängen getestet.
 
+Für die Auswertung, ob eine Zellgröße/Zeitschrittlänge-Kombination für eine Simulationsdurchführung nutzbar ist, würde der Ausdruck der Geschwindigkeiten der beiden Fahrzeuge über die Simulationszeit genutzt.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run1}}\qquad 
+   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run2}}\qquad 
+   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run3}}
+  \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,1 min} 
+  \label{figure:run1-3}
+\end{figure}
+
+In allen drei Kurvenverläufen in \cref{figure:run1-3} sind mehrfach Reduktionen der Geschwindigkeit auf Null zu sehen. Dies zeigt, dass an diesen Stellen eine Kollision stattgefunden hat. Das Kollisionsereignis wird vom Simulationstool ausgelöst, wenn ein Fahrzeug nicht in der Lage wäre, im nächsten Zeitschritt die für seine Geschwindigkeit entsprechende Streckenlänge zurückzulegen.
+
+Die Zeitschrittlänge von 0,1 Minuten, was sechs Sekunden entspricht, ist nicht ausreichend, um Geschwindigkeit in ausreichendem Maße abzubauen, um genug Abstand vom Vordermann einzuhalten.
+
+Auf die Ausführung von Durchgängen mit dieser Zeitschrittgröße und kleinerer Zellgröße wurde verzichtet.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run1}}\qquad 
+   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run2}}\qquad 
+   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run3}}
+  \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,05 min} 
+  \label{figure:run4-6}
+\end{figure}
+
+Die Verläufe der Kurven in \cref{figure:run4-6} zeigen in zwei von drei Fällen, dass sich die Geschwindigkeit des auffahrenden Fahrzeuges um die des langsameren Fahrzeuges einpendelt.
+
+Das Plot des zweiten Durchganges zeigt, dass auch in dieser Konstellation eine Kollision stattgefunden hat.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run1}}\qquad 
+   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run2}}\qquad 
+   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run3}}
+  \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,025 min} 
+  \label{figure:run7-8}
+\end{figure}
 
 
 
