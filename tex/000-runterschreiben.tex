@@ -132,10 +132,13 @@ Den nachfolgenden Ausführungen liegt das hier beschriebene Szenario zugrunde:
 	\item Streckenlänge: 1 km
 	\item Simulationsdauer: 30 min
 	\item Anzahl Fahrzeuge: 2
+	\item max. zulässige Geschwindigkeit: 100 km/h
 \end{itemize}
 Mit dem bereits [besprochenen] Setup - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung - wurden das Verhalten der Agenten ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert) in jew. drei Durchgängen getestet.
 
 Für die Auswertung, ob eine Zellgröße/Zeitschrittlänge-Kombination für eine Simulationsdurchführung nutzbar ist, würde der Ausdruck der Geschwindigkeiten der beiden Fahrzeuge über die Simulationszeit genutzt.
+
+\subsubsection{Zellgröße 7,5 m}
 
 \begin{figure}[hptb]
   \centering 
@@ -146,7 +149,8 @@ Für die Auswertung, ob eine Zellgröße/Zeitschrittlänge-Kombination für eine
   \label{figure:run1-3}
 \end{figure}
 
-In allen drei Kurvenverläufen in \cref{figure:run1-3} sind mehrfach Reduktionen der Geschwindigkeit auf Null zu sehen. Dies zeigt, dass an diesen Stellen eine Kollision stattgefunden hat. Das Kollisionsereignis wird vom Simulationstool ausgelöst, wenn ein Fahrzeug nicht in der Lage wäre, im nächsten Zeitschritt die für seine Geschwindigkeit entsprechende Streckenlänge zurückzulegen.
+In allen drei Kurvenverläufen in \cref{figure:run1-3} sind mehrfach Reduktionen der Geschwindigkeit auf Null zu sehen. 
+Dies zeigt, dass an diesen Stellen eine Kollision stattgefunden hat. Das Kollisionsereignis wird vom Simulationstool ausgelöst, wenn ein Fahrzeug nicht in der Lage wäre, im nächsten Zeitschritt die für seine Geschwindigkeit entsprechende Streckenlänge zurückzulegen.
 
 Die Zeitschrittlänge von 0,1 Minuten, was sechs Sekunden entspricht, ist nicht ausreichend, um Geschwindigkeit in ausreichendem Maße abzubauen, um genug Abstand vom Vordermann einzuhalten.
 
@@ -154,9 +158,9 @@ Auf die Ausführung von Durchgängen mit dieser Zeitschrittgröße und kleinerer
 
 \begin{figure}[hptb]
   \centering 
-   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run1}}\qquad 
-   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run2}}\qquad 
-   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run3}}
+   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run4}}\qquad 
+   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run5}}\qquad 
+   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run6}}
   \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,05 min} 
   \label{figure:run4-6}
 \end{figure}
@@ -164,15 +168,44 @@ Auf die Ausführung von Durchgängen mit dieser Zeitschrittgröße und kleinerer
 Die Verläufe der Kurven in \cref{figure:run4-6} zeigen in zwei von drei Fällen, dass sich die Geschwindigkeit des auffahrenden Fahrzeuges um die des langsameren Fahrzeuges einpendelt.
 
 Das Plot des zweiten Durchganges zeigt, dass auch in dieser Konstellation eine Kollision stattgefunden hat.
+Die Geschwindigkeit des langsameren Fahrzeuges lag in diesem Durchgang in Vergleich zu den anderen beiden um einiges niedriger, sodass die Zeiträume zwischen den Eingriffsmöglichkeiten zu hoch waren.
 
 \begin{figure}[hptb]
   \centering 
-   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run1}}\qquad 
-   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run2}}\qquad 
-   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run3}}
+   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run7}}\qquad 
+   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run8}}\qquad 
+   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run9}}
   \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,025 min} 
   \label{figure:run7-8}
 \end{figure}
+
+Die Geschwindigkeitskurve des schnelleren Fahrzeugs weist in \cref{figure:run7-9}(a) ein sägezahnähnliches Muster auf.
+Dies resultiert aus den, im Vergleich zu den herbeigeführten Geschwindigkeitszuwächsen, großen Zellen.
+Ein Geschwindigkeitsunterschied von zehn bis 15 km/h reicht bei entsprechend zugrunde liegender Ausgangsgeschwindigkeit nicht aus, eine Verkürzung des Abstands herbeizuführen.
+Da sich die Abbrems- und Beschleunigungsmanöver identisch wiederholen, kommt es zu dieser Musterbildung.
+
+Plot (b) zeigt ein Einordnen hinter dem langsameren Fahrzeug und die Beibehaltung dessen Geschwindigkeit.
+Plot (c) ist nahezu eine Mischform aus den ersten beiden Kurven.
+
+\subsubsection{Zellgröße 5,0 m}
+
+%\begin{figure}[hptb]
+%  \centering 
+%   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run14}}\qquad 
+%   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run15}}\qquad 
+%   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run16}}
+%  \caption{Simulationen mit Zellgröße 5,0 m und Zeitschrittlänge 0,05 min} 
+%  \label{figure:run14-16}
+%\end{figure}
+%
+%\begin{figure}[hptb]
+%  \centering 
+%   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run17}}\qquad 
+%   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run18}}\qquad 
+%   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run19}}
+%  \caption{Simulationen mit Zellgröße 5,0 m und Zeitschrittlänge 0,025 min} 
+%  \label{figure:run17-19}
+%\end{figure}
 
 
 
