@@ -59,8 +59,8 @@
         CurrentSpeed < AllowedSpeed
         && ~>>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
                 bool/equal( generic/type/tostring( FwdDir ), "forward[]" )
+                && FwdDist < CurrentSpeed
                 && FwdSpeed < CurrentSpeed
-                && FwdDist < 100
             )
     <-
         // generic/print( "ACC", ID, "accelerated");
@@ -74,7 +74,7 @@
 +!linger <-
     L = math/statistic/randomsimple;
     L < 0.1;
-    generic/print( "LIN", ID, "LINGERED" );
+//    generic/print( "LIN", ID, "LINGERED" );
     vehicle/decelerate(0.3)
 .
 
@@ -94,10 +94,11 @@
     // --- (avoids unnecessary breaking down to 0 kph) ---
     : >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ), 
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
-            && FwdSpeed < CurrentSpeed
-            && FwdDist < 100
+//            && FwdSpeed < CurrentSpeed
+//            && FwdSpeed-CurrentSpeed < 0.05*FwdSpeed
+            && FwdDist < CurrentSpeed
         ) <-
-        generic/print( "TFC", ID, "has vehicle in-front of -> decelerate");
+        generic/print( "TFC", ID, "has vehicle in front -> decelerate");
         vehicle/decelerate(1);
         !decelerate
 .

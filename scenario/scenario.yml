@@ -9,7 +9,7 @@ main:
     # was 100
     
     #was 180
-    simulationtime_in_minutes: 90
+    simulationtime_in_minutes: 60
 
     # preetprint of the result json
     prettyprint: true
@@ -27,7 +27,7 @@ main:
         type: "synchronized"
 
         # number of threads of the runtime (fixedsize, scheduled)
-        threads: 2
+        threads: 1
 
     # unit of the simulation
     unit:
@@ -37,7 +37,7 @@ main:
         # works fine with 1
 
         # time of a single timestep in simulation
-        # 0.1 -> 6 sec, 0.05 -> 3 sec, 0.025 -> 1.5 sec
+        # 0.1 -> 6 sec, 0.05 -> 3 sec, 0.025 -> 1.5 sec, 0.0125 -> 0.75 sec
         timestep_in_minutes: 0.025
 
 
@@ -62,7 +62,7 @@ agent:
     # must start with an upper-case letter)
     constant:
         # 130, was max. possible speed in multi-lane
-        AllowedSpeed: 100 
+        AllowedSpeed: 30 
 
     # all vehicle configuration, key is the filename of the filename
     # AgentSpeak(L++) script relative to configuration file
@@ -73,8 +73,8 @@ agent:
             # 10^3 cars in multi-lane
             # was 400
             
-            #was 15
-            count: 40
+            #was 36
+            count: 50
 
             # show beliefs in each cycle
             showlog: false
