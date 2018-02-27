@@ -74,7 +74,7 @@
 +!linger <-
     L = math/statistic/randomsimple;
     L < 0.1;
-//    generic/print( "LIN", ID, "LINGERED" );
+    generic/print( "LIN", ID, "LINGERED" );
     vehicle/decelerate(0.3)
 .
 

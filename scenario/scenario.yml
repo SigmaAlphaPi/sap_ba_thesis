@@ -8,8 +8,8 @@ main:
     # 10^5 timesteps in multi-lane, roughly 166ish minutes
     # was 100
     
-    #was 180
-    simulationtime_in_minutes: 60
+    #was 180 / 60
+    simulationtime_in_minutes: 30
 
     # preetprint of the result json
     prettyprint: true
@@ -51,7 +51,7 @@ environment:
     # 75 kms are about 10000 cells
     
     # was 25
-    length_in_km: 7.5
+    length_in_km: 1
     #7.5
 
 
@@ -62,7 +62,7 @@ agent:
     # must start with an upper-case letter)
     constant:
         # 130, was max. possible speed in multi-lane
-        AllowedSpeed: 30 
+        AllowedSpeed: 100 
 
     # all vehicle configuration, key is the filename of the filename
     # AgentSpeak(L++) script relative to configuration file
@@ -73,8 +73,8 @@ agent:
             # 10^3 cars in multi-lane
             # was 400
             
-            #was 36
-            count: 70
+            #was 100
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
@@ -111,7 +111,7 @@ agent:
         vehicle2.asl:
 
             # number of generated vehicles
-            count: 0
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
