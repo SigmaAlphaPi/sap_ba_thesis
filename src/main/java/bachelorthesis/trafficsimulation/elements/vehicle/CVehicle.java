@@ -640,11 +640,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             m_cache.clear();
             m_neighbour.clear();
             m_scenario.environment().get(
-                m_position.parallelStream()
+                m_position.stream()
                           .map( i -> new DenseDoubleMatrix1D( CVehicle.this.m_position.toArray() ).assign( i, DoubleFunctions.plus ) )
                           .map( i -> m_scenario.environment().clip( i ) )
             )
-                         .parallel()
                          .filter( i -> !i.equals( CVehicle.this ) )
                          .peek( i -> m_neighbour.put( i.id(), i ) )
                          .map( i -> new ImmutablePair<>( CMath.distance( CVehicle.this.worldposition(), CVehicle.this.unclip( i.worldposition() ) ), i ) )
