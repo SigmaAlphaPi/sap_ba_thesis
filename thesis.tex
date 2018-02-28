@@ -22,6 +22,42 @@
 \newcommand*{\sa}[1]{\todo[color=yellow]{\footnotesize\textbf{@Sven:} #1}}
 \newcommand*{\pk}[1]{\todo[color=green]{\footnotesize\textbf{@Phil:} #1}}
 
+
+% --- Code-Listing für AgentSpeak(L++) -----
+\definecolor{blue}{rgb}{0, 0, 0.9}
+\definecolor{violet}{rgb}{0.7, 0, 0.7}
+\definecolor{red}{rgb}{0.9, 0, 0}
+\definecolor{navy}{rgb}{0, 0.45, 0}
+\definecolor{orange}{rgb}{0.9, 0.3, 0}
+\definecolor{grey}{rgb}{0.98, 0.98, 0.98}
+
+\lstset{escapeinside={(*@}{@*)}}
+\lstdefinestyle{asl}{
+    backgroundcolor=\color{grey},
+    basicstyle=\linespread{0.8}\ttfamily\footnotesize,  
+    breaklines=true, 
+    tabsize=2, 
+    sensitive=true, 
+    showspaces=false,
+    alsoletter={/_-},
+    identifierstyle=\bfseries,
+    keywordstyle=\color{violet}\bfseries,
+    keywordstyle={[2]\color{blue}\bfseries},
+    keywordstyle={[3]\color{orange}\bfseries},
+    stringstyle=\color{red},  
+    showstringspaces=false,    
+    morestring=[b]",
+    morestring=[b]',
+    numberstyle=\scriptsize, 
+    numberblanklines=false, 
+    numbers=left, 
+    comment=[l]//,
+    commentstyle=\color{navy},
+    morecomment=[l]\#,
+    morecomment=[s]{/*}{*/}
+}
+
+
 \crefname{figure}{Abbildung}{Abbildungen}
 \crefname{section}{Kapitel}{Kapitel}
 
@@ -34,7 +70,7 @@
 \end{acronym}
 
 
-\title{\textbf{Empirischer Vergleich des Multi-Lane-Nagel-Schreckenberg-Fahrzeugfolgemodells mit einem heuristisch basierten Ansatz}}
+\title{\textbf{Empirische Studie und Erweiterung des klassischen Nagel-Schreckenberg Fahrzeugfolgemodells mit Hilfe eines multi-agent basierten Ansatzes, um individuelles Fahrverhalten abzubilden}}
 \author{Sven Albert-Pedersen}
 \date{\today}
 
@@ -54,7 +90,7 @@
     \include{tex/04-researchgap}
 %    \include{tex/05-realisierung}
     \include{tex/000-runterschreiben}
-    
+     
     \bibliography{references}
 
 \end{document}

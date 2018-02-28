@@ -14,6 +14,16 @@ Die mathematischen Gleichungen in \cite{na-sch} beschreiben gut, welches Verhalt
 
 \subsubsection{Zustandsautomat}
 
+\begin{lstlisting}[style=asl, keywords={move/forward,move/right}, keywords={[2]X}, caption={Test ASL Beispiel}]      
++!movement/walk/forward(X) <-
+move/forward(X);
+!movement/walk/forward.
+
++!movement/walk/right(X) <-
+move/right(X);
+!movement/walk/forward.
+\end{lstlisting}
+
 Dieses Verhalten wurde mit einem endlichen Automaten beschrieben, siehe \cref{figure:fsm-nasch}.
 
 \begin{figure}[hptb]
