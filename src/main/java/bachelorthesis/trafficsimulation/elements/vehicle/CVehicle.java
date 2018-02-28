@@ -11,8 +11,12 @@ import bachelorthesis.trafficsimulation.scenario.IScenario;
 import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
 import cern.jet.math.tdouble.DoubleFunctions;
+import com.google.common.collect.Multimaps;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import com.google.common.util.concurrent.AtomicDouble;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.lightjason.agentspeak.action.IAction;
 import org.lightjason.agentspeak.action.binding.IAgentAction;
 import org.lightjason.agentspeak.action.binding.IAgentActionFilter;
@@ -38,16 +42,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.InputStream;
 import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -175,7 +170,10 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
     @Override
     public final Map<String, IObject<?>> neighbours()
     {
-        return m_viewrange.m_neighbour;
+        return m_viewrange.m_cache
+                          .values()
+                          .stream()
+                          .collect( Collectors.toMap( i -> i.getRight().id(), Pair::getRight ) );
     }
 
     @Override
@@ -584,13 +582,11 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
          */
         private final Set<DoubleMatrix1D> m_position;
         /**
-         * object cache with distance and literal
+         * tree map for cache
          */
-        private final List<ILiteral> m_cache = new CopyOnWriteArrayList<>();
-        /**
-         * neighbour objects
-         */
-        private final Map<String, IObject<?>> m_neighbour = new ConcurrentHashMap<>();
+        private final SortedSetMultimap<Double, Pair<ILiteral, IObject<?>>> m_cache = Multimaps.synchronizedSortedSetMultimap(
+                TreeMultimap.create( Comparator.comparingDouble( i -> i ), Comparator.comparing( i -> i.getRight().id() ) )
+        );
 
         /**
          * ctor
@@ -618,7 +614,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         @Override
         public final Stream<ILiteral> streamLiteral()
         {
-            return m_cache.stream();
+            return m_cache.values().stream().map( Pair::getLeft );
         }
 
         @Override
@@ -631,14 +627,13 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         @Override
         public final Collection<ILiteral> literal( @Nonnull final String p_key )
         {
-            return m_cache;
+            return m_cache.values().stream().map( Pair::getLeft ).collect( Collectors.toSet() );
         }
 
         @Override
         public final void run()
         {
             m_cache.clear();
-            m_neighbour.clear();
             m_scenario.environment().get(
                 m_position.parallelStream()
                           .map( i -> new DenseDoubleMatrix1D( CVehicle.this.m_position.toArray() ).assign( i, DoubleFunctions.plus ) )
@@ -646,12 +641,13 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             )
                          .parallel()
                          .filter( i -> !i.equals( CVehicle.this ) )
-                         .peek( i -> m_neighbour.put( i.id(), i ) )
-                         .map( i -> new ImmutablePair<>( CMath.distance( CVehicle.this.worldposition(), CVehicle.this.unclip( i.worldposition() ) ), i ) )
-                         .sorted( Comparator.comparingDouble( i -> i.getLeft().doubleValue() ) )
-                         .map( ImmutablePair::getRight )
-                         .map( i -> i.literal( CVehicle.this ) )
-                         .forEachOrdered( m_cache::add );
+                         .forEach( i -> m_cache.put(
+                                 CMath.distance(
+                                         CVehicle.this.worldposition(),
+                                         CVehicle.this.unclip( i.worldposition() )
+                                 ).doubleValue(),
+                                 new ImmutablePair<>( i.literal( CVehicle.this ), i )
+                         ) );
         }
     }
 }
