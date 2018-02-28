@@ -9,7 +9,7 @@ main:
     # was 100
     
     #was 180 / 60
-    simulationtime_in_minutes: 30
+    simulationtime_in_minutes: 15
 
     # preetprint of the result json
     prettyprint: true
@@ -34,11 +34,10 @@ main:
 
         # cell size / size of a vehicle in meter
         cellsize_in_meter: 2.5
-        # works fine with 1
 
         # time of a single timestep in simulation
         # 0.1 -> 6 sec, 0.05 -> 3 sec, 0.025 -> 1.5 sec, 0.0125 -> 0.75 sec
-        timestep_in_minutes: 0.025
+        timestep_in_minutes: 0.05
 
 
 # environment / street setting
