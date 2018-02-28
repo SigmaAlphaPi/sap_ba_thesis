@@ -163,6 +163,10 @@ public final class CEnvironment implements IEnvironment
         final DoubleMatrix1D l_position = p_position.copy();
         l_position.set( 0, l_position.get( 0 ) % m_grid.rows() );
         l_position.set( 1, l_position.get( 1 ) % m_grid.columns() );
+
+        l_position.set( 0, l_position.get( 0 ) < 0 ? 0 : l_position.get( 0 ) );
+        l_position.set( 1, l_position.get( 1 ) < 0 ? m_grid.columns() + l_position.get( 1 ) : l_position.get( 1 ) );
+
         return l_position;
     }
 
