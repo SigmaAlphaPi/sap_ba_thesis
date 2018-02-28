@@ -14,6 +14,16 @@ Die mathematischen Gleichungen in \cite{na-sch} beschreiben gut, welches Verhalt
 
 \subsubsection{Zustandsautomat}
 
+\begin{lstlisting}[style=asl, keywords={move/forward,move/right}, keywords={[2]X}, caption={Test ASL Beispiel}]      
++!movement/walk/forward(X) <-
+move/forward(X);
+!movement/walk/forward.
+
++!movement/walk/right(X) <-
+move/right(X);
+!movement/walk/forward.
+\end{lstlisting}
+
 Dieses Verhalten wurde mit einem endlichen Automaten beschrieben, siehe \cref{figure:fsm-nasch}.
 
 \begin{figure}[hptb]
@@ -44,14 +54,14 @@ Dieses Verhalten wurde mit einem endlichen Automaten beschrieben, siehe \cref{fi
 %
 
 
-Startzustand ist ein allgemeiner Zustand \enquote{Drive/Fahren} (DRI), in dem nichts am Verhalten des Agenten geändert wird.
-Von hier aus ist der Zustand \enquote{Accelerate/Beschleunigen} (ACC) zu erreichen, wenn die aktuelle Geschwindigkeit unter der max. zulässigen liegt. 
-Der Zustand \enquote{Cruisen} (CRU) wird erreicht, wenn die max. zulässige Geschwindigkeit überschritten ist.
+Startzustand ist ein allgemeiner Zustand \enquote{DRI} (Drive/Fahren), in dem nichts am Verhalten des Agenten geändert wird.
+Von hier aus ist der Zustand \enquote{ACC} (Accelerate/Beschleunigen) zu erreichen, wenn die aktuelle Geschwindigkeit unter der max. zulässigen liegt. 
+Der Zustand \enquote{CRU} (Cruisen) wird erreicht, wenn die max. zulässige Geschwindigkeit überschritten ist.
 
 Die Übergänge aus den zwei letztgenannten Zuständen sind identisch. 
 Ist kein vorausfahrender Verkehr vorhanden und wird nicht getrödelt erfolgt der Übergang zurück in den normalen DRI-Zustand.
-Wird stattdessen zufällig das \enquote{Linger/Trödeln} angestoßen wird der entsprechende Zustand (LIN) erreicht.
-Ist Verkehr voraus wird der Zustand \enquote{Decelerate/Verzögern/Bremsen} (DEC) erreicht.
+Wird stattdessen zufällig das Trödeln angestoßen wird der entsprechende Zustand \enquote{LIN} erreicht.
+Ist Verkehr voraus wird der Zustand \enquote{DEC} (Decelerate/Verzögern/Bremsen) erreicht.
 
 Aus dem DEC-Zustand kann zufällig ein Übergang in den LIN-Zustand erfolgen ansonsten zurück in den allgemeinen DRI-Zustand.
 Aus dem LIN-Zustand wird zwangsläufig wieder in den DRI-Zustand übergegangen.
@@ -59,7 +69,7 @@ Aus dem LIN-Zustand wird zwangsläufig wieder in den DRI-Zustand übergegangen.
 \subsubsection{Agentenplan}
 
 Der o.g. Automat wurde in die Agentensprache \enquote{übersetzt}, siehe [Listing ASL-NaSch]. 
-Im Gegensatz zur Automatenversion erfolgten allerdings während der Entwicklung einige Änderungen. 
+Gegenüber der Automatenversion erfolgten allerdings während der Entwicklung einige Änderungen. 
 
 Der Agent beginnt im Plan \enquote{cruise}, von dem aus alle weiteren Pläne (\enquote{accelerate}, \enquote{linger}, \enquote{decelerate}) gestartet werden.
 Dieser Plan dient zudem dem loggen der Statusdaten.
@@ -304,12 +314,15 @@ In der dritten Durchführung traten allerdings wieder Kollisionsereignisse auf.
 
 Die Simulationen der 2,5 m/0,025 min-Variante zeigten [ein sehr gutes Verhalten]\sa{own: anders}.
 $Fzg^{S}$ konnte ohne Kollision hinter $Fzg^{L}$ abbremsen und sich dessen Geschwindigkeit anpassen.
-Es wurden insgesamt [x]\sa{own: Anzahl} Durchgänge durchgeführt. 
-Dabei wurde keine Kollision beobachtet.
+\\
+Es wurden insgesamt zehn weitere Durchgänge mit diesem Setup durchgeführt. 
+Dabei wurde zweimal je eine Kollision beobachtet, die aber immer im Bereich der Beschleunigungsphase am Anfang der Simulation stattfand. 
 
-\subsubsection{Zellgröße < 2,5 m}
+\subsubsection{\texorpdfstring{Zellgröße $ < $ 2,5 m}%
+                              {Zellgröße kleiner als 2,5 m}}
 
-Bei vorhergehenden Tests wurde festgestellt, dass es bei einer Zellgröße von weniger als 2,5 Meter zu Inkonsistenzen in den Beliefbases der Agenten kommt.
+Bei vorhergehenden Testläufen wurde festgestellt, dass es bei einer Zellgröße von weniger als 2,5 Meter zu Inkonsistenzen in den Beliefbases der Agenten kommt.
+Entscheidungen müssten dann aufgrund unterschiedlicher Voraussetzungen getroffen werden.
 Aus diesem Grund wurde auf den Einsatz von kleineren Zellgrößen verzichtet.
 
 

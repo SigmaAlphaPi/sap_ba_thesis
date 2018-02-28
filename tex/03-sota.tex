@@ -114,7 +114,7 @@ Wie in \cite[Abb. 1.5]{peri-rand} für die Umgebung von Pixeln\sa{bitte mal kont
 Damit einstand die Möglichkeit einer kontinuierlich arbeitenden Simulationsumgebung, siehe \cref{figure:traffic-simulation}.
 \begin{figure}[hptb]
  \centering
- \includegraphics[width=0.75\textwidth]{traffic-simulation}
+ \includegraphics[width=0.5\textwidth]{traffic-simulation}
  \caption[Darstellung des Verkehrs in einem geschlossenen System]
  		{Symbolbild: Verkehr in einem Kreis (geschlossenes System), Screenshot \url{http://traffic-simulation.de}}
  \label{figure:traffic-simulation}
@@ -134,11 +134,17 @@ Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil
 \textit{Hinweis:} $\Delta x$ $\widehat{=}$ dem Abstand zum vorausfahrenden Fahrzeug, die Indizes $b$ (\enquote*{behind} - für rückwärtigen Verkehr) und $o$ (\enquote*{other} - für Verkehr auf der Spur auf die gewechselt werden soll) können auch kombiniert werden. 
 
 \begin{itemize}
-	\item \textit{Sicherheitsbedingung}: die Geschwindigkeit des Fahrzeugs auf der Spur auf die gewechselt werden soll, darf nicht größer als der Abstand des Fahrzeugs sein (keine Behinderung des Nachfolgeverkehrs), $v^{o,b} \leq \Delta x^{o,b}-1$;
-	\item \textit{Intention zum Spurwechsel}: Fahrzeug kann nicht so schnell fahren, wie es möchte, $v_{max} > \Delta x-1$ \\
+	\item \textit{Sicherheitsbedingung}: 
+	\\	
+	die Geschwindigkeit des Fahrzeugs auf der Spur auf die gewechselt werden soll, darf nicht größer als der Abstand des Fahrzeugs sein (keine Behinderung des Nachfolgeverkehrs), $v^{o,b} \leq \Delta x^{o,b}-1$;
+	\item \textit{Intention zum Spurwechsel}: 
+	\\
+	Fahrzeug kann nicht so schnell fahren, wie es möchte, $v_{max} > \Delta x-1$ \\
 	UND\\
 	die andere Spur ist nicht schlechter als die aktuelle Spur, $\Delta x^{o} \geq \Delta x$
-	\item \textit{nach dem Spurwechsel}: diese Regeln werden mit einer gewissen Wahrscheinlichkeit $p_{l2r}$ (\enquote{Zurückwechselwahrscheinlichkeit}) ausgeführt, \\
+	\item \textit{nach dem Spurwechsel}: 
+	\\
+	diese Regeln werden mit einer gewissen Wahrscheinlichkeit $p_{l2r}$ (\enquote{Zurückwechselwahrscheinlichkeit}) ausgeführt, \\
 	ausreichend großer Abstand zum hinteren Fahrzeug auf der rechten Spur, $v^{o,b}_{max} \leq \Delta x^{o,b}-1$ \\
 	UND \\
 	ausreichend Platz auf der rechten Spur, $v \leq \Delta x^{o}-1$
