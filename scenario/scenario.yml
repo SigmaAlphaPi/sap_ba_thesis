@@ -45,7 +45,7 @@ main:
 environment:
 
     # number of lanes
-    lanes: 1
+    lanes: 2
 
     # length if the lane in kilometer
     # 75 kms are about 10000 cells

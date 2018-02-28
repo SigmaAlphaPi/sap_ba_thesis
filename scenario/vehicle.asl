@@ -44,13 +44,14 @@
 // --- start all other plans ---
 +!cruise <-
     
-//    generic/print( ID, "-> BELIEFLIST", agent/belieflist );
+//    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
     !pullout;
     !pullin;
+
     generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
@@ -62,13 +63,18 @@
 
 // --- acceleration ---
 +!accelerate
-    // --- accelerate only, if below max. allowed speed ---
-    // --- otherwise vehicle has to brake against the acceleration ---
+    // --- accelerate only, if no traffic ahead ---
+    // --- otherwise you have to brake against the acceleration ---
     // --- resulting in too long braking distances ---
     : 
         CurrentSpeed < AllowedSpeed
+        && ~>>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
+                bool/equal( generic/type/tostring( FwdDir ), "forward[]" )
+                && FwdDist < CurrentSpeed
+                && FwdSpeed < CurrentSpeed
+            )
     <-
-        // generic/print( "ACC", ID, "accelerated");
+        // generic/print( "ACC   ", ID, "accelerated");
         vehicle/accelerate(0.5);
         !accelerate
 .
@@ -79,7 +85,7 @@
 +!linger <-
     L = math/statistic/randomsimple;
     L < 0.1;
-    generic/print( "LIN", ID, "LINGERED" );
+    generic/print( "LIN   ", ID, "LINGERED" );
     vehicle/decelerate(0.3)
 .
 
@@ -152,7 +158,7 @@
                 )
 */
     <-
-        generic/print("OUT", ID, " -> Pull-out attempt successful");
+        generic/print("OUT   ", ID, " -> Pull-out attempt successful");
         vehicle/pullout
 
 .
@@ -209,7 +215,7 @@
                 )
     <-
         generic/print("######################################################################################################################################################");
-        generic/print("IN ", ID, " -> Pull-in attempt successful");
+        generic/print("IN    ", ID, " -> Pull-in attempt successful");
         vehicle/pullin
 */
 
@@ -221,7 +227,7 @@
         CurrentLane > 1 
         && ~>>view/vehicle( _, _ )
     <- 
-        generic/print( "PIA1", ID, "sees no traffic at all -> Pull-in"); 
+        generic/print( "PIA1   ", ID, "sees no traffic at all -> Pull-in"); 
         vehicle/pullin
     
     // --- PI attempt alternative #2 ---
@@ -240,7 +246,7 @@
                 && BwdDist > 125 
             )
     <- 
-        generic/print( "PIA2", ID, "forward > 200, backward > 125 -> Pull-in"); 
+        generic/print( "PIA2   ", ID, "forward > 200, backward > 125 -> Pull-in"); 
         vehicle/pullin
     
     // --- PI attempt alternative #3 ---
@@ -258,7 +264,7 @@
                 && math/floor(Lane) == CurrentLane-1
          )
      <- 
-        generic/print( "PIA3", ID, "no forward, backward > 125 -> Pull-in"); 
+        generic/print( "PIA3   ", ID, "no forward, backward > 125 -> Pull-in"); 
         vehicle/pullin
 
 .
@@ -269,27 +275,26 @@
 +!decelerate 
 /*
     // --- decelerate if max. allowed speed is reached ---
-    : 
+    :   
         CurrentSpeed > AllowedSpeed 
     <-
-        generic/print( "MAX", ID, "decelerated -> high speed");
+        generic/print( "MAXSPD", ID, "decelerated -> high speed");
         vehicle/decelerate(0.05);
         !decelerate
 */
     // --- if traffic is ahead only decelerate if  ---
-    // --- traffic is closer than 100 m ---
-
     // --- CurrentSpeed is higher than speed of traffic ahead ---
-    // --- (allows following at close to equal speed ---
-    // --- avoids unnecessary breaking down to 0 kph) ---
+    // --- (avoids unnecessary breaking down to 0 kph) ---
     : 
         >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ), 
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
-            && math/floor(FwdLane) == CurrentLane 
-            && FwdDist < 100
+//            && FwdSpeed < CurrentSpeed
+//            && FwdSpeed-CurrentSpeed < 0.05*FwdSpeed
+            && math/floor(Lane) == CurrentLane
+            && FwdDist < CurrentSpeed
         ) 
     <-
-        generic/print( "TFC100", ID, "has vehicle in-front of -> decelerate");
+        generic/print( "TFC   ", ID, "has vehicle in front -> decelerate");
         vehicle/decelerate(1);
         !decelerate
 .
@@ -297,14 +302,13 @@
 
 
 // --- collision ---
-+!vehicle/collision 
-    <-
++!vehicle/collision <-
 /*
     // --- brake as hard as possible ---
-        vehicle/decelerate( 1 );
-        generic/print( "COB", ID, "BREAKED HARD -> collision" )
+    vehicle/decelerate( 1 );
+    generic/print( "COB   ", ID, "BREAKED HARD -> collision" )
 */
     // --- stop immediately ---
-        vehicle/stop;
-        generic/print( "COS", ID, "STOPPED -> collision" )
+    vehicle/stop;
+    generic/print( "COS   ", ID, "STOPPED -> collision" )
 .

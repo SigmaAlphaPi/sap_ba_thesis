@@ -42,12 +42,33 @@
     !decelerate;
     !linger;
     
-//    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
+//    !pullout;
+//    !pullin;
+    
+    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
     scenario/statistic( ID, CurrentSpeed );
     !cruise
 .
+
+
+// --- to 'force' vehicle in desired lane if needed ---
++!pullin
+    :
+        CurrentLane > 1 
+    <- 
+        generic/print( "PULLIN", ID, "force to rightmost lane -> Pull-in"); 
+        vehicle/pullin
+.
++!pullout
+    :
+        CurrentLane < Lanes
+    <- 
+        generic/print( "PULOUT", ID, "force to leftmost lane -> Pull-out"); 
+        vehicle/pullout
+.
+
 
 
 // --- acceleration ---
@@ -116,4 +137,3 @@
     vehicle/stop;
     generic/print( "COS", ID, "STOPPED -> collision" )
 .
-
