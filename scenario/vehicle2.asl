@@ -36,23 +36,18 @@
 // --- start all other plans ---
 +!cruise <-
     
-    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
+//    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
-//    !pullout;
-//    !pullin;
-    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
+    
+//    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
     scenario/statistic( ID, CurrentSpeed );
     !cruise
 .
-
-// --- just for testing to force car to lane ---
-+!pullout : CurrentLane < Lanes <- vehicle/pullout.
-+!pullin : CurrentLane > 1 <- vehicle/pullin.
 
 
 // --- acceleration ---
@@ -60,11 +55,14 @@
     // --- accelerate only, if no traffic ahead ---
     // --- otherwise you have to brake against the acceleration ---
     // --- resulting in too long braking distances ---
-    : CurrentSpeed < AllowedSpeed
+    : 
+        CurrentSpeed < AllowedSpeed
         && ~>>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
                 bool/equal( generic/type/tostring( FwdDir ), "forward[]" )
+                && FwdDist < CurrentSpeed
+                && FwdSpeed < CurrentSpeed
             )
-        <-
+    <-
         // generic/print( "ACC", ID, "accelerated");
         vehicle/accelerate(0.5);
         !accelerate
@@ -84,21 +82,23 @@
 
 // --- deceleration ---
 +!decelerate 
+/*
     // --- decelerate if max. allowed speed is reached ---
     : CurrentSpeed > AllowedSpeed <-
         generic/print( "MAX", ID, "decelerated -> high speed");
         vehicle/decelerate(0.05);
         !decelerate
-    
+*/
     // --- if traffic is ahead only decelerate if  ---
     // --- CurrentSpeed is higher than speed of traffic ahead ---
     // --- (avoids unnecessary breaking down to 0 kph) ---
     : >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ), 
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
-            && FwdSpeed < CurrentSpeed
-            // && FwdDist > 100
+//            && FwdSpeed < CurrentSpeed
+//            && FwdSpeed-CurrentSpeed < 0.05*FwdSpeed
+            && FwdDist < CurrentSpeed
         ) <-
-        generic/print( "TFC", ID, "has vehicle in-front of -> decelerate");
+        generic/print( "TFC", ID, "has vehicle in front -> decelerate");
         vehicle/decelerate(1);
         !decelerate
 .

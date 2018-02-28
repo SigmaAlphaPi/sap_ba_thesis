@@ -8,8 +8,8 @@ main:
     # 10^5 timesteps in multi-lane, roughly 166ish minutes
     # was 100
     
-    #was 120
-    simulationtime_in_minutes: 120
+    #was 180 / 60
+    simulationtime_in_minutes: 30
 
     # preetprint of the result json
     prettyprint: true
@@ -18,25 +18,26 @@ main:
     alive: 0
 
     # line breaker after each step
-    linebreak: "--- step {0} ----------------"
+    linebreak: "----- step {0} ----------------"
 
     # runtime
     runtime:
 
-        # type of the runtime, parameter is the thread number: synchronized, workstealing, fixedsize(T), cached, scheduled(T), single
+        # type of the runtime, parameter is the thread number: ->synchronized<-, workstealing, fixedsize(T), cached, scheduled(T), single
         type: "synchronized"
 
-        # number of threads of the runtime
+        # number of threads of the runtime (fixedsize, scheduled)
         threads: 1
 
     # unit of the simulation
     unit:
 
         # cell size / size of a vehicle in meter
-        cellsize_in_meter: 7.5
+        cellsize_in_meter: 2.5
+        # works fine with 1
 
         # time of a single timestep in simulation
-        # 0.1 -> 6 sec, 0.05 -> 3 sec, 0.025 -> 1.5 sec
+        # 0.1 -> 6 sec, 0.05 -> 3 sec, 0.025 -> 1.5 sec, 0.0125 -> 0.75 sec
         timestep_in_minutes: 0.025
 
 
@@ -44,13 +45,14 @@ main:
 environment:
 
     # number of lanes
-    lanes: 2
+    lanes: 1
 
     # length if the lane in kilometer
     # 75 kms are about 10000 cells
     
     # was 25
-    length_in_km: 25
+    length_in_km: 1
+    #7.5
 
 
 # agent vehicle configuration
@@ -59,8 +61,8 @@ agent:
     # global constants for all vehicles (constant name
     # must start with an upper-case letter)
     constant:
-        # 160, was max. possible speed in multi-lane
-        AllowedSpeed: 130 
+        # 130, was max. possible speed in multi-lane
+        AllowedSpeed: 100 
 
     # all vehicle configuration, key is the filename of the filename
     # AgentSpeak(L++) script relative to configuration file
@@ -71,15 +73,15 @@ agent:
             # 10^3 cars in multi-lane
             # was 400
             
-            #was 15
-            count: 20
+            #was 100
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
 
             # view range in meters around a vehicle 
             # (should be greater than cell size)
-            viewrange: 200
+            viewrange: 250
 
             # local constant values for this vehicle
             costant:
@@ -88,9 +90,10 @@ agent:
             # speed range configuration for initialize and maximum
             # speed (maximum value will be set by random)
             speed:
-                # was 80 150
-                min: 100
+                min: 80
                 max: 130
+#                min: 40
+#                max: 50
 
             # acceleration configuration (the value is
             # calculated by random)
@@ -108,7 +111,7 @@ agent:
         vehicle2.asl:
 
             # number of generated vehicles
-            count: 0
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
@@ -126,6 +129,8 @@ agent:
             speed:
                 min: 70
                 max: 90
+#                min: 20
+#                max: 25
 
             # acceleration configuration (the value is
             # calculated by random)
