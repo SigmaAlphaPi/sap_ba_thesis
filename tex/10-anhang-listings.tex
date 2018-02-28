@@ -1,0 +1,99 @@
+\section{Anhang}
+
+\newpage
+
+\begin{lstlisting}[style=asl, 
+                   keywords={move/forward,move/right}, 
+                   keywords={[2]X}, 
+                   keywords={[3]}, 
+                   caption={Agentenscript: NaSch-Modell, einspurig}]      
+/*
+ *  ASL file        NaSch model traffic, single lane
+ */
+
+/*
+ * basic knowledge https://lightjason.github.io/knowledgebase/
+ * commands are found under https://lightjason.github.io/knowledgebase/builtinactions/
+ */
+
+!cruise.
+
+// --- start all other plans ---
++!cruise <-
+    !accelerate;
+    !decelerate;
+    !linger;
+    !cruise
+.
+
+// --- acceleration ---
++!accelerate
+    // --- accelerate only, if no traffic ahead ---
+    // --- otherwise you have to brake against the acceleration ---
+    // --- resulting in too long braking distances ---
+    : 
+        CurrentSpeed < AllowedSpeed
+        && ~>>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
+                bool/equal( generic/type/tostring( FwdDir ), "forward[]" )
+                && FwdDist < CurrentSpeed
+                && FwdSpeed < CurrentSpeed
+            )
+    <-
+        vehicle/accelerate(0.5);
+        !accelerate
+.
+
+// --- lingering ---
++!linger <-
+    L = math/statistic/randomsimple;
+    L < 0.1;
+    vehicle/decelerate(0.3)
+.
+
+// --- deceleration ---
++!decelerate 
+/*
+    // --- decelerate if max. allowed speed is reached ---
+    // --- if commented out vehicle will cruise slightly over speed limit ---
+    : CurrentSpeed > AllowedSpeed <-
+        generic/print( "MAX", ID, "decelerated -> high speed");
+        vehicle/decelerate(0.05);
+        !decelerate
+*/
+    // --- decelerate if traffic is ahead ---
+    // --- and own speed is higher than distance ---
+    : >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ), 
+            bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
+            && FwdDist < CurrentSpeed
+        ) <-
+        vehicle/decelerate(1);
+        !decelerate
+.
+
+// --- collision ---
++!vehicle/collision <-
+/*
+    // --- brake as hard as possible ---
+    vehicle/decelerate( 1 );
+    generic/print( "COB", ID, "BREAKED HARD -> collision" )
+*/
+    // --- stop immediately ---
+    vehicle/stop;
+    generic/print( "COS", ID, "STOPPED -> collision" )
+.\end{lstlisting}
+
+
+
+
+\newpage
+
+\begin{lstlisting}[style=asl, keywords={move/forward,move/right}, keywords={[2]X}, caption={Test ASL Beispiel}]      
++!movement/walk/forward(X) <-
+move/forward(X);
+!movement/walk/forward.
+
++!movement/walk/right(X) <-
+move/right(X);
+!movement/walk/forward.
+\end{lstlisting}
+

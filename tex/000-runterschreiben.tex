@@ -14,16 +14,6 @@ Die mathematischen Gleichungen in \cite{na-sch} beschreiben gut, welches Verhalt
 
 \subsubsection{Zustandsautomat}
 
-\begin{lstlisting}[style=asl, keywords={move/forward,move/right}, keywords={[2]X}, caption={Test ASL Beispiel}]      
-+!movement/walk/forward(X) <-
-move/forward(X);
-!movement/walk/forward.
-
-+!movement/walk/right(X) <-
-move/right(X);
-!movement/walk/forward.
-\end{lstlisting}
-
 Dieses Verhalten wurde mit einem endlichen Automaten beschrieben, siehe \cref{figure:fsm-nasch}.
 
 \begin{figure}[hptb]
@@ -342,30 +332,38 @@ Für das Abbremsen in der Agentensimulation kann sich das Trödeln positiv auf d
 
 
 
-\subsection{Entwicklung/Entscheidung - Festlegen der view range}
+\subsection{Entwicklung/Entscheidung - Festlegen der view range/Sichtweite}
 
-Das originale Modell von Nagel und Schreckenberg legt Beschleunigung, Verzögerung und Sichtfeld sehr einfach fest.
-Bedingt durch die Zellgröße von 7,5 m, die Ganzzahligkeit der Geschwindigkeit und die Zeitschrittlänge von 1 Sekunde ergeben sich Beschleunigungswerte von $7,5 \frac{m}{s^{2}}$. 
-Durch die Möglichkeit, die Geschwindigkeit innerhalb eines einzigen Zeitschrittes von der Maximalgeschwindigkeit \enquote{5} auf Null zu verringern, ergibt sich theoretisch eine Verzögerung von $37,5 \frac{m}{s^{2}}$.
+Das originale Modell von Nagel und Schreckenberg legt Beschleunigung, Verzögerung und Sichtweite sehr einfach fest.
+Bedingt durch die Zellgröße von 7,5 m, die Ganzzahligkeit der Geschwindigkeit und die Zeitschrittlänge von 1 Sekunde ergeben sich Beschleunigungswerte von 7,5 $\frac{m}{s^{2}}$. 
+Durch die Möglichkeit, die Geschwindigkeit innerhalb eines einzigen Zeitschrittes von der Maximalgeschwindigkeit \enquote{5} auf Null zu verringern, ergibt sich theoretisch eine Verzögerung von 37,5 $\frac{m}{s^{2}}$.
+Dies ist unrealistisch.
 
-Die Simulationsumgebung arbeitet hier mit realen Werten zwischen $3,5$ und $7 \frac{m}{s^{2}}$ für die Beschleunigung und zwischen $8$ und $10 \frac{m}{s^{2}}$ für die Verzögerung.
+Die Simulationsumgebung arbeitet hier mit realen Werten zwischen 3,5 und 7 $\frac{m}{s^{2}}$ für die Beschleunigung und zwischen 8 und 10 $\frac{m}{s^{2}}$ für die Verzögerung.
 Der Wert wird für jedes Fahrzeug bei der Initialisierung im Rahmen dieser Intervalle zufällig festgelegt.
 Die Dosierung der möglichen Beschleunigung bzw. Verzögerung wird im Agentenscript festgelegt.
 
-Für die Sichtweite ergibt sich für im NaSch-Modell der theoretische Wert von $5 \times 7,5 m$, also $37,5$ Meter.
+Für die Sichtweite ergibt sich für im NaSch-Modell der theoretische Wert von $5 \times 7,5 m$, also 37,5 Meter.
 Für die in der Agentensimulation vorliegenden \enquote{realen} Bremsvorgänge ist diese Entfernung unzureichend. 
-Die Sichtweite im Straßenverkehr kann laut \cite{sichtweite} aufgrund von physiologischen und psychologischen Gründen in drei Zonen eingeteilt werden - \enquote{Fernorientierung/Information} auf Autobahnen etwa zwischen 600 und 360 Metern, \enquote{Bereitschaft/Entscheidung} etwa zwischen 360 und 110 Metern und \enquote{Nahorientierung/Handlung} unter 110 Metern.
+Die Sichtweite im Straßenverkehr kann laut \cite{sichtweite} aufgrund von physiologischen und psychologischen Gründen in drei Zonen eingeteilt werden:
+\begin{itemize}
+	\item \enquote{Fernorientierung/Information}, auf Autobahnen etwa zwischen 600 und 360 Metern
+	\item \enquote{Bereitschaft/Entscheidung}, etwa zwischen 360 und 110 Metern
+	\item \enquote{Nahorientierung/Handlung}, unter 110 Metern
+\end{itemize}
 
 Durch die fehlende Reaktionsträgheit, die maßgeblich durch die menschliche Komponente auftritt, hier aber fehlt, muss nicht die Phase der Fernorientierung ausgeschöpft werden. 
 Ein Wert der Sichtweite mittig im Intervall der Entscheidung genügt, um bis zum Beginn der Handlungsphase \enquote{tätig zu werden}.
 
 Für die Sichtweite wurde der Wert 250 m gewählt.
-Dieser liegt ungefähr mittig im Intervall und gibt den Agenten genügend Raum für Reaktionen. 
+Dieser liegt ungefähr mittig im Intervall und sollte den Agenten genügend Raum für Reaktionen geben. 
 In den Agentenplänen wird schließlich die Handlung durch Bedingungen auf einen Bereich unter 110 m beschränkt.
 
 
 
 \subsection{Problem - Sichtfeld der Fahrzeuge}
+
+% techn. Hintergrund noch mit einbauen - Koordinaten relativ zu Ego bla bla bla
 
 Um die Position eines anderen Fahrzeugs in der Umwelt festzustellen, kann die Richtung, in der dieses sich befindet, bestimmt werden.
 Die Simulationsumgebung hatte für das Sichtfeld der Fahrzeuge eine Unterteilung in acht Sektoren vorgesehen, so dass neben den Richtungen vorwärts, rückwärts, links und rechts auch Unterscheidung in Zwischenschritte links vorwärts, rechts vorwärts usw. möglich war, siehe \cref{figure:car-view-sectors}(a).
@@ -486,3 +484,8 @@ Im Jahr 2015 wurde bei einer Studie der London School of Economics and Political
 
 Für zukünftige Entwicklungen der Simulation könnte man für diese oder ähnliche Fahrertypen Profile ausarbeiten und anlegen, die sich auf Abstands-, Beschleunigungs- und Verzögerungsverhalten sowie die Risikobereitschaft beim Aus- und Einscheren auswirken.
 So könnte noch eine weitere Komponente mit Hinsicht auf Realitätsnähe geschaffen werden. 
+
+Weiterhin könnte "Hupen" als Broadcast- oder Message-Ereignis festgelegt werden.
+Dieses oder auch wiederholtes zu dichtes Auffahren und \enquote{geschnitten} werden, könnten sich auf eine Art Stresslevel auswirken, das als interner Belief im Agenten hinterlegt wird.
+Über eine gewisse Zeit, baut sich erworbener Stress wieder ab.
+
