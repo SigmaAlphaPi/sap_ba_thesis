@@ -36,14 +36,14 @@
 // --- start all other plans ---
 +!cruise <-
     
-//    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
+//    generic/print( "      ", ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
     
 //    !pullout;
-//    !pullin;
+    !pullin;
     
     generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
@@ -117,6 +117,7 @@
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
 //            && FwdSpeed < CurrentSpeed
 //            && FwdSpeed-CurrentSpeed < 0.05*FwdSpeed
+            && math/floor( FwdLane ) == CurrentLane
             && FwdDist < CurrentSpeed
         ) <-
         generic/print( "TFC", ID, "has vehicle in front -> decelerate");

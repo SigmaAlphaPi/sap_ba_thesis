@@ -44,11 +44,12 @@
 // --- start all other plans ---
 +!cruise <-
     
-//    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
+//    generic/print( "      ", ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
+    
     !pullout;
     !pullin;
 
@@ -99,12 +100,12 @@
     // --- TEST SETUP FOR THE CONDITIONS ---
     <-
     generic/print("##########", "PULL-OUT PLAN", "##########")
-    ; Cond1 = CurrentLane < Lanes
-    ; generic/print("Cond1",Cond1)
+//    ; Cond1 = CurrentLane < Lanes
+//    ; generic/print("Cond1",Cond1)
     ; Cond2 = >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
                 bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
                 && math/floor( FwdLane ) == CurrentLane
-                && FwdDist < 200 
+                && FwdDist < 175 
                 )
     ; generic/print("Cond2",Cond2)
     ; Cond3 = ~>>( view/vehicle( _, data( _, static( lane( FwdLane2 ), cell( FwdCell2 ), speed( FwdSpeed2 ), distance( FwdDist2 ), direction( FwdDir2 ) ) ) ),
@@ -124,17 +125,16 @@
                 && BwdSpeed > CurrentSpeed 
                 )
     ; generic/print("Cond5",Cond5)
-    ; Combined = Cond1 && Cond2 && Cond3 && Cond4 && Cond5
-    ; generic/print("Combined", Combined)
+//    ; Combined = Cond1 && Cond2 && Cond3 && Cond4 && Cond5
+//    ; generic/print("Combined", Combined)
 */
-
     :   // --- cond #1: not in leftmost lane ---
         CurrentLane < Lanes 
         // --- cond #2: vehicle infront in own lane is close ---
         && >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
                 bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
                 && math/floor( FwdLane ) == CurrentLane
-                && FwdDist < 200 
+                && FwdDist < 175 
                 )
         // --- cond #3: other lane is not worse (in driving direction) ---
         // --- this includes empty lane ---
@@ -143,7 +143,7 @@
                 && math/floor( FwdLane2 ) == CurrentLane+1
                 && FwdDist2 < FwdDist 
                 )
-/* --- commented out last two conditions, bug in framework ---
+/* --- commented out last two conditions, bug in framework --- 
         // --- cond #4: no other vehicle directly to the left ---
         && ~>>( view/vehicle( _, data( _, static( lane( LeftLane ), cell( LeftCell ), speed( LeftSpeed ), distance( LeftDist ), direction( LeftDir ) ) ) ),
                 bool/equal( generic/type/tostring( LeftDir ), "left[]" ) 
@@ -290,7 +290,7 @@
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
 //            && FwdSpeed < CurrentSpeed
 //            && FwdSpeed-CurrentSpeed < 0.05*FwdSpeed
-            && math/floor(Lane) == CurrentLane
+            && math/floor( FwdLane ) == CurrentLane
             && FwdDist < CurrentSpeed
         ) 
     <-
