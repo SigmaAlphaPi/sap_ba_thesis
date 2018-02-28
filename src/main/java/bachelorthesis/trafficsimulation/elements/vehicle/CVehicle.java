@@ -642,7 +642,7 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
             m_scenario.environment().get(
                 m_position.parallelStream()
                           .map( i -> new DenseDoubleMatrix1D( CVehicle.this.m_position.toArray() ).assign( i, DoubleFunctions.plus ) )
-//                          .filter( i -> m_scenario.environment().isinside( i ) )
+                          .map( i -> m_scenario.environment().clip( i ) )
             )
                          .parallel()
                          .filter( i -> !i.equals( CVehicle.this ) )

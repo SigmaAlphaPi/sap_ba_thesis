@@ -36,7 +36,7 @@ public final class CEnvironment implements IEnvironment
     /**
      * clipping function
      */
-    private final Function<Number, Number> m_clippingfunction;
+    private final Function<Number, Number> m_cellclippingfunction;
     /**
      * size of the world
      */
@@ -51,7 +51,7 @@ public final class CEnvironment implements IEnvironment
     public CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes, @Nonnull final IScenario p_scenario )
     {
         m_scenario = p_scenario;
-        m_clippingfunction = i -> i.intValue() % p_length.intValue();
+        m_cellclippingfunction = i -> i.intValue() % p_length.intValue();
         m_grid = new SparseObjectMatrix2D( p_lanes.intValue(), p_length.intValue() );
 
         m_size = new DenseDoubleMatrix1D( 2 );
@@ -97,7 +97,7 @@ public final class CEnvironment implements IEnvironment
             // test free direction
             final Optional<Number> l_checkposition = IntStream.rangeClosed( l_xposstart.intValue(), l_xposend.intValue() )
                                                               .boxed()
-                                                              .map( m_clippingfunction::apply )
+                                                              .map( m_cellclippingfunction::apply )
                                                               .filter( i ->
                                                               {
                                                                   final Object l_object = m_grid.getQuick( l_ypos.intValue(), i.intValue() );
@@ -108,16 +108,16 @@ public final class CEnvironment implements IEnvironment
             {
                 // object moving to cell befor collision exists
                 m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
-                m_grid.setQuick( l_ypos.intValue(), m_clippingfunction.apply( l_checkposition.get().intValue() - 1 ).intValue(), p_vehicle );
-                p_vehicle.position().setQuick( 1, m_clippingfunction.apply( l_checkposition.get().intValue() - 1 ).intValue() );
+                m_grid.setQuick( l_ypos.intValue(), m_cellclippingfunction.apply( l_checkposition.get().intValue() - 1 ).intValue(), p_vehicle );
+                p_vehicle.position().setQuick( 1, m_cellclippingfunction.apply( l_checkposition.get().intValue() - 1 ).intValue() );
 
                 return false;
             }
 
             // object moving on regular end position
             m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
-            m_grid.setQuick( l_ypos.intValue(), m_clippingfunction.apply( l_xposend ).intValue(), p_vehicle );
-            p_vehicle.position().setQuick( 1, m_clippingfunction.apply( l_xposend ).intValue() );
+            m_grid.setQuick( l_ypos.intValue(), m_cellclippingfunction.apply( l_xposend ).intValue(), p_vehicle );
+            p_vehicle.position().setQuick( 1, m_cellclippingfunction.apply( l_xposend ).intValue() );
             return true;
         }
     }
@@ -158,12 +158,12 @@ public final class CEnvironment implements IEnvironment
     }
 
     @Override
-    public final boolean isinside( @Nonnull final DoubleMatrix1D p_position )
+    public final DoubleMatrix1D clip( @Nonnull final DoubleMatrix1D p_position )
     {
-        return ( p_position.getQuick( 0 ) >= 0 )
-               && ( p_position.getQuick( 1 ) >= 0 )
-               && ( p_position.getQuick( 0 ) < m_grid.rows() )
-               && ( p_position.getQuick( 1 ) < m_grid.columns() );
+        final DoubleMatrix1D l_position = p_position.copy();
+        l_position.set( 0, l_position.get( 0 ) % m_grid.rows() );
+        l_position.set( 1, l_position.get( 1 ) % m_grid.columns() );
+        return l_position;
     }
 
     @Override
