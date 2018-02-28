@@ -5,7 +5,7 @@ setwd("~/Sven/Uni/BA/sap_ba_thesis/scenario")
 
 # read JSON file
 # scenarioRawData <- jsonlite::read_json("scenario.json")
-scenarioRawData <- jsonlite::read_json("run19.json")
+scenarioRawData <- jsonlite::read_json("run3.json")
 
 # --- extract the data node ---
 vehicleData <- scenarioRawData[["vehicles"]]
