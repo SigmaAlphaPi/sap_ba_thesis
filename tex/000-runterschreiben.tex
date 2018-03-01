@@ -463,10 +463,25 @@ Dies führte zu dem Verhalten, dass Fahrzeuge vom Ende der Strecke an den Anfang
 Die Simulationsumgebung sieht hier vor, dass das Fahrzeug auf die letzte freie Zelle hinter das jeweils letzte Fahrzeug gesetzt wird.
 
 Es ergab sich bei den Simulationsläufen ein Häufung von Positionspunkten im negativen Teil der Strecke. 
-Als Beispiel siehe [PLOT].
+Als Beispiel siehe \cref{figure:negativ-sammeln}.
+\begin{figure}[hptb]
+ \centering
+ \includegraphics[width=0.9\textwidth]{negativ-sammeln}
+ \caption[Punktehäufung im negativen Bereich]
+ 		{Deutliche Häufung der Punkte im negativen Bereich (Position-Zeit-Diagramm)}
+ \label{figure:negativ-sammeln}
+\end{figure} 
+
 
 Nach der Behebung dieses Fehlers konnten dann auch Stauwellen beobachtet werden, die sich vom Streckenanfang herüber hinaus am Streckenende fortsetzten. 
 
+\begin{figure}[hptb]
+  \centering
+    \subfigure[Sichtfeld ohne Umbruch]{\includegraphics[width=0.8\textwidth]{view-range-no-clip}\label{figure:view-range-no-clip}} \\
+    \subfigure[Sichtfeld mit Umbruch]{\includegraphics[width=0.8\textwidth]{view-range-clip}\label{figure:view-range-clip}}
+  \caption{Umbruch...}
+  \label{figure:view-range-no-clip-clip}
+\end{figure}
 
 
 \subsection{Ergänzungen/Ausblick/Erweiterungen}
