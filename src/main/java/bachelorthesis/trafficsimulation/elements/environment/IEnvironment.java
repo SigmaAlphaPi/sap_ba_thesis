@@ -63,6 +63,7 @@ public interface IEnvironment extends Consumer<Number>
      * @param p_position position
      * @return new vector with clipped position
      */
+    @Nonnull
     DoubleMatrix1D clip( @Nonnull final DoubleMatrix1D p_position );
 
     /**
