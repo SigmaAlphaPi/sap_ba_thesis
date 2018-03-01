@@ -157,6 +157,7 @@ public final class CEnvironment implements IEnvironment
         return p_position.map( i -> (IObject<?>) m_grid.getQuick( (int) i.getQuick( 0 ), (int) i.getQuick( 1 ) ) ).filter( Objects::nonNull );
     }
 
+    @Nonnull
     @Override
     public final DoubleMatrix1D clip( @Nonnull final DoubleMatrix1D p_position )
     {
