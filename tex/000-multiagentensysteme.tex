@@ -68,7 +68,7 @@ Da einige Ziele nicht allein zu erreichen sind, muss der Agent die Fähigkeit ha
 \subsection{Das Konzept der Agentensprache \enquote{Agentspeak(L++)} von \enquote{LightJason} (nach \cite{lightjason} und \cite{lightjason-web})}
 
 Für die Entwickler von LightJason war es wichtig, dass die Agentensprache auch von Nicht-Informatikern verwendet werden kann.
-Auf der einen Seite brauchte man eine Syntax um Verhalten zu definieren, auf der anderen Seite muss diese leicht verständlich und sauber sein.
+Auf der einen Seite brauchte man eine Syntax um Verhalten zu definieren, auf der anderen Seite muss diese Syntax leicht verständlich und sauber sein.
 Die Syntax von \enquote{Agentspeak(L++)} (ASL) wurde als logische Programmiersprache designt, wobei alle Elemente auf Terme und Literale reduziert werden konnten.
 
 Dies erlaubt die Modellierung eines Multiagentensystems, das später bei der Agentenprogrammierung erlaubt, Verhalten durch Vorstellungen (beliefs), Regeln (rules), Pläne (plans) und Aktionen (actions) zu beschreiben.
@@ -77,18 +77,20 @@ Dies erlaubt die Modellierung eines Multiagentensystems, das später bei der Age
 Beliefs (oder auch Fakten) sind die Eindrücke des Agenten von seiner Umwelt.
 Aufgrund dieser Daten trifft der Agent seine Entscheidungen.
 \\
-Beliefs können in der Definition Agentenplanes als Standardwerte vorgegeben werden, von Sensoren erfasst oder vom Agenten selbst aus eigenen Daten oder den Daten von anderen Agenten kombiniert werden.
+Beliefs können in der Definition Agentenverhaltens als Standardwerte vorgegeben, von Sensoren erfasst oder vom Agenten selbst aus eigenen Daten oder den Daten von anderen Agenten kombiniert werden.
 \\
 Ein Belief muss nicht faktisch richt sein.
 Er kann also der Realität der Umwelt widersprechen. 
 Ursache hierfür können defekte Sensoren sein oder die Informationen, die z.B. andere Agenten bereitstellen, sind fehlerhaft.
 
-Ein einfaches Beispiel für einen Belief im Verkehrskontext wäre die wahrgenommene Lichtfarbe einer Ampel - \texttt{light(red)}.
-
-\paragraph*{rule}
-Plans are like static methods or functions in an imperative programming language, with an execution condition and boolean return value.
+Ein einfaches Beispiel für einen Belief im Verkehrskontext wäre die wahrgenommene Lichtfarbe einer Ampel - \enquote{\texttt{light(red)}}.
 
 \paragraph*{plan}
 Pläne sind ähnlich statischen Methoden oder Funktionen in imperativen Programmiersprachen, mit einer Ausführungsbedingung und einem boolean Rückgabewert.
+\\
+Der Aufruf von Plänen erfolgt über die Festlegung von Zielen (goals).
+So kann etwa aus dem Plan \enquote{\texttt{+!main}} über das Ziel \enquote{\texttt{!nextplan}} im nächsten Durchgang der Plan \enquote{\texttt{+!nextplan}} aufgerufen werden.
 
-Plans are like static methods or functions in an imperative programming language, with an execution condition and boolean return value.
+Innerhalb eines Planes kann es durch Auswertung von Beliefs (ähnlich IF-Bedingungen) zu unterschiedlichen Resultaten bei Durchlauf ein und ein und desselben Planes kommen.
+
+Für den Fall, dass die Ausführung eines Planes fehlschlägt, kann mit dem Trigger \enquote{\texttt{-!nextplan}} ein Alternativverhalten definiert werden.
