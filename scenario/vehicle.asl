@@ -36,7 +36,7 @@
 // --- start all other plans ---
 +!cruise <-
     
-    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
+//    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
@@ -96,7 +96,8 @@
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
 //            && FwdSpeed < CurrentSpeed
 //            && FwdSpeed-CurrentSpeed < 0.05*FwdSpeed
-            && FwdDist < CurrentSpeed
+//            && FwdDist < CurrentSpeed
+            && FwdDist < 100
         ) <-
         generic/print( "TFC", ID, "has vehicle in front -> decelerate");
         vehicle/decelerate(1);
