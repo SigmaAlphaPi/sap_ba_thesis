@@ -1,5 +1,6 @@
 package bachelorthesis.trafficsimulation.elements.environment;
 
+import bachelorthesis.trafficsimulation.common.CMath;
 import bachelorthesis.trafficsimulation.elements.IObject;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import bachelorthesis.trafficsimulation.scenario.IScenario;
@@ -11,7 +12,6 @@ import cern.colt.matrix.tobject.impl.SparseObjectMatrix2D;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -34,10 +34,6 @@ public final class CEnvironment implements IEnvironment
      */
     private final IScenario m_scenario;
     /**
-     * clipping function
-     */
-    private final Function<Number, Number> m_cellclippingfunction;
-    /**
      * size of the world
      */
     private final DoubleMatrix1D m_size;
@@ -51,7 +47,6 @@ public final class CEnvironment implements IEnvironment
     public CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes, @Nonnull final IScenario p_scenario )
     {
         m_scenario = p_scenario;
-        m_cellclippingfunction = i -> i.intValue() % p_length.intValue();
         m_grid = new SparseObjectMatrix2D( p_lanes.intValue(), p_length.intValue() );
 
         m_size = new DenseDoubleMatrix1D( 2 );
@@ -95,29 +90,37 @@ public final class CEnvironment implements IEnvironment
         synchronized ( this )
         {
             // test free direction
-            final Optional<Number> l_checkposition = IntStream.rangeClosed( l_xposstart.intValue(), l_xposend.intValue() )
-                                                              .boxed()
-                                                              .map( m_cellclippingfunction::apply )
-                                                              .filter( i ->
-                                                              {
-                                                                  final Object l_object = m_grid.getQuick( l_ypos.intValue(), i.intValue() );
-                                                                  return ( l_object != null ) && ( !l_object.equals( p_vehicle ) );
-                                                              } )
-                                                              .findFirst();
+            final Optional<Number[]> l_checkposition = IntStream.rangeClosed( l_xposstart.intValue(), l_xposend.intValue() )
+                                                                .boxed()
+                                                                .map( i -> this.clip( new DenseDoubleMatrix1D( new double[]{l_ypos.doubleValue(), i} ) ) )
+                                                                .map( CMath::numberarry )
+                                                                .filter( i ->
+                                                                {
+                                                                    final Object l_object = m_grid.getQuick( i[0].intValue(), i[1].intValue() );
+                                                                    return ( l_object != null ) && ( !l_object.equals( p_vehicle ) );
+                                                                } )
+                                                                .findFirst();
             if ( l_checkposition.isPresent() )
             {
                 // object moving to cell befor collision exists
                 m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
-                m_grid.setQuick( l_ypos.intValue(), m_cellclippingfunction.apply( l_checkposition.get().intValue() - 1 ).intValue(), p_vehicle );
-                p_vehicle.position().setQuick( 1, m_cellclippingfunction.apply( l_checkposition.get().intValue() - 1 ).intValue() );
+                m_grid.setQuick( l_ypos.intValue(), l_checkposition.get()[0].intValue(), p_vehicle );
+                p_vehicle.position().setQuick( 1, l_checkposition.get()[1].intValue() );
 
                 return false;
             }
 
             // object moving on regular end position
+            final Number[] l_result = CMath.numberarry(
+                    this.clip(
+                            new DenseDoubleMatrix1D(
+                                    new double[]{l_ypos.doubleValue(), l_xposend.doubleValue()}
+                            )
+                    )
+            );
             m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
-            m_grid.setQuick( l_ypos.intValue(), m_cellclippingfunction.apply( l_xposend ).intValue(), p_vehicle );
-            p_vehicle.position().setQuick( 1, m_cellclippingfunction.apply( l_xposend ).intValue() );
+            m_grid.setQuick( l_ypos.intValue(), l_result[0].intValue(), p_vehicle );
+            p_vehicle.position().setQuick( 1, l_result[1].intValue() );
             return true;
         }
     }

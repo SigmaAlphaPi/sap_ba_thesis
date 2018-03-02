@@ -12,6 +12,7 @@ import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.random.SynchronizedRandomGenerator;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -196,4 +197,15 @@ public final class CMath
                } );
     }
 
+    /**
+     * converts a vector to a number array
+     *
+     * @param p_matrix vector
+     * @return number array
+     */
+    @Nonnull
+    public static Number[] numberarry( @Nonnull final DoubleMatrix1D p_matrix )
+    {
+        return Arrays.stream( p_matrix.toArray() ).boxed().toArray( Number[]::new );
+    }
 }
