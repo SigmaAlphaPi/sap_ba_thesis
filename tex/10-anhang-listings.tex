@@ -3,17 +3,13 @@
 \newpage
 
 \begin{lstlisting}[style=asl, 
-                   keywords={move/forward,move/right}, 
-                   keywords={[2]X}, 
+                   keywords={+!cruise,+!accelerate,+!linger,+!decelerate,+!vehicle/collision}, 
+                   keywords={[2]}, 
                    keywords={[3]}, 
-                   caption={Agentenscript: NaSch-Modell, einspurig}]      
+                   caption={Agentenscript: NaSch-Modell, einspurig},
+                   label={lst:nasch}]      
 /*
  *  ASL file        NaSch model traffic, single lane
- */
-
-/*
- * basic knowledge https://lightjason.github.io/knowledgebase/
- * commands are found under https://lightjason.github.io/knowledgebase/builtinactions/
  */
 
 !cruise.
@@ -79,7 +75,6 @@
 */
     // --- stop immediately ---
     vehicle/stop;
-    generic/print( "COS", ID, "STOPPED -> collision" )
 .\end{lstlisting}
 
 
