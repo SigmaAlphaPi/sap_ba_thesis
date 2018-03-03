@@ -21,17 +21,18 @@ Den nachfolgenden Ausführungen liegt das hier beschriebene Szenario zugrunde:
 	\item Anzahl Fahrzeuge: 2
 	\item max. zulässige Geschwindigkeit: 100 km/h
 \end{itemize}
-Mit dem bereits [besprochenen] Setup - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung ($ Fzg^{S} $ = schnelleres Fahrzeug, $ v \in [80, 130] $, $ Fzg^{L} $ = langsameres Fahrzeug, $ v \in [70, 90] $) - wurden das Verhalten der Agenten, ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert), in jew. drei Durchgängen getestet.
+Mit dem bereits erwähnten Setup - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung ($ Fzg^{S} $ = schnelleres Fahrzeug (rote Kurve), $ v \in [80, 130] $, $ Fzg^{L} $ = langsameres Fahrzeug (schwarze Kurve), $ v \in [70, 90] $) - wurde das Verhalten der Agenten, ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert), in jew. drei Durchgängen getestet.
 
 Für die Auswertung, ob eine Zellgröße/Zeitschrittlänge-Kombination für eine Simulationsdurchführung nutzbar ist, wurde der Ausdruck der Geschwindigkeiten der beiden Fahrzeuge über die Simulationszeit genutzt.
+
 
 \subsubsection{Zellgröße 7,5 m}
 
 \begin{figure}[hptb]
   \centering 
-   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run1}\label{figure:run1}}\qquad 
-   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run2}\label{figure:run2}}\qquad 
-   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run3}\label{figure:run3}}
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run1}\label{figure:run1}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run2}\label{figure:run2}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run3}\label{figure:run3}}
   \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,1 min} 
   \label{figure:run1-3}
 \end{figure}
@@ -45,24 +46,23 @@ Auf die Ausführung von Durchgängen mit dieser Zeitschrittgröße und kleinerer
 
 \begin{figure}[hptb]
   \centering 
-   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run4}\label{figure:run4}}\qquad 
-   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run5}\label{figure:run5}}\qquad 
-   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run6}\label{figure:run6}}
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run4}\label{figure:run4}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run5}\label{figure:run5}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run6}\label{figure:run6}}
   \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,05 min} 
   \label{figure:run4-6}
 \end{figure}
 
 Die Verläufe der Kurven in \cref{figure:run4-6} zeigen in zwei von drei Fällen, dass sich die Geschwindigkeit des auffahrenden Fahrzeuges um die des langsameren Fahrzeuges einpendelt.
 
-Das Plot des zweiten Durchganges zeigt, dass auch in dieser Konstellation Kollisionen stattgefunden haben.
-Die Geschwindigkeit des langsameren Fahrzeuges lag in diesem Durchgang in Vergleich zu den anderen beiden um einiges niedriger
-Vermutlich waren die Zeiträume zwischen den Steuerungssmöglichkeiten zu groß.
+Im Plot des zweiten Durchlaufes ist zu sehen, dass auch in dieser Konstellation Kollisionen stattgefunden haben.
+Die Geschwindigkeit des langsameren Fahrzeuges lag in diesem Durchlauf im Vergleich zu den anderen beiden um einiges niedriger.
 
 \begin{figure}[hptb]
   \centering 
-   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run7}\label{figure:run7}}\qquad 
-   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run8}\label{figure:run8}}\qquad 
-   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run9}\label{figure:run9}}
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run7}\label{figure:run7}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run8}\label{figure:run8}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run9}\label{figure:run9}}
   \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,025 min} 
   \label{figure:run7-9}
 \end{figure}
@@ -75,39 +75,45 @@ Da sich die Abbrems- und Beschleunigungsmanöver identisch wiederholen, kommt es
 Das Plot in \cref{figure:run8} zeigt ein Einordnen hinter dem langsameren Fahrzeug und die Beibehaltung dessen Geschwindigkeit.
 Das in \cref{figure:run9} ist nahezu eine Mischform aus den ersten beiden Kurven.
 
+
 \subsubsection{Zellgröße 5,0 m}
 
 \begin{figure}[hptb]
   \centering 
-   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run14}\label{figure:run14}}\qquad 
-   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run15}\label{figure:run15}}\qquad 
-   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run16}\label{figure:run16}}
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run14}\label{figure:run14}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run15}\label{figure:run15}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run16}\label{figure:run16}}
   \caption{Simulationen mit Zellgröße 5,0 m und Zeitschrittlänge 0,05 min} 
   \label{figure:run14-16}
 \end{figure}
 
 Die Diagramme in \cref{figure:run14-16} zeigen wiederholt, dass der Abstand, der für den Bremsvorgang zur Verfügung steht, mit einem recht langen Zeitraum zwischen den Zeitschritten, nicht ausreicht.
 
+Allerdings ist im ersten und im dritten Durchlauf zu erkennen, dass das langsamere Fahrzeug, ohne dass es zu einer Kollision kommen muss, für das gerade beschleunigende Fahrzeug abbremsen konnte. 
+
 \begin{figure}[hptb]
   \centering 
-   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run17}\label{figure:run17}}\qquad 
-   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run18}\label{figure:run18}}\qquad 
-   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run19}\label{figure:run19}}
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run17}\label{figure:run17}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run18}\label{figure:run18}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run19}\label{figure:run19}}
   \caption{Simulationen mit Zellgröße 5,0 m und Zeitschrittlänge 0,025 min} 
   \label{figure:run17-19}
 \end{figure}
 
 Die drei Durchläufe mit einer Zeitschrittlänge von 0,025 min ergaben ein uneinheitliches Bild.
-In \cref{figure:run17} konnte das schnellere Fahrzeug wieder mit höherer Geschwindigkeit hinter dem langsameren herfahren, ohne dass ein Raumgewinn passierte.
-Der Durchgang im Diagramm in \cref{figure:run18} zeigt wieder das sägezahnähnliche Muster, wie es mit den größeren Zelldimensionen bereits der Fall war.
+In \cref{figure:run17} konnte das schnellere Fahrzeug wieder mit höherer Geschwindigkeit hinter dem langsameren herfahren, scheinbar ohne dass ein Raumgewinn passierte, der zu einer Verzögerung geführt hätte.
+\\
+Evtl. fuhr das schnellere Fahrzeug auch mit seiner max. möglichen Geschwindigkeit und der Geschwindigkeitsunterschied war so gering, das es in der Simulationszeit das langsamere Fahrzeug nicht erreichte.
 
-Unerwarteterweise kam es im dritten Durchgang zu je zwei Kollisionen.
+Der Durchlauf im Diagramm in \cref{figure:run18} zeigt wieder das sägezahnähnliche Muster, wie es mit den größeren Zelldimensionen bereits der Fall war.
+
+Unerwarteterweise kam es im dritten Durchlauf zu je zwei Kollisionen.
 Besonders die jeweils auslösende Kollision des ursprünglich schnelleren Fahrzeuges war nicht zu erklären, da der Geschwindigkeitsunterschied in beiden Fällen minimal gewesen war.
 
 Ein weiterer Durchlauf, siehe \cref{figure:run19a}, der einen vergleichbaren Ablauf hervorbrachte, bei dem aber die Ausgabe der Fahrzeugdaten im Kontrollfenster erfolgte, konnte das Verhalten aufklären.
 Die Bedingung im Agentenplan waren so formuliert, dass das Folgefahrzeug dem vorausfahrenden folgen konnte, ohne dass ein \enquote{Sicherheitsabstand} gebildet wurde, wenn die Geschwindigkeit jenes Fahrzeuges nicht größer als die des vorausfahrenden Fahrzeuges war. 
 \\
-Somit genügte, gewisse Geschwindigkeiten vorrausgesetzt, eine kleine Beschleunigung, um im nachfolgenden Zeitschritt die für die Geschwindigkeit erforderliche Wegstrecke nicht umsetzen zu können.
+Somit genügte, gewisse Geschwindigkeiten vorrausgesetzt, eine kleine Beschleunigung, um im nachfolgenden Zeitschritt die für die Geschwindigkeit erforderliche Wegstrecke nicht mehr umsetzen zu können.
 
 \begin{figure}[hptb]
   \centering 
@@ -131,9 +137,11 @@ Verschiedene Ansätze, bei denen in den Bedingungen der Logik mit den vorliegend
 \\
 Da den Agenten sowohl die eigene Geschwindigkeit als auch die Entfernung als numerische Werte bekannt sind, werden diese nun zu einander in Beziehung gesetzt.
 
-Dies führt dazu, dass \enquote{Ego}s eigene Geschwindigkeit gleichzeitig der jeweilige Mindestabstand vom Vordermann sein muss. 
+Dies führt dazu, dass die eigene Geschwindigkeit des betrachteten Fahrzeugs gleichzeitig der jeweilige Mindestabstand vom Vordermann sein muss. 
 \\
 Eine gleichwertige Bedingung wurde auch für die Simulation der Beschleunigung übernommen.
+Der reine Geschwindigkeitsvergleich wurde entfernt.
+
 
 \subsubsection{Zellgröße 2,5 m}
 
@@ -141,9 +149,9 @@ Aufgrund der Veränderung in den Agentenplänen wurde die erneut verringerte Zel
 
 \begin{figure}[hptb]
   \centering 
-   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run24}\label{figure:run24}}\qquad 
-   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run25}\label{figure:run25}}\qquad 
-   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run26}\label{figure:run26}}
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run24}\label{figure:run24}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run25}\label{figure:run25}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run26}\label{figure:run26}}
   \caption{Simulationen mit Zellgröße 2,5 m und Zeitschrittlänge 0,05 min} 
   \label{figure:run24-26}
 \end{figure}
@@ -153,9 +161,9 @@ In der dritten Durchführung traten allerdings wieder Kollisionsereignisse auf.
 
 \begin{figure}[hptb]
   \centering 
-   \subfigure[1. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run27}\label{figure:run27}}\qquad 
-   \subfigure[2. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run28}\label{figure:run28}}\qquad 
-   \subfigure[3. Durchgang]{\includegraphics[width=0.3\textwidth]{speed_run29}\label{figure:run29}}
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run27}\label{figure:run27}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run28}\label{figure:run28}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run29}\label{figure:run29}}
   \caption{Simulationen mit Zellgröße 2,5 m und Zeitschrittlänge 0,025 min} 
   \label{figure:run27-29}
 \end{figure}

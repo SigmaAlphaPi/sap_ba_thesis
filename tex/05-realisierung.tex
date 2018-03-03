@@ -1,13 +1,14 @@
 \section{Realisierung}
 \label{sec:realisierung}
 
-Das Simulationstool ist eine Modifikation einer Software, die als \enquote{Traffic Simulation Game} für einen Workshop für Doktoranden\footnote{https://lightjason.github.io/news/2017-09-workshop/} erstellt wurde.
+Das Simulationstool, welches für diese Arbeit verwendet wurde, ist eine Modifikation einer Software, die als \enquote{Traffic Simulation Game} für einen Workshop für Doktoranden\footnote{\url{https://lightjason.github.io/news/2017-09-workshop/}} erstellt wurde.
 
-In diesem Workshop mussten die Teilnehmer mit Hilfe der Agentensprache ein Fahrzeug so steuern, dass dieses auf einem 50 km langen Straßenstück, welches zufällig Bereiche mit Geschwindigkeitsbegrenzungen enthielt, möglichst wenige Strafzettel erhielten.
+In diesem Workshop mussten die Teilnehmer mit Hilfe der Agentensprache ein Fahrzeug so steuern, dass dieses auf einem 50 km langen Straßenstück, welches zufällig Bereiche mit unterschiedlich hohen Geschwindigkeitsbegrenzungen enthielt, möglichst wenige Verkehrsverstöße beging und die Strecke dennoch möglichst schnell zurücklegt.
 
 Für die Zwecke dieser Arbeit musste die Software angepasst werden.
 Dabei mussten während der Tests der ersten Agentenpläne Korrekturen vorgenommen werden, da sonst eine fehlerfreie Simulation nicht möglich gewesen wäre. 
 Mehr dazu nachfolgend in \cref{sec:anpassungen-probleme}.
+\pk{Kann, darf, soll, muss ich hier darauf hinweisen, dass die Programmierung nicht meine Aufgabe war und dass Du das gemacht hast?}
 
 
 
@@ -26,14 +27,14 @@ Dieses Umsetzen selbst bereitete keine Probleme, allerdings resultierten solche 
 \label{sec:probleme-ringform}
 
 Die Streckenunterbrechung führte dazu, dass es eine Pause in der Sichtbarkeit der Fahrzeuge untereinander gab, wenn sich diese an unterschiedlichen Enden der Strecke befanden.
-Aufgrund dieser \enquote{Unsichtbarkeit} ergab sich die Unmöglichkeit der Berechnung zwischen den einzelnen Fahrzeugen und führte zu einer freien Beschleunigung, da eine freie Strecke vermutet wurde.
+Aufgrund dieser \enquote{Unsichtbarkeit} war es unmöglich, eine Abstandsberechnung zwischen den einzelnen Fahrzeugen durchzuführen und führte zu einer freien Beschleunigung, da eine freie Strecke vermutet wurde.
 
 Nachfolgend ist dies anhand eines Auszugs aus einem Log einer Simulation mit zwei Fahrzeugen dargestellt.
 \enquote{...} bezeichnet Kürzungen der Ausgabe.
 
-In Zeitschritt 315 war Fahrzeug vehicle20 gerade noch in der letzten Zelle der Fahrbahn und überschreitet diese Grenze einen Zeitschritt später.
+In Zeitschritt 315 war Fahrzeug \texttt{vehicle20} gerade noch in der letzten Zelle der Fahrbahn und überschreitet diese Grenze einen Zeitschritt später.
 Die Beliefliste beider Fahrzeuge ist ab dem Schritt 316 leer.
-Erst nach vier Zeitschritten befindet sich auch das Folgefahrzeug (vehicle0) am Anfang der Fahrspur und ist ab Zeitschritt 320 wieder für Fahrzeug 20 sichtbar (andersherum ebenso).
+Erst nach vier Zeitschritten befindet sich auch das Folgefahrzeug (\texttt{vehicle0}) am Anfang der Fahrspur und ist ab Zeitschritt 320 wieder für Fahrzeug \texttt{20} sichtbar (andersherum ebenso).
 
 \footnotesize\begin{verbatim}
 ----- step 315 ----------------
@@ -65,10 +66,13 @@ Erst nach vier Zeitschritten befindet sich auch das Folgefahrzeug (vehicle0) am 
 
 Für die Simulation mit mehreren Fahrzeugen stellte dies insbesondere ein Problem dar, weil eine Stauwelle, die sich in ihrer Rückwärtsbewegung dem Anfang der Strecke näherte, von Fahrzeugen am Ende der Strecke nicht erkannt werden konnte.
 Dies führte zu dem Verhalten, dass Fahrzeuge vom Ende der Strecke an den Anfang gesetzt werden sollten, dort aber nicht in eine freie Zelle gesetzt werden konnten.
-Die Simulationsumgebung sieht hier vor, dass das Fahrzeug auf die freie Zelle hinter das jeweils letzte Fahrzeug gesetzt wird - also im negativen Bereich.
+Die Simulationsumgebung sieht hier vor, dass das Fahrzeug auf die freie Zelle hinter das jeweils letzte Fahrzeug gesetzt wird.
+\\
+Zelle 1 ist die erste zu besetzende Zelle einer Lane, die freie Zelle hinter dem Fahrzeug war Zelle 0.
 Allerdings wurden die Fahrzeuge, die sich bereits dort befanden, jeweils noch ein Feld weiter nach hinten gesetzt und das neue Fahrzeug dazwischen einfügt.
 
-Es ergab sich bei Simulationsläufen ein Häufung von Positionspunkten im negativen Teil der Strecke, siehe \cref{figure:negativ-sammeln}.
+Es ergab sich bei einigen Simulationsläufen ein Häufung von Positionspunkten im negativen Teil der Strecke.
+In der Simulation in \cref{figure:negativ-sammeln} trat das Problem direkt am Anfang des Durchlaufs aufgrund der langen Standzeit (siehe \cref{sec:accelerategroove}) des direkt am Anfang der Lane verorteten Fahrzeuges auf und konnte über die Simulationsdauer nicht abgebaut werden.
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.9\textwidth]{negativ-sammeln}
@@ -104,7 +108,7 @@ Nach der Behebung dieses Fehlers konnten dann auch Stauwellen beobachtet werden,
 \label{sec:unterteilung-sichtfeld}
 
 Um die relative Position eines anderen Fahrzeugs in der Umwelt festzustellen, kann die Richtung, in der dieses sich befindet, bestimmt werden.
-Die Simulationssoftware hatte für das Sichtfeld der Fahrzeuge eine Unterteilung in acht Sektoren vorgesehen, so dass neben den Richtungen vorwärts, rückwärts, links und rechts auch Unterscheidung in Zwischenschritte links vorwärts, rechts vorwärts usw. möglich war, siehe \cref{figure:car-view-8sectors}.
+Die Simulationssoftware hatte für das Sichtfeld der Fahrzeuge eine Unterteilung in acht Sektoren vorgesehen, sodass neben den Richtungen vorwärts, rückwärts, links und rechts auch Unterscheidung in Zwischenschritte links vorwärts, rechts vorwärts usw. möglich war, siehe \cref{figure:car-view-8sectors}.
 
 \begin{figure}[hptb]
   \centering 
@@ -117,7 +121,7 @@ Die Simulationssoftware hatte für das Sichtfeld der Fahrzeuge eine Unterteilung
 \end{figure}
 
 Eine solch feine Unterscheidung war nicht nötig.
-Es sollte genügen, feststellen zu können, ob sich ein anderes Fahrzeug relativ zu \enquote{Ego} im vorwärtigen oder rückwärtigen Raum befindet, siehe \cref{figure:car-view-2sectors}. 
+Es sollte genügen, feststellen zu können, ob sich ein anderes Fahrzeug relativ zum betrachteten Fahrzeug im vorwärtigen oder rückwärtigen Raum befindet, siehe \cref{figure:car-view-2sectors}. 
 Die Abdeckung der Umwelt sollte dabei ohne Unterbrechung sein.
 Für die Simulation nach dem Einspurmodell von Nagel-Schreckenberg funktionierte dies ohne Probleme.
 
@@ -126,7 +130,7 @@ Bei der Kontrolle des Logs wurde festgestellt, dass ein Fahrzeug (\texttt{vehicl
 Erkennbar in der Zeile \enquote{\texttt{PIA1}}, die nur ausgelöst wurde, wenn sich keinerlei Verkehr im Sichtfeld des Fahrzeuges befindet.
 Es gab in dieser Konstellation demnach keine Zuordnung dieser Position zu einer der beiden Bereiche.
 Daraufhin, so wie es das Verhalten des Agenten vorsah, wurde zum nächsten Schritt (366) in die Hauptspur gewechselt. 
-Im diesem Zeitschritt kam es dann zum Auslösen des Kollisionsereignisses, da der Abstand zwischen \texttt{vehicle0} und \texttt{vehicle20} nicht ausreichend groß war, um das hintere Fahrzeug mit seiner aktuellen Geschwindigkeit zu bewegen.
+Im diesem Zeitschritt kam es dann zum Auslösen des Kollisionsereignisses, da der Abstand zwischen \texttt{vehicle0} und \texttt{vehicle20} nicht ausreichend groß war, um das hintere Fahrzeug mit seiner aktuellen Geschwindigkeit die volle Strecke zu bewegen.
 
 \footnotesize\begin{verbatim}
 --- step 365 ----------------
@@ -146,13 +150,13 @@ OUT      vehicle0   -> Pull-out attempt successful
 \end{verbatim}
 \normalsize
 
-Das Sichtfeld der Fahrzeuge wurde zu einem Vier-Sektoren-Modell abgewandelt, siehe \cref{figure:car-view-4sectors}, und die Pläne für Ein- und Ausscheren, der hiervon gleichermaßen betroffen sein dürfte, angepasst.
+Das Sichtfeld der Fahrzeuge wurde hierauf zu einem Vier-Sektoren-Modell abgewandelt, siehe \cref{figure:car-view-4sectors}, und die Pläne für Ein- und Ausscheren, der hiervon gleichermaßen betroffen sein dürfte, angepasst.
 Es werden nun jeweils die beiden Sektoren kontrolliert, die die Bewegungs- bzw. Orientierungsrichtung darstellen. 
-Nach vorn und hinten wird jeweils auch auf Entfernungen geprüft, seitlich auf reine Präsenz/Nichtpräsenz von anderen Fahrzeugen.
+Nach vorn und hinten wird jeweils auch auf Entfernungen geprüft, seitlich genügt es auf reine Präsenz/Nichtpräsenz von anderen Fahrzeugen zu prüfen.
 
-Im Rahmen dieser Umstellung wurde festgestellt, dass es bei der Richtungsbestimmung einen Fehler im Framework gab.
+Im Rahmen dieser Umstellung wurde festgestellt, dass es bei der Richtungsbestimmung einen Fehler in der Simulationssoftware gab.
 Die Berechnung lieferte für beide seitlichen Richtungen ein und denselben Wert.
-Der Fehler lag in der Verwendung der Methode \texttt{acos} entstanden, wobei nicht beachtet wurde, dass der arccos nur im Bereich 0 bis $ \pi $ definiert ist, hier aber der Vollkreis zugrunde liegt.
+Der Fehler war durch die Verwendung der Methode \texttt{acos} entstanden, wobei nicht beachtet wurde, dass der arccos nur im Bereich 0 bis $ \pi $ definiert ist, hier aber der Vollkreis zugrunde liegt.
 
 
 
@@ -163,6 +167,7 @@ Der Fehler lag in der Verwendung der Methode \texttt{acos} entstanden, wobei nic
 
 Die mathematischen Gleichungen in \cite{na-sch} beschreiben gut, welches Verhalten dem Agenten zu geben ist: 
 \begin{itemize}
+\itemsep0em
 	\item wenn möglich beschleunigen
 	\item zufällige Reduktion der Geschwindigkeit (Trödeln)
 	\item wenn nötig abbremsen
@@ -204,11 +209,13 @@ Ist Verkehr voraus, wird der Zustand \texttt{DEC} (Decelerate/Verzögern, Bremse
 Aus dem \texttt{DEC}-Zustand kann zufällig ein Übergang in den \texttt{LIN}-Zustand erfolgen ansonsten zurück in den allgemeinen \texttt{DRI}-Zustand.
 Aus dem \texttt{LIN}-Zustand wird zwangsläufig wieder in den \texttt{DRI}-Zustand übergegangen.
 
+Ein Zeitschritt der Simulation entspricht dabei einem Zyklus vom Startzustand ausgehend, bis zur Rückkehr dorthin.
+
 
 \subsubsection{Agentenplan}
 
 Der o.g. Automat wurde in die Agentensprache \enquote{übersetzt}. 
-Die Automatenversion wurde während der Entwicklung leicht abgeändert. 
+Die Agentenversion unterscheidet sich dabei leicht von der Automatenversion. 
 
 Der Agent beginnt im Plan \enquote{\texttt{cruise}}, von dem aus alle weiteren Pläne (\enquote{\texttt{accelerate}}, \enquote{\texttt{linger}}, \enquote{\texttt{decelerate}}) gestartet werden.
 Außerdem ruft sich der Plan selbst wieder auf.
@@ -237,31 +244,31 @@ Der \texttt{accelerate}-Plan war ursprünglich mit der Bedingung ausgestattet, d
 Hier ergab sich das Problem, dass auch bei vorwärtigem Verkehr eine Beschleunigung durchgeführt wurde und die nachfolgende Verzögerung diesen Geschwindigkeitszuwachs in jedem Zeitschritt zusätzlich abbauen musste.
 Die Fähigkeit zu verzögern war entsprechend schlecht.
 
-Gelöst wurde dies durch den Zusatz, dass eine Beschleunigung ebenfalls ausbleiben soll, wenn sich ein Fahrzeug im vorwärtigen Sichtbereich befindet.
+Abgestellt wurde dies durch den Zusatz, dass eine Beschleunigung ebenfalls ausbleiben soll, wenn sich ein Fahrzeug im vorwärtigen Sichtbereich befindet.
 Mit der Vergrößerung des Sichtfeldes, siehe \cref{sec:sichtweite}, wurde es nötig, außerdem die Entfernung mit in die Bedingung aufzunehmen, ab der nicht mehr beschleunigt werden soll.
 
 Um einen realen Folgeverkehr zu ermöglichen erfolgt die Ausnahme, dass dennoch beschleunigt werden darf, solange das Folgefahrzeug langsamer ist.
 
 Der \texttt{linger}-Plan modelliert das zufällige Verringern der Geschwindigkeit. 
 Mit einer Wahrscheinlichkeit von $10 \%$ wird das Trödeln ausgeführt.
-Die Intensität der Verzögerung wurde nach einigen Tests, siehe \cref{sec:lingersweetspot}, auf den Wert 0,3, was 30 $\%$ der Bremskraft entspricht, festgelegt.
+Die Intensität der Verzögerung wurde nach einigen Tests, siehe \cref{sec:lingersweetspot}, auf den Wert \texttt{0,3}, was 30 $\%$ der Bremskraft entspricht, festgelegt.
 
 Die Verzögerung des Agenten wird durch den \texttt{decelerate}-Plan gesteuert. 
 Dort wird das Abbremsen bei vorwärtigem Verkehr geregelt. 
-Auch hier wurde es nach Erweiterung des Sichtfeldes nötig, zusätzliche Bedingungen für die relative Geschwindigkeit und einen Abstand zwischen den Fahrzeugen einzufügen, um die Lücke nicht zu groß werden zu lassen.
+Auch hier wurde es nach Erweiterung des Sichtfeldes nötig, zusätzliche Bedingungen für die relative Geschwindigkeit und einen Abstand zwischen den Fahrzeugen einzufügen, um die Lücke nicht zu groß werden zu lassen und das Abbremsen nicht übermäßig stark ausfällt.
 
-Die realistische Modellierung der Geschwindigkeitsänderungen macht es unmöglich, dass sich die Fahrzeuge in aufeinanderfolgenden Zellen folgen.
+Die realistische Modellierung der Geschwindigkeitsänderungen macht es unmöglich, dass die Fahrzeuge in aufeinanderfolgenden Zellen hinterher fahren.
 Vielmehr muss, wie im realen Verkehr auch, ein gewisser Abstand, innerhalb dessen der Nachfolgeverkehr reagieren kann, eingehalten werden.
-Ein Wert von 100 m erschien in der Simulation sinnvoll, um Kollisionen zu verringern. 
+Ein Wert von 100 m erschien in der Simulation sinnvoll, um die Kollisionshäufigkeit zu verringern. 
 Für eine Geschwindigkeit von 100 km/h entspricht diese Entfernung nach der Faustformel, siehe \cite{bremsweg}, dem Bremsweg.
 
 Ist der Geschwindigkeitsunterschied zwischen Fahrzeugen allerdings zu groß, können diese nicht verhindert werden.
 
 \paragraph*{Tests des Agentenplanes}
-Um die Wirksamkeit der Anweisungen für die Agenten zu testen, wurden in der Szenariovereinbarung zwei Arten von Fahrzeugen, welche mit identische Plänen ausgestattet waren, zum Einsatz gebracht.
-Der einzige Unterschied, den es zwischen den Fahrzeugen gab, war, dass eines seine Geschwindigkeit aus einem niedrigeren Intervall wählen musste.
+Um die Wirksamkeit der Anweisungen für die Agenten zu testen, wurden in der Szenarienvereinbarung zwei Arten von Fahrzeugen, welche mit identische Plänen ausgestattet waren, zum Einsatz gebracht.
+Der einzige Unterschied, den es zwischen den Fahrzeugen gab, war, dass eines seine Geschwindigkeit aus einem niedrigeren Intervall zugewiesen bekam.
 \\
-Somit war sichergestellt, dass das schnellere Fahrzeug im Laufe der für Testzwecke verkürzten Simulationzeit auf das langsamere aufholen würde.
+Somit war sichergestellt, dass das schnellere Fahrzeug im Laufe der für Testzwecke kurz gehaltenen Simulationzeit auf das langsamere aufholen würde.
 Es war wiederholbar zu testen, ob das Abbremsen bei vorwärtigem Verkehr funktionierte.
 
 [Grafik Speedcurve][Grafik Cellcurve]
@@ -285,10 +292,14 @@ Das Szenario für die Simulation kann über eine YAML-Datei individuell eingeste
 Es gibt u.a. die Möglichkeit, die Streckenlänge und die Simulationsdauer, die Zellgröße und die Zeitschrittgröße und über Intervalle die Geschwindigkeit und die Beschleunigungs- und Verzögerungswerte der Fahrzeuge anzugeben.
 
 
-\subsubsection{Einstellmöglichkeiten für Zellgröße und Länge der Zeitschritte}
-\label{zellgroesse-zeitschritte}
+
+\subsubsection{Einstellmöglichkeiten in der Szenarienkonfiguration}
+\label{einstellungen-szenario}
+
+%\subsubsection{Einstellmöglichkeiten für Zellgröße und Länge der Zeitschritte}
 
 \paragraph*{Zellgröße}
+\label{zellgroesse-zeitschritte}
 Die Entwicklung der Agentenpläne wurde ausschließlich in einer Simulationsumgebung mit einer Zellgröße von 7,5 m durchgeführt.
 Als das Verhalten der Agenten zufriedenstellend war, wurde u.a. auch wegen der in \cref{sec:bremsverhalten} angemerkten Bremsprobleme, getestet, inwiefern sich die Zelllänge verkürzen lässt und welchen Einfluss dies auf die Simulation hat.
 
@@ -301,22 +312,24 @@ Als das Verhalten der Agenten zufriedenstellend war, wurde u.a. auch wegen der i
 %z.B. kritische Situationen nicht erkannt werden.
 
 \paragraph*{Zeitschrittlänge}
-Die Länge der Zeitschritte lässt sich im Simulationstool in Minuten oder Bruchteilen davon angeben. 
+Die Länge der Zeitschritte lässt sich in der Konfiguration in Minuten oder Bruchteilen davon angeben. 
 Dies stellte sich als unpraktikabel heraus, da z.B. eine Dauer von einer Sekunde durch den Dezimalbruch für $\frac{1}{60}$ angegeben werden müsste, der aber eine Periodizität aufweist.
 
 Begonnen wurde mit einer Zeitschrittlänge von 0,1 min, was sechs Sekunden entspricht. 
-Diese Länge erwies sich als nicht sinnvoll, da zwischen den einzelnen Entscheidungsmöglichkeiten eine zu lange Zeitspanne liegt.
+Diese Länge erwies sich als nicht sinnvoll, da zwischen den einzelnen Entscheidungszeitpunkten eine zu lange Zeitspanne liegt.
 
 Die Entwicklung der Agentenpläne wurde mit einer Schrittlänge von drei Sekunden, 0,05 min, durchgeführt und genügte für diesen Zweck völlig.
 Für die Tests auf Leistungsfähigkeit wurde die Schrittlänge dann auf 0.025 min, 1,5 Sekunden, reduziert.
+\\
+Ausführlich siehe \cref{setup-multilane-scenarios}.
 
 
-\subsection{Festlegen der Beschleunigungs-/Verzögerungswerte und der Sichtweite}
-\label{sec:sichtweite}
+%\subsubsection{Festlegen der Beschleunigungs-/Verzögerungswerte und der Sichtweite}
 
 \paragraph*{Beschleunigung/Verzögerung}
+\label{sec:sichtweite}
 Das originale Modell von Nagel und Schreckenberg legt Beschleunigung, Verzögerung und Sichtweite sehr einfach fest.
-Bedingt durch die Zellgröße von 7,5 m, die Ganzzahligkeit der Geschwindigkeit und die Zeitschrittlänge von 1 Sekunde ergeben sich Beschleunigungswerte von 7,5 $\frac{m}{s^{2}}$. 
+Bedingt durch die Zellgröße von \mbox{7,5 m}, die Ganzzahligkeit der Geschwindigkeit und die Zeitschrittlänge von 1 Sekunde ergeben sich Beschleunigungswerte von 7,5 $\frac{m}{s^{2}}$. 
 Durch die Möglichkeit, die Geschwindigkeit innerhalb eines einzigen Zeitschrittes von der Maximalgeschwindigkeit \enquote{5} auf Null zu verringern, ergibt sich theoretisch eine Verzögerung von 37,5 $\frac{m}{s^{2}}$.
 Dies ist unrealistisch.
 
@@ -342,20 +355,21 @@ Durch die fehlende Reaktionsträgheit, die maßgeblich durch die menschliche Kom
 Ein Wert der Sichtweite mittig im Intervall der Entscheidung genügt, um bis zum Beginn der Handlungsphase \enquote{tätig zu werden}.
 
 Für die Sichtweite wurde der Wert 250 m gewählt.
-Dieser liegt ungefähr mittig im Intervall und sollte den Agenten genügend Raum für Reaktionen geben. 
+Dieser liegt ungefähr mittig im Intervall der Entscheidungsphase und sollte den Agenten genügend Raum für Reaktionen geben. 
 In den Agentenplänen wird schließlich die Handlung durch Bedingungen auf einen Bereich unter 110 m beschränkt.
 
 
-\subsubsection{Festlegen der Trödelparameter}
-\label{sec:lingersweetspot}
+\subsubsection{Einstellmöglichkeiten im Agentenverhalten (Parameter)}
 
+\paragraph*{Festlegen der Trödelparameter}
+\label{sec:lingersweetspot}
 \sa{own: hier fehlt noch die Wkt.}
 Im Originalmodell wird dem jeweiligen Fahrzeug im Trödelfall eine Geschwindigkeitseinheit wieder abgezogen. 
 In jenem Zeitschritt erfolgt somit keine Beschleunigung, bzw. bei Fahren mit max. möglicher Geschwindigkeit wird diese reduziert. 
 Auf das Abbremsen vor einem Hindernis hat dies keinen Einfluss, weil die mögliche Geschwindigkeit an Größe der vorhandenen Lücke angepasst wird.
 
 Für die Simulation musste ein Wert gefunden werden, der dieses Verhalten näherungsweise nachbildet.
-Im Laufe mehrerer Testdurchgänge schien eine Intensität der Verzögerung von $0,3$ die getätigte Beschleunigung am besten zu egalisieren. 
+Im Laufe mehrerer Testdurchgänge schien eine Intensität der Verzögerung von \texttt{0,3} die getätigte Beschleunigung am besten zu egalisieren. 
 Hierbei ist noch die Streuung der Beschleunigungs- und Verzögerungswerte zu beachten, sodass das Trödeln unterschiedlich große Effekte haben kann.
 
 Für das Abbremsen in der Agentensimulation kann sich das Trödeln positiv auf den Bremsweg auswirken, da ein zusätzlicher Bremsimpuls erzeugt wird.
@@ -373,7 +387,7 @@ Aufgrund der vergleichbar zum NaSch-Modell gewählten Zellgröße von 7,5 Metern
 Da jedes Fahrzeug softwareseitig in der Mitte der belegten Zelle platziert wird (bzw. im ersten Zeitschritt dorthin gesetzt wird) wird eine Geschwindigkeit von mehr als $ \frac{1}{2} \times $ 7,5 $ \frac{m}{s} = $ 13,5 km/h benötigt, um eine sichtbare Bewegung durchzuführen.
 Durch die unterschiedliche Ausprägung der Beschleunigungswerte ist keine Nennung eines festen Zeitpunkts möglich, an dem dies vollzogen wird.
 
-Im weiteren Verlauf der Simulation fällt es nicht weiter auf, dass die Fahrzeuge an Zellen mit einer bestimmten Länge gebunden sind.
+Im weiteren Verlauf der Simulation fällt es in der Weg-Zeit-Kurve nicht weiter auf, dass die Fahrzeuge an Zellen mit einer bestimmten Länge gebunden sind.
 
 
 
@@ -382,7 +396,7 @@ Im weiteren Verlauf der Simulation fällt es nicht weiter auf, dass die Fahrzeug
 
 Die Simulationsplattform bietet durch realistisch modellierte Beschleunigungen und Verzögerungen den Vorteil, dass der Verkehr feingranularer abgebildet werden kann.
 Die analog zu den Simulationen von Nagel und Schreckenberg gewählte Zellgröße von 7,5 Metern führt allerdings dazu, dass theoretisch dargestellte Reduktionen der Geschwindigkeit nicht direkt in nächsten Zeitschritt umgesetzt werden.
-Vielmehr muss, wie auch beim Losfahren, siehe \cref{sec:accelerategroove}, ein gewisser Wert unterschritten werden, damit die gezeigte Bewegung auch real kürzer gesetzt wird.
+Vielmehr muss, ähnlich wie beim Losfahren, siehe \cref{sec:accelerategroove}, ein gewisser Wert unterschritten werden, damit die gezeigte Bewegung auch real kürzer gesetzt wird.
 
 Reicht der Platz nach vorn nicht aus, um das Fahrzeug entsprechend seiner Geschwindigkeit zu bewegen und in die freie Zelle hinter das vorausfahrende Fahrzeug zu setzen, wird ein Kollisionsereignis ausgelöst.
 
@@ -392,15 +406,15 @@ Zu Beginn der Erarbeitung wurde die Kollision mit einem extremen abbremsen model
 Die Reduktion der Geschwindigkeit auf Null ist insofern vorteilhaft, weil der Extremausschlag nach unten im Plot der Geschwindigkeiten sichtbar ist.
 Außerdem wird der Agent wirklich in der aktuellen Zelle gestoppt. 
 Die Simulationsplattform würde sonst über (mehrere) Zeitschritte hinweg die Geschwindigkeit abzubauen, ohne dass bedingt durch vorausliegende Hindernisse, eine reale Bewegung stattfinden könnte. 
+\\
+Nachteilig ist zu sehen, dass ein Totalstillstand aufgrund der großen Geschwindigkeitsunterschiede meist weitere Kollisionen nach sich zieht.
 
 % --- Diese beiden Absätze sind gut - Phil FB 27feb
 Die Schwierigkeiten beim Bremsen können durch Reduktion der Zellgröße bei ansonsten gleichen Voraussetzungen \enquote{behoben} werden.
 Eine Simulation mit reduzierten Zellgrößen führte in diesem Aspekt zu einem harmonischeren Verkehrsbild.
 
 Für die weitere Entwicklung könnte für die Fahrzeuge bei der Initialisierung eine Länge generiert werden, wodurch diese mehrere dieser dann kleineren Zellen überdecken würden.
-Dies würde ein diversifizierteres Fahrzeugbild zur Folge haben, bzw. die Möglichkeit eröffnen Fahrzeugklassen auch in Sachen Platzbedarf realistisch erscheinen zu lassen.
-\\
-Dieses würde die Möglichkeit eröffnen, präzisere Simulationen mit kleineren Zellen durchzuführen.
+Dies würde ein diversifizierteres Fahrzeugbild zur Folge haben, bzw. die Möglichkeit eröffnen präzisere Simulationen mit kleineren Zellen durchzuführen und Fahrzeugklassen auch in Sachen Platzbedarf realistisch erscheinen zu lassen.
 
 
 

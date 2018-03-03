@@ -1,7 +1,7 @@
 \section{Die Simulationsumgebung \enquote{LightJason}}
 \label{simulationsumgebung}
 
-Als Simulationsumgebung für die geplanten Tests der Modelle wurde eine modifizierte Version einer Java-Software genutzt, welche im September 2017 für einen Workshop\footnote{https://lightjason.github.io/news/2017-09-workshop/} mit Doktoranden genutzt wurde.
+Als Simulationsumgebung für die geplanten Tests der Modelle wurde eine modifizierte Version einer Java-Software genutzt, welche im September 2017 für einen Workshop\footnote{\url{https://lightjason.github.io/news/2017-09-workshop/}} mit Doktoranden genutzt wurde.
 Die Steuerung des Agentenverhaltens wird dabei von LightJason, vorgestellt in \cite{lightjason}, übernommen.
 
 Es handelt sich um ein paralleles BDI-Multi-Agenten-Framework zum Erstellen von Multiagentensystemen mit Java. 
@@ -41,7 +41,7 @@ Dies können bei Agenten in einer realen Umwelt phsysische Sensoren oder bei Sof
 \\
 Aufgrund dieser Wahrnehmung seiner Umwelt trifft er Entscheidungen und handelt dann entsprechend dieser.
 Durch seine Handlungen (und natürlich auch die von anderen Agenten in der gleichen Umwelt) kann diese Umwelt verändert werden.
-Dies kann auch während der Entscheidungsfindung des Agenten passieren, so dass die getroffene Entscheidung nicht optimal zum denn aktuellen Zustand der Umwelt ist.
+Dies kann auch während der Entscheidungsfindung des Agenten passieren, so dass die getroffene Entscheidung nicht optimal zum dann aktuellen Zustand der Umwelt ist.
 
 Ein einfaches System, welches außerhalb der Digitalität als Agent angesehen werden kann, ist z.B. ein Heizungsthermostat.
 An diesem lassen sich leicht verständlich die Begrifflichkeiten erklären.
@@ -65,7 +65,7 @@ Ist etwa eine Tür oder ein Fenster geöffnet, kann eine Erwärmung des Raumes a
 Ein intelligenter Agent zeigt in der Regel drei Arten von Verhalten: Reaktivität, Proaktivität und soziale Fähigkeit.
 
 \paragraph*{Reaktivität} 
-Da sich die die Umwelt des Agenten  mit großer Wahrscheinlichkeit ständig verändert, muss er in der Lage sein, diese Änderungen aufzunehmen und in rechtzeitig darauf zu reagieren, um seine vorgegebenen Ziele zu erreichen.
+Da sich die die Umwelt des Agenten  mit großer Wahrscheinlichkeit ständig verändert, muss er in der Lage sein, diese Änderungen aufzunehmen und in angemessener Zeit darauf zu reagieren, um seine vorgegebenen Ziele zu erreichen.
 
 \paragraph*{Proaktivität} 
 Das Verhalten der Agenten ist nicht auf pure Reaktion beschränkt, sondern soll auch eigenes zielführendes Verhalten zeigen. 
@@ -80,15 +80,15 @@ Da einige Ziele nicht allein zu erreichen sind, muss der Agent die Fähigkeit ha
 
 Für die Entwickler von LightJason war es wichtig, dass die Agentensprache auch von Nicht-Informatikern verwendet werden kann.
 Auf der einen Seite brauchte man eine Syntax um Verhalten zu definieren, auf der anderen Seite muss diese Syntax leicht verständlich und sauber sein.
-Die Syntax von \enquote{Agentspeak(L++)} (ASL) wurde als logische Programmiersprache designt, wobei alle Elemente auf Terme und Literale reduziert werden konnten.
+Die Syntax von \enquote{Agentspeak(L++)} (ASL) wurde als logische Programmiersprache \mbox{designt}, wobei alle Elemente auf Terme und Literale reduziert werden konnten.
 
-Dies erlaubt die Modellierung eines Multiagentensystems, das später bei der Agentenprogrammierung erlaubt, Verhalten durch Vorstellungen (beliefs), Regeln (rules), Pläne (plans) und Aktionen (actions) zu beschreiben.
+Dies erlaubte die Modellierung eines Multiagentensystems, durch das später bei der Agentenprogrammierung möglich ist, Verhalten durch Umwelteindrücke (beliefs), Regeln (rules), Pläne (plans) und Aktionen (actions) zu beschreiben.
 
 \paragraph*{belief}
 Beliefs (oder auch Fakten) sind die Eindrücke des Agenten von seiner Umwelt.
 Aufgrund dieser Daten trifft der Agent seine Entscheidungen.
 \\
-Beliefs können in der Definition Agentenverhaltens als Standardwerte vorgegeben, von Sensoren erfasst oder vom Agenten selbst aus eigenen Daten oder den Daten von anderen Agenten kombiniert werden.
+Beliefs können in der Definition Agentenverhaltens als Standardwerte vorgegeben, von Sensoren erfasst oder vom Agenten selbst aus eigenen Daten oder den Daten anderer Agenten kombiniert werden.
 \\
 Ein Belief muss nicht faktisch richtig sein.
 Er kann also der Realität der Umwelt widersprechen. 
@@ -97,11 +97,14 @@ Ursache hierfür können defekte Sensoren sein oder die Informationen, die z.B. 
 Ein einfaches Beispiel für einen Belief im Verkehrskontext wäre die wahrgenommene Lichtfarbe einer Ampel - \enquote{\texttt{light(red)}}.
 
 \paragraph*{plan}
-Pläne sind ähnlich statischen Methoden oder Funktionen in imperativen Programmiersprachen, mit einer Ausführungsbedingung und einem boolean Rückgabewert.
+Pläne sind ähnlich statischen Methoden oder Funktionen in imperativen Programmiersprachen mit einer Ausführungsbedingung und einem boolean Rückgabewert.
 \\
 Der Aufruf von Plänen erfolgt über die Festlegung von Zielen (goals).
 So kann etwa aus dem Plan \enquote{\texttt{+!main}} über das Ziel \enquote{\texttt{!nextplan}} im nächsten Durchlauf der Plan \enquote{\texttt{+!nextplan}} aufgerufen werden.
 
 Innerhalb eines Planes kann es durch Auswertung von Beliefs (ähnlich IF-Bedingungen) zu unterschiedlichen Resultaten beim Durchlauf ein und desselben Planes kommen.
+Diesen unterschiedlichen Ausgängen könnten z.B. unterschiedliche Ziele und damit die Ausführung unterschiedlicher Pläne zugewiesen werden.
 
 Für den Fall, dass die Ausführung eines Planes fehlschlägt, kann mit dem Trigger \enquote{\texttt{-!nextplan}} ein Alternativverhalten definiert werden.
+
+Für ausführliche Erklärungen zur Syntax, Beispiele usw. sei an dieser Stelle auf die Webseite\footnote{\url{http://www.lightjason.org}} der Entwickler verwiesen.
