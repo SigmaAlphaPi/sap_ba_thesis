@@ -73,7 +73,7 @@
 // --- lingering ---
 +!linger <-
     L = math/statistic/randomsimple;
-    L < 0.35;
+    L < 0.000000001;
     generic/print( "LIN", ID, "LINGERED" );
     vehicle/decelerate(0.3)
 .
@@ -108,13 +108,14 @@
 
 // --- collision ---
 +!vehicle/collision <-
-/*
+
     // --- brake as hard as possible ---
     vehicle/decelerate( 1 );
     generic/print( "COB", ID, "BREAKED HARD -> collision" )
-*/
+/*
     // --- stop immediately ---
     vehicle/stop;
     generic/print( "COS", ID, "STOPPED -> collision" )
+*/
 .
 

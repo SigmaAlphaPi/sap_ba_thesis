@@ -9,7 +9,7 @@ main:
     # was 100
     
     #was 180 / 60
-    simulationtime_in_minutes: 60
+    simulationtime_in_minutes: 30
 
     # preetprint of the result json
     prettyprint: true
