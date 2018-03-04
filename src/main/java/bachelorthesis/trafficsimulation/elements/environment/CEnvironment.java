@@ -103,7 +103,7 @@ public final class CEnvironment implements IEnvironment
                             2
             ).filter( i ->
             {
-                final Object l_object = m_grid.getQuick( i.get( 1 )[0].intValue(), i.get( 1 )[1].intValue() );
+                final Object l_object = m_grid.getQuick( i.get( i.size() - 1 )[0].intValue(), i.get( i.size() - 1 )[1].intValue() );
                 return ( l_object != null ) && ( !l_object.equals( p_vehicle ) );
             } )
                                                                         .findFirst();
