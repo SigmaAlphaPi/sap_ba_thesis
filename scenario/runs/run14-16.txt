@@ -1,0 +1,2568 @@
+RUN14
+
+C:\Users\France\Documents\Sven\Uni\BA\sap_ba_thesis\scenario>java -jar trafficsimulation-1.0-SNAPSHOT.jar -scenario scenario.yml
+2018-02-27 09:17:13    main    bachelorthesis.trafficsimulation.scenario.CScenario.load 173    INFO: read configuration file [scenario.yml]
+2018-02-27 09:17:13    main    bachelorthesis.trafficsimulation.scenario.CScenario.generator 199    INFO: reading asl file [vehicle2.asl] and generate {count=1, showlog=false, viewrange=250, costant={LocalValue=nothing}, speed={min=70, max=90}, acceleration={min=3.5, max=7}, deceleration={min=8, max=10}} agents
+2018-02-27 09:17:13    ForkJoinPool.commonPool-worker-1    bachelorthesis.trafficsimulation.scenario.CScenario.generator 199    INFO: reading asl file [vehicle.asl] and generate {count=1, showlog=false, viewrange=250, costant={LocalValue=nothing}, speed={min=80, max=130}, acceleration={min=3.5, max=7}, deceleration={min=8, max=10}} agents
+----- step 0 ----------------
+LIN   vehicle0   LINGERED
+----- step 1 ----------------
+----- step 2 ----------------
+----- step 3 ----------------
+----- step 4 ----------------
+----- step 5 ----------------
+----- step 6 ----------------
+----- step 7 ----------------
+----- step 8 ----------------
+----- step 9 ----------------
+----- step 10 ----------------
+LIN   vehicle0   LINGERED
+----- step 11 ----------------
+----- step 12 ----------------
+LIN   vehicle0   LINGERED
+----- step 13 ----------------
+----- step 14 ----------------
+----- step 15 ----------------
+----- step 16 ----------------
+----- step 17 ----------------
+----- step 18 ----------------
+----- step 19 ----------------
+LIN   vehicle20   LINGERED
+----- step 20 ----------------
+----- step 21 ----------------
+----- step 22 ----------------
+----- step 23 ----------------
+LIN   vehicle0   LINGERED
+----- step 24 ----------------
+----- step 25 ----------------
+----- step 26 ----------------
+----- step 27 ----------------
+LIN   vehicle20   LINGERED
+----- step 28 ----------------
+----- step 29 ----------------
+----- step 30 ----------------
+LIN   vehicle20   LINGERED
+----- step 31 ----------------
+----- step 32 ----------------
+----- step 33 ----------------
+LIN   vehicle20   LINGERED
+----- step 34 ----------------
+----- step 35 ----------------
+LIN   vehicle0   LINGERED
+----- step 36 ----------------
+----- step 37 ----------------
+----- step 38 ----------------
+----- step 39 ----------------
+----- step 40 ----------------
+----- step 41 ----------------
+----- step 42 ----------------
+----- step 43 ----------------
+----- step 44 ----------------
+----- step 45 ----------------
+----- step 46 ----------------
+----- step 47 ----------------
+----- step 48 ----------------
+----- step 49 ----------------
+----- step 50 ----------------
+----- step 51 ----------------
+----- step 52 ----------------
+----- step 53 ----------------
+----- step 54 ----------------
+----- step 55 ----------------
+----- step 56 ----------------
+----- step 57 ----------------
+----- step 58 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 59 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 60 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 61 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 62 ----------------
+----- step 63 ----------------
+----- step 64 ----------------
+----- step 65 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 66 ----------------
+----- step 67 ----------------
+----- step 68 ----------------
+----- step 69 ----------------
+----- step 70 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 71 ----------------
+----- step 72 ----------------
+----- step 73 ----------------
+----- step 74 ----------------
+----- step 75 ----------------
+----- step 76 ----------------
+----- step 77 ----------------
+LIN   vehicle0   LINGERED
+----- step 78 ----------------
+----- step 79 ----------------
+----- step 80 ----------------
+----- step 81 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 82 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 83 ----------------
+----- step 84 ----------------
+----- step 85 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 86 ----------------
+----- step 87 ----------------
+LIN   vehicle0   LINGERED
+----- step 88 ----------------
+----- step 89 ----------------
+----- step 90 ----------------
+----- step 91 ----------------
+----- step 92 ----------------
+----- step 93 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 94 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 95 ----------------
+LIN   vehicle20   LINGERED
+----- step 96 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 97 ----------------
+----- step 98 ----------------
+LIN   vehicle0   LINGERED
+LIN   vehicle20   LINGERED
+----- step 99 ----------------
+----- step 100 ----------------
+----- step 101 ----------------
+----- step 102 ----------------
+----- step 103 ----------------
+LIN   vehicle0   LINGERED
+----- step 104 ----------------
+----- step 105 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 106 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 107 ----------------
+----- step 108 ----------------
+----- step 109 ----------------
+----- step 110 ----------------
+----- step 111 ----------------
+LIN   vehicle20   LINGERED
+----- step 112 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 113 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 114 ----------------
+----- step 115 ----------------
+----- step 116 ----------------
+LIN   vehicle20   LINGERED
+----- step 117 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 118 ----------------
+----- step 119 ----------------
+LIN   vehicle0   LINGERED
+----- step 120 ----------------
+----- step 121 ----------------
+----- step 122 ----------------
+----- step 123 ----------------
+LIN   vehicle20   LINGERED
+----- step 124 ----------------
+----- step 125 ----------------
+----- step 126 ----------------
+----- step 127 ----------------
+----- step 128 ----------------
+----- step 129 ----------------
+----- step 130 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 131 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 132 ----------------
+COS   vehicle0   STOPPED -> collision
+----- step 133 ----------------
+LIN   vehicle0   LINGERED
+----- step 134 ----------------
+----- step 135 ----------------
+----- step 136 ----------------
+----- step 137 ----------------
+----- step 138 ----------------
+----- step 139 ----------------
+----- step 140 ----------------
+----- step 141 ----------------
+LIN   vehicle20   LINGERED
+----- step 142 ----------------
+----- step 143 ----------------
+----- step 144 ----------------
+----- step 145 ----------------
+----- step 146 ----------------
+LIN   vehicle0   LINGERED
+----- step 147 ----------------
+----- step 148 ----------------
+----- step 149 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 150 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 151 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 152 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 153 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 154 ----------------
+COS   vehicle20   STOPPED -> collision
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 155 ----------------
+----- step 156 ----------------
+----- step 157 ----------------
+----- step 158 ----------------
+LIN   vehicle20   LINGERED
+----- step 159 ----------------
+----- step 160 ----------------
+----- step 161 ----------------
+----- step 162 ----------------
+LIN   vehicle20   LINGERED
+----- step 163 ----------------
+----- step 164 ----------------
+----- step 165 ----------------
+----- step 166 ----------------
+----- step 167 ----------------
+----- step 168 ----------------
+LIN   vehicle0   LINGERED
+----- step 169 ----------------
+----- step 170 ----------------
+LIN   vehicle0   LINGERED
+----- step 171 ----------------
+----- step 172 ----------------
+----- step 173 ----------------
+----- step 174 ----------------
+----- step 175 ----------------
+----- step 176 ----------------
+----- step 177 ----------------
+LIN   vehicle0   LINGERED
+----- step 178 ----------------
+----- step 179 ----------------
+----- step 180 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 181 ----------------
+----- step 182 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 183 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 184 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 185 ----------------
+----- step 186 ----------------
+----- step 187 ----------------
+LIN   vehicle0   LINGERED
+----- step 188 ----------------
+LIN   vehicle20   LINGERED
+----- step 189 ----------------
+LIN   vehicle20   LINGERED
+----- step 190 ----------------
+LIN   vehicle20   LINGERED
+COS   vehicle0   STOPPED -> collision
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 191 ----------------
+----- step 192 ----------------
+----- step 193 ----------------
+----- step 194 ----------------
+----- step 195 ----------------
+----- step 196 ----------------
+----- step 197 ----------------
+----- step 198 ----------------
+LIN   vehicle20   LINGERED
+----- step 199 ----------------
+----- step 200 ----------------
+----- step 201 ----------------
+LIN   vehicle20   LINGERED
+----- step 202 ----------------
+LIN   vehicle20   LINGERED
+----- step 203 ----------------
+----- step 204 ----------------
+----- step 205 ----------------
+----- step 206 ----------------
+----- step 207 ----------------
+----- step 208 ----------------
+----- step 209 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 210 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 211 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 212 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 213 ----------------
+----- step 214 ----------------
+LIN   vehicle20   LINGERED
+----- step 215 ----------------
+LIN   vehicle0   LINGERED
+----- step 216 ----------------
+LIN   vehicle0   LINGERED
+----- step 217 ----------------
+LIN   vehicle0   LINGERED
+----- step 218 ----------------
+----- step 219 ----------------
+LIN   vehicle20   LINGERED
+----- step 220 ----------------
+----- step 221 ----------------
+----- step 222 ----------------
+----- step 223 ----------------
+----- step 224 ----------------
+----- step 225 ----------------
+LIN   vehicle20   LINGERED
+----- step 226 ----------------
+----- step 227 ----------------
+----- step 228 ----------------
+----- step 229 ----------------
+----- step 230 ----------------
+----- step 231 ----------------
+----- step 232 ----------------
+----- step 233 ----------------
+----- step 234 ----------------
+----- step 235 ----------------
+----- step 236 ----------------
+----- step 237 ----------------
+----- step 238 ----------------
+----- step 239 ----------------
+----- step 240 ----------------
+----- step 241 ----------------
+----- step 242 ----------------
+----- step 243 ----------------
+----- step 244 ----------------
+----- step 245 ----------------
+----- step 246 ----------------
+LIN   vehicle20   LINGERED
+----- step 247 ----------------
+LIN   vehicle20   LINGERED
+----- step 248 ----------------
+----- step 249 ----------------
+LIN   vehicle0   LINGERED
+----- step 250 ----------------
+----- step 251 ----------------
+----- step 252 ----------------
+----- step 253 ----------------
+----- step 254 ----------------
+----- step 255 ----------------
+----- step 256 ----------------
+----- step 257 ----------------
+----- step 258 ----------------
+----- step 259 ----------------
+----- step 260 ----------------
+LIN   vehicle0   LINGERED
+LIN   vehicle20   LINGERED
+----- step 261 ----------------
+LIN   vehicle20   LINGERED
+----- step 262 ----------------
+----- step 263 ----------------
+----- step 264 ----------------
+----- step 265 ----------------
+----- step 266 ----------------
+----- step 267 ----------------
+----- step 268 ----------------
+----- step 269 ----------------
+LIN   vehicle0   LINGERED
+----- step 270 ----------------
+----- step 271 ----------------
+LIN   vehicle0   LINGERED
+----- step 272 ----------------
+----- step 273 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 274 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 275 ----------------
+COS   vehicle0   STOPPED -> collision
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 276 ----------------
+----- step 277 ----------------
+LIN   vehicle0   LINGERED
+----- step 278 ----------------
+----- step 279 ----------------
+----- step 280 ----------------
+----- step 281 ----------------
+----- step 282 ----------------
+----- step 283 ----------------
+LIN   vehicle20   LINGERED
+----- step 284 ----------------
+LIN   vehicle20   LINGERED
+----- step 285 ----------------
+----- step 286 ----------------
+----- step 287 ----------------
+LIN   vehicle20   LINGERED
+----- step 288 ----------------
+----- step 289 ----------------
+----- step 290 ----------------
+----- step 291 ----------------
+----- step 292 ----------------
+----- step 293 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 294 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 295 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 296 ----------------
+COS   vehicle20   STOPPED -> collision
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 297 ----------------
+----- step 298 ----------------
+----- step 299 ----------------
+----- step 300 ----------------
+----- step 301 ----------------
+----- step 302 ----------------
+----- step 303 ----------------
+----- step 304 ----------------
+----- step 305 ----------------
+----- step 306 ----------------
+LIN   vehicle0   LINGERED
+----- step 307 ----------------
+----- step 308 ----------------
+----- step 309 ----------------
+----- step 310 ----------------
+----- step 311 ----------------
+----- step 312 ----------------
+----- step 313 ----------------
+----- step 314 ----------------
+----- step 315 ----------------
+----- step 316 ----------------
+----- step 317 ----------------
+----- step 318 ----------------
+----- step 319 ----------------
+----- step 320 ----------------
+----- step 321 ----------------
+----- step 322 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 323 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 324 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 325 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 326 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 327 ----------------
+COS   vehicle0   STOPPED -> collision
+----- step 328 ----------------
+----- step 329 ----------------
+----- step 330 ----------------
+----- step 331 ----------------
+----- step 332 ----------------
+----- step 333 ----------------
+----- step 334 ----------------
+----- step 335 ----------------
+----- step 336 ----------------
+LIN   vehicle0   LINGERED
+----- step 337 ----------------
+----- step 338 ----------------
+----- step 339 ----------------
+----- step 340 ----------------
+LIN   vehicle0   LINGERED
+----- step 341 ----------------
+----- step 342 ----------------
+----- step 343 ----------------
+----- step 344 ----------------
+LIN   vehicle20   LINGERED
+----- step 345 ----------------
+----- step 346 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 347 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 348 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 349 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 350 ----------------
+----- step 351 ----------------
+----- step 352 ----------------
+----- step 353 ----------------
+----- step 354 ----------------
+LIN   vehicle0   LINGERED
+----- step 355 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 356 ----------------
+----- step 357 ----------------
+----- step 358 ----------------
+----- step 359 ----------------
+LIN   vehicle20   LINGERED
+----- step 360 ----------------
+----- step 361 ----------------
+----- step 362 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 363 ----------------
+----- step 364 ----------------
+----- step 365 ----------------
+----- step 366 ----------------
+----- step 367 ----------------
+----- step 368 ----------------
+----- step 369 ----------------
+----- step 370 ----------------
+----- step 371 ----------------
+----- step 372 ----------------
+----- step 373 ----------------
+----- step 374 ----------------
+----- step 375 ----------------
+----- step 376 ----------------
+----- step 377 ----------------
+LIN   vehicle20   LINGERED
+----- step 378 ----------------
+LIN   vehicle20   LINGERED
+----- step 379 ----------------
+----- step 380 ----------------
+----- step 381 ----------------
+----- step 382 ----------------
+----- step 383 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 384 ----------------
+----- step 385 ----------------
+----- step 386 ----------------
+----- step 387 ----------------
+----- step 388 ----------------
+----- step 389 ----------------
+----- step 390 ----------------
+----- step 391 ----------------
+----- step 392 ----------------
+----- step 393 ----------------
+----- step 394 ----------------
+LIN   vehicle20   LINGERED
+----- step 395 ----------------
+----- step 396 ----------------
+----- step 397 ----------------
+LIN   vehicle20   LINGERED
+----- step 398 ----------------
+----- step 399 ----------------
+----- step 400 ----------------
+----- step 401 ----------------
+----- step 402 ----------------
+----- step 403 ----------------
+----- step 404 ----------------
+----- step 405 ----------------
+----- step 406 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 407 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 408 ----------------
+----- step 409 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 410 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 411 ----------------
+----- step 412 ----------------
+----- step 413 ----------------
+----- step 414 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 415 ----------------
+----- step 416 ----------------
+----- step 417 ----------------
+----- step 418 ----------------
+----- step 419 ----------------
+LIN   vehicle20   LINGERED
+----- step 420 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 421 ----------------
+LIN   vehicle20   LINGERED
+----- step 422 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 423 ----------------
+----- step 424 ----------------
+----- step 425 ----------------
+----- step 426 ----------------
+----- step 427 ----------------
+----- step 428 ----------------
+----- step 429 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 430 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 431 ----------------
+----- step 432 ----------------
+----- step 433 ----------------
+----- step 434 ----------------
+----- step 435 ----------------
+----- step 436 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 437 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 438 ----------------
+----- step 439 ----------------
+----- step 440 ----------------
+----- step 441 ----------------
+----- step 442 ----------------
+LIN   vehicle0   LINGERED
+LIN   vehicle20   LINGERED
+----- step 443 ----------------
+----- step 444 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 445 ----------------
+----- step 446 ----------------
+----- step 447 ----------------
+----- step 448 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 449 ----------------
+LIN   vehicle20   LINGERED
+----- step 450 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 451 ----------------
+----- step 452 ----------------
+----- step 453 ----------------
+LIN   vehicle0   LINGERED
+----- step 454 ----------------
+----- step 455 ----------------
+----- step 456 ----------------
+----- step 457 ----------------
+----- step 458 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 459 ----------------
+----- step 460 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 461 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 462 ----------------
+----- step 463 ----------------
+----- step 464 ----------------
+----- step 465 ----------------
+----- step 466 ----------------
+----- step 467 ----------------
+----- step 468 ----------------
+----- step 469 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 470 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 471 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 472 ----------------
+----- step 473 ----------------
+----- step 474 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 475 ----------------
+----- step 476 ----------------
+----- step 477 ----------------
+----- step 478 ----------------
+----- step 479 ----------------
+----- step 480 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 481 ----------------
+----- step 482 ----------------
+----- step 483 ----------------
+LIN   vehicle0   LINGERED
+----- step 484 ----------------
+----- step 485 ----------------
+----- step 486 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 487 ----------------
+----- step 488 ----------------
+----- step 489 ----------------
+----- step 490 ----------------
+----- step 491 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 492 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 493 ----------------
+LIN   vehicle20   LINGERED
+----- step 494 ----------------
+LIN   vehicle20   LINGERED
+----- step 495 ----------------
+----- step 496 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 497 ----------------
+----- step 498 ----------------
+----- step 499 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 500 ----------------
+----- step 501 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 502 ----------------
+----- step 503 ----------------
+----- step 504 ----------------
+----- step 505 ----------------
+LIN   vehicle20   LINGERED
+----- step 506 ----------------
+----- step 507 ----------------
+----- step 508 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 509 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 510 ----------------
+LIN   vehicle20   LINGERED
+----- step 511 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 512 ----------------
+----- step 513 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 514 ----------------
+----- step 515 ----------------
+----- step 516 ----------------
+----- step 517 ----------------
+----- step 518 ----------------
+----- step 519 ----------------
+----- step 520 ----------------
+----- step 521 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 522 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 523 ----------------
+----- step 524 ----------------
+LIN   vehicle0   LINGERED
+----- step 525 ----------------
+----- step 526 ----------------
+----- step 527 ----------------
+----- step 528 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 529 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 530 ----------------
+----- step 531 ----------------
+----- step 532 ----------------
+----- step 533 ----------------
+----- step 534 ----------------
+----- step 535 ----------------
+LIN   vehicle0   LINGERED
+----- step 536 ----------------
+----- step 537 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 538 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 539 ----------------
+LIN   vehicle20   LINGERED
+----- step 540 ----------------
+----- step 541 ----------------
+----- step 542 ----------------
+----- step 543 ----------------
+----- step 544 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 545 ----------------
+LIN   vehicle0   LINGERED
+----- step 546 ----------------
+----- step 547 ----------------
+----- step 548 ----------------
+LIN   vehicle0   LINGERED
+----- step 549 ----------------
+----- step 550 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 551 ----------------
+----- step 552 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 553 ----------------
+----- step 554 ----------------
+----- step 555 ----------------
+----- step 556 ----------------
+----- step 557 ----------------
+----- step 558 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 559 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 560 ----------------
+----- step 561 ----------------
+----- step 562 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 563 ----------------
+----- step 564 ----------------
+----- step 565 ----------------
+----- step 566 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 567 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 568 ----------------
+LIN   vehicle0   LINGERED
+----- step 569 ----------------
+----- step 570 ----------------
+----- step 571 ----------------
+----- step 572 ----------------
+----- step 573 ----------------
+LIN   vehicle0   LINGERED
+----- step 574 ----------------
+----- step 575 ----------------
+LIN   vehicle20   LINGERED
+----- step 576 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 577 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 578 ----------------
+----- step 579 ----------------
+LIN   vehicle20   LINGERED
+----- step 580 ----------------
+----- step 581 ----------------
+----- step 582 ----------------
+----- step 583 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 584 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 585 ----------------
+LIN   vehicle0   LINGERED
+----- step 586 ----------------
+----- step 587 ----------------
+----- step 588 ----------------
+----- step 589 ----------------
+----- step 590 ----------------
+----- step 591 ----------------
+----- step 592 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 593 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 594 ----------------
+LIN   vehicle20   LINGERED
+----- step 595 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 596 ----------------
+----- step 597 ----------------
+----- step 598 ----------------
+----- step 599 ----------------
+
+C:\Users\France\Documents\Sven\Uni\BA\sap_ba_thesis\scenario>
+
+
+
+#########################################################################################
+
+
+
+RUN15
+
+C:\Users\France\Documents\Sven\Uni\BA\sap_ba_thesis\scenario>java -jar trafficsimulation-1.0-SNAPSHOT.jar -scenario scenario.yml
+2018-02-27 09:19:08    main    bachelorthesis.trafficsimulation.scenario.CScenario.load 173    INFO: read configuration file [scenario.yml]
+2018-02-27 09:19:08    ForkJoinPool.commonPool-worker-1    bachelorthesis.trafficsimulation.scenario.CScenario.generator 199    INFO: reading asl file [vehicle.asl] and generate {count=1, showlog=false, viewrange=250, costant={LocalValue=nothing}, speed={min=80, max=130}, acceleration={min=3.5, max=7}, deceleration={min=8, max=10}} agents
+2018-02-27 09:19:08    main    bachelorthesis.trafficsimulation.scenario.CScenario.generator 199    INFO: reading asl file [vehicle2.asl] and generate {count=1, showlog=false, viewrange=250, costant={LocalValue=nothing}, speed={min=70, max=90}, acceleration={min=3.5, max=7}, deceleration={min=8, max=10}} agents
+----- step 0 ----------------
+----- step 1 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 2 ----------------
+----- step 3 ----------------
+LIN   vehicle20   LINGERED
+----- step 4 ----------------
+----- step 5 ----------------
+LIN   vehicle0   LINGERED
+----- step 6 ----------------
+----- step 7 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 8 ----------------
+----- step 9 ----------------
+LIN   vehicle20   LINGERED
+----- step 10 ----------------
+----- step 11 ----------------
+----- step 12 ----------------
+----- step 13 ----------------
+----- step 14 ----------------
+----- step 15 ----------------
+----- step 16 ----------------
+----- step 17 ----------------
+----- step 18 ----------------
+----- step 19 ----------------
+----- step 20 ----------------
+----- step 21 ----------------
+----- step 22 ----------------
+----- step 23 ----------------
+----- step 24 ----------------
+LIN   vehicle0   LINGERED
+----- step 25 ----------------
+----- step 26 ----------------
+LIN   vehicle0   LINGERED
+----- step 27 ----------------
+----- step 28 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 29 ----------------
+----- step 30 ----------------
+LIN   vehicle20   LINGERED
+----- step 31 ----------------
+----- step 32 ----------------
+LIN   vehicle0   LINGERED
+----- step 33 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 34 ----------------
+----- step 35 ----------------
+----- step 36 ----------------
+----- step 37 ----------------
+LIN   vehicle0   LINGERED
+----- step 38 ----------------
+----- step 39 ----------------
+----- step 40 ----------------
+----- step 41 ----------------
+----- step 42 ----------------
+----- step 43 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 44 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 45 ----------------
+----- step 46 ----------------
+----- step 47 ----------------
+----- step 48 ----------------
+----- step 49 ----------------
+LIN   vehicle0   LINGERED
+----- step 50 ----------------
+LIN   vehicle20   LINGERED
+----- step 51 ----------------
+----- step 52 ----------------
+----- step 53 ----------------
+----- step 54 ----------------
+----- step 55 ----------------
+----- step 56 ----------------
+----- step 57 ----------------
+----- step 58 ----------------
+----- step 59 ----------------
+----- step 60 ----------------
+----- step 61 ----------------
+----- step 62 ----------------
+----- step 63 ----------------
+----- step 64 ----------------
+----- step 65 ----------------
+----- step 66 ----------------
+----- step 67 ----------------
+----- step 68 ----------------
+----- step 69 ----------------
+----- step 70 ----------------
+----- step 71 ----------------
+----- step 72 ----------------
+----- step 73 ----------------
+LIN   vehicle0   LINGERED
+----- step 74 ----------------
+----- step 75 ----------------
+----- step 76 ----------------
+----- step 77 ----------------
+----- step 78 ----------------
+LIN   vehicle20   LINGERED
+----- step 79 ----------------
+----- step 80 ----------------
+LIN   vehicle0   LINGERED
+----- step 81 ----------------
+LIN   vehicle20   LINGERED
+----- step 82 ----------------
+----- step 83 ----------------
+----- step 84 ----------------
+----- step 85 ----------------
+----- step 86 ----------------
+----- step 87 ----------------
+----- step 88 ----------------
+LIN   vehicle20   LINGERED
+----- step 89 ----------------
+----- step 90 ----------------
+----- step 91 ----------------
+----- step 92 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 93 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 94 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 95 ----------------
+----- step 96 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 97 ----------------
+LIN   vehicle0   LINGERED
+----- step 98 ----------------
+----- step 99 ----------------
+----- step 100 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 101 ----------------
+----- step 102 ----------------
+----- step 103 ----------------
+----- step 104 ----------------
+----- step 105 ----------------
+LIN   vehicle0   LINGERED
+----- step 106 ----------------
+----- step 107 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 108 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 109 ----------------
+----- step 110 ----------------
+----- step 111 ----------------
+----- step 112 ----------------
+----- step 113 ----------------
+----- step 114 ----------------
+----- step 115 ----------------
+----- step 116 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 117 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 118 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 119 ----------------
+----- step 120 ----------------
+----- step 121 ----------------
+----- step 122 ----------------
+----- step 123 ----------------
+----- step 124 ----------------
+----- step 125 ----------------
+----- step 126 ----------------
+----- step 127 ----------------
+----- step 128 ----------------
+----- step 129 ----------------
+----- step 130 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 131 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 132 ----------------
+----- step 133 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 134 ----------------
+----- step 135 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 136 ----------------
+----- step 137 ----------------
+LIN   vehicle20   LINGERED
+----- step 138 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 139 ----------------
+----- step 140 ----------------
+----- step 141 ----------------
+----- step 142 ----------------
+----- step 143 ----------------
+----- step 144 ----------------
+----- step 145 ----------------
+----- step 146 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 147 ----------------
+----- step 148 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 149 ----------------
+----- step 150 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 151 ----------------
+----- step 152 ----------------
+----- step 153 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 154 ----------------
+----- step 155 ----------------
+----- step 156 ----------------
+----- step 157 ----------------
+----- step 158 ----------------
+----- step 159 ----------------
+LIN   vehicle0   LINGERED
+----- step 160 ----------------
+----- step 161 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 162 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 163 ----------------
+LIN   vehicle20   LINGERED
+----- step 164 ----------------
+----- step 165 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 166 ----------------
+----- step 167 ----------------
+----- step 168 ----------------
+----- step 169 ----------------
+----- step 170 ----------------
+----- step 171 ----------------
+----- step 172 ----------------
+LIN   vehicle20   LINGERED
+----- step 173 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 174 ----------------
+----- step 175 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 176 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 177 ----------------
+LIN   vehicle20   LINGERED
+----- step 178 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 179 ----------------
+----- step 180 ----------------
+----- step 181 ----------------
+----- step 182 ----------------
+LIN   vehicle0   LINGERED
+----- step 183 ----------------
+LIN   vehicle20   LINGERED
+----- step 184 ----------------
+----- step 185 ----------------
+----- step 186 ----------------
+----- step 187 ----------------
+----- step 188 ----------------
+----- step 189 ----------------
+----- step 190 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 191 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 192 ----------------
+----- step 193 ----------------
+----- step 194 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 195 ----------------
+----- step 196 ----------------
+----- step 197 ----------------
+----- step 198 ----------------
+----- step 199 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 200 ----------------
+----- step 201 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 202 ----------------
+----- step 203 ----------------
+----- step 204 ----------------
+----- step 205 ----------------
+----- step 206 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 207 ----------------
+LIN   vehicle0   LINGERED
+----- step 208 ----------------
+----- step 209 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 210 ----------------
+----- step 211 ----------------
+LIN   vehicle20   LINGERED
+----- step 212 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 213 ----------------
+LIN   vehicle20   LINGERED
+----- step 214 ----------------
+LIN   vehicle20   LINGERED
+----- step 215 ----------------
+----- step 216 ----------------
+----- step 217 ----------------
+----- step 218 ----------------
+LIN   vehicle20   LINGERED
+----- step 219 ----------------
+----- step 220 ----------------
+----- step 221 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 222 ----------------
+----- step 223 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 224 ----------------
+----- step 225 ----------------
+----- step 226 ----------------
+----- step 227 ----------------
+----- step 228 ----------------
+----- step 229 ----------------
+----- step 230 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 231 ----------------
+----- step 232 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 233 ----------------
+----- step 234 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 235 ----------------
+----- step 236 ----------------
+----- step 237 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 238 ----------------
+----- step 239 ----------------
+----- step 240 ----------------
+----- step 241 ----------------
+----- step 242 ----------------
+----- step 243 ----------------
+----- step 244 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 245 ----------------
+----- step 246 ----------------
+----- step 247 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 248 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 249 ----------------
+----- step 250 ----------------
+----- step 251 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 252 ----------------
+----- step 253 ----------------
+----- step 254 ----------------
+LIN   vehicle0   LINGERED
+----- step 255 ----------------
+LIN   vehicle0   LINGERED
+LIN   vehicle20   LINGERED
+----- step 256 ----------------
+----- step 257 ----------------
+----- step 258 ----------------
+LIN   vehicle0   LINGERED
+----- step 259 ----------------
+----- step 260 ----------------
+LIN   vehicle20   LINGERED
+----- step 261 ----------------
+----- step 262 ----------------
+----- step 263 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 264 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 265 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 266 ----------------
+----- step 267 ----------------
+LIN   vehicle20   LINGERED
+----- step 268 ----------------
+----- step 269 ----------------
+LIN   vehicle0   LINGERED
+----- step 270 ----------------
+----- step 271 ----------------
+----- step 272 ----------------
+----- step 273 ----------------
+----- step 274 ----------------
+----- step 275 ----------------
+----- step 276 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 277 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 278 ----------------
+----- step 279 ----------------
+----- step 280 ----------------
+----- step 281 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 282 ----------------
+----- step 283 ----------------
+----- step 284 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 285 ----------------
+----- step 286 ----------------
+LIN   vehicle0   LINGERED
+----- step 287 ----------------
+----- step 288 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 289 ----------------
+LIN   vehicle0   LINGERED
+----- step 290 ----------------
+----- step 291 ----------------
+----- step 292 ----------------
+----- step 293 ----------------
+----- step 294 ----------------
+----- step 295 ----------------
+LIN   vehicle0   LINGERED
+----- step 296 ----------------
+LIN   vehicle20   LINGERED
+----- step 297 ----------------
+----- step 298 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 299 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 300 ----------------
+----- step 301 ----------------
+----- step 302 ----------------
+----- step 303 ----------------
+----- step 304 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 305 ----------------
+----- step 306 ----------------
+----- step 307 ----------------
+----- step 308 ----------------
+----- step 309 ----------------
+----- step 310 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 311 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 312 ----------------
+----- step 313 ----------------
+----- step 314 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 315 ----------------
+----- step 316 ----------------
+----- step 317 ----------------
+----- step 318 ----------------
+----- step 319 ----------------
+----- step 320 ----------------
+----- step 321 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 322 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 323 ----------------
+LIN   vehicle20   LINGERED
+----- step 324 ----------------
+----- step 325 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 326 ----------------
+----- step 327 ----------------
+----- step 328 ----------------
+----- step 329 ----------------
+LIN   vehicle0   LINGERED
+----- step 330 ----------------
+----- step 331 ----------------
+----- step 332 ----------------
+LIN   vehicle20   LINGERED
+----- step 333 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 334 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 335 ----------------
+----- step 336 ----------------
+----- step 337 ----------------
+LIN   vehicle20   LINGERED
+----- step 338 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 339 ----------------
+----- step 340 ----------------
+----- step 341 ----------------
+----- step 342 ----------------
+----- step 343 ----------------
+----- step 344 ----------------
+LIN   vehicle0   LINGERED
+----- step 345 ----------------
+LIN   vehicle20   LINGERED
+----- step 346 ----------------
+----- step 347 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 348 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 349 ----------------
+----- step 350 ----------------
+----- step 351 ----------------
+LIN   vehicle0   LINGERED
+----- step 352 ----------------
+----- step 353 ----------------
+----- step 354 ----------------
+----- step 355 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 356 ----------------
+----- step 357 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 358 ----------------
+----- step 359 ----------------
+----- step 360 ----------------
+----- step 361 ----------------
+LIN   vehicle20   LINGERED
+----- step 362 ----------------
+----- step 363 ----------------
+----- step 364 ----------------
+----- step 365 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 366 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 367 ----------------
+----- step 368 ----------------
+LIN   vehicle0   LINGERED
+----- step 369 ----------------
+----- step 370 ----------------
+----- step 371 ----------------
+----- step 372 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 373 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 374 ----------------
+----- step 375 ----------------
+----- step 376 ----------------
+----- step 377 ----------------
+----- step 378 ----------------
+----- step 379 ----------------
+----- step 380 ----------------
+----- step 381 ----------------
+----- step 382 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 383 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 384 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 385 ----------------
+----- step 386 ----------------
+----- step 387 ----------------
+----- step 388 ----------------
+----- step 389 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 390 ----------------
+LIN   vehicle0   LINGERED
+----- step 391 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 392 ----------------
+LIN   vehicle20   LINGERED
+----- step 393 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 394 ----------------
+----- step 395 ----------------
+----- step 396 ----------------
+LIN   vehicle0   LINGERED
+----- step 397 ----------------
+----- step 398 ----------------
+----- step 399 ----------------
+----- step 400 ----------------
+LIN   vehicle0   LINGERED
+----- step 401 ----------------
+LIN   vehicle0   LINGERED
+----- step 402 ----------------
+LIN   vehicle0   LINGERED
+----- step 403 ----------------
+----- step 404 ----------------
+----- step 405 ----------------
+LIN   vehicle0   LINGERED
+----- step 406 ----------------
+----- step 407 ----------------
+----- step 408 ----------------
+----- step 409 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 410 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 411 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 412 ----------------
+LIN   vehicle0   LINGERED
+----- step 413 ----------------
+----- step 414 ----------------
+----- step 415 ----------------
+----- step 416 ----------------
+----- step 417 ----------------
+----- step 418 ----------------
+----- step 419 ----------------
+----- step 420 ----------------
+----- step 421 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 422 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 423 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 424 ----------------
+----- step 425 ----------------
+----- step 426 ----------------
+----- step 427 ----------------
+----- step 428 ----------------
+----- step 429 ----------------
+----- step 430 ----------------
+----- step 431 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 432 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 433 ----------------
+LIN   vehicle0   LINGERED
+----- step 434 ----------------
+----- step 435 ----------------
+----- step 436 ----------------
+LIN   vehicle0   LINGERED
+----- step 437 ----------------
+LIN   vehicle0   LINGERED
+----- step 438 ----------------
+----- step 439 ----------------
+----- step 440 ----------------
+----- step 441 ----------------
+----- step 442 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 443 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 444 ----------------
+----- step 445 ----------------
+----- step 446 ----------------
+----- step 447 ----------------
+----- step 448 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 449 ----------------
+LIN   vehicle0   LINGERED
+----- step 450 ----------------
+----- step 451 ----------------
+----- step 452 ----------------
+----- step 453 ----------------
+----- step 454 ----------------
+----- step 455 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 456 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 457 ----------------
+----- step 458 ----------------
+----- step 459 ----------------
+----- step 460 ----------------
+----- step 461 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 462 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 463 ----------------
+----- step 464 ----------------
+----- step 465 ----------------
+----- step 466 ----------------
+----- step 467 ----------------
+----- step 468 ----------------
+LIN   vehicle20   LINGERED
+----- step 469 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 470 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 471 ----------------
+----- step 472 ----------------
+----- step 473 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 474 ----------------
+----- step 475 ----------------
+----- step 476 ----------------
+----- step 477 ----------------
+----- step 478 ----------------
+----- step 479 ----------------
+LIN   vehicle0   LINGERED
+----- step 480 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 481 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 482 ----------------
+LIN   vehicle0   LINGERED
+----- step 483 ----------------
+----- step 484 ----------------
+----- step 485 ----------------
+----- step 486 ----------------
+----- step 487 ----------------
+----- step 488 ----------------
+----- step 489 ----------------
+LIN   vehicle0   LINGERED
+----- step 490 ----------------
+LIN   vehicle0   LINGERED
+----- step 491 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 492 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 493 ----------------
+----- step 494 ----------------
+----- step 495 ----------------
+----- step 496 ----------------
+----- step 497 ----------------
+----- step 498 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 499 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 500 ----------------
+----- step 501 ----------------
+----- step 502 ----------------
+----- step 503 ----------------
+----- step 504 ----------------
+----- step 505 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 506 ----------------
+----- step 507 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 508 ----------------
+----- step 509 ----------------
+LIN   vehicle20   LINGERED
+----- step 510 ----------------
+----- step 511 ----------------
+LIN   vehicle0   LINGERED
+----- step 512 ----------------
+----- step 513 ----------------
+----- step 514 ----------------
+LIN   vehicle20   LINGERED
+----- step 515 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 516 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 517 ----------------
+----- step 518 ----------------
+----- step 519 ----------------
+----- step 520 ----------------
+----- step 521 ----------------
+----- step 522 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 523 ----------------
+----- step 524 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 525 ----------------
+LIN   vehicle0   LINGERED
+----- step 526 ----------------
+----- step 527 ----------------
+----- step 528 ----------------
+LIN   vehicle0   LINGERED
+LIN   vehicle20   LINGERED
+----- step 529 ----------------
+----- step 530 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 531 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 532 ----------------
+----- step 533 ----------------
+----- step 534 ----------------
+----- step 535 ----------------
+----- step 536 ----------------
+----- step 537 ----------------
+----- step 538 ----------------
+----- step 539 ----------------
+----- step 540 ----------------
+LIN   vehicle0   LINGERED
+----- step 541 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 542 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+LIN   vehicle20   LINGERED
+----- step 543 ----------------
+----- step 544 ----------------
+----- step 545 ----------------
+----- step 546 ----------------
+LIN   vehicle20   LINGERED
+----- step 547 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 548 ----------------
+----- step 549 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 550 ----------------
+----- step 551 ----------------
+LIN   vehicle20   LINGERED
+----- step 552 ----------------
+----- step 553 ----------------
+----- step 554 ----------------
+----- step 555 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 556 ----------------
+----- step 557 ----------------
+----- step 558 ----------------
+LIN   vehicle20   LINGERED
+----- step 559 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 560 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 561 ----------------
+----- step 562 ----------------
+----- step 563 ----------------
+LIN   vehicle0   LINGERED
+----- step 564 ----------------
+----- step 565 ----------------
+----- step 566 ----------------
+----- step 567 ----------------
+----- step 568 ----------------
+----- step 569 ----------------
+----- step 570 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 571 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 572 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 573 ----------------
+----- step 574 ----------------
+----- step 575 ----------------
+----- step 576 ----------------
+----- step 577 ----------------
+----- step 578 ----------------
+----- step 579 ----------------
+----- step 580 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 581 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 582 ----------------
+----- step 583 ----------------
+----- step 584 ----------------
+----- step 585 ----------------
+----- step 586 ----------------
+----- step 587 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 588 ----------------
+----- step 589 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 590 ----------------
+----- step 591 ----------------
+----- step 592 ----------------
+----- step 593 ----------------
+----- step 594 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 595 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 596 ----------------
+LIN   vehicle20   LINGERED
+----- step 597 ----------------
+----- step 598 ----------------
+----- step 599 ----------------
+
+C:\Users\France\Documents\Sven\Uni\BA\sap_ba_thesis\scenario>
+
+
+
+#########################################################################################
+
+
+
+RUN16
+
+C:\Users\France\Documents\Sven\Uni\BA\sap_ba_thesis\scenario>java -jar trafficsimulation-1.0-SNAPSHOT.jar -scenario scenario.yml
+2018-02-27 09:20:49    main    bachelorthesis.trafficsimulation.scenario.CScenario.load 173    INFO: read configuration file [scenario.yml]
+2018-02-27 09:20:49    main    bachelorthesis.trafficsimulation.scenario.CScenario.generator 199    INFO: reading asl file [vehicle2.asl] and generate {count=1, showlog=false, viewrange=250, costant={LocalValue=nothing}, speed={min=70, max=90}, acceleration={min=3.5, max=7}, deceleration={min=8, max=10}} agents
+2018-02-27 09:20:49    ForkJoinPool.commonPool-worker-1    bachelorthesis.trafficsimulation.scenario.CScenario.generator 199    INFO: reading asl file [vehicle.asl] and generate {count=1, showlog=false, viewrange=250, costant={LocalValue=nothing}, speed={min=80, max=130}, acceleration={min=3.5, max=7}, deceleration={min=8, max=10}} agents
+----- step 0 ----------------
+----- step 1 ----------------
+----- step 2 ----------------
+----- step 3 ----------------
+----- step 4 ----------------
+----- step 5 ----------------
+----- step 6 ----------------
+LIN   vehicle0   LINGERED
+----- step 7 ----------------
+----- step 8 ----------------
+LIN   vehicle0   LINGERED
+----- step 9 ----------------
+----- step 10 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 11 ----------------
+----- step 12 ----------------
+LIN   vehicle20   LINGERED
+----- step 13 ----------------
+----- step 14 ----------------
+----- step 15 ----------------
+----- step 16 ----------------
+LIN   vehicle20   LINGERED
+----- step 17 ----------------
+----- step 18 ----------------
+LIN   vehicle0   LINGERED
+----- step 19 ----------------
+LIN   vehicle20   LINGERED
+----- step 20 ----------------
+LIN   vehicle0   LINGERED
+LIN   vehicle20   LINGERED
+----- step 21 ----------------
+----- step 22 ----------------
+----- step 23 ----------------
+----- step 24 ----------------
+----- step 25 ----------------
+----- step 26 ----------------
+----- step 27 ----------------
+----- step 28 ----------------
+----- step 29 ----------------
+----- step 30 ----------------
+LIN   vehicle20   LINGERED
+----- step 31 ----------------
+----- step 32 ----------------
+LIN   vehicle0   LINGERED
+----- step 33 ----------------
+----- step 34 ----------------
+LIN   vehicle20   LINGERED
+----- step 35 ----------------
+----- step 36 ----------------
+----- step 37 ----------------
+----- step 38 ----------------
+----- step 39 ----------------
+LIN   vehicle20   LINGERED
+----- step 40 ----------------
+----- step 41 ----------------
+----- step 42 ----------------
+----- step 43 ----------------
+----- step 44 ----------------
+----- step 45 ----------------
+----- step 46 ----------------
+----- step 47 ----------------
+LIN   vehicle20   LINGERED
+----- step 48 ----------------
+LIN   vehicle20   LINGERED
+----- step 49 ----------------
+LIN   vehicle0   LINGERED
+----- step 50 ----------------
+----- step 51 ----------------
+----- step 52 ----------------
+----- step 53 ----------------
+----- step 54 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 55 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 56 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 57 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 58 ----------------
+----- step 59 ----------------
+----- step 60 ----------------
+LIN   vehicle0   LINGERED
+----- step 61 ----------------
+----- step 62 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 63 ----------------
+----- step 64 ----------------
+----- step 65 ----------------
+----- step 66 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 67 ----------------
+----- step 68 ----------------
+----- step 69 ----------------
+----- step 70 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 71 ----------------
+----- step 72 ----------------
+LIN   vehicle0   LINGERED
+----- step 73 ----------------
+----- step 74 ----------------
+----- step 75 ----------------
+----- step 76 ----------------
+----- step 77 ----------------
+LIN   vehicle20   LINGERED
+----- step 78 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 79 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 80 ----------------
+----- step 81 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 82 ----------------
+----- step 83 ----------------
+----- step 84 ----------------
+----- step 85 ----------------
+----- step 86 ----------------
+----- step 87 ----------------
+----- step 88 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 89 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 90 ----------------
+----- step 91 ----------------
+----- step 92 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 93 ----------------
+----- step 94 ----------------
+LIN   vehicle0   LINGERED
+----- step 95 ----------------
+----- step 96 ----------------
+----- step 97 ----------------
+LIN   vehicle20   LINGERED
+----- step 98 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 99 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 100 ----------------
+----- step 101 ----------------
+----- step 102 ----------------
+----- step 103 ----------------
+----- step 104 ----------------
+----- step 105 ----------------
+----- step 106 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 107 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 108 ----------------
+----- step 109 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 110 ----------------
+----- step 111 ----------------
+----- step 112 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 113 ----------------
+----- step 114 ----------------
+----- step 115 ----------------
+----- step 116 ----------------
+----- step 117 ----------------
+----- step 118 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 119 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 120 ----------------
+----- step 121 ----------------
+----- step 122 ----------------
+----- step 123 ----------------
+----- step 124 ----------------
+----- step 125 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 126 ----------------
+----- step 127 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 128 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 129 ----------------
+----- step 130 ----------------
+LIN   vehicle0   LINGERED
+----- step 131 ----------------
+----- step 132 ----------------
+----- step 133 ----------------
+----- step 134 ----------------
+----- step 135 ----------------
+----- step 136 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 137 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 138 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 139 ----------------
+----- step 140 ----------------
+LIN   vehicle0   LINGERED
+----- step 141 ----------------
+----- step 142 ----------------
+----- step 143 ----------------
+LIN   vehicle20   LINGERED
+----- step 144 ----------------
+----- step 145 ----------------
+----- step 146 ----------------
+----- step 147 ----------------
+----- step 148 ----------------
+----- step 149 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 150 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 151 ----------------
+----- step 152 ----------------
+----- step 153 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 154 ----------------
+----- step 155 ----------------
+----- step 156 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 157 ----------------
+----- step 158 ----------------
+----- step 159 ----------------
+----- step 160 ----------------
+----- step 161 ----------------
+----- step 162 ----------------
+LIN   vehicle0   LINGERED
+----- step 163 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 164 ----------------
+----- step 165 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 166 ----------------
+----- step 167 ----------------
+----- step 168 ----------------
+----- step 169 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 170 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 171 ----------------
+----- step 172 ----------------
+LIN   vehicle20   LINGERED
+----- step 173 ----------------
+LIN   vehicle0   LINGERED
+----- step 174 ----------------
+LIN   vehicle0   LINGERED
+LIN   vehicle20   LINGERED
+----- step 175 ----------------
+----- step 176 ----------------
+----- step 177 ----------------
+----- step 178 ----------------
+----- step 179 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 180 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 181 ----------------
+----- step 182 ----------------
+----- step 183 ----------------
+----- step 184 ----------------
+LIN   vehicle20   LINGERED
+----- step 185 ----------------
+----- step 186 ----------------
+----- step 187 ----------------
+----- step 188 ----------------
+----- step 189 ----------------
+----- step 190 ----------------
+----- step 191 ----------------
+LIN   vehicle0   LINGERED
+----- step 192 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 193 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 194 ----------------
+----- step 195 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 196 ----------------
+COS   vehicle0   STOPPED -> collision
+----- step 197 ----------------
+----- step 198 ----------------
+LIN   vehicle0   LINGERED
+----- step 199 ----------------
+----- step 200 ----------------
+----- step 201 ----------------
+----- step 202 ----------------
+----- step 203 ----------------
+LIN   vehicle20   LINGERED
+----- step 204 ----------------
+----- step 205 ----------------
+----- step 206 ----------------
+LIN   vehicle0   LINGERED
+----- step 207 ----------------
+----- step 208 ----------------
+----- step 209 ----------------
+----- step 210 ----------------
+----- step 211 ----------------
+----- step 212 ----------------
+----- step 213 ----------------
+----- step 214 ----------------
+----- step 215 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 216 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 217 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 218 ----------------
+TFC   vehicle20   has vehicle in front -> decelerate
+----- step 219 ----------------
+LIN   vehicle0   LINGERED
+----- step 220 ----------------
+----- step 221 ----------------
+----- step 222 ----------------
+----- step 223 ----------------
+----- step 224 ----------------
+----- step 225 ----------------
+----- step 226 ----------------
+LIN   vehicle0   LINGERED
+----- step 227 ----------------
+LIN   vehicle20   LINGERED
+----- step 228 ----------------
+----- step 229 ----------------
+----- step 230 ----------------
+----- step 231 ----------------
+----- step 232 ----------------
+----- step 233 ----------------
+----- step 234 ----------------
+----- step 235 ----------------
+----- step 236 ----------------
+----- step 237 ----------------
+----- step 238 ----------------
+----- step 239 ----------------
+----- step 240 ----------------
+----- step 241 ----------------
+----- step 242 ----------------
+----- step 243 ----------------
+----- step 244 ----------------
+----- step 245 ----------------
+LIN   vehicle20   LINGERED
+----- step 246 ----------------
+----- step 247 ----------------
+----- step 248 ----------------
+----- step 249 ----------------
+LIN   vehicle20   LINGERED
+----- step 250 ----------------
+----- step 251 ----------------
+----- step 252 ----------------
+----- step 253 ----------------
+----- step 254 ----------------
+----- step 255 ----------------
+----- step 256 ----------------
+----- step 257 ----------------
+----- step 258 ----------------
+----- step 259 ----------------
+----- step 260 ----------------
+----- step 261 ----------------
+----- step 262 ----------------
+----- step 263 ----------------
+LIN   vehicle0   LINGERED
+----- step 264 ----------------
+----- step 265 ----------------
+----- step 266 ----------------
+----- step 267 ----------------
+----- step 268 ----------------
+----- step 269 ----------------
+----- step 270 ----------------
+----- step 271 ----------------
+----- step 272 ----------------
+----- step 273 ----------------
+LIN   vehicle20   LINGERED
+----- step 274 ----------------
+----- step 275 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 276 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 277 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 278 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 279 ----------------
+----- step 280 ----------------
+----- step 281 ----------------
+LIN   vehicle20   LINGERED
+----- step 282 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 283 ----------------
+----- step 284 ----------------
+----- step 285 ----------------
+----- step 286 ----------------
+LIN   vehicle20   LINGERED
+----- step 287 ----------------
+----- step 288 ----------------
+----- step 289 ----------------
+----- step 290 ----------------
+----- step 291 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 292 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 293 ----------------
+----- step 294 ----------------
+----- step 295 ----------------
+----- step 296 ----------------
+----- step 297 ----------------
+LIN   vehicle0   LINGERED
+----- step 298 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 299 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 300 ----------------
+----- step 301 ----------------
+----- step 302 ----------------
+----- step 303 ----------------
+----- step 304 ----------------
+----- step 305 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 306 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 307 ----------------
+----- step 308 ----------------
+----- step 309 ----------------
+LIN   vehicle0   LINGERED
+----- step 310 ----------------
+----- step 311 ----------------
+----- step 312 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 313 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 314 ----------------
+----- step 315 ----------------
+----- step 316 ----------------
+----- step 317 ----------------
+----- step 318 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 319 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 320 ----------------
+LIN   vehicle0   LINGERED
+----- step 321 ----------------
+----- step 322 ----------------
+----- step 323 ----------------
+----- step 324 ----------------
+----- step 325 ----------------
+----- step 326 ----------------
+----- step 327 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 328 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 329 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 330 ----------------
+----- step 331 ----------------
+----- step 332 ----------------
+----- step 333 ----------------
+----- step 334 ----------------
+----- step 335 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 336 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 337 ----------------
+----- step 338 ----------------
+----- step 339 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 340 ----------------
+LIN   vehicle0   LINGERED
+----- step 341 ----------------
+----- step 342 ----------------
+----- step 343 ----------------
+LIN   vehicle20   LINGERED
+----- step 344 ----------------
+----- step 345 ----------------
+----- step 346 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 347 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 348 ----------------
+----- step 349 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 350 ----------------
+----- step 351 ----------------
+----- step 352 ----------------
+----- step 353 ----------------
+----- step 354 ----------------
+----- step 355 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 356 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 357 ----------------
+LIN   vehicle20   LINGERED
+----- step 358 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 359 ----------------
+----- step 360 ----------------
+----- step 361 ----------------
+----- step 362 ----------------
+LIN   vehicle0   LINGERED
+----- step 363 ----------------
+LIN   vehicle0   LINGERED
+----- step 364 ----------------
+LIN   vehicle0   LINGERED
+----- step 365 ----------------
+LIN   vehicle0   LINGERED
+----- step 366 ----------------
+----- step 367 ----------------
+----- step 368 ----------------
+----- step 369 ----------------
+----- step 370 ----------------
+----- step 371 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 372 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 373 ----------------
+----- step 374 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 375 ----------------
+LIN   vehicle20   LINGERED
+----- step 376 ----------------
+LIN   vehicle0   LINGERED
+----- step 377 ----------------
+----- step 378 ----------------
+----- step 379 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 380 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 381 ----------------
+----- step 382 ----------------
+----- step 383 ----------------
+LIN   vehicle0   LINGERED
+----- step 384 ----------------
+----- step 385 ----------------
+----- step 386 ----------------
+----- step 387 ----------------
+----- step 388 ----------------
+----- step 389 ----------------
+----- step 390 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 391 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 392 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 393 ----------------
+----- step 394 ----------------
+----- step 395 ----------------
+LIN   vehicle0   LINGERED
+----- step 396 ----------------
+----- step 397 ----------------
+----- step 398 ----------------
+----- step 399 ----------------
+----- step 400 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 401 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 402 ----------------
+LIN   vehicle0   LINGERED
+----- step 403 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 404 ----------------
+LIN   vehicle20   LINGERED
+----- step 405 ----------------
+----- step 406 ----------------
+LIN   vehicle20   LINGERED
+----- step 407 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 408 ----------------
+----- step 409 ----------------
+----- step 410 ----------------
+----- step 411 ----------------
+LIN   vehicle20   LINGERED
+----- step 412 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 413 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 414 ----------------
+LIN   vehicle20   LINGERED
+----- step 415 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 416 ----------------
+----- step 417 ----------------
+LIN   vehicle20   LINGERED
+----- step 418 ----------------
+----- step 419 ----------------
+LIN   vehicle0   LINGERED
+----- step 420 ----------------
+----- step 421 ----------------
+----- step 422 ----------------
+----- step 423 ----------------
+LIN   vehicle0   LINGERED
+----- step 424 ----------------
+LIN   vehicle0   LINGERED
+----- step 425 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 426 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 427 ----------------
+----- step 428 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 429 ----------------
+LIN   vehicle0   LINGERED
+----- step 430 ----------------
+----- step 431 ----------------
+----- step 432 ----------------
+----- step 433 ----------------
+----- step 434 ----------------
+----- step 435 ----------------
+----- step 436 ----------------
+----- step 437 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 438 ----------------
+----- step 439 ----------------
+----- step 440 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 441 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 442 ----------------
+----- step 443 ----------------
+----- step 444 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle0   LINGERED
+----- step 445 ----------------
+LIN   vehicle0   LINGERED
+----- step 446 ----------------
+----- step 447 ----------------
+----- step 448 ----------------
+----- step 449 ----------------
+----- step 450 ----------------
+----- step 451 ----------------
+----- step 452 ----------------
+----- step 453 ----------------
+----- step 454 ----------------
+----- step 455 ----------------
+----- step 456 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 457 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 458 ----------------
+----- step 459 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 460 ----------------
+----- step 461 ----------------
+----- step 462 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 463 ----------------
+LIN   vehicle20   LINGERED
+----- step 464 ----------------
+LIN   vehicle0   LINGERED
+----- step 465 ----------------
+----- step 466 ----------------
+LIN   vehicle0   LINGERED
+----- step 467 ----------------
+----- step 468 ----------------
+----- step 469 ----------------
+----- step 470 ----------------
+----- step 471 ----------------
+----- step 472 ----------------
+----- step 473 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 474 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 475 ----------------
+----- step 476 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 477 ----------------
+----- step 478 ----------------
+----- step 479 ----------------
+----- step 480 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 481 ----------------
+----- step 482 ----------------
+LIN   vehicle20   LINGERED
+----- step 483 ----------------
+----- step 484 ----------------
+----- step 485 ----------------
+LIN   vehicle20   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 486 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 487 ----------------
+----- step 488 ----------------
+----- step 489 ----------------
+----- step 490 ----------------
+LIN   vehicle0   LINGERED
+----- step 491 ----------------
+LIN   vehicle20   LINGERED
+----- step 492 ----------------
+----- step 493 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 494 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 495 ----------------
+----- step 496 ----------------
+----- step 497 ----------------
+----- step 498 ----------------
+----- step 499 ----------------
+LIN   vehicle0   LINGERED
+----- step 500 ----------------
+----- step 501 ----------------
+----- step 502 ----------------
+LIN   vehicle0   LINGERED
+----- step 503 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 504 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 505 ----------------
+----- step 506 ----------------
+----- step 507 ----------------
+----- step 508 ----------------
+----- step 509 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 510 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 511 ----------------
+----- step 512 ----------------
+----- step 513 ----------------
+----- step 514 ----------------
+----- step 515 ----------------
+LIN   vehicle0   LINGERED
+----- step 516 ----------------
+LIN   vehicle0   LINGERED
+----- step 517 ----------------
+----- step 518 ----------------
+----- step 519 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 520 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 521 ----------------
+----- step 522 ----------------
+----- step 523 ----------------
+----- step 524 ----------------
+----- step 525 ----------------
+----- step 526 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 527 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 528 ----------------
+----- step 529 ----------------
+----- step 530 ----------------
+----- step 531 ----------------
+----- step 532 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 533 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 534 ----------------
+LIN   vehicle20   LINGERED
+----- step 535 ----------------
+----- step 536 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 537 ----------------
+----- step 538 ----------------
+----- step 539 ----------------
+----- step 540 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 541 ----------------
+----- step 542 ----------------
+----- step 543 ----------------
+----- step 544 ----------------
+----- step 545 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 546 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 547 ----------------
+LIN   vehicle20   LINGERED
+----- step 548 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 549 ----------------
+----- step 550 ----------------
+----- step 551 ----------------
+----- step 552 ----------------
+----- step 553 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 554 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 555 ----------------
+----- step 556 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 557 ----------------
+----- step 558 ----------------
+----- step 559 ----------------
+LIN   vehicle0   LINGERED
+----- step 560 ----------------
+LIN   vehicle20   LINGERED
+----- step 561 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 562 ----------------
+----- step 563 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 564 ----------------
+----- step 565 ----------------
+----- step 566 ----------------
+----- step 567 ----------------
+----- step 568 ----------------
+----- step 569 ----------------
+----- step 570 ----------------
+LIN   vehicle0   LINGERED
+TFC   vehicle0   has vehicle in front -> decelerate
+LIN   vehicle20   LINGERED
+----- step 571 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 572 ----------------
+----- step 573 ----------------
+----- step 574 ----------------
+----- step 575 ----------------
+LIN   vehicle20   LINGERED
+----- step 576 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 577 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 578 ----------------
+----- step 579 ----------------
+LIN   vehicle0   LINGERED
+----- step 580 ----------------
+LIN   vehicle20   LINGERED
+----- step 581 ----------------
+----- step 582 ----------------
+----- step 583 ----------------
+----- step 584 ----------------
+----- step 585 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 586 ----------------
+LIN   vehicle0   LINGERED
+----- step 587 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 588 ----------------
+----- step 589 ----------------
+LIN   vehicle20   LINGERED
+LIN   vehicle0   LINGERED
+----- step 590 ----------------
+TFC   vehicle0   has vehicle in front -> decelerate
+----- step 591 ----------------
+----- step 592 ----------------
+LIN   vehicle0   LINGERED
+----- step 593 ----------------
+----- step 594 ----------------
+LIN   vehicle0   LINGERED
+----- step 595 ----------------
+----- step 596 ----------------
+----- step 597 ----------------
+----- step 598 ----------------
+----- step 599 ----------------
+
+C:\Users\France\Documents\Sven\Uni\BA\sap_ba_thesis\scenario>
