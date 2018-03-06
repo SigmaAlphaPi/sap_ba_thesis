@@ -61,7 +61,7 @@ agent:
     # must start with an upper-case letter)
     constant:
         # 130, was max. possible speed in multi-lane
-        AllowedSpeed: 50
+        AllowedSpeed: 100
 
     # all vehicle configuration, key is the filename of the filename
     # AgentSpeak(L++) script relative to configuration file
