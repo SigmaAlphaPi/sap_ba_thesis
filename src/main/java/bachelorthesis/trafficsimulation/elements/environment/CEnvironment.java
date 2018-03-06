@@ -114,6 +114,24 @@ public final class CEnvironment implements IEnvironment
                         return ( l_object != null ) && ( !l_object.equals( p_vehicle ) );
                     } )
                     .findFirst();
+/*
+            final Optional<List<Number[]>> l_checkposition = StreamUtils.windowed(
+                            IntStream.rangeClosed(
+                                l_xposstart.intValue(),
+                                l_xposend.intValue()
+                            )
+                            .boxed()
+                            .map( i -> this.clip( new DenseDoubleMatrix1D( new double[]{l_ypos.doubleValue(), i} ) ) )
+                            .map( CMath::numberarry ),
+                            2
+            ).filter( i ->
+            {
+                final Object l_object = m_grid.getQuick( i.get( i.size() - 1 )[0].intValue(), i.get( i.size() - 1 )[1].intValue() );
+                return ( l_object != null ) && ( !l_object.equals( p_vehicle ) );
+            } )
+                                                                        .findFirst();
+
+*/
             if ( l_checkposition.isPresent() )
             {
                 // object moving to cell befor collision exists

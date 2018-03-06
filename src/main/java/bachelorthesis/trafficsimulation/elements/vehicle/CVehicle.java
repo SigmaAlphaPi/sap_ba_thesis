@@ -182,8 +182,8 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
         final DoubleMatrix1D l_unclipped = this.unclip( p_object.worldposition() );
 
         return Stream.of(
-            CLiteral.from( "lane", CRawTerm.from( this.position().get( 0 ) + 1 ) ),
-            CLiteral.from( "cell", CRawTerm.from( this.position().get( 1 ) + 1 ) ),
+            CLiteral.from( "lane", CRawTerm.from( this.position().get( 0 ) ) ),
+            CLiteral.from( "cell", CRawTerm.from( this.position().get( 1 ) ) ),
             CLiteral.from( "speed", CRawTerm.from( m_speed.get() ) ),
             CLiteral.from( "distance", CRawTerm.from( CMath.distance( this.worldposition(), l_unclipped ) ) ),
             CLiteral.from( "direction",
@@ -561,8 +561,8 @@ public final class CVehicle extends IBaseObject<IVehicle> implements IVehicle
                 ),
                 Stream.of(
                     new CConstant<>( "CurrentSpeed", l_vehicle.speed() ),
-                    new CConstant<>( "CurrentCell", l_vehicle.position().get( 1 ) + 1 ),
-                    new CConstant<>( "CurrentLane", l_vehicle.lane().intValue() + 1 ),
+                    new CConstant<>( "CurrentCell", l_vehicle.position().get( 1 ) ),
+                    new CConstant<>( "CurrentLane", l_vehicle.lane().intValue() ),
                     new CConstant<>( "Acceleration", l_vehicle.acceleration() ),
                     new CConstant<>( "Deceleration", l_vehicle.deceleration() ),
                     new CConstant<>( "Lanes", l_vehicle.scenario().environment().lanes() ),
