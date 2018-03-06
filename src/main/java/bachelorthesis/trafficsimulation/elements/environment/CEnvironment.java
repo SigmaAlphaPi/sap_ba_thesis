@@ -1,6 +1,5 @@
 package bachelorthesis.trafficsimulation.elements.environment;
 
-import bachelorthesis.trafficsimulation.common.CMath;
 import bachelorthesis.trafficsimulation.elements.IObject;
 import bachelorthesis.trafficsimulation.elements.vehicle.IVehicle;
 import bachelorthesis.trafficsimulation.scenario.IScenario;
@@ -8,12 +7,11 @@ import cern.colt.matrix.tdouble.DoubleMatrix1D;
 import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix1D;
 import cern.colt.matrix.tobject.ObjectMatrix2D;
 import cern.colt.matrix.tobject.impl.SparseObjectMatrix2D;
-import com.codepoetics.protonpack.StreamUtils;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -36,6 +34,10 @@ public final class CEnvironment implements IEnvironment
      */
     private final IScenario m_scenario;
     /**
+     * clipping function
+     */
+    private final Function<Number, Number> m_cellclippingfunction;
+    /**
      * size of the world
      */
     private final DoubleMatrix1D m_size;
@@ -49,6 +51,17 @@ public final class CEnvironment implements IEnvironment
     public CEnvironment( @Nonnull final Number p_length, @Nonnull final Number p_lanes, @Nonnull final IScenario p_scenario )
     {
         m_scenario = p_scenario;
+        m_cellclippingfunction = i ->
+        {
+            if ( i.intValue() < 0 )
+            {
+                return i.intValue() + p_length.intValue();
+            }
+            else
+            {
+                return i.intValue() % p_length.intValue();
+            }
+        };
         m_grid = new SparseObjectMatrix2D( p_lanes.intValue(), p_length.intValue() );
 
         m_size = new DenseDoubleMatrix1D( 2 );
@@ -92,43 +105,29 @@ public final class CEnvironment implements IEnvironment
         synchronized ( this )
         {
             // test free direction
-            final Optional<List<Number[]>> l_checkposition = StreamUtils.windowed(
-                            IntStream.rangeClosed(
-                                l_xposstart.intValue(),
-                                l_xposend.intValue()
-                            )
-                            .boxed()
-                            .map( i -> this.clip( new DenseDoubleMatrix1D( new double[]{l_ypos.doubleValue(), i} ) ) )
-                            .map( CMath::numberarry ),
-                            2
-            ).filter( i ->
-            {
-                final Object l_object = m_grid.getQuick( i.get( 1 )[0].intValue(), i.get( 1 )[1].intValue() );
-                return ( l_object != null ) && ( !l_object.equals( p_vehicle ) );
-            } )
-                                                                        .findFirst();
-
+            final Optional<Number> l_checkposition = IntStream.rangeClosed( l_xposstart.intValue(), l_xposend.intValue() )
+                    .boxed()
+                    .map( m_cellclippingfunction::apply )
+                    .filter( i ->
+                    {
+                        final Object l_object = m_grid.getQuick( l_ypos.intValue(), i.intValue() );
+                        return ( l_object != null ) && ( !l_object.equals( p_vehicle ) );
+                    } )
+                    .findFirst();
             if ( l_checkposition.isPresent() )
             {
                 // object moving to cell befor collision exists
                 m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
-                m_grid.setQuick( l_ypos.intValue(), l_checkposition.get().get( 0 )[0].intValue(), p_vehicle );
-                p_vehicle.position().setQuick( 1, l_checkposition.get().get( 0 )[1].intValue() );
+                m_grid.setQuick( l_ypos.intValue(), m_cellclippingfunction.apply( l_checkposition.get().intValue() - 1 ).intValue(), p_vehicle );
+                p_vehicle.position().setQuick( 1, m_cellclippingfunction.apply( l_checkposition.get().intValue() - 1 ).intValue() );
 
                 return false;
             }
 
             // object moving on regular end position
-            final Number[] l_result = CMath.numberarry(
-                    this.clip(
-                            new DenseDoubleMatrix1D(
-                                    new double[]{l_ypos.doubleValue(), l_xposend.doubleValue()}
-                            )
-                    )
-            );
             m_grid.setQuick( l_ypos.intValue(), l_xposstart.intValue(), null );
-            m_grid.setQuick( l_ypos.intValue(), l_result[0].intValue(), p_vehicle );
-            p_vehicle.position().setQuick( 1, l_result[1].intValue() );
+            m_grid.setQuick( l_ypos.intValue(), m_cellclippingfunction.apply( l_xposend ).intValue(), p_vehicle );
+            p_vehicle.position().setQuick( 1, m_cellclippingfunction.apply( l_xposend ).intValue() );
             return true;
         }
     }
@@ -146,11 +145,11 @@ public final class CEnvironment implements IEnvironment
         {
             // test free move (Manhatten distance)
             if ( IntStream.rangeClosed( Math.min( l_lane.intValue(), p_lane.intValue() ), Math.max( l_lane.intValue(), p_lane.intValue() ) )
-                          .parallel()
-                          .boxed()
-                          .map( i -> m_grid.getQuick( i, l_xpos.intValue() ) )
-                          .anyMatch( i -> ( i != null ) && ( !i.equals( p_vehicle ) ) )
-                )
+                    .parallel()
+                    .boxed()
+                    .map( i -> m_grid.getQuick( i, l_xpos.intValue() ) )
+                    .anyMatch( i -> ( i != null ) && ( !i.equals( p_vehicle ) ) )
+                    )
                 return false;
 
             m_grid.setQuick( l_lane.intValue(), l_xpos.intValue(), null );
@@ -177,7 +176,7 @@ public final class CEnvironment implements IEnvironment
         l_position.set( 1, l_position.get( 1 ) % m_grid.columns() );
 
         l_position.set( 0, Math.max( 0, l_position.get( 0 ) ) );
-        l_position.set( 1, l_position.get( 1 ) <= 0 ? m_grid.columns() + l_position.get( 1 ) : l_position.get( 1 ) );
+        l_position.set( 1, l_position.get( 1 ) < 0 ? m_grid.columns() + l_position.get( 1 ) : l_position.get( 1 ) );
 
         return l_position;
     }
@@ -198,12 +197,12 @@ public final class CEnvironment implements IEnvironment
     public final void accept( final Number p_number )
     {
         IntStream.range( 0, m_grid.rows() )
-                 .parallel()
-                 .forEach( i -> m_scenario.statistic().accept( "lanedensity-" + i, (double) m_grid.viewRow( i ).cardinality() / m_grid.columns() ) );
+                .parallel()
+                .forEach( i -> m_scenario.statistic().accept( "lanedensity-" + i, (double) m_grid.viewRow( i ).cardinality() / m_grid.columns() ) );
 
         m_scenario.vehicles()
-                  .parallel()
-                  .forEach( i -> m_scenario.statistic().accept( "speed-" + p_number.longValue(), i.speed() ) );
+                .parallel()
+                .forEach( i -> m_scenario.statistic().accept( "speed-" + p_number.longValue(), i.speed() ) );
 
     }
 
