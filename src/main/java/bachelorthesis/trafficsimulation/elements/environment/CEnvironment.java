@@ -167,7 +167,7 @@ public final class CEnvironment implements IEnvironment
                     .boxed()
                     .map( i -> m_grid.getQuick( i, l_xpos.intValue() ) )
                     .anyMatch( i -> ( i != null ) && ( !i.equals( p_vehicle ) ) )
-                    )
+                )
                 return false;
 
             m_grid.setQuick( l_lane.intValue(), l_xpos.intValue(), null );
