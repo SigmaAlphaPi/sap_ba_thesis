@@ -9,17 +9,56 @@ Dennoch liegen theoretische Überlegungen und in Teilen getestete praktische Vor
 
 
 
-\subsection{Veränderung der Agentenpläne}
-\label{agentplan-multilane}
+\subsection{Veränderungen für die Mehrspurigkeit}
+\label{sec:multilane-change}
 
-Für die Simulation mehrspuriger Fahrbahnen müssen dem Agentenverhalten lediglich zwei Pläne für das Ausscheren (Pull-out) und das Einscheren (Pull-in) hinzugefügt werden.
-%Für das komplette Listing siehe \cref{lst:multilane}.
-\sa{own: add listing multilane}
+
+\subsubsection{Zustandsautomat}
+
+Für die Simulation mehrspuriger Fahrbahnen kann der ursprüngliche Zustandsautomat (\cref{figure:fsm-nasch}), der sich mit der Veränderung der Geschwindigkeit beschäftigt, unverändert bleiben.
+Das Spurwechselverhalten wird in einem separaten Automaten abgebildet, siehe \cref{figure:fsm-pull}.
+
+\begin{figure}[hptb]
+ \centering
+ \includegraphics[width=0.9\textwidth]{fsm-pull}
+ \caption[Zustandsautomat für das Spurverhalten]
+ 		{Zustandsautomat für das Agentenverhalten Spur halten/Spur wechseln}
+ \label{figure:fsm-pull}
+\end{figure}
+
+Der Startzustand des Automaten \texttt{KEEP} (keep lane/Spur halten) steht für das Verhalten, die aktuelle Spur beizubehalten.
+
+Aus diesem Zustand heraus sind die Zustände \texttt{POA} (Pull-out attempt/Ausscherversuch) und \texttt{PIA} (Pull-in attempt/Einscherversuch) zu erreichen.
+Ein Ausscherversuch kann z.B. unternommen werden, wenn das Fahrzeug auf ein anderes Fahrzeug aufläuft.
+\\
+Ist keiner der Spurwechselversuche möglich, kann der Zustand \texttt{KEEP} über eine Schleife auch wieder selbst erreicht werden.
+
+Sowohl aus \texttt{POA}, als auch aus \texttt{PIA} ist ein Übergang zurück zu \texttt{KEEP} möglich.
+Dieser Pfad wird genommen, wenn der jeweilige Versuch abgebrochen werden muss.
+\\
+Für den Ausscherversuch könnte dies beispielsweise aufgrund von seitlichem Verkehr auf der Überholspur der Fall sein.
+
+Sind die Voraussetzungen für einen sichern Spurwechsel gegeben, erfolgt jeweils der Übergang in die Zustände \texttt{OUT} (pull out/Ausscheren) bzw. \texttt{IN} (pull in/Einscheren) und von dort aus wieder in den \texttt{KEEP}-Zustand.
+
+Auch hier entspricht ein Zeitschritt der Simulation einem Zyklus vom Startzustand ausgehend bis zur Rückkehr dorthin.
+
+
+
+\subsubsection{Agentenverhalten}
+\label{sec:agentplan-multilane}
+
+Die Veränderungen im Grundplan des Agentenverhaltens sind minimal. 
+Lediglich zwei Ziele für das Ausscheren (Pull-out) und das Einscheren (Pull-in) hinzugefügt werden.
+Dies wird durch die jeweiligen Pläne ergänzt.
+\sa{own: add listing multilane}Für das komplette Listing siehe %\cref{lst:multilane}.
+
+Der Aufruf des jeweiligen Plans und die Abarbeitung der Bedingungen entspricht dabei dem Spurwechselversuch.
+Die Ausführung wird aus dem Agentenplan an die Simulationssoftware weiter geleitet.
 
 \begin{minipage}[hptb]{0.95\textwidth}
 \begin{lstlisting}[style=asl, 
                    keywords={!pullout,!pullin}, 
-                   keywords={[2]}, 
+                   keywords={[2]vehicle/pullout,vehicle/pullin}, 
                    keywords={[3]}, 
                    caption={Auszug aus Agentenscript: multi lane-Version},
                    label={lst:multilane-auszug}]      
@@ -33,10 +72,22 @@ Für die Simulation mehrspuriger Fahrbahnen müssen dem Agentenverhalten ledigli
     !pullout
     !pullin
     !cruise
+.
+
+// --- pull-out, change lane to overtake ---
++!pullout
+    : // --- Bedingungen gekuerzt ---
+    <- vehicle/pullout
+.
+
+// --- pull-in, change lane after overtake is finished ---
++!pullin
+    : // --- Bedingungen gekuerzt ---
+    <- vehicle/pullin
 .\end{lstlisting}
 \end{minipage}
 
-\paragraph*{\texttt{pullout}-Plan}
+\paragraph*{Der \texttt{pullout}-Plan}
 \hfill \\
 Der Plan für das Ausscheren ist mit insgesamt fünf Bedingungen versehen.
 
@@ -45,7 +96,7 @@ Der Plan für das Ausscheren ist mit insgesamt fünf Bedingungen versehen.
 	\item Befindet sich das Fahrzeug nicht auf der am weitesten linken Fahrspur?
 	\item Ist in der aktuellen Spur Verkehr voraus?
 	\item Ist Verkehr in der Spur, in die gewechselt werden soll, nicht näher?
-	\item Befindet sich Verkehr direkt links neben dem Fahrzeug?
+	\item Befindet sich kein Verkehr direkt links neben dem Fahrzeug?
 	\item Ist der rückwärtige Verkehr auf der Überholspur ausreichend weit entfernt?
 \end{enumerate}
 
@@ -55,7 +106,7 @@ Die Auslösung eines Kollisionsereignisses wäre in der Simulation die Folge.
 Die zweite Bedingung macht den Ausschervorgang erst nötig. 
 Wäre die aktuelle Spur nicht blockiert, könnte auf ihr weitergefahren werden.
 \\
-Ein Spurwechsel ist nur sinnvoll, wenn auf der zukünftigen Spur mindestens genauso viel Platz nach vorn ist, wie auf der aktuellen. 
+Ein Spurwechsel ist nur sinnvoll, wenn auf der zukünftigen Spur mindestens genauso viel Raum nach vorn ist, wie auf der aktuellen. 
 Dem trägt Bedingung 3 Rechnung.
 \\
 Durch die Unterteilung des Sichtfeldes in vier Sektoren, siehe \cref{sec:unterteilung-sichtfeld}, wurde die vierte Bedingung notwendig.
@@ -66,8 +117,30 @@ Durch die o.g. Fehler im Framework ist die gleichzeitige Auswertung aller Beding
 \\
 Bei keiner der Bedingungen ist es möglich, diese wegzulassen oder mit einer anderen zusammenzufassen, ohne dass unerwünschtes Verhalten auftritt.
 
-Würden zum Beispiel die Bedingungen 2 und 3 zusammengefasst und nur auf forwärtigen Verkehr (in beiden Spuren) geprüft, so würde dies zwar der Bedingung \enquote{nicht schlechter} für die Überholspur genügen, aber jedes überholende Fahrzeug würde zum Auslösen der Bedingung führen.
-Dies sogar in übergroßen Maße, da die Entfernung sehr gering ist.
+Würden zum Beispiel die Bedingungen 2 und 3 zusammengefasst und nur auf vorwärtigen Verkehr (in beiden Spuren) geprüft, so würde dies zwar der Bedingung \enquote{nicht schlechter} für die Überholspur genügen, aber jedes überholende Fahrzeug würde zum Auslösen der Bedingung bzw. des Überholvorganges führen.
+
+
+\paragraph*{Der \texttt{pullin}-Plan}
+\hfill \\
+Im Plan für das Einscheren sind vier Bedingungen zu beachten.
+
+\begin{enumerate}
+	\itemsep0em
+	\item Befindet sich das Fahrzeug nicht auf der am weitesten rechten Fahrspur?
+	\item Ist in der Spur, in die gewechselt werden soll, genügend Abstand nach vorn?
+	\item Befindet sich kein Verkehr direkt rechts neben dem Fahrzeug?
+	\item Ist der rückwärtige Verkehr auf der Normalspur ausreichend weit entfernt?
+\end{enumerate}
+
+Wie auch beim Ausscheren muss sich in Orientierungsrichtung mindestens eine weitere Spur befinden, da es sonst zum Auslösen des Kollisionsereignisses durch die Simulationssoftware kommt.
+Hierfür sorgt die erste Bedingung.
+
+Die Bedingungen 2 bis 4 sorgen dafür, dass kein anderer Verkehr behindert wird oder das Fahrzeug behindert.
+
+Auch die Ausführung dieses Planes ist durch die Fehler im Agenten-Framework betroffen. Allerdings gibt es einen \enquote{Workaround}, der aber kein optimales Verhalten bringt.
+\\
+Das kollisionsfreie Wiedereinordnen kann garantiert werden, wenn sich keinerlei Verkehr im Sichtfeld des Fahrzeuges befindet.
+Dies ist jedoch bei Simulationen mit vielen Fahrzeugen nahezu unmöglich.
 
 
 
@@ -106,16 +179,26 @@ Für eine Bestimmung von Wahrscheinlichkeiten für diesen Zweck erscheint die lo
 \begin{center}
 $ f(x) = \frac{1}{1 + e^{-x}} $ 
 \end{center}
-siehe \cite{logistic-function}, eine Sigmoid-Funktion, ein geeigneter Kandidat. 
+siehe \cite{logistic-function}, eine Sigmoid-Funktion (auch S- oder Schwanenhalsfunktion), ein geeigneter Kandidat. 
 Ihr Definitionsbereich sind alle Zahlen in $ \mathbb{R} $ und ihr Wertebereich liegt zwischen 0 und 1.
-\\
-Die Grundfunktion steigt im Intervall $ [-5; 5] $ ziemlich rasch von nahe 0 auf nahe 1.
+
+\begin{figure}[hptb]
+  \centering
+    \subfigure[Grundform]{\includegraphics[width=0.45\textwidth]{kurve-logistic-10-10}\label{figure:kurve-logistic-10-10}} \qquad 
+    \subfigure[gestreckte Form]{\includegraphics[width=0.45\textwidth]{kurve-logistic-streched-10-10}\label{figure:kurve-logistic-streched-10-10}}
+  \caption[Kurvenbeispiele der logistischen Funktion]
+          {Kurvenbeispiele logistischer Funktionen im identischen Intervall}
+  \label{figure:kurve-logistic}
+\end{figure}
+
+\noindent
+Die Grundfunktion (\cref{figure:kurve-logistic-10-10}) steigt im Intervall $ [-5; 5] $ ziemlich rasch von nahe 0 auf nahe 1.
 Dies kann durch Streckung der Funktion etwas abgemildert werden.
 So verläuft z.B. 
 \begin{center}
 $ f(x) = \frac{1}{1 + e^{-\frac{1}{2}x}} $ 
 \end{center}
-weniger steil und hat den für diesen Zweck sinnvoll nutzbaren Intervall $ [-10; 10 ] $.
+weniger steil (\cref{figure:kurve-logistic-streched-10-10}) und hat den für diesen Zweck sinnvoll nutzbaren Intervall $ [-10; 10 ] $.
 Für Werte außerhalb dieses Intervalles ergibt sich eine kleine von Null, bzw. große von Eins verschiedene Wahrscheinlichkeit.
 
 \paragraph*{Wahrscheinlichkeit des Ausscherens (Pull-out)} 
@@ -161,14 +244,14 @@ $ p_{po} = \frac{1}{2}(p_{po}(s) + p_{po}(v_{rel})) = \frac{1}{2}p_{po}(s) + \fr
 \end{center}
 liefert die Wahrscheinlichkeit für das Ausscheren $ p_{po} $.
 
-Es ergibt sich eine Funktionskurve mit drei erkennbaren Plateaubildungen um die Werte 0, 0,5 und 1, siehe \cref{figure:kurve-ueberholwahrscheinlichkeit}.
-Die Darstellung erfolgt in den Intervallen  $ [0; 1] $ für die Wahrscheinlichkeit, $ [ 40; 120 ] $ für den Abstand und $ [ -5; 30 ] $ für die relative Geschwindigkeit.
+Es ergibt sich eine Funktionskurve mit der Ausbildung von drei erkennbaren Plateaus um die Wahrscheinlichkeitswerte 0, 0,5 und 1, siehe \cref{figure:kurve-ueberholwahrscheinlichkeit}.
+%Die Darstellung erfolgt in den Intervallen  $ [0; 1] $ für die Wahrscheinlichkeit, $ [ 40; 120 ] $ für den Abstand und $ [ -5; 30 ] $ für die relative Geschwindigkeit.
 
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.5\textwidth]{kurve-ueberholwahrscheinlichkeit}
  \caption[Funktionskurve für die Ausscherwahrscheinlichkeit]
- 		 {Plateaubildung der Funktionskurve der Ausscherwahrscheinlichkeit}
+ 		 {Plateaubildung der Funktionskurve der Ausscherwahrscheinlichkeit}{\footnotesize(für $ p_{po} \in [0; 1] $, $ s \in [ 40; 120 ] $, $ v_{rel} \in [ -5; 30 ] $)}
  \label{figure:kurve-ueberholwahrscheinlichkeit}
 \end{figure} 
 
@@ -189,3 +272,39 @@ Aufgrund der fehlenden Möglichkeit eines Tests, wird hier nur das Konzept umris
 \end{itemize}
 
 Beim Zusammenfassung der entstehenden einzelnen Wahrscheinlichkeiten kann ebenfalls wieder über Faktoren eine individuelle Gewichtung vorgenommen werden.
+
+
+
+
+
+
+\subsection{Vermeidung des Rechts-Überholens}
+
+Um Fahrzeuge in der Simulation vom Überholen auf der rechten Seite abzuhalten ist nur eine einfache Bedingung im \texttt{decelerate}-Plan notwendig, siehe \cref{lst:multilane-rechts}.
+
+\begin{minipage}[hptb]{0.95\textwidth}
+\begin{lstlisting}[style=asl, 
+                   keywords={}, 
+                   keywords={[2]}, 
+                   keywords={[3]}, 
+                   caption={Auszug aus Agentenscript: Überholverbot rechts},
+                   label={lst:multilane-rechts}]      
+!decelerate
+// --- gekuerzt ---
+    : >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
+            bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
+            && math/floor(Lane) > CurrentLane
+            && Speed < CurrentSpeed
+            && Dist < 1.5*CurrentSpeed
+        ) <-
+        CurrentSpeed > 80 ? vehicle/decelerate(0.9) : vehicle/decelerate(0.5);
+.\end{lstlisting}
+\end{minipage}
+
+Je weiter links eine Fahrspur ist, desto größer ist ihre Id.
+Falls auf einer Fahrspur, deren Id größer ist, als die derjenigen, auf der sich Fahrzeug A aktuell befindet, ein anderes Fahrzeug (B) ist, so wird von Fahrzeug A ein Bremsmanöver eingeleitet.
+\\
+Außerdem muss Fahrzeug A eine höhere Geschwindigkeit haben und sich in einer von seiner aktuellen Geschwindigkeit abhängigen Entfernung hinter Fahrzeug B befinden. 
+
+Das Verhalten, was diese Bedingung auslöst, konnte getestet werden, indem ein langsameres Fahrzeug auf der Überholspur fuhr und das schnellere auf der Normalspur aufschloss.
+Das schnellere Fahrzeug bremste ab und passte sich der Geschwindigkeit des langsameren Fahrzeugs an.

@@ -219,7 +219,7 @@ Ist Verkehr voraus, wird der Zustand \texttt{DEC} (Decelerate/Verzögern, Bremse
 Aus dem \texttt{DEC}-Zustand kann zufällig ein Übergang in den \texttt{LIN}-Zustand erfolgen ansonsten zurück in den allgemeinen \texttt{DRI}-Zustand.
 Aus dem \texttt{LIN}-Zustand wird zwangsläufig wieder in den \texttt{DRI}-Zustand übergegangen.
 
-Ein Zeitschritt der Simulation entspricht dabei einem Zyklus vom Startzustand ausgehend, bis zur Rückkehr dorthin.
+Ein Zeitschritt der Simulation entspricht dabei einem Zyklus vom Startzustand ausgehend bis zur Rückkehr dorthin.
 
 
 \subsubsection{Agentenplan}
@@ -231,7 +231,7 @@ Der Agent beginnt im Plan \enquote{\texttt{cruise}}, von dem aus alle weiteren P
 Außerdem ruft sich der Plan selbst wieder auf.
 \\
 Während der Simulationsläufe diente dieser Plan zudem dem Loggen der Statusdaten.
-Das komplette Listing siehe \sa{why not} \cref{lst:nasch}.
+Das komplette Listing siehe \cref{lst:nasch}.
 
 \begin{minipage}[hptb]{0.95\textwidth}
 \begin{lstlisting}[style=asl, 
