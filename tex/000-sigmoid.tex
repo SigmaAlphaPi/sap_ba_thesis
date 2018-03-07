@@ -1,0 +1,53 @@
+[ZU FAZIT]
+
+Wird as Nagel-Schreckenberg-Modell zukünftig noch von Bedeutung sein? 
+Viele Entwicklungen im Automobilbereich gehen hin in Richtung hochassitentes oder gar autonomes Fahren.
+
+bla bla bla Fehleinschätzungen können auch dem Rechner passieren bla bla bla
+
+Sollten diese Systeme zu 100% sicher funktionieren, kann man den Faktor Mensch, der meist die Unsicherheiten in das System Verkehr einbringt, aus der Gleichung entfernen.
+Wichtig wäre dann aber auch die Kommunikation der Fahrzeuge untereinander.
+
+Von diesem Punkt ist die Technik aktuell noch weit entfernt, siehe [www.sueddeutsche.de/auto/autonomes-fahren-der-entwicklungsaufwand-bei-selbstfahrenden-autos-ist-riesig-1.3838094], sodass der Mensch hinter dem Lenkrad wohl noch einige Zeit erhalten bleiben wird \dots und sei es als Backup bei Fehleinschätzungen der Technik.
+
+https://www.welt.de/wirtschaft/article168550776/Fuer-autonomes-Fahren-gibt-es-ein-grosses-Hindernis.html
+
+
+
+\subsection{Zufälligkeit des Aus- und Einscherens}
+
+Um unterschiedliche Verhalten beim Überholen im Autobahnverkehr abbilden zu können, benötigt man einen Mechanismus, Wahrscheinlichkeiten für eine der Handlungen zu generieren.
+\\
+Hier scheint die Sigmoid-Funktion $ f(x) = \frac{1}{1 + e^{-x}} $ ein geeigneter Kandidat. 
+Ihr Definitionsbereich sind alle $ R $ und ihr Wertebereich liegt zwischen 0 und 1.
+\\
+Die Grundfunktion steigt im Intervall -5, 5 ziemlich rasch von nahe 0 auf nahe 1.
+Dies kann durch Streckung der Funktion etwas abgemildert werden.
+So hat z.B. $ \frac{1}{1 + e^{-\frac{x}{2}}} $ einen nutzbaren Intervall zwischen -10, 10.
+
+Für das Überholen wurden die folgende Zusammenhänge erkannt:
+\begin{itemize}
+    \itemsep0em
+    \item Abstand $ \uparrow $, Überholbedürfnis $ \downarrow $ und umgekehrt
+    \item relative Geschwindigkeit $ \uparrow $, Überholbedürfnis $ \uparrow $ und umgekehrt
+\end{itemize}
+
+Es galt sinnvolle Werte zu finden und diese auf den o.g. Intervall zu normieren.
+
+Für den Abstand wurde die Grenze der [Zone Handlung ... Verweis] - 110 m - und ein Punkt, an dem nach Möglichkeit spätestens ein Überholvorgang eingeleitet sein sollte - 50 m - gewählt.
+\\
+Dies führt zur Funktion $ f(a) = \frac{1}{1 + e^{-\frac{ \frac{80}{3} - \frac{a}{3} }{2}}} $.
+
+Für die relative Geschwindigkeit wurden die Grenzen bei 0 und 25 km/h festgelegt.
+Ab 0 km/h bzw. darunter ist kein Überholen mehr nötig.
+Für die obere Grenze wurde das Verhalten auf Landstraßen [https://www.adac.de/_mmm/pdf/fachdossier_ueberholen_auf_landstraßen_68414.pdf, S. 27] auf den Autobahnverkehr übertragen.
+\\
+Dies führt zu der Funktion $ f(v_{rel}) = \frac{1}{1 + e^{-\frac{ \frac{4 v_{rel}}{5} - 10 }{2}}} $.
+
+Eine Kombination der beiden Gleichungen 
+\\
+$ \frac{1}{2}(f(a) + f(v_{rel})) = \frac{1}{2}( \frac{1}{1 + e^{-\frac{ \frac{80}{3} - \frac{a}{3} }{2}}} + \frac{1}{1 + e^{-\frac{ \frac{4 v_{rel}}{5} - 10 }{2}}} ) $ 
+\\
+liefert die Wahrscheinlichkeit für das Ausschehren.
+
+[Grafik WolframAlpha]
