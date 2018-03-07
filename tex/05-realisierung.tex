@@ -89,7 +89,7 @@ Gleiches gilt analog für die rückwärtige Sicht des violetten Fahrzeugs.
     \subfigure[ohne Umbruch]{\includegraphics[width=0.8\textwidth]{view-range-no-clip}\label{figure:view-range-no-clip}} \\
     \subfigure[mit Umbruch]{\includegraphics[width=0.8\textwidth]{view-range-clip}\label{figure:view-range-clip}}
   \caption[Umbrechen des Sichtfelds eines Fahrzeugs am Ende der Lane]
-          {Sichtfeld des gelben Fahrzeugs am Ende der Lane, Quelle: Auto-Silhouette vecteezy.com}
+          {Sichtfeld des gelben Fahrzeugs am Ende der Lane, Quelle Auto-Silhouette: vecteezy.com}
   \label{figure:view-range-no-clip-clip}
 \end{figure}
 
@@ -97,10 +97,20 @@ Für die Erstellung der sichtbaren Umgebung der Fahrzeuge werden die Zellen zur 
 Diese werden als relative Angaben mit dem jeweiligen Fahrzeug als Mittelpunkt gespeichert und in jedem Zeitschritt auf reale Koordinaten umgerechnet.
 Befindet sich dann ein anderes Fahrzeug in einer dieser Zellen, befindet es sich im Sichtfeld und eine Entfernung und Richtung wird berechnet.
 
-Die Schwierigkeit bestand darin, die Zellen am anderen Ende der Strecke mit in die Liste der relativen Zellpositionen aufzunehmen, siehe \cref{figure:view-range-clip}.
+Die Schwierigkeit bestand darin, die Zellen am anderen Ende der Strecke mit in die Liste der relativen Zellpositionen aufzunehmen, siehe \cref{figure:view-range-clip}, und virtuelle Zellpositionen korrekt auf reale Positionen umzurechnen.
 
-\sa{own: noch nicht vollends behoben}
-Nach der Behebung dieses Fehlers konnten dann auch Stauwellen beobachtet werden, die sich vom Streckenanfang herüber hinaus am Streckenende fortsetzten. 
+\begin{figure}[hptb]
+  \centering
+    \subfigure[vorher: Durchlauf mit Fehler]{\includegraphics[width=0.45\textwidth]{go-negative_release-v175_fail}\label{figure:go-negative-fail}} \qquad 
+    \subfigure[nachher: Durchlauf ohne Fehler]{\includegraphics[width=0.45\textwidth]{go-negative_release-v185_success}\label{figure:go-negative-success}}
+  \caption[Fehlerbehebung: Übergang vom Streckenende zum Anfang]
+          {Fehlerbehebung des Übergangs vom Streckenende zum Anfang}
+  \label{figure:go-negative}
+\end{figure}
+
+Durch Testläufe unterschiedlicher Versionen der Simulationssoftware mit identischen Szenariovorgaben - ein Fahrzeug wurde mit einer so kleinen Geschwindigkeit generiert, dass es in seiner Startzelle verblieb - konnte die Behebung des Fehlverhaltens nachgewiesen werden, siehe \cref{figure:go-negative}.
+
+Danach konnten dann auch Stauwellen beobachtet werden, die sich rückwärts vom Streckenanfang her darüber hinaus am Streckenende fortsetzten. 
 
 
 
@@ -116,7 +126,7 @@ Die Simulationssoftware hatte für das Sichtfeld der Fahrzeuge eine Unterteilung
    \subfigure[zwei Sektoren]{\includegraphics[width=0.3\textwidth]{car-view-2sectors}\label{figure:car-view-2sectors}}\qquad 
    \subfigure[vier Sektoren]{\includegraphics[width=0.3\textwidth]{car-view-4sectors}\label{figure:car-view-4sectors}}
   \caption[mögliche Unterteilung des Sichtfeldes]
-          {mögliche Unterteilung des Sichtfeldes, Quelle: Auto-Silhouette vecteezy.com} 
+          {mögliche Unterteilung des Sichtfeldes, Quelle Auto-Silhouette: vecteezy.com} 
   \label{figure:car-view-sectors}
 \end{figure}
 
@@ -223,11 +233,12 @@ Außerdem ruft sich der Plan selbst wieder auf.
 Während der Simulationsläufe diente dieser Plan zudem dem Loggen der Statusdaten.
 Das komplette Listing siehe \sa{why not} \cref{lst:nasch}.
 
+\begin{minipage}[hptb]{0.95\textwidth}
 \begin{lstlisting}[style=asl, 
                    keywords={!cruise}, 
                    keywords={[2]}, 
                    keywords={[3]}, 
-                   caption={Auszug aus Agentenscript: Standardplan},
+                   caption={Auszug aus Agentenscript: single lane-Version},
                    label={lst:nasch-auszug}]      
 !cruise.
 
@@ -238,7 +249,7 @@ Das komplette Listing siehe \sa{why not} \cref{lst:nasch}.
     !linger;
     !cruise
 .\end{lstlisting}
-
+\end{minipage}
 
 Der \texttt{accelerate}-Plan war ursprünglich mit der Bedingung ausgestattet, dass die Beschleunigung nur erfolgen soll, wenn die aktuelle Geschwindigkeit unter der zulässigen liegt.
 Hier ergab sich das Problem, dass auch bei vorwärtigem Verkehr eine Beschleunigung durchgeführt wurde und die nachfolgende Verzögerung diesen Geschwindigkeitszuwachs in jedem Zeitschritt zusätzlich abbauen musste.
@@ -271,7 +282,7 @@ Der einzige Unterschied, den es zwischen den Fahrzeugen gab, war, dass eines sei
 Somit war sichergestellt, dass das schnellere Fahrzeug im Laufe der für Testzwecke kurz gehaltenen Simulationzeit auf das langsamere aufholen würde.
 Es war wiederholbar zu testen, ob das Abbremsen bei vorwärtigem Verkehr funktionierte.
 
-[Grafik Speedcurve][Grafik Cellcurve]
+\sa{own: [Grafik Speedcurve][Grafik Cellcurve]}
 %\begin{figure}[hptb]
 %  \centering 
 %   \subfigure[Zellpostionen]{\includegraphics[width=0.5\textwidth]{image1name}\label{figure:image1name}}\qquad 
@@ -298,7 +309,7 @@ Es gibt u.a. die Möglichkeit, die Streckenlänge und die Simulationsdauer, die 
 
 %\subsubsection{Einstellmöglichkeiten für Zellgröße und Länge der Zeitschritte}
 
-\paragraph*{Zellgröße}
+\paragraph*{Zellgröße:}
 \label{zellgroesse-zeitschritte}
 Die Entwicklung der Agentenpläne wurde ausschließlich in einer Simulationsumgebung mit einer Zellgröße von 7,5 m durchgeführt.
 Als das Verhalten der Agenten zufriedenstellend war, wurde u.a. auch wegen der in \cref{sec:bremsverhalten} angemerkten Bremsprobleme, getestet, inwiefern sich die Zelllänge verkürzen lässt und welchen Einfluss dies auf die Simulation hat.
@@ -311,7 +322,7 @@ Als das Verhalten der Agenten zufriedenstellend war, wurde u.a. auch wegen der i
 %vorangegangenen Zeitschritt und musste aufgrund dieser Informationen handeln. Hier konnten
 %z.B. kritische Situationen nicht erkannt werden.
 
-\paragraph*{Zeitschrittlänge}
+\paragraph*{Zeitschrittlänge:}
 Die Länge der Zeitschritte lässt sich in der Konfiguration in Minuten oder Bruchteilen davon angeben. 
 Dies stellte sich als unpraktikabel heraus, da z.B. eine Dauer von einer Sekunde durch den Dezimalbruch für $\frac{1}{60}$ angegeben werden müsste, der aber eine Periodizität aufweist.
 
@@ -326,23 +337,25 @@ Ausführlich siehe \cref{setup-multilane-scenarios}.
 
 %\subsubsection{Festlegen der Beschleunigungs-/Verzögerungswerte und der Sichtweite}
 
-\paragraph*{Beschleunigung/Verzögerung}
-\label{sec:sichtweite}
+\paragraph*{Beschleunigung/Verzögerung:}
+\label{beschl-verz}
 Das originale Modell von Nagel und Schreckenberg legt Beschleunigung, Verzögerung und Sichtweite sehr einfach fest.
 Bedingt durch die Zellgröße von \mbox{7,5 m}, die Ganzzahligkeit der Geschwindigkeit und die Zeitschrittlänge von 1 Sekunde ergeben sich Beschleunigungswerte von 7,5 $\frac{m}{s^{2}}$. 
-Durch die Möglichkeit, die Geschwindigkeit innerhalb eines einzigen Zeitschrittes von der Maximalgeschwindigkeit \enquote{5} auf Null zu verringern, ergibt sich theoretisch eine Verzögerung von 37,5 $\frac{m}{s^{2}}$.
+Durch die Möglichkeit, die Geschwindigkeit innerhalb eines einzigen Zeitschrittes von der Maximalgeschwindigkeit \enquote{5} auf Null zu verringern, ergibt sich theoretisch eine Verzögerung von \mbox{37,5 $\frac{m}{s^{2}}$}.
 Dies ist unrealistisch.
 
 Die Simulationsumgebung arbeitet hier mit frei wähl- und einstellbaren Werten. 
 In \cite{unfallrekonstruktion} sind die Werte für eine Vielzahl von Fahrzeugen aufgelistet. 
-Für die Simulation wurden real möglichen Werte zwischen 3,5 und 7 $\frac{m}{s^{2}}$ für die Beschleunigung und zwischen 8 und 10 $\frac{m}{s^{2}}$ für die Verzögerung gewählt.
+Für die Simulation wurden real möglichen Werte zwischen 3,5 und \mbox{7 $\frac{m}{s^{2}}$} für die Beschleunigung und zwischen 8 und \mbox{10 $\frac{m}{s^{2}}$} für die Verzögerung gewählt.
 Der Wert wird für jedes Fahrzeug bei der Initialisierung im Rahmen dieser Intervalle zufällig festgelegt.
 Die Dosierung der möglichen Beschleunigung bzw. Verzögerung wird im Agentenscript festgelegt.
 
-\paragraph*{Sichtweite}
-Für die Sichtweite ergibt sich für im NaSch-Modell der theoretische Wert von $ 5 \times $ 7,5 m, also 37,5 Meter (bzw. je nach max. möglicher Geschwindigkeit  $ v_{max} $: $ v_{max} \times $ 7,5 m).
+\paragraph*{Sichtweite:}
+\label{sec:sichtweite}
+Für die Sichtweite ergibt sich für im NaSch-Modell der theoretische Wert von \mbox{$ 5 \times $ 7,5 m}, also 37,5 Meter (bzw. je nach max. möglicher Geschwindigkeit  $ v_{max} $: \mbox{$ v_{max} \times $ 7,5 m}).
 \\
 Für die in der Agentensimulation vorliegenden \enquote{realen} Bremsvorgänge ist diese Entfernung unzureichend. 
+
 Die Sichtweite im Straßenverkehr kann laut \cite{sichtweite} aufgrund von physiologischen und psychologischen Gründen in drei Zonen eingeteilt werden:
 \begin{itemize}
 \itemsep0em
@@ -361,9 +374,9 @@ In den Agentenplänen wird schließlich die Handlung durch Bedingungen auf einen
 
 \subsubsection{Einstellmöglichkeiten im Agentenverhalten (Parameter)}
 
-\paragraph*{Festlegen der Trödelparameter}
+\paragraph*{Festlegen der Trödelparameter:}
 \label{sec:lingersweetspot}
-\sa{own: hier fehlt noch die Wkt.}
+
 Im Originalmodell wird dem jeweiligen Fahrzeug im Trödelfall eine Geschwindigkeitseinheit wieder abgezogen. 
 In jenem Zeitschritt erfolgt somit keine Beschleunigung, bzw. bei Fahren mit max. möglicher Geschwindigkeit wird diese reduziert. 
 Auf das Abbremsen vor einem Hindernis hat dies keinen Einfluss, weil die mögliche Geschwindigkeit an Größe der vorhandenen Lücke angepasst wird.
@@ -372,7 +385,228 @@ Für die Simulation musste ein Wert gefunden werden, der dieses Verhalten näher
 Im Laufe mehrerer Testdurchgänge schien eine Intensität der Verzögerung von \texttt{0,3} die getätigte Beschleunigung am besten zu egalisieren. 
 Hierbei ist noch die Streuung der Beschleunigungs- und Verzögerungswerte zu beachten, sodass das Trödeln unterschiedlich große Effekte haben kann.
 
-Für das Abbremsen in der Agentensimulation kann sich das Trödeln positiv auf den Bremsweg auswirken, da ein zusätzlicher Bremsimpuls erzeugt wird.
+Für das Abbremsen in der Agentensimulation kann sich das Trödeln positiv auf den Bremsweg auswirken, da ein zusätzlicher Bremsimpuls erzeugt wird. 
+Hier wird im allgemeinen aber im Summe eine Verzögerung über dem max. möglichen Wert erziehlt.
+\\
+Aufgrund der \enquote{Bremsprobleme}, siehe \cref{sec:bremsverhalten}, wurde dies aber vorerst in Kauf genommen.
+
+Für die Trödelwahrscheinlichkeit $ p_{linger} $ wurde herausgefunden, dass diese bei gleicher Höhe, abhängig von gefahrenen Geschwindigkeiten, unterschiedliche Einflüsse auf den Verkehrsfluss hat.
+
+Bei einer max. möglichen Geschwindigkeit von 50 km/h erzeugt erst eine Wahrscheinlichkeit von \texttt{0,5} einen merklichen Effekt. Für eine Geschwindigkeit von 100 km/h ist dies bereits bei \texttt{0,3} der Fall.
+\\
+Bei Werten darüber hinaus wurde beobachten, dass die Beschleunigung eines oder mehrerer Fahrzeuge so gehemmt wurde, dass ein Erreichen der möglichen Geschwindigkeit für alle im System befindlichen Fahrzeuge nicht möglich war.
+
+Für die Dauertests mit einer max. möglichen Geschwindigkeit von 100 km/h wurden die Parameter im \texttt{linger}-Plan somit auf Wahrscheinlichkeit von \texttt{0,3} und eine Bremsintensität von \texttt{0,3} festgelegt.
+
+
+
+
+
+\subsection{Festlegen des Setups für die Langzeittests}
+\label{setup-multilane-scenarios}
+
+Den nachfolgenden Ausführungen liegt das hier beschriebene Szenario zugrunde:
+\begin{itemize}
+\itemsep0em
+	\item Anzahl Lanes: 1
+	\item Streckenlänge: 1 km
+	\item Simulationsdauer: 30 min
+	\item Anzahl Fahrzeuge: 2
+	\item max. zulässige Geschwindigkeit: 100 km/h
+	\item Trödelwahrscheinlichkeit: 0,1
+\end{itemize}
+Mit dem bereits erwähnten Vorgehen - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung ($ Fzg^{S} $ = schnelleres Fahrzeug (rote Kurve), $ v \in [80; 130] $, $ Fzg^{L} $ = langsameres Fahrzeug (schwarze Kurve), $ v \in [70; 90] $) - wurde das Verhalten der Agenten, ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert), in jew. drei Durchgängen getestet.
+
+Für die Auswertung, ob eine Zellgröße/Zeitschrittlänge-Kombination für eine Simulationsdurchführung nutzbar ist, wurde der Ausdruck der Geschwindigkeiten der beiden Fahrzeuge über die Simulationszeit genutzt.
+
+
+\subsubsection{Zellgröße 7,5 m}
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run1}\label{figure:run1}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run2}\label{figure:run2}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run3}\label{figure:run3}}
+  \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,1 min} 
+  \label{figure:run1-3}
+\end{figure}
+
+In allen drei Kurvenverläufen in \cref{figure:run1-3} sind mehrfach Reduktionen der Geschwindigkeit auf Null zu sehen. 
+Dies zeigt, dass an diesen Stellen eine Kollision stattgefunden hat. Das Kollisionsereignis wird vom Simulationstool ausgelöst, wenn ein Fahrzeug nicht in der Lage wäre, im nächsten Zeitschritt die für seine Geschwindigkeit entsprechende Streckenlänge zurückzulegen.
+
+Die Zeitschrittlänge von 0,1 Minuten, was sechs Sekunden entspricht, ist nicht ausreichend, um Geschwindigkeit in ausreichendem Maße abzubauen, um genug Abstand vom Vordermann einzuhalten.
+
+Auf die Ausführung von Durchgängen mit dieser Zeitschrittgröße und kleinerer Zellgröße wurde verzichtet.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run4}\label{figure:run4}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run5}\label{figure:run5}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run6}\label{figure:run6}}
+  \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,05 min} 
+  \label{figure:run4-6}
+\end{figure}
+
+Die Verläufe der Kurven in \cref{figure:run4-6} zeigen in zwei von drei Fällen, dass sich die Geschwindigkeit des auffahrenden Fahrzeuges um die des langsameren Fahrzeuges einpendelt.
+
+Im Plot des zweiten Durchlaufes ist zu sehen, dass auch in dieser Konstellation Kollisionen stattgefunden haben.
+Die Geschwindigkeit des langsameren Fahrzeuges lag in diesem Durchlauf im Vergleich zu den anderen beiden um einiges niedriger.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run7}\label{figure:run7}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run8}\label{figure:run8}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run9}\label{figure:run9}}
+  \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,025 min} 
+  \label{figure:run7-9}
+\end{figure}
+
+Die Geschwindigkeitskurve des schnelleren Fahrzeugs weist in \cref{figure:run7} ein sägezahnähnliches Muster auf.
+Dies resultiert aus den, im Vergleich zu den herbeigeführten Geschwindigkeitszuwächsen, großen Zellen.
+Ein Geschwindigkeitsunterschied von zehn bis 15 km/h reicht bei entsprechend zugrunde liegender Ausgangsgeschwindigkeit nicht aus, eine Verkürzung des Abstands herbeizuführen.
+Da sich die Abbrems- und Beschleunigungsmanöver identisch wiederholen, kommt es zu dieser Musterbildung.
+
+Das Plot in \cref{figure:run8} zeigt ein Einordnen hinter dem langsameren Fahrzeug und die Beibehaltung dessen Geschwindigkeit.
+Das in \cref{figure:run9} ist nahezu eine Mischform aus den ersten beiden Kurven.
+
+
+\subsubsection{Zellgröße 5,0 m}
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run14}\label{figure:run14}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run15}\label{figure:run15}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run16}\label{figure:run16}}
+  \caption{Simulationen mit Zellgröße 5,0 m und Zeitschrittlänge 0,05 min} 
+  \label{figure:run14-16}
+\end{figure}
+
+Die Diagramme in \cref{figure:run14-16} zeigen wiederholt, dass der Abstand, der für den Bremsvorgang zur Verfügung steht, mit einem recht langen Zeitraum zwischen den Zeitschritten, nicht ausreicht.
+
+Allerdings ist im ersten und im dritten Durchlauf zu erkennen, dass das langsamere Fahrzeug, ohne dass es zu einer Kollision kommen muss, für das gerade beschleunigende Fahrzeug abbremsen konnte. 
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run17}\label{figure:run17}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run18}\label{figure:run18}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run19}\label{figure:run19}}
+  \caption{Simulationen mit Zellgröße 5,0 m und Zeitschrittlänge 0,025 min} 
+  \label{figure:run17-19}
+\end{figure}
+
+Die drei Durchläufe mit einer Zeitschrittlänge von 0,025 min ergaben ein uneinheitliches Bild.
+In \cref{figure:run17} konnte das schnellere Fahrzeug wieder mit höherer Geschwindigkeit hinter dem langsameren herfahren, scheinbar ohne dass ein Raumgewinn passierte, der zu einer Verzögerung geführt hätte.
+\\
+Evtl. fuhr das schnellere Fahrzeug auch mit seiner max. möglichen Geschwindigkeit und der Geschwindigkeitsunterschied war so gering, das es in der Simulationszeit das langsamere Fahrzeug nicht erreichte.
+
+Der Durchlauf im Diagramm in \cref{figure:run18} zeigt wieder das sägezahnähnliche Muster, wie es mit den größeren Zelldimensionen bereits der Fall war.
+
+Unerwarteterweise kam es im dritten Durchlauf zu je zwei Kollisionen.
+Besonders die jeweils auslösende Kollision des ursprünglich schnelleren Fahrzeuges war nicht zu erklären, da der Geschwindigkeitsunterschied in beiden Fällen minimal gewesen war.
+
+Ein weiterer Durchlauf, siehe \cref{figure:run19a}, der einen vergleichbaren Ablauf hervorbrachte, bei dem aber die Ausgabe der Fahrzeugdaten im Kontrollfenster erfolgte, konnte das Verhalten aufklären.
+Die Bedingung im Agentenplan waren so formuliert, dass das Folgefahrzeug dem vorausfahrenden folgen konnte, ohne dass ein \enquote{Sicherheitsabstand} gebildet wurde, wenn die Geschwindigkeit jenes Fahrzeuges nicht größer als die des vorausfahrenden Fahrzeuges war. 
+\\
+Somit genügte, gewisse Geschwindigkeiten vorrausgesetzt, eine kleine Beschleunigung, um im nachfolgenden Zeitschritt die für die Geschwindigkeit erforderliche Wegstrecke nicht mehr umsetzen zu können.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[ursprüngliches Verhalten]{\includegraphics[width=0.3\textwidth]{speed_run19a}\label{figure:run19a}}\qquad 
+   \subfigure[Modifikation 1]{\includegraphics[width=0.3\textwidth]{speed_run19b}\label{figure:run19b}}\qquad 
+   \subfigure[Modifikation 2]{\includegraphics[width=0.3\textwidth]{speed_run19c}\label{figure:run19c}}
+  \caption{Simulationen mit Veränderungen in den Agentenplänen} 
+  \label{figure:run19a-c}
+\end{figure}
+
+Eine erste Modifikation führte wieder zurück zu einem Verhalten, siehe \cref{figure:run19b}, aufgrund dessen die Geschwindigkeitskomponente mit in die Verzögerungslogik eingefügt worden war. 
+\\
+Das nachfolgende Fahrzeug bremste so lange ab, bis der gewünschte Abstand erreicht war, um daraufhin mit einem \enquote{Zwischensprint} wieder auf das vorausfahrende Fahrzeug aufzuschließen.
+Durch den Geschwindigkeitsüberschuss, der abgebaut werden muss, wurde der Abstand wieder extrem verkürzt, dass der Kreislauf von vorn beginnt.
+\\
+In einigen Simulationsläufen musste die Geschwindigkeit derart massiv abgebaut werden, dass das Folgefahrzeug fast zum Stillstand kam.
+
+Es musste ein Weg gefunden werden, die Geschwindigkeit von \enquote{Ego} in Zusammenhang mit der Entfernung vom vorausfahrenden Fahrzeug zu bringen.
+\\
+Verschiedene Ansätze, bei denen in den Bedingungen der Logik mit den vorliegenden Werten Berechnungen durchzuführen gewesen wären, wurden von der Simulationsplattform nicht unterstützt.
+\\
+Da den Agenten sowohl die eigene Geschwindigkeit als auch die Entfernung als numerische Werte bekannt sind, werden diese nun zu einander in Beziehung gesetzt.
+
+Dies führt dazu, dass die eigene Geschwindigkeit des betrachteten Fahrzeugs gleichzeitig der jeweilige Mindestabstand vom Vordermann sein muss. 
+\\
+Eine gleichwertige Bedingung wurde auch für die Simulation der Beschleunigung übernommen.
+Der reine Geschwindigkeitsvergleich wurde entfernt.
+
+
+\subsubsection{Zellgröße 2,5 m}
+
+Aufgrund der Veränderung in den Agentenplänen wurde die erneut verringerte Zellgröße ebenfalls mit den beiden verbliebenen Zeitschrittwerten simuliert.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run24}\label{figure:run24}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run25}\label{figure:run25}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run26}\label{figure:run26}}
+  \caption{Simulationen mit Zellgröße 2,5 m und Zeitschrittlänge 0,05 min} 
+  \label{figure:run24-26}
+\end{figure}
+
+Die ersten beiden Simulationen mit 2,5 m/0,05 min zeigten ein Bild, welches nach den Veränderungen zu erwarten war.
+In der dritten Durchführung traten allerdings wieder Kollisionsereignisse auf.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run27}\label{figure:run27}}\qquad 
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run28}\label{figure:run28}}\qquad 
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run29}\label{figure:run29}}
+  \caption{Simulationen mit Zellgröße 2,5 m und Zeitschrittlänge 0,025 min} 
+  \label{figure:run27-29}
+\end{figure}
+
+Die Simulationen der 2,5 m/0,025 min-Variante zeigten [ein sehr gutes Verhalten]\sa{own: anders}.
+$Fzg^{S}$ konnte ohne Kollision hinter $Fzg^{L}$ abbremsen und sich dessen Geschwindigkeit anpassen.
+\\
+Es wurden insgesamt zehn weitere Durchgänge mit diesem Setup durchgeführt. 
+Dabei wurde zweimal je eine Kollision beobachtet, die aber immer im Bereich der Beschleunigungsphase am Anfang der Simulation stattfand. 
+
+\subsubsection{\texorpdfstring{Zellgröße $ < $ 2,5 m}%
+                              {Zellgröße kleiner als 2,5 m}}
+
+Bei vorhergehenden Testläufen wurde festgestellt, dass es bei einer Zellgröße von weniger als 2,5 Meter zu Inkonsistenzen in den Beliefbases der Agenten kommt.
+Entscheidungen müssten dann aufgrund unterschiedlicher Voraussetzungen getroffen werden.
+Aus diesem Grund wurde auf den Einsatz von kleineren Zellgrößen verzichtet.
+
+
+
+
+
+\subsection{Testläufe des Einspurszenarios}
+\label{test-singlelane}
+
+Die Testläufe für den Einspurfall erfolgten mit folgenden Einstellungen:
+\begin{itemize}
+	\itemsep0em
+	\item Anzahl Fahrzeuge: variabel
+	\item Anzahl Fahrspuren: 1
+	\item Streckenlänge: 7,5 km 
+	\item Zellgröße: 2,5 m
+	\item Simulationsdauer: 2 h
+	\item Zeitschrittlänge: 0,025 min (1,5 sek)
+	\item Intervalle Beschleunigung/Verzögerung/Geschwindigkeit: $ [3,5; 7] $/$ [8; 10] $/$ [80; 130] $
+	\item max. Geschwindigkeit: 100 km/h
+	\item Verhalten bei Kollisionsereignis: abbremsen (kein Totalstop)
+\end{itemize}
+
+Während bei der Entwicklung durchaus rückwärts laufenden Stauwellen beobachtet werden konnten, ist die Phase der Totalstopps, die dieses Verhalten hervorruft, bei der Simulation im allgemeinen nicht vorhanden.
+Durch die feinere Ausführung der Bremsmanöver nähern nähern sich die Positionen der Fahrzeuge einander an und fächern sich, nachdem die Ursache (langsames Fahrzeug) beseitigt ist, wieder auf.
+
+
+
+
+
+
+
+
+
 
 
 

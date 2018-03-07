@@ -9,174 +9,183 @@ Dennoch liegen theoretische Überlegungen und in Teilen getestete praktische Vor
 
 
 
-\subsection{Festlegen des Setups für Tests der Multilane-Scenarios}
-\label{setup-multilane-scenarios}
+\subsection{Veränderung der Agentenpläne}
+\label{agentplan-multilane}
 
-Den nachfolgenden Ausführungen liegt das hier beschriebene Szenario zugrunde:
+Für die Simulation mehrspuriger Fahrbahnen müssen dem Agentenverhalten lediglich zwei Pläne für das Ausscheren (Pull-out) und das Einscheren (Pull-in) hinzugefügt werden.
+%Für das komplette Listing siehe \cref{lst:multilane}.
+\sa{own: add listing multilane}
+
+\begin{minipage}[hptb]{0.95\textwidth}
+\begin{lstlisting}[style=asl, 
+                   keywords={!pullout,!pullin}, 
+                   keywords={[2]}, 
+                   keywords={[3]}, 
+                   caption={Auszug aus Agentenscript: multi lane-Version},
+                   label={lst:multilane-auszug}]      
+!cruise.
+
+// --- start all other plans ---
++!cruise <-
+    !accelerate;
+    !decelerate;
+    !linger;
+    !pullout
+    !pullin
+    !cruise
+.\end{lstlisting}
+\end{minipage}
+
+\paragraph*{\texttt{pullout}-Plan}
+\hfill \\
+Der Plan für das Ausscheren ist mit insgesamt fünf Bedingungen versehen.
+
+\begin{enumerate}
+	\itemsep0em
+	\item Befindet sich das Fahrzeug nicht auf der am weitesten linken Fahrspur?
+	\item Ist in der aktuellen Spur Verkehr voraus?
+	\item Ist Verkehr in der Spur, in die gewechselt werden soll, nicht näher?
+	\item Befindet sich Verkehr direkt links neben dem Fahrzeug?
+	\item Ist der rückwärtige Verkehr auf der Überholspur ausreichend weit entfernt?
+\end{enumerate}
+
+Die erste Bedingung ist zwingend notwendig, da sonst keine Spur zum hineinwechseln vorhanden wäre.
+Die Auslösung eines Kollisionsereignisses wäre in der Simulation die Folge.
+\\
+Die zweite Bedingung macht den Ausschervorgang erst nötig. 
+Wäre die aktuelle Spur nicht blockiert, könnte auf ihr weitergefahren werden.
+\\
+Ein Spurwechsel ist nur sinnvoll, wenn auf der zukünftigen Spur mindestens genauso viel Platz nach vorn ist, wie auf der aktuellen. 
+Dem trägt Bedingung 3 Rechnung.
+\\
+Durch die Unterteilung des Sichtfeldes in vier Sektoren, siehe \cref{sec:unterteilung-sichtfeld}, wurde die vierte Bedingung notwendig.
+\\
+Um den nachfolgenden Verkehr nicht zu behindern, ist die fünfte Regel zu beachten.
+
+Durch die o.g. Fehler im Framework ist die gleichzeitige Auswertung aller Bedingungen unmöglich.
+\\
+Bei keiner der Bedingungen ist es möglich, diese wegzulassen oder mit einer anderen zusammenzufassen, ohne dass unerwünschtes Verhalten auftritt.
+
+Würden zum Beispiel die Bedingungen 2 und 3 zusammengefasst und nur auf forwärtigen Verkehr (in beiden Spuren) geprüft, so würde dies zwar der Bedingung \enquote{nicht schlechter} für die Überholspur genügen, aber jedes überholende Fahrzeug würde zum Auslösen der Bedingung führen.
+Dies sogar in übergroßen Maße, da die Entfernung sehr gering ist.
+
+
+
+%\subsection{Testläufe des Mehrspurmodells}
+%\label{test-multilane}
+%
+%Da die Ausführung der erdachten Logik nicht funktioniert, wurde überlegt, das Verhalten mit Alternativen/Workarounds herzustellen.
+%
+%Eine Idee war, die zweite und dritte Bedingung zusammenzufassen.
+%Dies hätte aber zur Folge, dass
+%
+%IDEE
+%Für den Zweispurfall könnte man die zweite und die dritte Bedingung zusammenfassen.
+%NO RISK, NO FUN -- try not looking left.
+
+
+
+
+\subsection{Zufälligkeit des Aus- und Einscherens}
+\label{sec:pullout-pullin}
+
+Um unterschiedliche Verhalten beim Überholen im Autobahnverkehr abbilden zu können, benötigt man einen Mechanismus, Wahrscheinlichkeiten für jew. eine der Handlungen zu generieren.
+
+Dieses wurde u.a. in \cite{dat-ba} anhand des \enquote{Social-Force-Vehicle-Modells} versucht. 
+Der dort erarbeitete Ansatz scheint jedoch das gewünschte Verhalten übermäßig zu bevorteilen.
+
+Für den Anreiz zum Spurwechsel nach links (Pull-out) oder rechts (Pull-in) genügt im Zweispurfall die Berechnung der jeweiligen Wahrscheinlichkeit.
+Die Wahrscheinlichkeit, die Spur zu halten, wäre jeweils die Gegenwahrscheinlichkeit.
+\\
+Für Szenarien mit mehr als zwei Spuren ist eine Exklusivität (XOR) der beiden Ereignisse zu gewährleisten.
+Hier könnte die Wahl auf die Alternative mit der größeren Wahrscheinlichkeit fallen bei exakter Gleichheit würde es Sinn machen, aufgrund des zu überholenden Verkehrs und des Verbotes des rechts Überholens, den Spurwechsel nach links zu präferieren.
+
+\paragraph*{Wahrscheinlichkeitsfunktion} 
+\hfill \\
+Für eine Bestimmung von Wahrscheinlichkeiten für diesen Zweck erscheint die logistische Funktion  
+\begin{center}
+$ f(x) = \frac{1}{1 + e^{-x}} $ 
+\end{center}
+siehe \cite{logistic-function}, eine Sigmoid-Funktion, ein geeigneter Kandidat. 
+Ihr Definitionsbereich sind alle Zahlen in $ \mathbb{R} $ und ihr Wertebereich liegt zwischen 0 und 1.
+\\
+Die Grundfunktion steigt im Intervall $ [-5; 5] $ ziemlich rasch von nahe 0 auf nahe 1.
+Dies kann durch Streckung der Funktion etwas abgemildert werden.
+So verläuft z.B. 
+\begin{center}
+$ f(x) = \frac{1}{1 + e^{-\frac{1}{2}x}} $ 
+\end{center}
+weniger steil und hat den für diesen Zweck sinnvoll nutzbaren Intervall $ [-10; 10 ] $.
+Für Werte außerhalb dieses Intervalles ergibt sich eine kleine von Null, bzw. große von Eins verschiedene Wahrscheinlichkeit.
+
+\paragraph*{Wahrscheinlichkeit des Ausscherens (Pull-out)} 
+\hfill \\
+Für das Ausscheren wurden die folgende Zusammenhänge, bezogen auf ein vorausfahrendes Fahrzeug, erkannt:
 \begin{itemize}
-\itemsep0em
-	\item Anzahl Lanes: 1
-	\item Streckenlänge: 1 km
-	\item Simulationsdauer: 30 min
-	\item Anzahl Fahrzeuge: 2
-	\item max. zulässige Geschwindigkeit: 100 km/h
+    \itemsep0em
+    \item Abstand $ \searrow $  $ \Longrightarrow $ Ausscherwunsch $ \nearrow $ (und umgekehrt)
+    \item relative Geschwindigkeit $ \nearrow $ $ \Longrightarrow $ Ausscherwunsch $ \nearrow $ (und umgekehrt)
 \end{itemize}
-Mit dem bereits erwähnten Setup - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung ($ Fzg^{S} $ = schnelleres Fahrzeug (rote Kurve), $ v \in [80, 130] $, $ Fzg^{L} $ = langsameres Fahrzeug (schwarze Kurve), $ v \in [70, 90] $) - wurde das Verhalten der Agenten, ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert), in jew. drei Durchgängen getestet.
 
-Für die Auswertung, ob eine Zellgröße/Zeitschrittlänge-Kombination für eine Simulationsdurchführung nutzbar ist, wurde der Ausdruck der Geschwindigkeiten der beiden Fahrzeuge über die Simulationszeit genutzt.
+Es galt sinnvolle Werte zu finden und diese auf den o.g. Intervall zu normieren.
 
-
-\subsubsection{Zellgröße 7,5 m}
-
-\begin{figure}[hptb]
-  \centering 
-   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run1}\label{figure:run1}}\qquad 
-   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run2}\label{figure:run2}}\qquad 
-   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run3}\label{figure:run3}}
-  \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,1 min} 
-  \label{figure:run1-3}
-\end{figure}
-
-In allen drei Kurvenverläufen in \cref{figure:run1-3} sind mehrfach Reduktionen der Geschwindigkeit auf Null zu sehen. 
-Dies zeigt, dass an diesen Stellen eine Kollision stattgefunden hat. Das Kollisionsereignis wird vom Simulationstool ausgelöst, wenn ein Fahrzeug nicht in der Lage wäre, im nächsten Zeitschritt die für seine Geschwindigkeit entsprechende Streckenlänge zurückzulegen.
-
-Die Zeitschrittlänge von 0,1 Minuten, was sechs Sekunden entspricht, ist nicht ausreichend, um Geschwindigkeit in ausreichendem Maße abzubauen, um genug Abstand vom Vordermann einzuhalten.
-
-Auf die Ausführung von Durchgängen mit dieser Zeitschrittgröße und kleinerer Zellgröße wurde verzichtet.
-
-\begin{figure}[hptb]
-  \centering 
-   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run4}\label{figure:run4}}\qquad 
-   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run5}\label{figure:run5}}\qquad 
-   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run6}\label{figure:run6}}
-  \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,05 min} 
-  \label{figure:run4-6}
-\end{figure}
-
-Die Verläufe der Kurven in \cref{figure:run4-6} zeigen in zwei von drei Fällen, dass sich die Geschwindigkeit des auffahrenden Fahrzeuges um die des langsameren Fahrzeuges einpendelt.
-
-Im Plot des zweiten Durchlaufes ist zu sehen, dass auch in dieser Konstellation Kollisionen stattgefunden haben.
-Die Geschwindigkeit des langsameren Fahrzeuges lag in diesem Durchlauf im Vergleich zu den anderen beiden um einiges niedriger.
-
-\begin{figure}[hptb]
-  \centering 
-   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run7}\label{figure:run7}}\qquad 
-   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run8}\label{figure:run8}}\qquad 
-   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run9}\label{figure:run9}}
-  \caption{Simulationen mit Zellgröße 7,5 m und Zeitschrittlänge 0,025 min} 
-  \label{figure:run7-9}
-\end{figure}
-
-Die Geschwindigkeitskurve des schnelleren Fahrzeugs weist in \cref{figure:run7} ein sägezahnähnliches Muster auf.
-Dies resultiert aus den, im Vergleich zu den herbeigeführten Geschwindigkeitszuwächsen, großen Zellen.
-Ein Geschwindigkeitsunterschied von zehn bis 15 km/h reicht bei entsprechend zugrunde liegender Ausgangsgeschwindigkeit nicht aus, eine Verkürzung des Abstands herbeizuführen.
-Da sich die Abbrems- und Beschleunigungsmanöver identisch wiederholen, kommt es zu dieser Musterbildung.
-
-Das Plot in \cref{figure:run8} zeigt ein Einordnen hinter dem langsameren Fahrzeug und die Beibehaltung dessen Geschwindigkeit.
-Das in \cref{figure:run9} ist nahezu eine Mischform aus den ersten beiden Kurven.
-
-
-\subsubsection{Zellgröße 5,0 m}
-
-\begin{figure}[hptb]
-  \centering 
-   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run14}\label{figure:run14}}\qquad 
-   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run15}\label{figure:run15}}\qquad 
-   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run16}\label{figure:run16}}
-  \caption{Simulationen mit Zellgröße 5,0 m und Zeitschrittlänge 0,05 min} 
-  \label{figure:run14-16}
-\end{figure}
-
-Die Diagramme in \cref{figure:run14-16} zeigen wiederholt, dass der Abstand, der für den Bremsvorgang zur Verfügung steht, mit einem recht langen Zeitraum zwischen den Zeitschritten, nicht ausreicht.
-
-Allerdings ist im ersten und im dritten Durchlauf zu erkennen, dass das langsamere Fahrzeug, ohne dass es zu einer Kollision kommen muss, für das gerade beschleunigende Fahrzeug abbremsen konnte. 
-
-\begin{figure}[hptb]
-  \centering 
-   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run17}\label{figure:run17}}\qquad 
-   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run18}\label{figure:run18}}\qquad 
-   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run19}\label{figure:run19}}
-  \caption{Simulationen mit Zellgröße 5,0 m und Zeitschrittlänge 0,025 min} 
-  \label{figure:run17-19}
-\end{figure}
-
-Die drei Durchläufe mit einer Zeitschrittlänge von 0,025 min ergaben ein uneinheitliches Bild.
-In \cref{figure:run17} konnte das schnellere Fahrzeug wieder mit höherer Geschwindigkeit hinter dem langsameren herfahren, scheinbar ohne dass ein Raumgewinn passierte, der zu einer Verzögerung geführt hätte.
+Für den Abstand $ s $ wurde die Grenze der Zone der Nahortientierung/Handlung, siehe \cref{sec:sichtweite} - 110 m - und ein Punkt, an dem nach Möglichkeit spätestens ein Überholvorgang eingeleitet sein sollte - 50 m - gewählt.
 \\
-Evtl. fuhr das schnellere Fahrzeug auch mit seiner max. möglichen Geschwindigkeit und der Geschwindigkeitsunterschied war so gering, das es in der Simulationszeit das langsamere Fahrzeug nicht erreichte.
+Dies führt zu der Funktion
+\begin{center}
+$ f(s) = -\frac{s}{3} + \frac{80}{3} $
+\end{center}
+Somit ergibt sich für die Überholwahrscheinlichkeit in Abhängigkeit vom Abstand zum vorausfahrenden Fahrzeug $ p_{po}(s) $
+\begin{center}
+$ p_{po}(s) = \frac{1}{1 + e^{-\frac{1}{2}f(s)}} $
+\end{center}
 
-Der Durchlauf im Diagramm in \cref{figure:run18} zeigt wieder das sägezahnähnliche Muster, wie es mit den größeren Zelldimensionen bereits der Fall war.
-
-Unerwarteterweise kam es im dritten Durchlauf zu je zwei Kollisionen.
-Besonders die jeweils auslösende Kollision des ursprünglich schnelleren Fahrzeuges war nicht zu erklären, da der Geschwindigkeitsunterschied in beiden Fällen minimal gewesen war.
-
-Ein weiterer Durchlauf, siehe \cref{figure:run19a}, der einen vergleichbaren Ablauf hervorbrachte, bei dem aber die Ausgabe der Fahrzeugdaten im Kontrollfenster erfolgte, konnte das Verhalten aufklären.
-Die Bedingung im Agentenplan waren so formuliert, dass das Folgefahrzeug dem vorausfahrenden folgen konnte, ohne dass ein \enquote{Sicherheitsabstand} gebildet wurde, wenn die Geschwindigkeit jenes Fahrzeuges nicht größer als die des vorausfahrenden Fahrzeuges war. 
+\noindent
+Für die relative Geschwindigkeit $ v_{rel} $ wurden die Grenzen bei 0 und 25 km/h festgelegt.
+Ab 0 km/h bzw. darunter ist kein Überholen mehr nötig.
+Für die obere Grenze wurde das Verhalten auf Landstraßen, siehe \cite[S. 27]{ueberholgeschwindigkeit}, auf den Autobahnverkehr übertragen.
 \\
-Somit genügte, gewisse Geschwindigkeiten vorrausgesetzt, eine kleine Beschleunigung, um im nachfolgenden Zeitschritt die für die Geschwindigkeit erforderliche Wegstrecke nicht mehr umsetzen zu können.
+Dies führt zu der Funktion 
+\begin{center}
+$ f(v_{rel}) = \frac{4 v_{rel}}{5} - 10 $
+\end{center}
+Für die Überholwahrscheinlichkeit in Abhängigkeit von der relativen Geschwindigkeit zum vorausfahrenden Fahrzeug $ p_{po}(v_{rel}) $ ergibt sich
+\begin{center}
+$ p_{po}(v_{rel}) = \frac{1}{1 + e^{-\frac{1}{2}v_{rel}}} $
+\end{center}
+
+\noindent
+Eine Kombination der beiden Gleichungen und Normierung auf den Intervall $ [0; 1] $
+\begin{center}
+$ p_{po} = \frac{1}{2}(p_{po}(s) + p_{po}(v_{rel})) = \frac{1}{2}p_{po}(s) + \frac{1}{2}p_{po}(v_{rel}) $
+\end{center}
+liefert die Wahrscheinlichkeit für das Ausscheren $ p_{po} $.
+
+Es ergibt sich eine Funktionskurve mit drei erkennbaren Plateaubildungen um die Werte 0, 0,5 und 1, siehe \cref{figure:kurve-ueberholwahrscheinlichkeit}.
+Die Darstellung erfolgt in den Intervallen  $ [0; 1] $ für die Wahrscheinlichkeit, $ [ 40; 120 ] $ für den Abstand und $ [ -5; 30 ] $ für die relative Geschwindigkeit.
 
 \begin{figure}[hptb]
-  \centering 
-   \subfigure[ursprüngliches Verhalten]{\includegraphics[width=0.3\textwidth]{speed_run19a}\label{figure:run19a}}\qquad 
-   \subfigure[Modifikation 1]{\includegraphics[width=0.3\textwidth]{speed_run19b}\label{figure:run19b}}\qquad 
-   \subfigure[Modifikation 2]{\includegraphics[width=0.3\textwidth]{speed_run19c}\label{figure:run19c}}
-  \caption{Simulationen mit Veränderungen in den Agentenplänen} 
-  \label{figure:run19a-c}
-\end{figure}
+ \centering
+ \includegraphics[width=0.5\textwidth]{kurve-ueberholwahrscheinlichkeit}
+ \caption[Funktionskurve für die Ausscherwahrscheinlichkeit]
+ 		 {Plateaubildung der Funktionskurve der Ausscherwahrscheinlichkeit}
+ \label{figure:kurve-ueberholwahrscheinlichkeit}
+\end{figure} 
 
-Eine erste Modifikation führte wieder zurück zu einem Verhalten, siehe \cref{figure:run19b}, aufgrund dessen die Geschwindigkeitskomponente mit in die Verzögerungslogik eingefügt worden war. 
-\\
-Das nachfolgende Fahrzeug bremste so lange ab, bis der gewünschte Abstand erreicht war, um daraufhin mit einem \enquote{Zwischensprint} wieder auf das vorausfahrende Fahrzeug aufzuschließen.
-Durch den Geschwindigkeitsüberschuss, der abgebaut werden muss, wurde der Abstand wieder extrem verkürzt, dass der Kreis von vorn beginnt.
+Hier wären die beiden Wahrscheinlichkeiten gleich gewichtet (Faktor $ \frac{1}{2} $). Eine unterschiedliche Gewichtung kann durch Faktoren, welche in Summe 1 ergeben müssen, herbeigeführt werden.
 
-In einigen Simulationsläufen musste die Geschwindigkeit derart massiv abgebaut werden, dass das Folgefahrzeug zum Stillstand kam.
+\paragraph*{Wahrscheinlichkeit des Einscherens (Pull-in)} 
+\hfill \\
+Eine ähnliche Herangehensweise ist für das Einscheren möglich.
+Hier müssten allerdings sowohl der vorausfahrende Verkehr $ T_{f} $, als auch der rückwärtige Verkehr $ T_{b} $ beachtet werden. 
+Aufgrund der fehlenden Möglichkeit eines Tests, wird hier nur das Konzept umrissen.
 
-Es musste ein Weg gefunden werden, die Geschwindigkeit von \enquote{Ego} in Zusammenhang mit der Entfernung vom vorausfahrenden Fahrzeug zu bringen.
-\\
-Verschiedene Ansätze, bei denen in den Bedingungen der Logik mit den vorliegenden Werten Berechnungen durchzuführen gewesen wären, wurden von der Simulationsplattform nicht unterstützt.
-\\
-Da den Agenten sowohl die eigene Geschwindigkeit als auch die Entfernung als numerische Werte bekannt sind, werden diese nun zu einander in Beziehung gesetzt.
+\begin{itemize}
+    \itemsep0em
+    \item Abstand $ T_{f} $ $ \nearrow $ $ \Longrightarrow $ Einscherdrang $ \nearrow $ (und umgekehrt)
+    \item relative Geschwindigkeit $ T_{f} $ $ \searrow $ $ \Longrightarrow $ Einscherdrang $ \nearrow $ (und umgekehrt)
+    \item Abstand $ T_{b} $ $ \nearrow $ $ \Longrightarrow $ Einscherdrang $ \nearrow $ (und umgekehrt)
+    \item relative Geschwindigkeit $ T_{b} $ $ \nearrow $ $ \Longrightarrow $ Einscherdrang $ \nearrow $ (und umgekehrt)
+\end{itemize}
 
-Dies führt dazu, dass die eigene Geschwindigkeit des betrachteten Fahrzeugs gleichzeitig der jeweilige Mindestabstand vom Vordermann sein muss. 
-\\
-Eine gleichwertige Bedingung wurde auch für die Simulation der Beschleunigung übernommen.
-Der reine Geschwindigkeitsvergleich wurde entfernt.
-
-
-\subsubsection{Zellgröße 2,5 m}
-
-Aufgrund der Veränderung in den Agentenplänen wurde die erneut verringerte Zellgröße ebenfalls mit den beiden verbliebenen Zeitschrittwerten simuliert.
-
-\begin{figure}[hptb]
-  \centering 
-   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run24}\label{figure:run24}}\qquad 
-   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run25}\label{figure:run25}}\qquad 
-   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run26}\label{figure:run26}}
-  \caption{Simulationen mit Zellgröße 2,5 m und Zeitschrittlänge 0,05 min} 
-  \label{figure:run24-26}
-\end{figure}
-
-Die ersten beiden Simulationen mit 2,5 m/0,05 min zeigten ein Bild, welches nach den Veränderungen zu erwarten war.
-In der dritten Durchführung traten allerdings wieder Kollisionsereignisse auf.
-
-\begin{figure}[hptb]
-  \centering 
-   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run27}\label{figure:run27}}\qquad 
-   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run28}\label{figure:run28}}\qquad 
-   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run29}\label{figure:run29}}
-  \caption{Simulationen mit Zellgröße 2,5 m und Zeitschrittlänge 0,025 min} 
-  \label{figure:run27-29}
-\end{figure}
-
-Die Simulationen der 2,5 m/0,025 min-Variante zeigten [ein sehr gutes Verhalten]\sa{own: anders}.
-$Fzg^{S}$ konnte ohne Kollision hinter $Fzg^{L}$ abbremsen und sich dessen Geschwindigkeit anpassen.
-\\
-Es wurden insgesamt zehn weitere Durchgänge mit diesem Setup durchgeführt. 
-Dabei wurde zweimal je eine Kollision beobachtet, die aber immer im Bereich der Beschleunigungsphase am Anfang der Simulation stattfand. 
-
-\subsubsection{\texorpdfstring{Zellgröße $ < $ 2,5 m}%
-                              {Zellgröße kleiner als 2,5 m}}
-
-Bei vorhergehenden Testläufen wurde festgestellt, dass es bei einer Zellgröße von weniger als 2,5 Meter zu Inkonsistenzen in den Beliefbases der Agenten kommt.
-Entscheidungen müssten dann aufgrund unterschiedlicher Voraussetzungen getroffen werden.
-Aus diesem Grund wurde auf den Einsatz von kleineren Zellgrößen verzichtet.
+Beim Zusammenfassung der entstehenden einzelnen Wahrscheinlichkeiten kann ebenfalls wieder über Faktoren eine individuelle Gewichtung vorgenommen werden.
