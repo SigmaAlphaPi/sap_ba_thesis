@@ -377,24 +377,32 @@ In den Agentenplänen wird schließlich die Handlung durch Bedingungen auf einen
 \paragraph*{Festlegen der Trödelparameter:}
 \label{sec:lingersweetspot}
 
-Im Originalmodell wird dem jeweiligen Fahrzeug im Trödelfall eine Geschwindigkeitseinheit wieder abgezogen. 
+Im Originalmodell wird dem jeweiligen Fahrzeug im Trö"-del"-fall eine Geschwindigkeitseinheit wieder abgezogen. 
 In jenem Zeitschritt erfolgt somit keine Beschleunigung, bzw. bei Fahren mit max. möglicher Geschwindigkeit wird diese reduziert. 
 Auf das Abbremsen vor einem Hindernis hat dies keinen Einfluss, weil die mögliche Geschwindigkeit an Größe der vorhandenen Lücke angepasst wird.
 
 Für die Simulation musste ein Wert gefunden werden, der dieses Verhalten näherungsweise nachbildet.
 Im Laufe mehrerer Testdurchgänge schien eine Intensität der Verzögerung von \texttt{0,3} die getätigte Beschleunigung am besten zu egalisieren. 
-Hierbei ist noch die Streuung der Beschleunigungs- und Verzögerungswerte zu beachten, sodass das Trödeln unterschiedlich große Effekte haben kann.
+Hierbei ist noch die Streuung der Be"-schleu"-ni"-gungs- und Verzögerungswerte zu beachten, sodass das Trödeln unterschiedlich große Effekte haben kann.
 
 Für das Abbremsen in der Agentensimulation kann sich das Trödeln positiv auf den Bremsweg auswirken, da ein zusätzlicher Bremsimpuls erzeugt wird. 
 Hier wird im allgemeinen aber im Summe eine Verzögerung über dem max. möglichen Wert erziehlt.
 \\
 Aufgrund der \enquote{Bremsprobleme}, siehe \cref{sec:bremsverhalten}, wurde dies aber vorerst in Kauf genommen.
 
-Für die Trödelwahrscheinlichkeit $ p_{linger} $ wurde herausgefunden, dass diese bei gleicher Höhe, abhängig von gefahrenen Geschwindigkeiten, unterschiedliche Einflüsse auf den Verkehrsfluss hat.
+Für die Trödelwahrscheinlichkeit $ p_{linger} $ wurde beobachtet, dass deren Höhe kaum einen Einfluss auf das Verhalten bei max. möglicher Geschwindigkeit hatte.
+Bei den Geschwindigkeitsreduktionen glichen sich Stärke und Muster.
+//
+Eine signifikante Veränderung trat jedoch bei der Beschleunigung der Fahrzeuge auf.
+Je höher die Wahrscheinlichkeit desto flacher wird der Anstieg bei der Beschleunigung.
+Die Verzögerungen in dieser Simulationsumgebung treten weniger wegen des Geschwindigkeitsverlustes auf, sondern wegen der Verlängerung der Zeit wieder zur ursprünglichen Geschwindigkeit zurückzukehren.
+\sa{own: add 3 linger speed graphs 0,3 0,5 0,7}
 
-Bei einer max. möglichen Geschwindigkeit von 50 km/h erzeugt erst eine Wahrscheinlichkeit von \texttt{0,5} einen merklichen Effekt. Für eine Geschwindigkeit von 100 km/h ist dies bereits bei \texttt{0,3} der Fall.
+Weiterhin hat die Trödelwahrscheinlichkeit bei gleicher Höhe, abhängig von gefahrenen Geschwindigkeiten, unterschiedliche Einflüsse auf den Verkehrsfluss.
 \\
-Bei Werten darüber hinaus wurde beobachten, dass die Beschleunigung eines oder mehrerer Fahrzeuge so gehemmt wurde, dass ein Erreichen der möglichen Geschwindigkeit für alle im System befindlichen Fahrzeuge nicht möglich war.
+Bei einer max. möglichen Geschwindigkeit von 50 km/h erzeugt erst eine Wahrscheinlichkeit von \texttt{0,5} einen merklichen Effekt. Für eine Geschwindigkeit von 100 km/h ist dies bei gleicher Fahrzeuganzahl bereits bei einem Wert von \texttt{0,3} der Fall.
+\\
+Bei Werten darüber hinaus wurde beobachtet, dass die Beschleunigung eines oder mehrerer Fahrzeuge so gehemmt wurde, dass ein Erreichen der möglichen Geschwindigkeit für alle im System befindlichen Fahrzeuge nicht möglich war.
 
 Für die Dauertests mit einer max. möglichen Geschwindigkeit von 100 km/h wurden die Parameter im \texttt{linger}-Plan somit auf Wahrscheinlichkeit von \texttt{0,3} und eine Bremsintensität von \texttt{0,3} festgelegt.
 
@@ -651,9 +659,39 @@ Für die weitere Entwicklung könnte für die Fahrzeuge bei der Initialisierung 
 Dies würde ein diversifizierteres Fahrzeugbild zur Folge haben, bzw. die Möglichkeit eröffnen präzisere Simulationen mit kleineren Zellen durchzuführen und Fahrzeugklassen auch in Sachen Platzbedarf realistisch erscheinen zu lassen.
 
 
+\subparagraph*{Worst Case-Analyse für Mindestabstände}
 
+Das Kollisionsereignis wird nicht erst bei einer tatsächlichen Kollision, also wenn sich zwei Fahrzeuge in einem Punkt treffen, ausgelöst, sondern bereits wenn der Platz nach vorn zum aktuellen Zeitpunkt nicht mehr zum bewegen ausreicht.
+Hierbei spielt es für das Simulationstool keine Rolle, dass das Hindernis in Bewegung ist und sich von dort entfernt.
 
+In \cref{tab:restgeschw-abstand} sind die Mindestabstände für eine kollisionsfreie Bewegung für eine Zellgröße vom 2,5 m und einer Zeitschrittgröße von 0,025 min aufgeführt.
+Zwischenschritte der Berechnung wurden jeweils aufgerundet.
 
+\begin{table}[ht]
+\begin{center}
+\setlength{\tabcolsep}{0.5em} % for the horizontal padding
+{\renewcommand{\arraystretch}{1.2}% for the vertical padding
+\begin{tabular}{| c  c  c |}
+\hline 
+Restgeschwindigkeit & Mindestabstand in m \\ \hline 
+130 & 55 \\ 
+100 & 43 \\ 
+80 & 35 \\ 
+70 & 30 \\ 
+60 & 25 \\ 
+50 & 23 \\ 
+30 & 13 \\ 
+Schritt & 3 \\ \hline
+\end{tabular}
+}
+\caption{Mindestabstände für Restgeschwindigkeit}
+\label{tab:restgeschw-abstand}
+\end{center}
+\end{table}
+
+Eine Veränderung der Zellgröße verändert diese Werte nicht grundlegend. 
+Es wird meist lediglich auf ein Vielfaches der Zellgröße gerundet.
+\\
 
 
 
