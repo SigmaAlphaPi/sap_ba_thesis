@@ -620,9 +620,14 @@ Durch die feinere Ausführung der Bremsmanöver nähern nähern sich die Positio
 
 
 
-\subsection{Zellgröße vs. Simulation realer Beschleuningung/Verzögerung}
+\subsection{Zellgröße/Zeitschrittlänge vs. Simulation realer Beschleuningung/Verzögerung}
 
-\subsubsection{träges Anfahren}
+Durch die einerseits real simulierten Beschleunigungs-, Verzögerungs- und Geschwindigkeitswerte, andererseits aber \enquote{grob} unterteilten Zellgrößen und Zeitabschnitte kommt es in der Simulation zu Verhalten, welches durch diese Unterschiede erklärbar ist.
+
+
+\subsubsection{Zellgröße}
+
+\paragraph{träges Anfahren:}
 \label{sec:accelerategroove}
 
 Aufgrund der vergleichbar zum NaSch-Modell gewählten Zellgröße von 7,5 Metern, im Gegensatz dazu aber die Simulation realitätsnaher Beschleunigungswerte, kommt es am Beginn des Simulationslaufs mehrere Zeitschritte lang zu einem Stillstand der Fahrzeuge.
@@ -633,7 +638,7 @@ Im weiteren Verlauf der Simulation fällt es in der Weg-Zeit-Kurve nicht weiter 
 
 
 
-\subsubsection{schlechte Bremswirkung}
+\paragraph{schlechte Bremswirkung:}
 \label{sec:bremsverhalten}
 
 Die Simulationsplattform bietet durch realistisch modellierte Beschleunigungen und Verzögerungen den Vorteil, dass der Verkehr feingranularer abgebildet werden kann.
@@ -659,13 +664,24 @@ Für die weitere Entwicklung könnte für die Fahrzeuge bei der Initialisierung 
 Dies würde ein diversifizierteres Fahrzeugbild zur Folge haben, bzw. die Möglichkeit eröffnen präzisere Simulationen mit kleineren Zellen durchzuführen und Fahrzeugklassen auch in Sachen Platzbedarf realistisch erscheinen zu lassen.
 
 
-\subparagraph*{Worst Case-Analyse für Mindestabstände}
+\subsubsection{Zeitschrittlänge}
 
-Das Kollisionsereignis wird nicht erst bei einer tatsächlichen Kollision, also wenn sich zwei Fahrzeuge in einem Punkt treffen, ausgelöst, sondern bereits wenn der Platz nach vorn zum aktuellen Zeitpunkt nicht mehr zum bewegen ausreicht.
+\subparagraph*{Worst Case-Analyse für Mindestabstände:}
+
+Das Kollisionsereignis wird nicht erst bei einer tatsächlichen Kollision, wenn sich zwei Fahrzeuge in einem Punkt treffen, ausgelöst, sondern bereits wenn der Platz nach vorn zum aktuellen Zeitpunkt nicht mehr zum bewegen ausreichen würde.
 Hierbei spielt es für das Simulationstool keine Rolle, dass das Hindernis in Bewegung ist und sich von dort entfernt.
 
-In \cref{tab:restgeschw-abstand} sind die Mindestabstände für eine kollisionsfreie Bewegung für eine Zellgröße vom 2,5 m und einer Zeitschrittgröße von 0,025 min aufgeführt.
+Ein Verzögerungsvorgang - Abbremsen/Heranbremsen - muss also innerhalb einer kürzeren Strecke abgeschlossen werden, als dies in der Realität der Fall wäre.
+
+In \cref{tab:restgeschw-abstand} sind die Mindestabstände für eine kollisionsfreie Bewegung für eine Zellgröße vom 2,5 m und einer Zeitschrittgröße von 0,025 und 0,05 min aufgeführt.
 Zwischenschritte der Berechnung wurden jeweils aufgerundet.
+
+\noindent
+Anzahl zu setzender Zellen: $ x = \lceil \frac{Geschw.}{3,6} \times \frac{Zeitschrittl.}{Zellgr.} \rceil $
+\\
+Mindestabstand: $ s_{min} = \lceil x \times Zellgr. \rceil $
+\\
+Fasste man beide Gleichungen zusammen, würde die Zellgröße aus der Gleichung entfernt.
 
 \begin{table}[ht]
 \begin{center}
@@ -673,15 +689,15 @@ Zwischenschritte der Berechnung wurden jeweils aufgerundet.
 {\renewcommand{\arraystretch}{1.2}% for the vertical padding
 \begin{tabular}{| c  c  c |}
 \hline 
-Restgeschwindigkeit & Mindestabstand in m \\ \hline 
-130 & 55 \\ 
-100 & 43 \\ 
-80 & 35 \\ 
-70 & 30 \\ 
-60 & 25 \\ 
-50 & 23 \\ 
-30 & 13 \\ 
-Schritt & 3 \\ \hline
+(Rest-)Geschwindigkeit & $ s_{min} $ in m bei ts=0,025 min & $ s_{min} $ in m bei ts=0,05 min \\ \hline 
+130 & 55 & 110 \\ 
+100 & 43 & 85 \\ 
+80 & 35 & 68 \\ 
+70 & 30 & 60 \\ 
+60 & 25 & 50 \\ 
+50 & 23 & 43 \\ 
+30 & 13 & 25 \\ 
+Schritt & 3 & 5 \\ \hline
 \end{tabular}
 }
 \caption{Mindestabstände für Restgeschwindigkeit}
@@ -689,9 +705,10 @@ Schritt & 3 \\ \hline
 \end{center}
 \end{table}
 
-Eine Veränderung der Zellgröße verändert diese Werte nicht grundlegend. 
-Es wird meist lediglich auf ein Vielfaches der Zellgröße gerundet.
+Da der Einfluss Zellgröße bei entsprechender Umstellung der Gleichung, siehe oben, keinerlei Einfluss auf die Berechnung hat, hat eine Veränderung der Zellgröße in dieser Abschätzung die Werte nicht grundlegend verändert. 
+Es wird lediglich auf ein Vielfaches der Zellgröße gerundet.
 \\
+Durch die Entfernungen, die in einem größeren Zeitschritt zurückgelegt werden, wird durch eine eine Anhebung der Zeitschrittlänge auch der Mindestabstand entsprechend höher.
 
 
 
