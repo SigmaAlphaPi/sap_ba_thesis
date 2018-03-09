@@ -3,7 +3,7 @@
 
 
 Den Straßenverkehr theoretisch abzubilden, ist fachübergreifend eine große Herausforderung in der Forschung.
-Hier ergeben sich u. a. Aufgaben im Bereich der Mathematik (Routenplanung z. B. durch graphentheoretische Ansätze), Psychologie (Erforschung menschlichen Verhaltens) und nicht zuletzt Informatik (Simulationen).
+Hier ergeben sich u. a. Aufgaben im Bereich der Mathematik (Routenplanung z.B. durch graphentheoretische Ansätze), Psychologie (Erforschung menschlichen Verhaltens) und nicht zuletzt Informatik (Simulationen).
 
 Die Simulation von Fahrverhalten ist aufgrund des unsicheren Faktors Mensch, der als Haupt"-entscheider nur durch Wahlmöglichkeiten mit vorgegebenen unterschiedlich hohen Wahrscheinlichkeiten modelliert werden kann, ein Bereich in dem seit den 1930er Jahren geforscht wird.
 
@@ -16,7 +16,7 @@ Die Simulation von Fahrverhalten ist aufgrund des unsicheren Faktors Mensch, der
  \label{figure:family-tree}
 \end{figure}
 \noindent
-Die Fundamentalrelation, heute bekannt als Fundamentaldiagramm, kann aber auch mit Hilfe anderer Variablen, wie z. B. der Verkehrsdichte ($\rho$, der durchschnittlichen Anzahl von Fahrzeugen auf einer bestimmten Strecke) und dem Verkehrsfluss ($q$, der durchschnittlichen Anzahl von Fahrzeugen pro Zeiteinheit) wiedergegeben werden, siehe \cref{figure:fundamental-relations}. 
+Die Fundamentalrelation, heute bekannt als Fundamentaldiagramm, kann aber auch mit Hilfe anderer Variablen, wie z.B. der Verkehrsdichte ($\rho$, der durchschnittlichen Anzahl von Fahrzeugen auf einer bestimmten Strecke) und dem Verkehrsfluss ($q$, der durchschnittlichen Anzahl von Fahrzeugen pro Zeiteinheit) wiedergegeben werden, siehe \cref{figure:fundamental-relations}. 
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.9\textwidth]{fundamental-relations}
@@ -39,28 +39,27 @@ wurden und werden verfolgt, vgl. \cite{dingding}.
 %\addcontentsline{toc}{subsection}{Zellularautomaten}
 \label{sec:ca}
 
-Zellularautomaten werden seit etwa 25-30 Jahren für die Verkehrssimulation verwendet.
+Zellularautomaten werden seit etwa 25--30 Jahren für die Verkehrssimulation verwendet.
 
 \begin{quote}
 Ein zellulärer Automat ist eine regelmäßige Annordnung von Zellen. Jede Zelle kann eine endliche Zahl von Werten / Zuständen annehmen und hat eine  begrenzte Zahl von Nachbarzellen, die sie beeinflussen können. Das Muster des gesamten zellulären Automaten ändert sich in einzelnen Schritten, die durch eine Reihe von Übergangsregeln bestimmt werden, die für alle Zellen gelten. (aus \cite{cell-autom})
 \end{quote} 
 
 \noindent
-Vereinfacht kann eine Fahrspur einer Straße als Aneinanderreihung vieler Zellen gesehen werden(siehe \cref{figure:grid-umgebung}) und damit durch den Zellularautomaten abgebildet werden. 
+Vereinfacht kann eine Fahrspur einer Straße als Aneinanderreihung vieler Zellen gesehen werden (siehe \cref{figure:grid-umgebung}) und damit durch den Zellularautomaten abgebildet werden. 
+Dies führt schließlich zu einer gridbasierten Simulationsumgebung. 
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.9\textwidth]{grid-umgebung}
  \caption[Beispiel für die Griddarstellung einer Straße]
- 		{symbolische Griddarstellung einer Straße mit einer Fahrspur mit Fahrzeugen, nach \cite{multi-lane}, Quelle: Auto-Silhouette vecteezy.com}
+ 		{symbolische Griddarstellung einer Straße mit einer Fahrspur mit Fahrzeugen, nach \cite{multi-lane}}
+        {\footnotesize Quelle: Auto-Silhouette vecteezy.com}
  \label{figure:grid-umgebung}
 \end{figure} 
-Dies führt schließlich zu einer gridbasierten Simulationsumgebung. 
 
 
-\subparagraph{Das Nagel-Schreckenberg-Modell}
-%\subsubsection*{Das Nagel-Schreckenberg-Modell}
-%\addcontentsline{toc}{subsubsection}{Das Nagel-Schreckenberg-Modell}
-%\label{sec:na-sch}
+\subparagraph{Das Nagel-Schreckenberg-Modell:}
+\label{sec:na-sch}
 
 Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahr\-zeug\-füh\-rers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für Autobahnverkehr realistisch darstellte. 
 Jedes Fahrzeug durchläuft in jedem Zeitschritt die folgenden Übergangsregeln, vgl. \cite{na-sch}. 
@@ -101,14 +100,6 @@ $6$ & 45 & 162 \\ \hline
 \label{tab:umrechnung-zelle-kmh}
 \end{table}
 
-Zu Beginn eines Simulationslaufes wurden $N$ Fahrzeuge zufällig auf die $L$ Zellen verteilt.
-Dies führte dazu, dass über den Durchlauf hinweg eine konstante Fahrzeugdichte $\rho$ im System garantiert werden konnte:
-\begin{equation}
-\rho = \dfrac{N}{L} = \dfrac{\text{Anzahl der Fahrzeuge im System}}{\text{Anzahl der Zellen des Systems}}
-\nonumber
-\end{equation}
-
-\noindent
 Die Simulation erfolgte unter Nutzung periodischer Randbedingungen. 
 Wie in \cite[Abb. 1.5]{peri-rand} für die Umgebung von Pixeln\sa{bitte mal kontrollieren, ob man wirklich von Pixeln hier spricht, denn Pixel ist ein Element aus der Computergraphik, ein Fahrzeug in dem Bild ist aber mehr als ein Pixel} beschrieben, werden die Fahrzeuge somit vom \enquote*{Ende} der Gridstrecke am \enquote*{Anfang} wieder eingesetzt. 
 Damit einstand die Möglichkeit einer kontinuierlich arbeitenden Simulationsumgebung, siehe \cref{figure:traffic-simulation}.
@@ -120,14 +111,22 @@ Damit einstand die Möglichkeit einer kontinuierlich arbeitenden Simulationsumge
  \label{figure:traffic-simulation}
 \end{figure} 
 
+Zu Beginn eines Simulationslaufes wurden $N$ Fahrzeuge zufällig auf die $L$ Zellen verteilt.
+Dies führte dazu, dass über den Durchlauf hinweg eine konstante Fahrzeugdichte $\rho$ im System garantiert werden konnte:
+\begin{equation}
+\rho = \dfrac{N}{L} = \dfrac{\text{Anzahl der Fahrzeuge im System}}{\text{Anzahl der Zellen des Systems}}
+\nonumber
+\end{equation}
 
 
-\subparagraph{Erweiterung auf Mehrspurigkeit}
+
+
+\subparagraph{Erweiterung auf Mehrspurigkeit:}
 %\label{sec:multi-lane}
 
 Um Verkehr auf mehrspurigen Fahrbahnen zu simulieren, war das Originalmodell nicht geeignet. 
 1996 folgte deswegen eine Ausdehnung auf Mehrspurigkeit \cite{multi-lane} - zwei Spuren. 
-Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil kollisionsfreien, und nicht behindernden Spurwechsel ermöglichen, wurden hinzugefügt. Die Regeln 1-3 wurden übernommen. Nach Simulationsläufen, die unerwünschtes Verhalten zeigten, waren die finalen Regeln wie folgt:
+Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil kollisionsfreien, und nicht behindernden Spurwechsel ermöglichen, wurden hinzugefügt. Die Regeln 1--3 wurden übernommen. Nach Simulationsläufen, die unerwünschtes Verhalten zeigten, waren die finalen Regeln wie folgt:
 
 \textit{Hinweis:} $\Delta x$ $\widehat{=}$ dem Abstand zum vorausfahrenden Fahrzeug, die Indizes $b$ (\enquote*{behind} - für rückwärtigen Verkehr) und $o$ (\enquote*{other} - für Verkehr auf der Spur auf die gewechselt werden soll) können auch kombiniert werden. 
 
@@ -151,7 +150,7 @@ Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil
 Wenn es die festgelegten Kriterien zulassen\sa{es wäre sinnvoll genau diese Definition als Grundlage für das erste Mehrspurszenario in der Simulation zu nutzen und sich in der Arbeit darauf zu beziehen}, erfolgt der Spurwechsel auf die linke Spur immer, da dieser nicht an eine Wahrscheinlichkeit geknüpft ist.
 Lediglich um die Überbevölkerung der Überholspur zu vermeiden, wurde eine Wahrscheinlichkeit $p_{l2r}$ für das zurückwechseln eingeführt.
 
-Was dieser Modellierung fehlt\sa{und hier genau dann als 'Case Study' für Deine Arbeit zu bezeichnen}, ist die Berücksichtigung irregulärer Verhaltensweisen der Fahrer - Unsicherheiten (z. B. Fehleinschätzungen oder Ängste), Ablenkungen (z. B. Gespräche mit anderen Fahrzeuginsassen, Telefonieren, Suche im Handschuhfach oder nach der fallen gelassenen Zigarette). 
+Was dieser Modellierung fehlt\sa{und hier genau dann als 'Case Study' für Deine Arbeit zu bezeichnen}, ist die Berücksichtigung irregulärer Verhaltensweisen der Fahrer - Unsicherheiten (z.B. Fehleinschätzungen oder Ängste), Ablenkungen (z.B. Gespräche mit anderen Fahrzeuginsassen, Telefonieren, Suche im Handschuhfach oder nach der fallen gelassenen Zigarette). 
 
 Zusätzlich ist die Bremswirkung, wie auch im ursprünglichen Nagel-Schreckenberg-Modell, \enquote{über\-di\-men\-sio\-niert}. 
 Vollbremsungen aus Höchstgeschwindigkeit sind innerhalb kürzester Distanz möglich \cite{acc-free}.
@@ -163,7 +162,7 @@ In Österreich und der Schweiz geht man, aufgrund der Einordnung in eine eigene 
 
 Laut Statistischem Bundesamt gab es 2016 auf Autobahnen 21193 Unfälle, davon 1435 innerhalb von Baustellen \cite{unf2016}. 
 Bei den etwa 13000 km Autobahn \cite{autob2016} entspricht dies durchschnittlich etwa einem Unfall pro 200 km Strecke pro Tag. 
-In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittswert überschreiten.
+In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittswert überschreiten, sodass an anderen Stellen unterdurchschnittlich viele Unfälle passieren.
 
 
 
@@ -190,7 +189,10 @@ Dieser Ansatz arbeitet mit Gridzellen und achtet auf Kollisionsfreiheit.
 In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Vorschlag für die Simulation von Spurwechseln entwickelt. 
 Das Modell orientiert sich bei den Fahrzeugbewegungen an den Grundlagen des Nagel-Schreckenberg-Modells, vermeidet Unfälle aber in erster Linie nicht durch Abbremsen, sondern durch Ausweichen, also Spurwechsel. 
 
-Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt, wirken als eine Art \enquote{Anziehungskraft} und liefern bei Auswahl einen Impuls für die Beibehaltung oder Änderung der Fahrspur. 
+Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z.B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. 
+Hier wirken diese als eine Art \enquote{Anziehungskraft} und liefern bei Auswahl einen Impuls für die Beibehaltung oder Änderung der Fahrspur. 
+Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
+
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.7\textwidth]{social-forces}
@@ -198,7 +200,6 @@ Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} f
  \label{figure:social-forces}
 \end{figure}
 \noindent
-Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
 
 Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$, da dessen Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt, über verschiedene Funktionen berechnet. Das betrachtete Fahrzeug (Ego) befindet sich:
 \begin{itemize}
@@ -222,9 +223,9 @@ Die letztendliche Auswahl der Zielzelle für einen \enquote{Impuls zur Spurwahl}
 
 %%%%%
 
-\subparagraph{\enquote{Fitness-proportionate Selection} oder \enquote{Roulette-wheel sampling}}
+\subparagraph{\enquote{Fitness-proportionate Selection} oder \enquote{Roulette-wheel sampling}:}
 
-Die Konzept der \enquote{Fitness-proportionate Selection} kommt aus dem Bereich der genetischen Algorithmen. 
+Das Konzept der \enquote{Fitness-proportionate Selection} kommt aus dem Bereich der genetischen Algorithmen. 
 \cite{gen-algo} beschreibt es in einem Beispiel anhand einer Population von $n=4$ Strings, die man repräsentativ auch als Individuen oder Wahlmöglichkeiten ansehen kann. 
 Jedem dieser Strings ist ein Funktionswert $f$ (Fitnesswert), ein Maß für Profit, Nutzwert oder Güte zugeordnet, den es zu maximieren gilt. 
 Strings mit einem höheren Fitnesswert haben eine höhere Wahrscheinlichkeit, einen oder mehrere Nachkommen für die Folgegeneration beizutragen.
@@ -256,18 +257,18 @@ Dabei wird jeder Option ein Bereich (Slot) auf einem Rouletterad zugewiesen, wel
  \centering
  \includegraphics[width=0.7\textwidth]{meta-chart}
  \caption[gewichtetes Roulette-Rad (fitness-proportionate selection]
- 		{schematische Darstellung eines gewichteten Rouletterades für der Beispiel in \cref{tab:beispiel-tabelle-roulette}}
+ 		{schematische Darstellung eines gewichteten Rouletterades für das Beispiel in \cref{tab:beispiel-tabelle-roulette}}
  \label{figure:meta-chart}
 \end{figure}
 
-Benötigt man z. B. auch in der Nachfolgegeneration vier Strings, würde das Rouletterad viermal gedreht.
+Benötigt man z.B. auch in der Nachfolgegeneration vier Strings, würde das Rouletterad viermal gedreht.
 Das Individuum in dessen Slot die Kugel liegen bleibt, würde ausgewählt.
 
-Aufgrund der Größe der Slots von String 2 und String 4 ist es z. B. möglich, dass String 2 für die Kindgeneration zweimal und String 4 gar nicht ausgewählt wird.
+Aufgrund der Größe der Slots von String 2 und String 4 ist es z.B. möglich, dass String 2 für die Kindgeneration zweimal und String 3 gar nicht ausgewählt wird.
 
 %%%%%
 
-\subparagraph{Verwendung im Social-Force-Vehicle-Modell}
+\subparagraph{Verwendung im Social-Force-Vehicle-Modell:}
 
 Im Social-Force-Vehicle-Modell gibt es zwei Möglichkeiten, aus denen gewählt werden kann. 
 Zum einen jeweils das Geradeausfahren, zum anderen die Möglichkeit aus- respektive einzuscheren.
@@ -276,7 +277,7 @@ Für die Wahl der Alternative ist nur eine Entscheidung zwischen den jeweils zwe
 Entgegen des Zwangs zum Ausscheren oder einer vorgegebenen Wahrscheinlichkeit für das Einscheren in der mehrspurigen Version des Nagel-Schreckenberg-Modells wird eine stochastische Simulationsmöglichkeit der Neigung zum Spurwechsel aufgezeigt.
 Es entsteht eine Ungewissheit, ob die wahrscheinlichste Alternative ausgewählt wird oder ob die andere, weniger wahrscheinliche, das Verhalten bestimmen wird. 
 
-\subparagraph{Möglichkeit von Kollisionen im Social-Force-Vehicle-Modell}
+\subparagraph{Möglichkeit von Kollisionen im Social-Force-Vehicle-Modell:}
 
 Da Kollisionen im Modell durch Ausweichen verhindert werden sollen, aber die \enquote{Bremskomponente} aus dem Ursprungsmodell entfernt wurde, ist in bestimmten Situationen ein Auffahrunfall denkbar.
 
@@ -375,7 +376,7 @@ Da Kollisionen im Modell durch Ausweichen verhindert werden sollen, aber die \en
 %\pagebreak
 %In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Ansatz für die Simulation von Spurwechseln entwickelt.
 %Auch hier wird eine Grid-Umgebung verwendet.
-%Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z. B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$ berechnet, da seine Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt.
+%Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z.B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$ berechnet, da seine Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt.
 %Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
 %
 %\begin{figure}[hptb]
