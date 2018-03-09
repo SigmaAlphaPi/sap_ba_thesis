@@ -82,13 +82,28 @@
 
 \newpage
 
-\begin{lstlisting}[style=asl, keywords={move/forward,move/right}, keywords={[2]X}, caption={Test ASL Beispiel}]      
-+!movement/walk/forward(X) <-
-move/forward(X);
-!movement/walk/forward.
+\begin{lstlisting}[style=asl, 
+                   keywords={+!cruise,+!accelerate,+!linger,+!decelerate,+!vehicle/collision}, 
+                   keywords={[2]}, 
+                   keywords={[3]}, 
+                   caption={Agentenscript: NaSch-Modell, mehrspurig},
+                   label={lst:multi-lane}]      
+/*
+ *  ASL file        NaSch model traffic, multi lane
+ */
 
-+!movement/walk/right(X) <-
-move/right(X);
-!movement/walk/forward.
+!cruise.
+
+// --- start all other plans ---
++!cruise <-
+    !accelerate;
+    !decelerate;
+    !pullout;
+    !pullin;
+    !linger;
+    !cruise
+.
+
+// --- NOCH NICHT VOLLSTAENDIG ---
 \end{lstlisting}
 

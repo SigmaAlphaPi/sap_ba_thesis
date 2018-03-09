@@ -65,12 +65,12 @@ Aus dem \texttt{LIN}-Zustand wird zwangsläufig wieder in den \texttt{DRI}-Zusta
 Ein Zeitschritt der Simulation entspricht dabei einem Zyklus vom Startzustand ausgehend bis zur Rückkehr dorthin.
 
 
-\subsubsection{Agentenplan}
+\subsubsection{Agentenpläne}
 
 Der o.g. Automat wurde in die Agentensprache \enquote{übersetzt}. 
 Die Agentenversion unterscheidet sich dabei leicht von der Automatenversion. 
 
-Der Agent beginnt im Plan \enquote{\texttt{cruise}}, von dem aus alle weiteren Pläne (\enquote{\texttt{accelerate}}, \enquote{\texttt{linger}}, \enquote{\texttt{decelerate}}) gestartet werden.
+Der Agent beginnt im Plan \texttt{cruise}, von dem aus alle weiteren Pläne (\texttt{accelerate}, \texttt{linger}, \texttt{decelerate}) gestartet werden.
 Außerdem ruft sich der Plan selbst wieder auf.
 \\
 Während der Simulationsläufe diente dieser Plan zudem dem Loggen der Statusdaten.
@@ -99,13 +99,14 @@ Hier ergab sich das Problem, dass auch bei vorwärtigem Verkehr eine Beschleunig
 Die Fähigkeit zu verzögern war entsprechend schlecht.
 
 Abgestellt wurde dies durch den Zusatz, dass eine Beschleunigung ebenfalls ausbleiben soll, wenn sich ein Fahrzeug im vorwärtigen Sichtbereich befindet.
-Mit der Vergrößerung des Sichtfeldes, siehe \cref{sec:sichtweite}, wurde es nötig, außerdem die Entfernung mit in die Bedingung aufzunehmen, ab der nicht mehr beschleunigt werden soll.
+Mit der Vergrößerung des Sichtfeldes, siehe \cref{sec:sichtweite}, wurde es nötig, außerdem die Entfernung, ab der nicht mehr beschleunigt werden soll, mit in die Bedingung aufzunehmen.
 \\
 Um einen realen Folgeverkehr zu ermöglichen erfolgte die Ausnahme, dass dennoch beschleunigt werden darf, solange das Folgefahrzeug langsamer ist.
 
 Der \texttt{linger}-Plan modelliert das zufällige Beibehalten bzw. Verringern der Geschwindigkeit. 
-Zunächst wurde das Trödeln mit einer Wahrscheinlichkeit von 10 $\%$ ausgeführt.
-Die Intensität der Verzögerung wurde nach einigen Tests, siehe \cref{sec:lingersweetspot}, auf den Wert \texttt{0,3}, was 30 $\%$ der Bremskraft entspricht, festgelegt.
+Zunächst wurde das Trödeln mit einer Wahrscheinlichkeit von 10 $\%$ und einer Intensität von 50 $\%$ der Bremskraft ausgeführt.
+Für die Dauertests wurden diese Werte später noch angepasst, siehe \cref{sec:lingersweetspot}.
+%Die Intensität der Verzögerung wurde nach einigen Tests, siehe \cref{sec:lingersweetspot}, auf den Wert \texttt{0,3}, was 30 $\%$ der Bremskraft entspricht, festgelegt.
 
 Die Verzögerung des Agenten wird durch den \texttt{decelerate}-Plan gesteuert. 
 Dort wird das Abbremsen bei vorwärtigem Verkehr geregelt. 
@@ -116,9 +117,9 @@ Vielmehr muss, wie im realen Verkehr auch, ein gewisser Abstand, innerhalb desse
 Ein Wert von 100 m erschien in der Simulation sinnvoll, um die Kollisionshäufigkeit zu verringern. 
 Für eine Geschwindigkeit von 100 km/h entspricht diese Entfernung nach der Faustformel, siehe \cite{bremsweg}, dem Bremsweg.
 
-Ist der Geschwindigkeitsunterschied zwischen Fahrzeugen allerdings zu groß, können diese nicht verhindert werden.
+Ist der Geschwindigkeitsunterschied zwischen Fahrzeugen allerdings zu groß, können Kollisionen nicht verhindert werden.
 
-\paragraph*{Tests des Agentenplanes}
+\paragraph*{Tests des Agentenscripts:}
 Um die Wirksamkeit der Anweisungen für die Agenten zu testen, wurden in der Szenarienvereinbarung zwei Arten von Fahrzeugen, welche mit identische Plänen ausgestattet waren, zum Einsatz gebracht.
 Der einzige Unterschied, den es zwischen den Fahrzeugen gab, war, dass eines seine Geschwindigkeit aus einem niedrigeren Intervall zugewiesen bekam.
 \\
@@ -147,7 +148,7 @@ Es gibt u.a. die Möglichkeit, die Streckenlänge und die Simulationsdauer, die 
 
 
 
-\subsubsection{Einstellmöglichkeiten in der Szenarienkonfiguration}
+\subsubsection{Einstellmöglichkeiten in der Szenariokonfiguration}
 \label{einstellungen-szenario}
 
 %\subsubsection{Einstellmöglichkeiten für Zellgröße und Länge der Zeitschritte}
@@ -155,7 +156,7 @@ Es gibt u.a. die Möglichkeit, die Streckenlänge und die Simulationsdauer, die 
 \paragraph*{Zellgröße:}
 \label{zellgroesse-zeitschritte}
 Die Entwicklung der Agentenpläne wurde ausschließlich in einer Simulationsumgebung mit einer Zellgröße von 7,5 m durchgeführt.
-Als das Verhalten der Agenten zufriedenstellend war, wurde u.a. auch wegen der in \cref{sec:bremsverhalten} angemerkten Bremsprobleme, getestet, inwiefern sich die Zelllänge verkürzen lässt und welchen Einfluss dies auf die Simulation hat.
+Als das Verhalten der Agenten zufriedenstellend war, wurde u.a. auch wegen der in \cref{sec:bremsverhalten} beschriebenen Bremsprobleme, getestet, inwiefern sich die Zelllänge verkürzen lässt und welchen Einfluss dies auf die Simulation hat.
 
 % --- für Ausblick, Phil FB 27feb
 % --- war vorerst nur solala formuliert
@@ -167,15 +168,15 @@ Als das Verhalten der Agenten zufriedenstellend war, wurde u.a. auch wegen der i
 
 \paragraph*{Zeitschrittlänge:}
 Die Länge der Zeitschritte lässt sich in der Konfiguration in Minuten oder Bruchteilen davon angeben. 
-Dies stellte sich als unpraktikabel heraus, da z.B. eine Dauer von einer Sekunde durch den Dezimalbruch für $\frac{1}{60}$ angegeben werden müsste, der aber eine Periodizität aufweist.
+Dies stellte sich als unpraktikabel heraus, da z.B. eine Dauer von einer Sekunde durch den Dezimalbruch für $\frac{1}{60}$ angegeben werden müsste. Dieser weist aber eine Periodizität auf.
 
 Begonnen wurde mit einer Zeitschrittlänge von 0,1 min, was sechs Sekunden entspricht. 
 Diese Länge erwies sich als nicht sinnvoll, da zwischen den einzelnen Entscheidungszeitpunkten eine zu lange Zeitspanne liegt.
 
-Die Entwicklung der Agentenpläne wurde mit einer Schrittlänge von drei Sekunden, 0,05 min, durchgeführt und genügte für diesen Zweck völlig.
+Die Entwicklung der Agentenpläne wurde mit einer Schrittlänge von drei Sekunden, 0,05 min, durchgeführt. Diese Länge genügte für diesen Zweck völlig.
 Für die Tests auf Leistungsfähigkeit wurde die Schrittlänge dann auf 0.025 min, 1,5 Sekunden, reduziert.
 \\
-Ausführlich siehe \cref{setup-multilane-scenarios}.
+Ausführlich siehe \cref{sec:cellsize-timesteplength}.
 
 
 %\subsubsection{Festlegen der Beschleunigungs-/Verzögerungswerte und der Sichtweite}
@@ -189,7 +190,7 @@ Dies ist unrealistisch.
 
 Die Simulationsumgebung arbeitet hier mit frei wähl- und einstellbaren Werten. 
 In \cite{unfallrekonstruktion} sind die Werte für eine Vielzahl von Fahrzeugen aufgelistet. 
-Für die Simulation wurden real möglichen Werte zwischen 3,5 und \mbox{7 $\frac{m}{s^{2}}$} für die Beschleunigung und zwischen 8 und \mbox{10 $\frac{m}{s^{2}}$} für die Verzögerung gewählt.
+Für die Simulation wurden als real mögliche Werte Intervalle zwischen 3,5 und \mbox{7 $\frac{m}{s^{2}}$} für die Beschleunigung und zwischen 8 und \mbox{10 $\frac{m}{s^{2}}$} für die Verzögerung gewählt.
 Der Wert wird für jedes Fahrzeug bei der Initialisierung im Rahmen dieser Intervalle zufällig festgelegt.
 Die Dosierung der möglichen Beschleunigung bzw. Verzögerung wird im Agentenscript festgelegt.
 
@@ -211,7 +212,7 @@ Durch die fehlende Reaktionsträgheit, die maßgeblich durch die menschliche Kom
 Ein Wert der Sichtweite mittig im Intervall der Entscheidung genügt, um bis zum Beginn der Handlungsphase \enquote{tätig zu werden}.
 
 Für die Sichtweite wurde der Wert 250 m gewählt.
-Dieser liegt ungefähr mittig im Intervall der Entscheidungsphase und sollte den Agenten genügend Raum für Reaktionen geben. 
+Dieser trifft die o.g. Vorgabe und liegt ungefähr mittig im Intervall der Entscheidungsphase. Den Agenten sollte diese Strecke genügend Raum für Reaktionen geben. 
 In den Agentenplänen wird schließlich die Handlung durch Bedingungen auf einen Bereich unter 110 m beschränkt.
 
 
@@ -222,23 +223,23 @@ In den Agentenplänen wird schließlich die Handlung durch Bedingungen auf einen
 
 Im Originalmodell wird dem jeweiligen Fahrzeug im Trö"-del"-fall eine Geschwindigkeitseinheit wieder abgezogen. 
 In jenem Zeitschritt erfolgt somit keine Beschleunigung, bzw. bei Fahren mit max. möglicher Geschwindigkeit wird diese reduziert. 
-Auf das Abbremsen vor einem Hindernis hat dies keinen Einfluss, weil die mögliche Geschwindigkeit an Größe der vorhandenen Lücke angepasst wird.
+Auf das Abbremsen vor einem Hindernis hat dies keinen Einfluss, weil die mögliche Geschwindigkeit an Größe der vorhandenen Lücke angepasst werden kann.
 
 Für die Simulation musste ein Wert gefunden werden, der dieses Verhalten näherungsweise nachbildet.
 Im Laufe mehrerer Testdurchgänge schien eine Intensität der Verzögerung von \texttt{0,3} die getätigte Beschleunigung am besten zu egalisieren. 
 Hierbei ist noch die Streuung der Be"-schleu"-ni"-gungs- und Verzögerungswerte zu beachten, sodass das Trödeln unterschiedlich große Effekte haben kann.
 
 Für das Abbremsen in der Agentensimulation kann sich das Trödeln positiv auf den Bremsweg auswirken, da ein zusätzlicher Bremsimpuls erzeugt wird. 
-Hier wird im allgemeinen aber im Summe eine Verzögerung über dem max. möglichen Wert erziehlt.
+Hier wird im allgemeinen aber in Summe eine Verzögerung über dem max. real möglichen Wert erziehlt.
 \\
 Aufgrund der \enquote{Bremsprobleme}, siehe \cref{sec:bremsverhalten}, wurde dies aber vorerst in Kauf genommen.
 
 Für die Trödelwahrscheinlichkeit $ p_{linger} $ wurde beobachtet, dass deren Höhe kaum einen Einfluss auf das Verhalten bei max. möglicher Geschwindigkeit hatte.
 Bei den Geschwindigkeitsreduktionen glichen sich Stärke und Muster.
-//
+\\
 Eine signifikante Veränderung trat jedoch bei der Beschleunigung der Fahrzeuge auf.
 Je höher die Wahrscheinlichkeit desto flacher wird der Anstieg bei der Beschleunigung.
-Die Verzögerungen in dieser Simulationsumgebung treten weniger wegen des Geschwindigkeitsverlustes auf, sondern wegen der Verlängerung der Zeit wieder zur ursprünglichen Geschwindigkeit zurückzukehren.
+%Die Verzögerungen in dieser Simulationsumgebung treten weniger wegen des Geschwindigkeitsverlustes auf, sondern wegen der Verlängerung der Zeit wieder zur ursprünglichen Geschwindigkeit zurückzukehren.
 \sa{own: add 3 linger speed graphs 0,3 0,5 0,7}
 
 Weiterhin hat die Trödelwahrscheinlichkeit bei gleicher Höhe, abhängig von gefahrenen Geschwindigkeiten, unterschiedliche Einflüsse auf den Verkehrsfluss.
@@ -307,18 +308,18 @@ Erst nach vier Zeitschritten befindet sich auch das Folgefahrzeug (\texttt{vehic
 
 Für die Simulation mit mehreren Fahrzeugen stellte dies insbesondere ein Problem dar, weil eine Stauwelle, die sich in ihrer Rückwärtsbewegung dem Anfang der Strecke näherte, von Fahrzeugen am Ende der Strecke nicht erkannt werden konnte.
 Demzufolge folgte auch keinerlei Reaktion auf das Hindernis.
-\\
+
 Dies führte zu dem Verhalten, dass Fahrzeuge vom Ende der Strecke an den Anfang gesetzt werden sollten, dort aber nicht in eine freie Zelle gesetzt werden konnten.
 Die Simulationsumgebung sieht hier vor, dass das Fahrzeug auf die freie Zelle (in Fahrtrichtung) hinter das jeweils letzte Fahrzeug gesetzt wird.
 \\
-Softwareseitig ist Zelle \texttt{0} die erste zu besetzende Zelle einer Lane. Die freie Zelle hinter dem Fahrzeug war Zelle \texttt{-1} und nicht die letzte Zelle am Lane-Ende.
+Softwareseitig ist Zelle \texttt{0} die erste zu besetzende Zelle einer Lane. Die freie Zelle hinter dem Fahrzeug war hier aber Zelle \texttt{-1} und nicht die letzte Zelle am Lane-Ende.
 Zudem wurde ein Fahrzeug, das sich bereits dort befand, jeweils noch ein Feld weiter nach hinten gesetzt und das neue Fahrzeug dazwischen einfügt.
 Dies setzte sich kaskadierend in den negativen Bereich fort.
 \\
 Hierbei handelt es sich um einen separaten Fehler, der durch ersteren erkannt werden konnte.
 
 Es ergab sich bei einigen Simulationsläufen ein Häufung von Positionspunkten im negativen Teil der Strecke.
-In der Simulation in \cref{figure:negativ-sammeln} trat das Problem direkt am Anfang des Durchlaufs aufgrund der langen Standzeit (siehe \cref{sec:accelerategroove}) des direkt am Anfang der Lane verorteten Fahrzeuges auf und konnte über die Simulationsdauer nicht abgebaut werden.
+In der Simulation in \cref{figure:negativ-sammeln} trat das Problem direkt am Anfang des Durchlaufs aufgrund der langen Standzeit (siehe auch \cref{sec:accelerategroove}) des direkt am Anfang der Lane verorteten Fahrzeuges auf und konnte über die Simulationsdauer nicht abgebaut werden.
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.9\textwidth]{negativ-sammeln}
@@ -357,7 +358,7 @@ Die Schwierigkeit bestand darin, die Zellen am anderen Ende der Strecke mit in d
 
 Durch Testläufe unterschiedlicher Versionen der Simulationssoftware mit identischen Szenariovorgaben - ein Fahrzeug wurde mit einer so kleinen Geschwindigkeit generiert, dass es in seiner Startzelle verblieb - konnte die Behebung des Fehlverhaltens nachgewiesen werden, siehe \cref{figure:go-negative}.
 
-Danach konnten dann auch Stauwellen beobachtet werden, die sich rückwärts vom Streckenanfang her darüber hinaus am Streckenende fortsetzten. 
+Danach konnten dann auch Stauwellen beobachtet werden, die sich rückwärts vom Streckenanfang her darüber hinaus am Streckenende fortsetzten. \sa{own: Stauwellenbild in Anhang, JSON 09mar 13:13}
 
 
 
@@ -388,9 +389,9 @@ Bei der Kontrolle des Logs wurde festgestellt, dass ein Fahrzeug (\texttt{vehicl
 Erkennbar in der Zeile \enquote{\texttt{PIA1}}, die nur ausgelöst wurde, wenn sich keinerlei Verkehr im Sichtfeld des Fahrzeuges befindet.
 Es gab in dieser Konstellation demnach keine Zuordnung dieser Position zu einer der beiden Bereiche.
 Daraufhin, so wie es das Verhalten des Agenten vorsah, wurde zum nächsten Schritt (366) in die Hauptspur gewechselt. 
-Im diesem Zeitschritt kam es dann zum Auslösen des Kollisionsereignisses, da der Abstand zwischen \texttt{vehicle0} und \texttt{vehicle20} nicht ausreichend groß war, um das hintere Fahrzeug mit seiner aktuellen Geschwindigkeit die volle Strecke zu bewegen.
+In diesem Zeitschritt kam es dann zum Auslösen des Kollisionsereignisses, da der Abstand zwischen \texttt{vehicle0} und \texttt{vehicle20} nicht ausreichend groß war, um das hintere Fahrzeug mit seiner aktuellen Geschwindigkeit die volle Strecke zu bewegen.
 \\
-Anmerkung: Gleichzeitig reagierte \texttt{vehicle0} korrekt auf das Hindernis direkt vor sich und leitete einen Überholvorgang ein.
+Anmerkung: Gleichzeitig reagierte \texttt{vehicle0} korrekt auf das Hindernis direkt vor sich und leitete für den folgenden Zeitschritt einen Überholvorgang ein.
 
 \footnotesize\begin{verbatim}
 --- step 365 ----------------
@@ -414,16 +415,98 @@ Das Sichtfeld der Fahrzeuge wurde hierauf zu einem Vier-Sektoren-Modell abgewand
 Es werden nun jeweils die beiden Sektoren kontrolliert, die die Bewegungs- bzw. Orientierungsrichtung darstellen. 
 Nach vorn und hinten wird jeweils auch auf Entfernungen geprüft, seitlich genügt es auf reine Präsenz/Nichtpräsenz von anderen Fahrzeugen zu prüfen.
 
-Im Rahmen dieser Umstellung wurde festgestellt, dass es bei der Richtungsbestimmung einen Fehler in der Simulationssoftware gab.
-Die Berechnung lieferte für beide seitlichen Richtungen ein und denselben Wert.
-Der Fehler war durch die Verwendung der Methode \texttt{acos} entstanden, wobei nicht beachtet wurde, dass der arccos nur im Bereich 0 bis $ \pi $ definiert ist, hier aber der Vollkreis zugrunde liegt.
+Im Rahmen dieser Umstellung wurde festgestellt, dass es bei der Richtungsbestimmung einen weiteren Fehler in der Simulationssoftware gab.
+Die Berechnung lieferte für beide seitlichen Richtungen ein und denselben Wert und somit auch die gleiche Blickrichtung.
+Der Fehler war durch die Verwendung der Methode \texttt{acos} entstanden, wobei nicht beachtet wurde, dass der \textit{arccos} nur im Bereich 0 bis $ \pi $ definiert ist, hier aber der Vollkreis zugrunde liegt.
 
 
 
 
 
-\subsection{Festlegen des Setups für die Langzeittests}
-\label{setup-multilane-scenarios}
+\subsection{Setups für die Langzeittests}
+\label{sec:setup-dauertests}
+
+Für die Durchführung der Dauersimulationen galt es sinnvolle Einstellungen zu finden. 
+Für das Agentenverhalten wurde dies in \cref{sec:verfeinerung-agentenplan} beschrieben. 
+Nachfolgend sind Festlegungen für das Szenario zu finden.
+
+
+
+\subsubsection{Fahrzeuganzahl}
+\label{sec:fahrzeuganzahl}
+
+Um einen Anhaltspunkt für die Anzahl der zu simulierenden Fahrzeuge zu erhalten, wurden reale Daten der Bundesanstalt für Straßenwesen aus dem Jahr 2016 für je eine automatische Dauerzählstelle auf den Autobahnen A7\footnote{siehe \url{http://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-verkehrszaehlung/Daten/2016_1/Jawe2016.html?nn=626916&cms_detail=4602&cms_map=0}, abgerufen am 09. März 2018}, A38\footnote{siehe \url{http://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-verkehrszaehlung/Daten/2016_1/Jawe2016.html?nn=626916&cms_detail=4372&cms_map=0}, abgerufen am 09. März 2018} und A71\footnote{siehe \url{http://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-verkehrszaehlung/Daten/2016_1/Jawe2016.html?nn=626916&cms_detail=4340&cms_map=0}, abgerufen am 09. März 2018} in der Harzregion herangezogen, siehe \cref{tab:reale-verkehrsdaten}. 
+Das Teilstück auf der A7 war zu dieser Zeit nur zweispurig ausgebaut. 
+Die A38 und die A71 sind generell nur zweispurig.
+\\
+Für eine Messstelle auf der A395 zwischen Bad Harzburg und Braunschweig lagen nur Werte aus dem Jahr 2014 vor.
+Die Zahlen lagen nur wenig über den aktuelleren der Messstelle auf der A38.
+Aus diesem Grund wurde auf die Einbeziehung verzichtet.
+
+
+\begin{table}[hptb]
+\begin{center}
+\setlength{\tabcolsep}{0.5em} % for the horizontal padding
+{\renewcommand{\arraystretch}{1.2}% for the vertical padding
+\begin{tabular}{| c  c  c  c |}
+\hline 
+Zählstelle & Düderode & Röstebachtalbrücke & Tunnel Schmücke \\
+(Autobahn) & (A7) & (A38) & (A71) \\
+\hline 
+Lage zw. AS & Seesen (Harz) & Breitenworbis & Heldrungen \\
+ & und Echte & und Leinefelde & und Kölleda \\
+\hline 
+Verkehr Fahrtrichtung 1 & 25.881 & 11.851 & 6.418 \\ 
+\hline 
+Verkehr Fahrtrichtung 2 & 26.340 & 11.877 & 6.386 \\ 
+\hline 
+Durchschnitt pro Tag & 26.111 & 11.864 & 6.402 \\ 
+\hline 
+Durchschnitt pro Stunde & 1.088 & 495 & 267 \\ \hline
+\end{tabular}
+}
+\caption{durchschnittliche tägliche Verkehrsdaten}
+\label{tab:reale-verkehrsdaten}
+\end{center}
+\end{table}
+
+\noindent
+Bei der Berechnung der Durchschnitte wurde jeweils, wenn nötig, auf volle Fahrzeuge aufgerundet.
+
+Die o.a. Zahlen spiegeln eine Verkehrsstärke ($q$ in $ \frac{\text{Fahrzeuge}}{\text{Zeit}} $) wieder.
+Nach \cite{verkehrsplanung} kann diese mit Hilfe der mittleren momentanen Geschwindigkeit ($\overline{v}_{m}$) in eine Verkehrsdichte ($D$ in $ \frac{\text{Fahrzeuge}}{\text{Strecke}} $) umgerechnet werden.
+Der Zusammenhang lautet: $ D = \frac{q}{\overline{v}_{m}} $.
+
+Die weiteren Berechnungen erfolgten jeweils mit den Durchschnittswerten der beiden Fahrtrichtungen.
+Als $\overline{v}_{m}$ wird für Pkw 120 km/h angenommen.
+Somit ergibt sich auf diesen Autobahnstücken eine Verkehrsdichte von 9,066 $\frac{\text{Fahrzeugen}}{\text{km}}$ für die A7, 4,125 für die A38 und 2,225 für die A71.
+\\
+Aufgrund der Einspurigkeit muss dieser Wert für das Szenario halbiert werden. 
+Die Anzahl der Fahrzeuge erhält man dann durch Multiplikation mit der Streckenlänge.
+Die Rundung erfolgte zum nächsten ganzen Fahrzeug.
+
+Ausgangswerte für die Simulation einer 7,5 km langen Strecke sind die folgenden Fahrzeuganzahlen: 
+\begin{itemize}
+	\itemsep0em
+	\item 34 (A7)
+	\item 15 (A38)
+	\item 8 (A71)
+\end{itemize}
+
+\paragraph*{Anmerkung zum Teilstück auf der A7}
+\hfill \\
+Die Autobahn A7 wurde in Niedersachsen den vergangenen Jahren an vielen Stellen auf drei Spuren je Fahrtrichtung verbreitert.
+Das Teilstück zwischen den Anschlussstellen Seesen und Nörten-Hardenberg war eines der letzten zweispurigen.
+Der Umbau hat im September 2017 begonnen\footnote{siehe \url{https://www.strassenbau.niedersachsen.de/download/45795/Sechsstreifiger_Ausbau_der_A_7_Uebersichtskarte.pdf}, abgerufen am 09. März 2018}.
+Mit seiner Lage zwischen zwei bereits dreispurig ausgebauten Teilstücken, mussten hier sicherlich größere Verkehrslasten bewältigt werden, als auf anderen zweispurigen Autobahnen.
+
+Für die Simulation war dies ein glücklicher Zufall, da im speziellen $p_{linger}$ mit der hier vorgegebenen Fahrzeuganzahl weiter präzisiert werden konnte.
+
+
+
+
+\subsubsection{Zellgröße und Zeitschrittgröße}
+\label{sec:cellsize-timesteplength}
 
 Den nachfolgenden Ausführungen liegt das hier beschriebene Szenario zugrunde:
 \begin{itemize}
@@ -435,12 +518,13 @@ Den nachfolgenden Ausführungen liegt das hier beschriebene Szenario zugrunde:
 	\item max. zulässige Geschwindigkeit: 100 km/h
 	\item Trödelwahrscheinlichkeit: 0,1
 \end{itemize}
-Mit dem bereits erwähnten Vorgehen - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung ($ Fzg^{S} $ = schnelleres Fahrzeug (rote Kurve), $ v \in [80; 130] $, $ Fzg^{L} $ = langsameres Fahrzeug (schwarze Kurve), $ v \in [70; 90] $) - wurde das Verhalten der Agenten, ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert), in jew. drei Durchgängen getestet.
+Mit dem bereits erwähnten Vorgehen - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung (schnelleres Fahrzeug (rote Kurve), $ v \in [80; 130] $, langsameres Fahrzeug (schwarze Kurve), $ v \in [70; 90] $) - wurde das Verhalten der Agenten, ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert), in jew. drei Durchgängen getestet.
 
 Für die Auswertung, ob eine Zellgröße/Zeitschrittlänge-Kombination für eine Simulationsdurchführung nutzbar ist, wurde der Ausdruck der Geschwindigkeiten der beiden Fahrzeuge über die Simulationszeit genutzt.
 
 
-\subsubsection{Zellgröße 7,5 m}
+\paragraph*{Zellgröße 7,5 m}
+\hfill \\
 
 \begin{figure}[hptb]
   \centering 
@@ -487,10 +571,11 @@ Ein Geschwindigkeitsunterschied von zehn bis 15 km/h reicht bei entsprechend zug
 Da sich die Abbrems- und Beschleunigungsmanöver identisch wiederholen, kommt es zu dieser Musterbildung.
 
 Das Plot in \cref{figure:run8} zeigt ein Einordnen hinter dem langsameren Fahrzeug und die Beibehaltung dessen Geschwindigkeit.
-Das in \cref{figure:run9} ist nahezu eine Mischform aus den ersten beiden Kurven.
+\cref{figure:run9} ist nahezu eine Mischform aus den ersten beiden Kurven.
 
 
-\subsubsection{Zellgröße 5,0 m}
+\paragraph*{Zellgröße 5,0 m}
+\hfill \\
 
 \begin{figure}[hptb]
   \centering 
@@ -527,7 +612,7 @@ Besonders die jeweils auslösende Kollision des ursprünglich schnelleren Fahrze
 Ein weiterer Durchlauf, siehe \cref{figure:run19a}, der einen vergleichbaren Ablauf hervorbrachte, bei dem aber die Ausgabe der Fahrzeugdaten im Kontrollfenster erfolgte, konnte das Verhalten aufklären.
 Die Bedingung im Agentenplan waren so formuliert, dass das Folgefahrzeug dem vorausfahrenden folgen konnte, ohne dass ein \enquote{Sicherheitsabstand} gebildet wurde, wenn die Geschwindigkeit jenes Fahrzeuges nicht größer als die des vorausfahrenden Fahrzeuges war. 
 \\
-Somit genügte, gewisse Geschwindigkeiten vorrausgesetzt, eine kleine Beschleunigung, um im nachfolgenden Zeitschritt die für die Geschwindigkeit erforderliche Wegstrecke nicht mehr umsetzen zu können.
+Somit genügte, gewisse Geschwindigkeiten vorrausgesetzt, eine kleine Beschleunigung, ggf. bei Zusammentreffen mit einem Trödelvorgang des langsameren Fahrzeugs, um im nachfolgenden Zeitschritt die für die Geschwindigkeit erforderliche Wegstrecke nicht mehr umsetzen zu können.
 
 \begin{figure}[hptb]
   \centering 
@@ -541,25 +626,27 @@ Somit genügte, gewisse Geschwindigkeiten vorrausgesetzt, eine kleine Beschleuni
 Eine erste Modifikation führte wieder zurück zu einem Verhalten, siehe \cref{figure:run19b}, aufgrund dessen die Geschwindigkeitskomponente mit in die Verzögerungslogik eingefügt worden war. 
 \\
 Das nachfolgende Fahrzeug bremste so lange ab, bis der gewünschte Abstand erreicht war, um daraufhin mit einem \enquote{Zwischensprint} wieder auf das vorausfahrende Fahrzeug aufzuschließen.
-Durch den Geschwindigkeitsüberschuss, der abgebaut werden muss, wurde der Abstand wieder extrem verkürzt, dass der Kreislauf von vorn beginnt.
+Durch den Geschwindigkeitsüberschuss, der abgebaut werden muss, wurde der Abstand wieder extrem verlängert, dass der Kreislauf von vorn beginnt.
 \\
 In einigen Simulationsläufen musste die Geschwindigkeit derart massiv abgebaut werden, dass das Folgefahrzeug fast zum Stillstand kam.
 
-Es musste ein Weg gefunden werden, die Geschwindigkeit von \enquote{Ego} in Zusammenhang mit der Entfernung vom vorausfahrenden Fahrzeug zu bringen.
+Es musste ein Weg gefunden werden, die Geschwindigkeit eines Fahrzeuges in Zusammenhang mit der Entfernung vom vorausfahrenden Fahrzeug zu bringen.
 \\
 Verschiedene Ansätze, bei denen in den Bedingungen der Logik mit den vorliegenden Werten Berechnungen durchzuführen gewesen wären, wurden von der Simulationsplattform nicht unterstützt.
 \\
-Da den Agenten sowohl die eigene Geschwindigkeit als auch die Entfernung als numerische Werte bekannt sind, werden diese nun zu einander in Beziehung gesetzt.
+Da aber den Agenten sowohl die eigene Geschwindigkeit als auch die Entfernung als numerische Werte bekannt sind, werden diese nun zu einander in Beziehung gesetzt.
 
 Dies führt dazu, dass die eigene Geschwindigkeit des betrachteten Fahrzeugs gleichzeitig der jeweilige Mindestabstand vom Vordermann sein muss. 
+Hier würde zu einem späteren Zeitpunkt noch der Faktor 1,5 eingefügt.
 \\
 Eine gleichwertige Bedingung wurde auch für die Simulation der Beschleunigung übernommen.
 Der reine Geschwindigkeitsvergleich wurde entfernt.
 
 
-\subsubsection{Zellgröße 2,5 m}
+\paragraph*{Zellgröße 2,5 m}
+\hfill \\
 
-Aufgrund der Veränderung in den Agentenplänen wurde die erneut verringerte Zellgröße ebenfalls mit den beiden verbliebenen Zeitschrittwerten simuliert.
+Aufgrund der Veränderung in den Agentenplänen wurde die erneut verringerte Zellgröße ebenfalls mit den beiden noch verbliebenen Zeitschrittwerten simuliert.
 
 \begin{figure}[hptb]
   \centering 
@@ -582,16 +669,18 @@ In der dritten Durchführung traten allerdings wieder Kollisionsereignisse auf.
   \label{figure:run27-29}
 \end{figure}
 
-Die Simulationen der 2,5 m/0,025 min-Variante zeigten [ein sehr gutes Verhalten]\sa{own: anders}.
-$Fzg^{S}$ konnte ohne Kollision hinter $Fzg^{L}$ abbremsen und sich dessen Geschwindigkeit anpassen.
+Die Simulationen der 2,5 m/0,025 min-Variante (\cref{figure:run27-29}) zeigten ein, nach den bisherigen Erfahrungen, erwartetes und gewünschtes Verhalten.
+Das schnelle Fahrzeug konnte ohne Kollision hinter dem langsamen Fahrzeug abbremsen und sich dessen Geschwindigkeit anpassen.
 \\
 Es wurden insgesamt zehn weitere Durchgänge mit diesem Setup durchgeführt. 
 Dabei wurde zweimal je eine Kollision beobachtet, die aber immer im Bereich der Beschleunigungsphase am Anfang der Simulation stattfand. 
 
-\subsubsection{\texorpdfstring{Zellgröße $ < $ 2,5 m}%
-                              {Zellgröße kleiner als 2,5 m}}
 
-Bei vorhergehenden Testläufen wurde festgestellt, dass es bei einer Zellgröße von weniger als 2,5 Meter zu Inkonsistenzen in den Beliefbases der Agenten kommt.
+\paragraph*{\texorpdfstring{Zellgröße $ < $ 2,5 m}%
+                              {Zellgröße kleiner als 2,5 m}}
+\hfill \\
+
+Bei vorhergehenden Testläufen außerhalb dieser Reihe wurde festgestellt, dass es bei einer Zellgröße von weniger als 2,5 Meter zu Inkonsistenzen in den Beliefbases der Agenten kommt.
 Entscheidungen müssten dann aufgrund unterschiedlicher Voraussetzungen getroffen werden.
 Aus diesem Grund wurde auf den Einsatz von kleineren Zellgrößen verzichtet.
 
@@ -599,48 +688,46 @@ Aus diesem Grund wurde auf den Einsatz von kleineren Zellgrößen verzichtet.
 
 
 
+
 \subsection{Testläufe des Einspurszenarios}
-\label{test-singlelane}
-
-Die Festlegung der Anzahl der Fahrzeuge erfolgte aufgrunde realer Daten des BASt aus dem Jahr für eine Messstelle auf der A7 zwischen den Anschlussstellen Seesen und Echte (\cite{zaehlstelle}).
-Zu diesem Zeitpunkt war dieses Autobahnstück noch zweispurig ausgebaut.
-
-In Fahrtrichtung Hannover fuhren pro Tag durchschnittlich 25881 Pkw, in der Gegenrichtung 26340.
-Schwerlastverkehr wurde hier vorerst außer Acht gelassen.
-\\
-Die o.a. Zahlen spiegeln eine Verkehrsstärke $q$ ($ \frac{\text{Fahrzeuge}}{delta t} $) wieder.
-Nach \cite{verkehrsplanung} kann diese mit Hilfe der mittleren momentanen Geschwindigkeit $\overline{v}_{m}$ in eine Verkehrsdichte $D$ ($ \frac{\text{Fahrzeuge}}{delta s} $) umgerechnet werden - $ D = \frac{q}{\overline{v}_{m}} $.
-
-Die Berechnung erfolgte mit 26111 Fahrzeugen, dem Durchschnittswert der beiden Fahrtrichtungen - Wert pro Stunde: 1088.
-Als $\overline{v}_{m}$ wird für Pkw 120 km/h angenommen.
-Somit ergibt sich auf diesem zweispurigen Autobahnstück eine Verkehrsdichte von 9 $\frac{\text{Fahrzeugen}}{\text{km}}$.
-\\
-Für das Szenario muss diese halbiert und auf die Streckenlänge hochgerechnet werden.
+\label{sec:test-singlelane}
 
 Die Testläufe für den Einspurfall erfolgten mit folgenden Einstellungen:
 \begin{itemize}
 	\itemsep0em
-	\item Anzahl Fahrzeuge: variabel
+	\item Simulationsdauer: 2 h
+	\item Anzahl Fahrzeuge: variabel, siehe \cref{sec:fahrzeuganzahl}
 	\item Anzahl Fahrspuren: 1
 	\item Streckenlänge: 7,5 km 
 	\item Zellgröße: 2,5 m
-	\item Simulationsdauer: 2 h
 	\item Zeitschrittlänge: 0,025 min (1,5 sek)
 	\item Intervalle Beschleunigung/Verzögerung/Geschwindigkeit: $ [3,5; 7] $/$ [8; 10] $/$ [80; 130] $
 	\item max. Geschwindigkeit: 100 km/h
 	\item Verhalten bei Kollisionsereignis: abbremsen (kein Totalstop)
 \end{itemize}
 
-
-
-Während bei der Entwicklung durchaus rückwärts laufenden Stauwellen beobachtet werden konnten, ist die Phase der Totalstopps, die dieses Verhalten hervorruft, bei der Simulation im allgemeinen nicht vorhanden.
-Durch die feinere Ausführung der Bremsmanöver nähern nähern sich die Positionen der Fahrzeuge einander an und fächern sich, nachdem die Ursache (langsames Fahrzeug) beseitigt ist, wieder auf.
-
-
-
+\paragraph*{Anpassung der Trödelwahrscheinlichkeit $p_{linger}$}
+\hfill \\
+Der zuvor präferierte Wahrscheinlichkeitswert von 0,3 führte bei der Simulation mit 34 Fahrzeugen mehrfach zu keinem ordentliche Verkehrsfluss.
+Aus diesem Grund wurden mit einer auf eine Stunde verkürzten Simulationsdauer kleinere Werte getestet.
 
 
 
+\subsubsection{Szenario A7: 34 Fahrzeuge}
+\label{sec:szenario-a7}
+\sa{own: content}
+
+\subsubsection{Szenario A38: 15 Fahrzeuge}
+\label{sec:szenario-a38}
+\sa{own: content}
+
+\subsubsection{Szenario A71: 8 Fahrzeuge}
+\label{sec:szenario-a71}
+\sa{own: content}
+
+
+%Während bei der Entwicklung durchaus rückwärts laufenden Stauwellen beobachtet werden konnten, ist die Phase der Totalstopps, die dieses Verhalten hervorruft, bei der Simulation im allgemeinen nicht vorhanden.
+%Durch die feinere Ausführung der Bremsmanöver nähern nähern sich die Positionen der Fahrzeuge einander an und fächern sich, nachdem die Ursache (langsames Fahrzeug) beseitigt ist, wieder auf.
 
 
 
@@ -649,7 +736,13 @@ Durch die feinere Ausführung der Bremsmanöver nähern nähern sich die Positio
 
 
 
-\subsection{Zellgröße/Zeitschrittlänge vs. Simulation realer Beschleuningung/Verzögerung}
+
+
+
+
+
+
+\subsection{Erkenntnisse aus Entwicklung und Simulationsläufen}
 
 Durch die einerseits real simulierten Beschleunigungs-, Verzögerungs- und Geschwindigkeitswerte, andererseits aber \enquote{grob} unterteilten Zellgrößen und Zeitabschnitte kommt es in der Simulation zu Verhalten, welches durch diese Unterschiede erklärbar ist.
 
@@ -661,7 +754,7 @@ Durch die einerseits real simulierten Beschleunigungs-, Verzögerungs- und Gesch
 
 Aufgrund der vergleichbar zum NaSch-Modell gewählten Zellgröße von 7,5 Metern, im Gegensatz dazu aber die Simulation realitätsnaher Beschleunigungswerte, kommt es am Beginn des Simulationslaufs mehrere Zeitschritte lang zu einem Stillstand der Fahrzeuge.
 Da jedes Fahrzeug softwareseitig in der Mitte der belegten Zelle platziert wird (bzw. im ersten Zeitschritt dorthin gesetzt wird) wird eine Geschwindigkeit von mehr als $ \frac{1}{2} \times $ 7,5 $ \frac{m}{s} = $ 13,5 km/h benötigt, um eine sichtbare Bewegung durchzuführen.
-Durch die unterschiedliche Ausprägung der Beschleunigungswerte ist keine Nennung eines festen Zeitpunkts möglich, an dem dies vollzogen wird.
+Durch die unterschiedliche Ausprägung der Beschleunigungswerte und möglicher Trödelphasen ist keine Nennung eines festen Zeitpunkts möglich, an dem dies vollzogen wird.
 
 Im weiteren Verlauf der Simulation fällt es in der Weg-Zeit-Kurve nicht weiter auf, dass die Fahrzeuge an Zellen mit einer bestimmten Länge gebunden sind.
 
@@ -688,6 +781,7 @@ Nachteilig ist zu sehen, dass ein Totalstillstand aufgrund der großen Geschwind
 % --- Diese beiden Absätze sind gut - Phil FB 27feb
 Die Schwierigkeiten beim Bremsen können durch Reduktion der Zellgröße bei ansonsten gleichen Voraussetzungen \enquote{behoben} werden.
 Eine Simulation mit reduzierten Zellgrößen führte in diesem Aspekt zu einem harmonischeren Verkehrsbild.
+Eine komplette Vermeidung der Kollisionsereignisse ist nicht gelungen, siehe auch nachfolgendes \cref{sec:mindestabstaende}.
 
 Für die weitere Entwicklung könnte für die Fahrzeuge bei der Initialisierung eine Länge generiert werden, wodurch diese mehrere dieser dann kleineren Zellen überdecken würden.
 Dies würde ein diversifizierteres Fahrzeugbild zur Folge haben, bzw. die Möglichkeit eröffnen präzisere Simulationen mit kleineren Zellen durchzuführen und Fahrzeugklassen auch in Sachen Platzbedarf realistisch erscheinen zu lassen.
@@ -695,7 +789,8 @@ Dies würde ein diversifizierteres Fahrzeugbild zur Folge haben, bzw. die Mögli
 
 \subsubsection{Zeitschrittlänge}
 
-\subparagraph*{Worst Case-Analyse für Mindestabstände:}
+\paragraph*{Worst Case-Analyse für Mindestabstände:}
+\label{sec:mindestabstaende}
 
 Das Kollisionsereignis wird nicht erst bei einer tatsächlichen Kollision, wenn sich zwei Fahrzeuge in einem Punkt treffen, ausgelöst, sondern bereits wenn der Platz nach vorn zum aktuellen Zeitpunkt nicht mehr zum bewegen ausreichen würde.
 Hierbei spielt es für das Simulationstool keine Rolle, dass das Hindernis in Bewegung ist und sich von dort entfernt.
@@ -708,7 +803,7 @@ Zwischenschritte der Berechnung wurden jeweils aufgerundet.
 \noindent
 Anzahl zu setzender Zellen: $ x = \lceil \frac{\text{Geschwindigkeit}}{3,6} \times \frac{\text{Zeitschrittlänge}}{\text{Zellgröße}} \rceil $
 \\
-Mindestabstand: $ s_{min} = \lceil x \times Zellgr. \rceil $
+Mindestabstand: $ s_{min} = \lceil x \times \text{Zellgröße} \rceil $
 \\
 Fasste man beide Gleichungen zusammen, würde die Zellgröße aus der Gleichung entfernt.
 
@@ -718,7 +813,8 @@ Fasste man beide Gleichungen zusammen, würde die Zellgröße aus der Gleichung 
 {\renewcommand{\arraystretch}{1.2}% for the vertical padding
 \begin{tabular}{| c  c  c |}
 \hline 
-(Rest-)Geschwindigkeit & $ s_{min} $ in m bei ts=0,025 min & $ s_{min} $ in m bei ts=0,05 min \\ \hline 
+(Rest-) & $ s_{min} $ in m & $ s_{min} $ in m  \\ 
+Geschwindigkeit & bei ts=0,025 min & bei ts=0,05 min \\ \hline 
 130 & 55 & 110 \\ 
 100 & 43 & 85 \\ 
 80 & 35 & 68 \\ 
@@ -738,7 +834,6 @@ Da der Einfluss Zellgröße bei entsprechender Umstellung der Gleichung, siehe o
 Es wird lediglich auf ein Vielfaches der Zellgröße gerundet.
 \\
 Durch die Entfernungen, die in einem größeren Zeitschritt zurückgelegt werden, wird durch eine eine Anhebung der Zeitschrittlänge auch der Mindestabstand entsprechend höher.
-
 
 
 

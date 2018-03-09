@@ -1,9 +1,9 @@
 \section{Überlegungen für die Multilane-Szenarios}
 \label{sec:ueberlegungen-multilane}
 
-Aufgrund zweier Fehler\footnote{siehe \url{https://github.com/LightJason/AgentSpeak/issues/47} und \url{https://github.com/LightJason/AgentSpeak/issues/50}} im Agenten-Framework, die bis zum Termin dieser Arbeit nicht behoben wurden, war es mir nicht möglich, auch belastende Tests für die Mehrspurszenarien durchzuführen.
+Aufgrund zweier Fehler\footnote{siehe \url{https://github.com/LightJason/AgentSpeak/issues/47} und \url{https://github.com/LightJason/AgentSpeak/issues/50}} im Agenten-Framework, die bis zum Termin dieser Arbeit nicht behoben wurden, war es nicht möglich, auch belastende Tests für die Mehrspurszenarien durchzuführen.
 
-Dennoch liegen theoretische Überlegungen und in Teilen getestete praktische Vorarbeiten vor, die in diesem Kapitel präsentiert werden sollen.
+Dennoch sind theoretische Überlegungen und in Teilen getestete praktische Vorarbeiten vorhanden, die in diesem Kapitel präsentiert werden sollen.
 
 
 
@@ -15,7 +15,7 @@ Dennoch liegen theoretische Überlegungen und in Teilen getestete praktische Vor
 
 \subsubsection{Zustandsautomat}
 
-Für die Simulation mehrspuriger Fahrbahnen kann der ursprüngliche Zustandsautomat (\cref{figure:fsm-nasch}), der sich mit der Veränderung der Geschwindigkeit beschäftigt, unverändert bleiben.
+Für die Simulation mehrspuriger Fahrbahnen kann der ursprüngliche Zustandsautomat (\cref{figure:fsm-nasch}), der die Veränderung der Geschwindigkeit beinhaltet, unverändert bleiben.
 Das Spurwechselverhalten wird in einem separaten Automaten abgebildet, siehe \cref{figure:fsm-pull}.
 
 \begin{figure}[hptb]
@@ -50,7 +50,7 @@ Auch hier entspricht ein Zeitschritt der Simulation einem Zyklus vom Startzustan
 Die Veränderungen im Grundplan des Agentenverhaltens sind minimal. 
 Lediglich zwei Ziele für das Ausscheren (Pull-out) und das Einscheren (Pull-in) hinzugefügt werden.
 Dies wird durch die jeweiligen Pläne ergänzt.
-\sa{own: add listing multilane}Für das komplette Listing siehe %\cref{lst:multilane}.
+Für das komplette Agentenscript siehe \cref{lst:multi-lane}.
 
 Der Aufruf des jeweiligen Plans und die Abarbeitung der Bedingungen entspricht dabei dem Spurwechselversuch.
 Die Ausführung wird aus dem Agentenplan an die Simulationssoftware weiter geleitet.
