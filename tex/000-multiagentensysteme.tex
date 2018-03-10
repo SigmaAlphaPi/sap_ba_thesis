@@ -22,10 +22,11 @@ Die Idee eines Multiagentensystems ist dabei recht einfach.
 Ein Agent ist ein Computersystem, welches in der Lage ist, selbständig im Interesse seiner Benutzer/Eigner zu handeln.
 Der Agent kann eigenständig herausfinden, welche Handlungen nötig sind, um seine Designziele zu erreichen, ohne dass ihm immer wieder vorgegeben werden müsste, was in welchem Moment zu tun ist.
 
-Der Agent ist die aktuell letzte Stufe der Entwicklung in der Reihe der Programmierkonzepte - von Maschinensprache und Assemblercode bis abstrakten Datentypen und Objekten.
+Der Agent ist die aktuell letzte Stufe der Entwicklung in der Reihe der Programmierkonzepte - von Maschinensprache und Assemblercode bis hin zu abstrakten Datentypen und Objekten.
 
 Ein Multiagentensystem besteht in der Regel aus einer Anzahl von Agenten, deren Kommunikation über eine Computernetzwerkinfrastruktur abläuft.
-Da jeder Agent seine Ziele, bzw. die seines Benutzers, verfolgt, können die Ziele und Motivation der einzelnen Agenten grundverschieden sein.
+Die Zielsetzung und Motivation der einzelnen Agenten kann grundverschieden sein, da jeder Agent sein\sa{own: \usepackage[letterspace=150]{microtype}} Ziel bzw. das seines Benutzers verfolgt.
+% Da jeder Agent seine Ziele, bzw. die seines Benutzers, verfolgt, können die Ziele und Motivation der einzelnen Agenten grundverschieden sein. \sa{own: daddy said: Die Ziele und die Motivation der einzelnen Agenten kann grundverschieden sein, da jeder   s e i n  Ziel, bzw. das seines Benutzers verfolgt.}
 Für eine Interaktion müssen die Agenten die Fähigkeit haben, zu kooperieren, zu koordinieren und zu verhandeln.
 
 \begin{figure}[hptb]
@@ -39,7 +40,8 @@ Für eine Interaktion müssen die Agenten die Fähigkeit haben, zu kooperieren, 
 Jeder Agent befindet sich dabei in einer Umwelt, die er mit verschiedenen geigneten Sensoren wahrnehmen kann, siehe \cref{figure:intelligent-agent}.
 Dies können bei Agenten in einer realen Umwelt phsysische Sensoren oder bei Softwareagenten Softwaresensoren sein.
 \\
-Aufgrund dieser Wahrnehmung seiner Umwelt trifft er Entscheidungen und handelt dann entsprechend dieser.
+Aufgrund dieser Umweltwahrnehmung trifft er Entscheidungen und handelt entsprechend.
+% Aufgrund dieser Wahrnehmung seiner Umwelt trifft er Entscheidungen und handelt dann entsprechend dieser. \sa{own: daddy said: Er entscheidet dann aufgrund dieser Umweltwahrnehmung und handelt entsprechend.}
 Durch seine Handlungen (und natürlich auch die von anderen Agenten in der gleichen Umwelt) kann diese Umwelt verändert werden.
 Dies kann auch während der Entscheidungsfindung des Agenten passieren, so dass die getroffene Entscheidung nicht optimal zum dann aktuellen Zustand der Umwelt ist.
 
@@ -85,13 +87,13 @@ Für die Entwickler von LightJason war es wichtig, dass die Agentensprache auch 
 Auf der einen Seite brauchte man eine Syntax um Verhalten zu definieren, auf der anderen Seite musste diese Syntax leicht verständlich und sauber sein.
 Die Syntax von \enquote{Agentspeak(L++)} (ASL) wurde als logische Programmiersprache \mbox{designt}, wobei alle Elemente auf Terme und Literale reduziert werden konnten.
 
-Dies erlaubte die Modellierung eines Multiagentensystems, durch das später bei der Agentenprogrammierung möglich ist, Verhalten durch Umwelteindrücke (beliefs), Regeln (rules), Pläne (plans) und Aktionen (actions) zu beschreiben.
+Dies erlaubte das Modellieren eines Multiagentensystems, welches es ermöglicht, bei der Agentenprogrammierung deren Verhalten durch Umwelteindrücke (beliefs), Regeln (rules), Pläne (plans) und Aktionen (actions) zu beschreiben.
 
 \paragraph*{belief:}
 Beliefs (oder auch Fakten) sind die Eindrücke des Agenten von seiner Umwelt.
 Aufgrund dieser Daten trifft der Agent seine Entscheidungen.
 \\
-Beliefs können in der Definition Agentenverhaltens als Standardwerte vorgegeben, von Sensoren erfasst oder vom Agenten selbst aus eigenen Daten oder den Daten anderer Agenten kombiniert werden.
+Beliefs können in der Definition des Agentenverhaltens als Standardwerte vorgegeben, von Sensoren erfasst oder vom Agenten selbst aus eigenen Daten oder den Daten anderer Agenten kombiniert werden.
 \\
 Ein Belief muss nicht faktisch richtig sein.
 Er kann also der Realität der Umwelt widersprechen. 
