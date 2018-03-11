@@ -7,7 +7,9 @@ Hier ergeben sich u. a. Aufgaben im Bereich der Mathematik (Routenplanung z.B. d
 
 Die Simulation von Fahrverhalten ist aufgrund des unsicheren Faktors Mensch, der als Haupt"-entscheider nur durch Wahlmöglichkeiten mit vorgegebenen unterschiedlich hohen Wahrscheinlichkeiten modelliert werden kann, ein Bereich in dem seit den 1930er Jahren geforscht wird.
 
-\cite{genealogy}\sa{nicht mit einer Referenz den Satz beginnen} gibt einen umfassenden Überblick über die verschiedenen Ansätze (siehe \cref{figure:family-tree}), die seit den ursprünglichen Annahmen der \enquote{fundamental relation} von Bruce D. Greenshields (1934/35), dass es einen Zusammenhang zwischen dem Abstand zwischen Fahrzeugen ($s$, genauer zweier Fahrzeugfronten) und deren Geschwindigkeit ($v$) geben muss, verfolgt wurden. 
+In \cite{genealogy} wird ein umfassender Überblick über die verschiedenen Ansätze gegeben, die seit den ursprünglichen Annahmen der \enquote{fundamental relation} von Bruce D. Greenshields (1934/35) verfolgt wurden, siehe \cref{figure:family-tree}. 
+Diese besagte, dass es einen Zusammenhang zwischen dem Abstand zwischen Fahrzeugen ($s$, genauer zweier Fahrzeugfronten) und deren Geschwindigkeit ($v$) geben muss.
+
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.9\textwidth]{family-tree}
@@ -15,8 +17,10 @@ Die Simulation von Fahrverhalten ist aufgrund des unsicheren Faktors Mensch, der
  		{\enquote{Stammbaum} der Verkehrsflussmodelle, aus \cite{genealogy}}
  \label{figure:family-tree}
 \end{figure}
+
 \noindent
 Die Fundamentalrelation, heute bekannt als Fundamentaldiagramm, kann aber auch mit Hilfe anderer Variablen, wie z.B. der Verkehrsdichte ($\rho$, der durchschnittlichen Anzahl von Fahrzeugen auf einer bestimmten Strecke) und dem Verkehrsfluss ($q$, der durchschnittlichen Anzahl von Fahrzeugen pro Zeiteinheit) wiedergegeben werden, siehe \cref{figure:fundamental-relations}. 
+
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.9\textwidth]{fundamental-relations}
@@ -101,13 +105,16 @@ $6$ & 45 & 162 \\ \hline
 \end{table}
 
 Die Simulation erfolgte unter Nutzung periodischer Randbedingungen. 
-Wie in \cite[Abb. 1.5]{peri-rand} für die Umgebung von Pixeln\sa{bitte mal kontrollieren, ob man wirklich von Pixeln hier spricht, denn Pixel ist ein Element aus der Computergraphik, ein Fahrzeug in dem Bild ist aber mehr als ein Pixel} beschrieben, werden die Fahrzeuge somit vom \enquote*{Ende} der Gridstrecke am \enquote*{Anfang} wieder eingesetzt. 
+Während bei offenen Randbedingungen an den Rändern ständig Fahrzeuge in das System strömen und es verlassen, bezeichnen periodische Randbedingungen eine zu einem Ring geschlossene Strecke, vgl.\cite[S. 6]{spahn-da}.
+%für die Umgebung von Pixeln\sa{bitte mal kontrollieren, ob man wirklich von Pixeln hier spricht, denn Pixel ist ein Element aus der Computergraphik, ein Fahrzeug in dem Bild ist aber mehr als ein Pixel} beschrieben, 
+Die Fahrzeuge werden somit vom \enquote*{Ende} der Gridstrecke wieder an den \enquote*{Anfang} eingesetzt. 
 Damit einstand die Möglichkeit einer kontinuierlich arbeitenden Simulationsumgebung, siehe \cref{figure:traffic-simulation}.
+
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.5\textwidth]{traffic-simulation}
  \caption[Darstellung des Verkehrs in einem geschlossenen System]
- 		{Symbolbild: Verkehr in einem Kreis (geschlossenes System), Screenshot \url{http://traffic-simulation.de}}
+ 		{Symbolbild: Verkehr in einem Kreis (geschlossenes System)}{\footnotesize Screenshot: \url{http://traffic-simulation.de}}
  \label{figure:traffic-simulation}
 \end{figure} 
 
@@ -141,16 +148,22 @@ Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil
 	die andere Spur ist nicht schlechter als die aktuelle Spur, $\Delta x^{o} \geq \Delta x$
 	\item \textit{nach dem Spurwechsel}: 
 	\\
-	diese Regeln werden mit einer gewissen Wahrscheinlichkeit $p_{l2r}$ (\enquote{Zurückwechselwahrscheinlichkeit}) ausgeführt, \\
+	(diese Regeln werden mit einer gewissen Wahrscheinlichkeit $p_{l2r}$ (\enquote{Zurückwechselwahrscheinlichkeit}) ausgeführt) \\
 	ausreichend großer Abstand zum hinteren Fahrzeug auf der rechten Spur, $v^{o,b}_{max} \leq \Delta x^{o,b}-1$ \\
 	UND \\
 	ausreichend Platz auf der rechten Spur, $v \leq \Delta x^{o}-1$
 \end{itemize}
 
-Wenn es die festgelegten Kriterien zulassen\sa{es wäre sinnvoll genau diese Definition als Grundlage für das erste Mehrspurszenario in der Simulation zu nutzen und sich in der Arbeit darauf zu beziehen}, erfolgt der Spurwechsel auf die linke Spur immer, da dieser nicht an eine Wahrscheinlichkeit geknüpft ist.
-Lediglich um die Überbevölkerung \sa{own: Vati sagt \enquote{Überbelegung}} der Überholspur zu vermeiden, wurde eine Wahrscheinlichkeit $p_{l2r}$ für das zurückwechseln eingeführt.
+Wenn es die festgelegten Kriterien zulassen
+%\sa{es wäre sinnvoll genau diese Definition als Grundlage für das erste Mehrspurszenario in der Simulation zu nutzen und sich in der Arbeit darauf zu beziehen}
+% brauche ich nicht mehr, weil leider keine Mehrspurigkeit simuliert werden konnte
+, erfolgt der Spurwechsel auf die linke Spur immer, da dieser nicht an eine Wahrscheinlichkeit geknüpft ist.
+Lediglich um die Überbevölkerung der Überholspur zu vermeiden, wurde eine Wahrscheinlichkeit $p_{l2r}$ für das Zurückwechseln eingeführt.
 
-Was dieser Modellierung fehlt\sa{und hier genau dann als 'Case Study' für Deine Arbeit zu bezeichnen}, ist die Berücksichtigung irregulärer Verhaltensweisen der Fahrer - Unsicherheiten (z.B. Fehleinschätzungen oder Ängste), Ablenkungen (z.B. Gespräche mit anderen Fahrzeuginsassen, Telefonieren, Suche im Handschuhfach oder nach der fallen gelassenen Zigarette). 
+Was dieser Modellierung fehlt
+%\sa{und hier genau dann als 'Case Study' für Deine Arbeit zu bezeichnen}
+% brauche ich nicht mehr, weil leider keine Mehrspurigkeit simuliert werden konnte
+, ist die Berücksichtigung irregulärer Verhaltensweisen der Fahrer - Unsicherheiten (z.B. Fehleinschätzungen oder Ängste), Ablenkungen (z.B. Gespräche mit anderen Fahrzeuginsassen, Telefonieren, Suche im Handschuhfach oder nach der fallen gelassenen Zigarette). 
 
 Zusätzlich ist die Bremswirkung, wie auch im ursprünglichen Nagel-Schreckenberg-Modell, \enquote{über\-di\-men\-sio\-niert}. 
 Vollbremsungen aus Höchstgeschwindigkeit sind innerhalb kürzester Distanz möglich \cite{acc-free}.
@@ -169,13 +182,14 @@ In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittsw
 \subsection{Stochastische Ansätze}
 \label{sec:stochastic-approaches}
 
-Es gibt inzwischen Ansätze, die das mikroskopische Verhalten der Fahrzeugführer aus Realdaten  stochastisch modelliert haben \cite{stoch-carfollow}. 
-In den aggregierten Daten wurde eine Laplace-Verteilung der Beschleunigungswerte erkannt. 
-Das daraus entwickelte Modell wurde getestet. 
-Die Reproduktion der Sicherheitsparameter, wie Zeit bis zur Kollision (TTC, time to collision) und der Bremsrate um einen Unfall zu verhindern (DRAC, deceleration rate to avoid crash) gelang. 
+Es existieren Ansätze, die das mikroskopische Verhalten der Fahrzeugführer aus Realdaten  stochastisch modelliert haben, z.B. \cite{stoch-carfollow}. 
+Dort wurde in den aggregierten Daten eine Laplace-Verteilung der Beschleunigungswerte erkannt. 
+Ein daraus entwickeltes Modell wurde getestet. 
+Die Reproduktion von Sicherheitsparametern, wie Zeit bis zur Kollision (TTC, time to collision) und der Bremsrate um einen Unfall zu verhindern (DRAC, deceleration rate to avoid crash) gelang. 
 Allerdings konnte das Fundamentaldiagramm nicht nachgestellt werden.
 
-\cite{multi-fuzzy} integriert den Ansatz der Mehrspurigkeit in einem Multiagenten-Fuzzy-System.\sa{genau das ist ein kern meiner Arbeit mit LightJason und das ist in Deiner Arbeit eingebaut} 
+Von \cite{multi-fuzzy} wird der Ansatz der Mehrspurigkeit in einem Multiagenten-Fuzzy-System integriert.
+%\sa{genau das ist ein kern meiner Arbeit mit LightJason und das ist in Deiner Arbeit eingebaut} 
 Die Spuren werden als Vereinigung mehrerer miteinander kommunizierender einspuriger Zellularautomaten (\enquote{continuous cellular automata}) beschrieben. 
 Diese Kommunikation zwischen den Spuren beschränkt sich auf die Sicherheitskriterien, wenn ein Fahrzeug die Spur wechseln möchte. 
 Intentionen zum Wechsel zwischen den Spuren werden durch fortwährend aktualisierte \enquote{Stresslevel} je Fahrzeug beeinflusst, die Wahrscheinlichkeiten dafür durch einen Bernoulli-Prozess berechnet.
@@ -186,11 +200,11 @@ Dieser Ansatz arbeitet mit Gridzellen und achtet auf Kollisionsfreiheit.
 \subsection{Das Social-Force-Vehicle-Modell}
 \label{sec:social-force-vm}
 
-In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Vorschlag für die Simulation von Spurwechseln entwickelt. 
+In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Vorschlag für die Simulation von Spurwechselvorgängen entwickelt. 
 Das Modell orientiert sich bei den Fahrzeugbewegungen an den Grundlagen des Nagel-Schreckenberg-Modells, vermeidet Unfälle aber in erster Linie nicht durch Abbremsen, sondern durch Ausweichen, also Spurwechsel. 
 
 Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z.B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. 
-Hier wirken diese als eine Art \enquote{Anziehungskraft} und liefern bei Auswahl einen Impuls für die Beibehaltung oder Änderung der Fahrspur. 
+Hier wirken die Kräfte als eine Art \enquote{Anziehungskraft} und liefern bei Auswahl einen Impuls für die Beibehaltung oder Änderung der Fahrspur. 
 Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
 
 \begin{figure}[hptb]
@@ -201,7 +215,8 @@ Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsricht
 \end{figure}
 \noindent
 
-Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$, da dessen Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt, über verschiedene Funktionen berechnet. Das betrachtete Fahrzeug (Ego) befindet sich:
+Da die Position eines Fahrzeugs zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt, werden die Kräfte der Zellen, siehe \cref{figure:social-forces}, für jedes Fahrzeug zu jedem Zeitschritt $t$ über verschiedene Funktionen berechnet. 
+Das betrachtete Fahrzeug (Ego) befindet sich:
 \begin{itemize}
 	\item auf der Hauptspur 
 	\begin{itemize}
