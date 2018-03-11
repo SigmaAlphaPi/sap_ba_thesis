@@ -8,7 +8,7 @@ main:
     # 10^5 timesteps in multi-lane, roughly 166ish minutes
     
     #was 120
-    simulationtime_in_minutes: 60
+    simulationtime_in_minutes: 30
 
     # preetprint of the result json
     prettyprint: true
@@ -49,7 +49,7 @@ environment:
     # 75 kms are about 10000 cells
     
     # was 25
-    length_in_km: 3
+    length_in_km: 1
     #7.5 #2.5
 
 
@@ -88,7 +88,7 @@ agent:
             # speed range configuration for initialize and maximum
             # speed (maximum value will be set by random)
             speed:
-                min: 80
+                min: 100
                 max: 130
 #                min: 40
 #                max: 50
@@ -109,7 +109,7 @@ agent:
         vehicle2.asl:
 
             # number of generated vehicles
-            count: 1
+            count: 0
 
             # show beliefs in each cycle
             showlog: false

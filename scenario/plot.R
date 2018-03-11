@@ -117,7 +117,7 @@ positionTo = floor( configurationData$lanelength_in_cells/( positionStepwidth_in
 positionBy = positionStepwidth_in_meters/1000
 labelAxisPosition = paste( seq( positionFrom, positionTo, positionBy), sep = ",", collapse = NULL )
 # --- generate own time axis in hours ---
-timeStepwidth_in_minutes = 30
+timeStepwidth_in_minutes = 15
 timeFrom = 0
 timeTo = floor( configurationData$simulationtime_in_timesteps/( timeStepwidth_in_minutes/configurationData$timestep_in_minutes ) )/(60/timeStepwidth_in_minutes)
 timeBy = timeStepwidth_in_minutes/60
