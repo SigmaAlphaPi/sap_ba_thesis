@@ -127,16 +127,15 @@ Um die Wirksamkeit der Anweisungen für die Agenten zu testen, wurden in der Sze
 Der einzige Unterschied, den es zwischen den Fahrzeugen gab, war, dass eines seine Geschwindigkeit aus einem niedrigeren Intervall zugewiesen bekam.
 \\
 Somit war sichergestellt, dass das schnellere Fahrzeug im Laufe der für Testzwecke kurz gehaltenen Simulationzeit auf das langsamere aufholen würde.
-Es war wiederholbar zu testen, ob das Abbremsen bei vorwärtigem Verkehr funktionierte.
+Es war wiederholbar zu testen, ob das Abbremsen bei vorwärtigem Verkehr funktionierte, siehe \cref{figure:test-cell-speedcurves}.
 
-\sa{own: [Grafik Speedcurve][Grafik Cellcurve] (got it)}
-%\begin{figure}[hptb]
-%  \centering 
-%   \subfigure[Zellpostionen]{\includegraphics[width=0.5\textwidth]{image1name}\label{figure:image1name}}\qquad 
-%   \subfigure[Geschwindigkeit]{\includegraphics[width=0.5\textwidth]{image2name}\label{figure:image2name}}
-%  \caption{lalala} 
-%  \label{figure:imagename}
-%\end{figure}
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[Plot der Geschwindigkeiten]{\includegraphics[width=0.45\textwidth]{test-speedcurve}\label{figure:test-speedcurve}}\qquad
+   \subfigure[Plot der Zellpostionen]{\includegraphics[width=0.45\textwidth]{test-cellcurve}\label{figure:test-cellcurve}} 
+  \caption{Beispielkurven eines Testdurchlaufes}{\footnotesize Dauer: 1 h, Länge: 3 km, Zellgröße: 7,5 m, Zeitschritt: 0,05 min} 
+  \label{figure:test-cell-speedcurves}
+\end{figure}
 
 
 
@@ -239,19 +238,35 @@ Hier wird im allgemeinen aber in Summe eine Verzögerung über dem max. real mö
 \\
 Aufgrund der \enquote{Bremsprobleme}, siehe \cref{sec:bremsverhalten}, wurde dies aber vorerst in Kauf genommen.
 
-Für die Trödelwahrscheinlichkeit $ p_{linger} $ wurde beobachtet, dass deren Höhe bei Werten $\leq$ \texttt{0,5} nur einen kleinen Einfluss auf das Verhalten bei max. möglicher Geschwindigkeit hatte.
-In den Testdurchläufen konnte die Geschwindigkeit erreicht werden.
+Für die Trödelwahrscheinlichkeit $ p_{linger} $ wurde beobachtet, dass deren Höhe bei Werten \mbox{$\leq$ \texttt{0,5}} nur einen kleinen Einfluss auf die max. mögliche Geschwindigkeit hatte.
+In den Testdurchläufen konnte diese Geschwindigkeit erreicht werden.
 \\
 Bei einer größeren Wahrscheinlichkeit wurde die mögliche Geschwindigkeit innerhalb der 30 Minuten Simulationszeit teilweise nicht oder nur schwer erreicht.
-Bei einem Wert von \texttt{0,7} ergab sich ein Durchlauf, bei dem die 20 km/h nicht erreicht wurden.
-\sa{own: add 3 linger speed graphs 0,7}
-\\
-Eine merkliche Veränderung trat auch bei der Beschleunigung der Fahrzeuge auf.
-Je höher der Wert für $ p_{linger} $, desto flacher wurde der Anstieg bei der Beschleunigung.
-%Die Verzögerungen in dieser Simulationsumgebung treten weniger wegen des Geschwindigkeitsverlustes auf, sondern wegen der Verlängerung der Zeit wieder zur ursprünglichen Geschwindigkeit zurückzukehren.
-\sa{own: add 3 linger speed graphs 0,1 0,3 0,5}
+Bei einem Wert von \texttt{0,7} ergab sich ein Durchlauf, bei dem die 20 km/h nicht erreicht wurden, siehe \cref{figure:linger-0ko7-2nd}.
 
-Weiterhin hat die Trödelwahrscheinlichkeit bei gleicher Höhe, abhängig von gefahrenen Geschwindigkeiten, unterschiedliche Einflüsse auf den Verkehrsfluss.
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{linger-0ko7}\label{figure:linger-0ko7-1st}}\qquad
+   \subfigure[2. Durchlauf]{\includegraphics[width=0.3\textwidth]{linger-0ko7-2nd}\label{figure:linger-0ko7-2nd}}\qquad
+   \subfigure[3. Durchlauf]{\includegraphics[width=0.3\textwidth]{linger-0ko7-3rd}\label{figure:linger-0ko7-3rd}} 
+  \caption{Geschwindigkeitskurven bei $p_{linger}$ = 0,7}
+  \label{figure:linger-0ko7}
+\end{figure}
+
+Eine merkliche Veränderung trat auch bei der Beschleunigung der Fahrzeuge auf.
+Je höher der Wert für $ p_{linger} $, desto flacher wurde im allgemeinen der Anstieg bei der Beschleunigung, siehe \cref{figure:linger-0ko1-3-5}.
+Außerdem bilden sich mit zunehmender Trödelwahrscheinlichkeit deutlichere Geschwindigkeitseinbrüche aus - z.B. \cref{figure:linger-0ko1} vs. \cref{figure:linger-0ko3}.
+
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[Durchlauf $p_{linger}$ = 0,1]{\includegraphics[width=0.3\textwidth]{linger-0ko1-3rd}\label{figure:linger-0ko1}}\qquad
+   \subfigure[Durchlauf $p_{linger}$ = 0,3]{\includegraphics[width=0.3\textwidth]{linger-0ko3}\label{figure:linger-0ko3}}\qquad
+   \subfigure[Durchlauf $p_{linger}$ = 0,5]{\includegraphics[width=0.3\textwidth]{linger-0ko5-3rd}\label{figure:linger-0ko5}} 
+  \caption{Beispiele für Geschwindigkeitskurven bei unterschiedlichen Werten für $p_{linger}$}
+  \label{figure:linger-0ko1-3-5}
+\end{figure}
+
+Weiterhin hat die Trödelwahrscheinlichkeit bei gleicher Höhe, scheinbar abhängig von den gefahrenen Geschwindigkeiten, unterschiedliche Einflüsse auf den Verkehrsfluss.
 \\
 Bei einer max. möglichen Geschwindigkeit von 50 km/h erzeugt erst eine Wahrscheinlichkeit von \texttt{0,5} einen merklichen Effekt. Für eine Geschwindigkeit von 100 km/h ist dies bei gleicher Fahrzeuganzahl bereits bei einem Wert von \texttt{0,3} der Fall.
 \\
