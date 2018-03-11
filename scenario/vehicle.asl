@@ -42,7 +42,7 @@
     !decelerate;
     !linger;
     
-    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
+//    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
     scenario/statistic( ID, CurrentSpeed );
@@ -73,8 +73,8 @@
 // --- lingering ---
 +!linger <-
     L = math/statistic/randomsimple;
-    L < 0.5;
-    generic/print( "LIN", ID, "LINGERED" );
+    L < 0.1;
+//    generic/print( "LIN", ID, "LINGERED" );
     vehicle/decelerate(0.3)
 .
 
@@ -99,7 +99,7 @@
             && FwdDist < 1.5*CurrentSpeed
 //            && FwdDist < 100
         ) <-
-        generic/print( "TFC", ID, "has vehicle in front -> decelerate");
+//        generic/print( "TFC", ID, "has vehicle in front -> decelerate");
         vehicle/decelerate(1);
         !decelerate
 .
@@ -108,7 +108,6 @@
 
 // --- collision ---
 +!vehicle/collision <-
-
     // --- brake as hard as possible ---
     vehicle/decelerate( 1 );
     generic/print( "COB", ID, "BREAKED HARD -> collision" )

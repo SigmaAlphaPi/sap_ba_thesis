@@ -5,13 +5,13 @@ setwd("~/Sven/Uni/BA/sap_ba_thesis/scenario")
 
 # read JSON file
 scenarioRawData <- jsonlite::read_json("scenario.json")
-# scenarioRawData <- jsonlite::read_json("run3.json")
+# scenarioRawData <- jsonlite::read_json("test 7ko5km - 100kmh - 2h - lin0ko5 - stop - 25veh 1.json")
 
-# --- extract the data node ---
+# --- extract the data nodes ---
 vehicleData <- scenarioRawData[["vehicles"]]
 configurationData <- scenarioRawData[["configuration"]]
 
-# --- set drop of data time(steps) (first 10 minutes or half of duration) ---
+# --- set drop of data time(steps) (first 15 minutes or half of duration) ---
 if (configurationData$simulationtime_in_minutes < 30) beginWithTimestep = 0.5*configurationData$simulationtime_in_minutes/configurationData$timestep_in_minutes
 if (configurationData$simulationtime_in_minutes >= 30) beginWithTimestep = 15/configurationData$timestep_in_minutes
 
@@ -71,23 +71,18 @@ for (i in 1:length(vehicleData)){
   # --- gather data for fundamental diagram ---
   for (m in beginWithTimestep:length(buildList3)) {
     if (buildList3[[m]] < buildList3[[m-1]]){
-      # drives through beginning of lane
-      # print("-----")
-      # print(m)
-      # print(buildList3[[m]])
-      # print(buildList3[[m-1]])
+      # vehicle drives through beginning of lane
       fundamentalDiagramList[[m]][1] <- fundamentalDiagramList[[m]][1]+1
     }
     if (buildList3[[m]] <= measuringDistanceLastCell){
-      # is in first x cells of lane
-      # print("*****")
+      # vehicle is in first x cells of lane
       fundamentalDiagramList[[m]][[2]] <- fundamentalDiagramList[[m]][2]+1
     }
   }
 }
 
 # --- remove first x elements of fundamental diagram data ---
-for (i in 1:beginWithTimestep) {
+for (i in 1:beginWithTimestep-1) {
   fundamentalDiagramList[i] <- NULL
 }
 
@@ -103,31 +98,56 @@ for (i in 1:repetitions) {
   statisticsList[["fundamental"]][[i]] <- vector("numeric", 2)
   trafficFlowSum = 0
   trafficDensitySum = 0
-  for (j in i-1*intervalWidth+1:i*intervalWidth) {
+  jRangeStart = (i-1)*intervalWidth+1
+  jRangeEnd = i*intervalWidth
+  for (j in jRangeStart:jRangeEnd) {
     trafficFlowSum = trafficFlowSum + fundamentalDiagramList[[j]][1]
     trafficDensitySum = trafficDensitySum + fundamentalDiagramList[[j]][2]/measuringDistanceLastCell
-    # print("+++++")
-    # print(trafficFlowSum)
-    # print(trafficDensitySum)
   }
   statisticsList[["fundamental"]][[i]][1] <- trafficFlowSum/intervalWidth
   statisticsList[["fundamental"]][[i]][2] <- trafficDensitySum/intervalWidth
 }
 
+
+# --- generate own axes ---
+# --- generate own position axis in kilometers ---
+positionStepwidth_in_meters = 500
+positionFrom = 0
+positionTo = floor( configurationData$lanelength_in_cells/( positionStepwidth_in_meters/configurationData$cellsize_in_meter ) )/(1000/positionStepwidth_in_meters)
+positionBy = positionStepwidth_in_meters/1000
+labelAxisPosition = paste( seq( positionFrom, positionTo, positionBy), sep = ",", collapse = NULL )
+# --- generate own time axis in hours ---
+timeStepwidth_in_minutes = 30
+timeFrom = 0
+timeTo = floor( configurationData$simulationtime_in_timesteps/( timeStepwidth_in_minutes/configurationData$timestep_in_minutes ) )/(60/timeStepwidth_in_minutes)
+timeBy = timeStepwidth_in_minutes/60
+labelAxisTime = paste( seq( timeFrom, timeTo, timeBy ), sep = ",", collapse = NULL )
+
+
+
 # --- plot for FUNDAMENTAL DIAGRAM ---
-plot(0.5, 0.5, xlab="density", ylab="flow", main="my plot", ylim=c(0,1.5), xlim=c(0,1), type="n")
+plot(0.5, 0.5, xlab="Fahrzeugdichte (Fzge/Abschnitt / Zeit)", ylab="Verkehrsfluss (Fzge/Zeit)", ylim=c(0,0.2), xlim=c(0,0.1), type="n")
 for (i in 1:length(statisticsList[["fundamental"]])) {
   points(statisticsList[["fundamental"]][[i]][2], statisticsList[["fundamental"]][[i]][1], pch=19, cex=0.25)
 }
 
+
 # --- plot for POSITION ('movement') ---
-plot(vehicleDataList[[1]][[3]], 1:configurationData$simulationtime_in_timesteps, type="n", xlab="Zellposition Fahrzeuge", ylab="Zeitschritte", xlim = range(1:configurationData$lanelength_in_cells), ylim = rev(range(1:configurationData$simulationtime_in_timesteps)))
+plot(vehicleDataList[[1]][[3]], 1:configurationData$simulationtime_in_timesteps, type="n", xlab="Position der Fahrzeuge auf der Strecke (km)", ylab="Simulationszeit in h", xlim = range(1:configurationData$lanelength_in_cells), ylim = rev(range(1:configurationData$simulationtime_in_timesteps)), xaxt = "n", yaxt = "n")
+# --- position axis in kms ---
+axis(1, at = seq( 0, configurationData$lanelength_in_cells, by = positionStepwidth_in_meters/configurationData$cellsize_in_meter ), labels = labelAxisPosition )
+# --- time axis in hours ---
+axis(2, at = seq( 0, configurationData$simulationtime_in_timesteps, by = timeStepwidth_in_minutes/configurationData$timestep_in_minutes ), labels = labelAxisTime )
+# --- draw graph for each vehicle ---
 for (i in 1:length(vehicleDataList)){
   lines(vehicleDataList[[i]][[3]], 1:configurationData$simulationtime_in_timesteps, type = "p", pch=19, cex=0.15, col = i)
 }
 
+
 # --- plot for SPEED ---
-plot(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[2]][[1]], type="n", xlab="Zeitschritte", ylab="Geschwindigkeit der Fahrzeuge", ylim=c(0, 105))
+plot(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[1]][[1]], type="n", xlab="Simulationszeit in h", ylab="Geschwindigkeit in km/h", ylim=c(0, 105), xaxt = "n")
+# --- time axis in hours ---
+axis(1, at = seq( 0, configurationData$simulationtime_in_timesteps, by = timeStepwidth_in_minutes/configurationData$timestep_in_minutes ), labels = labelAxisTime )
 for (i in 1:length(vehicleDataList)){
   lines(1:configurationData$simulationtime_in_timesteps, vehicleDataList[[i]][[1]], type = "l", col = i)
 }

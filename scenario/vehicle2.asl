@@ -36,13 +36,13 @@
 // --- start all other plans ---
 +!cruise <-
     
-    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
+//    generic/print( "   ", ID, "-> BELIEFLIST", agent/belieflist );
     
     !accelerate;
     !decelerate;
     !linger;
     
-    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
+//    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
     scenario/statistic( ID, CurrentSpeed );
@@ -59,11 +59,11 @@
         CurrentSpeed < AllowedSpeed
         && ~>>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
                 bool/equal( generic/type/tostring( FwdDir ), "forward[]" )
-                && FwdDist < CurrentSpeed
+                && FwdDist < 1.5*CurrentSpeed
                 && FwdSpeed < CurrentSpeed
             )
     <-
-        // generic/print( "ACC", ID, "accelerated");
+//        generic/print( "ACC", ID, "accelerated");
         vehicle/accelerate(0.5);
         !accelerate
 .
@@ -74,7 +74,7 @@
 +!linger <-
     L = math/statistic/randomsimple;
     L < 0.1;
-    generic/print( "LIN", ID, "LINGERED" );
+//    generic/print( "LIN", ID, "LINGERED" );
     vehicle/decelerate(0.3)
 .
 
@@ -96,9 +96,10 @@
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
 //            && FwdSpeed < CurrentSpeed
 //            && FwdSpeed-CurrentSpeed < 0.05*FwdSpeed
-            && FwdDist < CurrentSpeed
+            && FwdDist < 1.5*CurrentSpeed
+//            && FwdDist < 100
         ) <-
-        generic/print( "TFC", ID, "has vehicle in front -> decelerate");
+//        generic/print( "TFC", ID, "has vehicle in front -> decelerate");
         vehicle/decelerate(1);
         !decelerate
 .
@@ -107,13 +108,13 @@
 
 // --- collision ---
 +!vehicle/collision <-
-/*
     // --- brake as hard as possible ---
     vehicle/decelerate( 1 );
     generic/print( "COB", ID, "BREAKED HARD -> collision" )
-*/
+/*
     // --- stop immediately ---
     vehicle/stop;
     generic/print( "COS", ID, "STOPPED -> collision" )
+*/
 .
 

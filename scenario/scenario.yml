@@ -6,9 +6,8 @@ main:
 
     # simulated time
     # 10^5 timesteps in multi-lane, roughly 166ish minutes
-    # was 100
     
-    #was 180 / 60
+    #was 120
     simulationtime_in_minutes: 60
 
     # preetprint of the result json
@@ -33,7 +32,7 @@ main:
     unit:
 
         # cell size / size of a vehicle in meter
-        cellsize_in_meter: 2.5
+        cellsize_in_meter: 7.5
 
         # time of a single timestep in simulation
         # 0.1 -> 6 sec, 0.05 -> 3 sec, 0.025 -> 1.5 sec, 0.0125 -> 0.75 sec
@@ -50,7 +49,7 @@ environment:
     # 75 kms are about 10000 cells
     
     # was 25
-    length_in_km: 2.5
+    length_in_km: 3
     #7.5 #2.5
 
 
@@ -72,8 +71,8 @@ agent:
             # 10^3 cars in multi-lane
             # was 400
             
-            #was 100
-            count: 10
+            #was 34
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
@@ -110,7 +109,7 @@ agent:
         vehicle2.asl:
 
             # number of generated vehicles
-            count: 0
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
