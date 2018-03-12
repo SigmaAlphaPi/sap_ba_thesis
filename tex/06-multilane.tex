@@ -189,7 +189,7 @@ Für eine Bestimmung von Wahrscheinlichkeiten für diesen Zweck erscheint die lo
 $ f(x) = \frac{1}{1 + e^{-x}} $ 
 \end{center}
 siehe \cite{logistic-function}, eine Sigmoid-Funktion (auch S- oder Schwanenhalsfunktion), ein geeigneter Kandidat. 
-Ihr Definitionsbereich sind alle Zahlen in $ \mathbb{R} $ und ihr Wertebereich liegt zwischen 0 und 1.
+Sie ist für alle Zahlen in $ \mathbb{R} $ definiert und ihr Wertebereich liegt zwischen 0 und 1.
 
 \begin{figure}[hptb]
   \centering
@@ -208,7 +208,7 @@ So verläuft z.B.
 $ f(x) = \frac{1}{1 + e^{-\frac{1}{2}x}} $ 
 \end{center}
 weniger steil (\cref{figure:kurve-logistic-streched-10-10}) und hat den für diesen Zweck sinnvoll nutzbaren Intervall $ [-10; 10 ] $.
-Für Werte außerhalb dieses Intervalles ergibt sich jeweils eintweder eine kleine von Null, bzw. große von Eins verschiedene Wahrscheinlichkeit.
+Für Werte außerhalb dieses Intervalles ergibt sich jeweils entweder eine kleine von Null, bzw. große von Eins verschiedene Wahrscheinlichkeit.
 
 \paragraph*{Wahrscheinlichkeit des Ausscherens (Pull-out)} 
 \hfill \\
@@ -245,7 +245,7 @@ $ f(v_{rel}) = \frac{4 v_{rel}}{5} - 10 $
 \end{center}
 Für die Überholwahrscheinlichkeit in Abhängigkeit von der relativen Geschwindigkeit zum vorausfahrenden Fahrzeug $ p_{po}(v_{rel}) $ ergibt sich
 \begin{center}
-$ p_{po}(v_{rel}) = \frac{1}{1 + e^{-\frac{1}{2}v_{rel}}} $
+$ p_{po}(v_{rel}) = \frac{1}{1 + e^{-\frac{1}{2}f(v_{rel})}} $
 \end{center}
 
 \noindent
@@ -314,9 +314,9 @@ Um Fahrzeuge in der Simulation vom Überholen auf der rechten Seite abzuhalten i
 \end{minipage}
 
 Je weiter links eine Fahrspur ist, desto größer ist ihre Id.
-Falls auf einer Fahrspur, deren Id größer ist, als die derjenigen, auf der sich Fahrzeug A aktuell befindet, ein anderes Fahrzeug (B) ist, so wird von Fahrzeug A ein Bremsmanöver eingeleitet.
+Befindet sich also im Sichtfeld von Fahrzeug A ein Fahrzeug B auf einer Fahrspur mit größerer Id, so wird von Fahrzeug A ein Bremsmanöver eingeleitet.
 \\
-Außerdem muss Fahrzeug A eine höhere Geschwindigkeit haben und sich in einer von seiner aktuellen Geschwindigkeit abhängigen Entfernung hinter Fahrzeug B befinden. 
+Weitere Einschränkungen ergeben sich durch die Hinzunahme einer Geschwindigkeits- und einer Abstandskomponente.
 
 Das Verhalten, was diese Bedingung auslöst, konnte getestet werden, indem ein langsameres Fahrzeug auf der Überholspur fuhr und das schnellere auf der Normalspur aufschloss.
 Das schnellere Fahrzeug bremste ab und passte sich der Geschwindigkeit des langsameren Fahrzeugs an.

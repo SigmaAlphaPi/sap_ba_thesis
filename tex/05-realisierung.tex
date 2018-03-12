@@ -9,15 +9,18 @@ In diesem Workshop mussten die Teilnehmer mit Hilfe der Agentensprache ein Fahrz
 Für die Zwecke dieser Arbeit musste die Software weiter angepasst werden.
 Dabei mussten während der Tests der ersten Agentenpläne Korrekturen vorgenommen werden, da eine fehlerfreie Simulation sonst nicht möglich gewesen wäre. 
 Mehr dazu nachfolgend in \cref{sec:anpassungen-probleme}.
-\pk{Kann, darf, soll, muss ich hier darauf hinweisen, dass die Programmierung nicht meine Aufgabe war und dass Du das gemacht hast?}
-\sa{Das musst Du sogar machen, das war aber eine explizite Vorgabe für Deine Arbeit, Du solltest aber auch dazu schreiben, dass Du eben einige Anpassungen gemacht hast, da es nicht richtig funktioniert hat}
+Fehlersuche und kleinere Anpassungen wurden selbst geleistet.
+Umfangreichere Codeänderungen erfolgten durch den Ersteller des Tools, Philipp Kraus.
+
+%\pk{Kann, darf, soll, muss ich hier darauf hinweisen, dass die Programmierung nicht meine Aufgabe war und dass Du das gemacht hast?}
+%\sa{Das musst Du sogar machen, das war aber eine explizite Vorgabe für Deine Arbeit, Du solltest aber auch dazu schreiben, dass Du eben einige Anpassungen gemacht hast, da es nicht richtig funktioniert hat}
 
 
 
-
-\subsection{Entwicklung des Agentenverhaltens}\sa{mit dem Kapitel beginnen und dann auf die Umwelt eingehen -> klar durch strukturieren, Du redest vorher schon von Agent, aber wie der jetzt bei Dir zum Nutzen kommt ist bis zu diesem Kapitel für den Leser nicht klar}
+\subsection{Entwicklung des Agentenverhaltens}%\sa{mit dem Kapitel beginnen und dann auf die Umwelt eingehen -> klar durch strukturieren, Du redest vorher schon von Agent, aber wie der jetzt bei Dir zum Nutzen kommt ist bis zu diesem Kapitel für den Leser nicht klar}
 \label{sec:entwicklung-agentenplan}
 
+Jeder Agent in den Simulationen, die dieser Arbeit zugrunde liegen, stellt ein individuelles Fahrzeug dar.
 Die mathematischen Gleichungen in \cite{na-sch} beschreiben gut, welches Verhalten dem Agenten zu geben ist: 
 \begin{itemize}
 \itemsep0em
@@ -29,7 +32,7 @@ Die mathematischen Gleichungen in \cite{na-sch} beschreiben gut, welches Verhalt
 
 \subsubsection{Zustandsautomat}
 
-Das oben beschriebene Verhalten wurde mit Hilfe eines endlichen Automaten beschrieben, siehe \cref{figure:fsm-nasch}.
+Das oben beschriebene Verhalten wurde zuerst mit Hilfe eines endlichen Automaten beschrieben, siehe \cref{figure:fsm-nasch}.
 
 \begin{figure}[hptb]
  \centering
@@ -43,7 +46,7 @@ Das oben beschriebene Verhalten wurde mit Hilfe eines endlichen Automaten beschr
 Erläuterungen zu \cref{figure:fsm-nasch}:
 \begin{enumerate}
 \itemsep0em
-	\item  $ v_{aktuell}  >=  v_{limit} $
+	\item  $ v_{aktuell}  \leq  v_{limit} $
 	\item  $ v_{aktuell}  <  v_{limit} $
 	\item  \enquote{Verkehr voraus}
 	\item  \enquote{kein Verkehr voraus} \texttt{UND} $ p_{linger} $
@@ -51,7 +54,7 @@ Erläuterungen zu \cref{figure:fsm-nasch}:
 	\item  $ v_{aktuell}  > 0 $ \texttt{UND} $ p_{linger} $
 \end{enumerate}
 
-Startzustand ist ein allgemeiner Zustand \texttt{DRI} (Drive/Fahren), in dem nichts am Verhalten des Agenten geändert wird.
+Startzustand des Automaten ist ein allgemeiner Zustand \texttt{DRI} (Drive/Fahren), in dem nichts am Verhalten des Agenten geändert wird.
 Von hier aus ist der Zustand \texttt{ACC} (Accelerate/Beschleunigen) zu erreichen, wenn die aktuelle Geschwindigkeit unter der max. zulässigen liegt. 
 Der Zustand \texttt{CRU} (Cruisen) wird erreicht, wenn die max. zulässige Geschwindigkeit erreicht oder überschritten ist.
 
@@ -96,7 +99,7 @@ Das komplette Listing siehe \cref{lst:nasch}.
 \end{minipage}
 
 Der \texttt{accelerate}-Plan war ursprünglich mit der Bedingung ausgestattet, dass die Beschleunigung nur erfolgen soll, wenn die aktuelle Geschwindigkeit unter der zulässigen liegt.
-Hier ergab sich das Problem, dass auch bei vorwärtigem Verkehr eine Beschleunigung durchgeführt wurde und die nachfolgende Verzögerung diesen Geschwindigkeitszuwachs in jedem Zeitschritt zusätzlich abbauen musste.
+Hier ergab sich das Problem, dass auch bei vorwärtigem Verkehr eine Beschleunigung durchgeführt wurde. Die nachfolgende Verzögerung musste diesen Geschwindigkeitszuwachs in jedem Zeitschritt zusätzlich abbauen.
 Die Fähigkeit zu verzögern war entsprechend schlecht.
 
 Abgestellt wurde dies durch den Zusatz, dass eine Beschleunigung ebenfalls ausbleiben soll, wenn sich ein Fahrzeug im vorwärtigen Sichtbereich befindet.
@@ -118,9 +121,9 @@ Diese Vorgaben konnten durch zusätzliche Bedingungen für die relative Geschwin
 Die realistische Modellierung der Geschwindigkeitsänderungen macht es unmöglich, dass die Fahrzeuge in aufeinanderfolgenden Zellen hinterher fahren.
 Vielmehr muss, wie im realen Verkehr auch, ein gewisser Abstand, innerhalb dessen der Nachfolgeverkehr reagieren kann, eingehalten werden.
 Ein Wert von 100 m erschien in der Simulation sinnvoll, um die Kollisionshäufigkeit zu verringern. 
-Für eine Geschwindigkeit von 100 km/h entspricht diese Entfernung nach der Faustformel, siehe \cite{bremsweg}, dem Bremsweg.
+Für eine Geschwindigkeit von 100 km/h entspricht diese Entfernung nach der Faustformel, die in Fahrschulen gelehrt wird, dem Bremsweg\footnote{siehe \url{https://www.jungesportal.de/fuehrerschein/faustformeln-fuer-die-theorie.php}, abgerufen am 25. Februar 2018}.
 
-Ist der Geschwindigkeitsunterschied zwischen Fahrzeugen allerdings zu groß, können Kollisionen nicht verhindert werden.
+Ist der Geschwindigkeitsunterschied zwischen Fahrzeugen allerdings zu groß, konnten Kollisionen bzw. Kollisionsereignisse nicht verhindert werden.
 
 \paragraph*{Tests des Agentenscripts:}
 Um die Wirksamkeit der Anweisungen für die Agenten zu testen, wurden in der Szenarienvereinbarung zwei Arten von Fahrzeugen, welche mit identische Plänen ausgestattet waren, zum Einsatz gebracht.
@@ -735,7 +738,10 @@ Die Testläufe für den Einspurfall erfolgten mit folgenden Einstellungen:
 \paragraph*{Anpassung der Trödelwahrscheinlichkeit $p_{linger}$}
 \hfill \\
 Der zuvor präferierte Wahrscheinlichkeitswert von 0,3 führte bei der Simulation mit 34 Fahrzeugen mehrfach zu keinem ordentliche Verkehrsfluss.
-Aus diesem Grund wurden mit einer auf eine Stunde verkürzten Simulationsdauer kleinere Werte getestet.
+Aus diesem Grund wurden mit einer auf eine Stunde verkürzten Simulationsdauer kleinere Werte und Änderungen am Szenario getestet.
+
+Erst bei einem Wert deutlich unter 0,1 konnte fließender Verkehr simuliert werden.
+Hierbei wurde ebenfalls festgestellt, dass eine Homogenisierung der Geschwindigkeiten der Fahrzeuge auf bzw. über den max. Geschwindigkeitswert, eine Simulation ermöglicht.
 
 
 
@@ -791,11 +797,11 @@ Im weiteren Verlauf der Simulation fällt es in der Weg-Zeit-Kurve nicht weiter 
 
 Die Simulationsplattform bietet durch realistisch modellierte Beschleunigungen und Verzögerungen den Vorteil, dass der Verkehr feingranularer abgebildet werden kann.
 Die analog zu den Simulationen von Nagel und Schreckenberg gewählte Zellgröße von 7,5 Metern führt allerdings dazu, dass theoretisch dargestellte Reduktionen der Geschwindigkeit nicht direkt in nächsten Zeitschritt umgesetzt werden.
-Vielmehr muss, ähnlich wie beim Losfahren, siehe \cref{sec:accelerategroove}, ein gewisser Wert unterschritten werden, damit die gezeigte Bewegung auch real kürzer gesetzt wird.
+Vielmehr muss, ähnlich wie beim soeben beschriebenen Anfahren, ein gewisser Wert unterschritten werden, damit die gezeigte Bewegung auch real kürzer gesetzt wird.
 
 Reicht der Platz nach vorn nicht aus, um das Fahrzeug entsprechend seiner Geschwindigkeit zu bewegen und in die freie Zelle hinter das vorausfahrende Fahrzeug zu setzen, wird ein Kollisionsereignis ausgelöst.
 
-Das Reaktion darauf kann über einen Agentenplan gesteuert werden.
+Die Reaktion darauf kann über einen Agentenplan gesteuert werden.
 Zu Beginn der Erarbeitung wurde die Kollision mit einem extremen Abbremsen modelliert, später dann als Totalstopp.
 \\
 Die Reduktion der Geschwindigkeit auf Null ist insofern vorteilhaft, weil der Extremausschlag nach unten im Plot der Geschwindigkeiten sichtbar ist.
@@ -858,10 +864,10 @@ Schritt & 3 & 5 \\ \hline
 \end{center}
 \end{table}
 
-Da der Einfluss Zellgröße bei entsprechender Umstellung der Gleichung, siehe oben, keinerlei Einfluss auf die Berechnung hat, hat eine Veränderung der Zellgröße in dieser Abschätzung die Werte nicht grundlegend verändert. 
+Da die Zellgröße bei entsprechender Umstellung der obigen Gleichung keinerlei Einfluss auf die Berechnung hat, verändert eine Änderung des Wertes die Ergebnisse nicht grundlegend. 
 Es wird lediglich auf ein Vielfaches der Zellgröße gerundet.
 \\
-Durch die Entfernungen, die in einem größeren Zeitschritt zurückgelegt werden, wird durch eine Anhebung der Zeitschrittlänge auch der Mindestabstand entsprechend höher.
+Durch die Entfernungen, die in einem größeren Zeitschritt zurückgelegt werden, erhöht sich durch eine Anhebung der Zeitschrittlänge auch der Mindestabstand entsprechend.
 
 
 
