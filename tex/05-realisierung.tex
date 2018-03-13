@@ -529,7 +529,7 @@ Das Teilstück zwischen den Anschlussstellen Seesen und Nörten-Hardenberg war e
 Der Umbau hat im September 2017 begonnen\footnote{siehe \url{https://www.strassenbau.niedersachsen.de/download/45795/Sechsstreifiger_Ausbau_der_A_7_Uebersichtskarte.pdf}, abgerufen am 09. März 2018}.
 Mit seiner Lage zwischen zwei bereits dreispurig ausgebauten Teilstücken, mussten hier sicherlich größere Verkehrslasten bewältigt werden, als auf anderen zweispurigen Autobahnen.
 
-Für die Simulation war dies ein glücklicher Zufall, da im speziellen $p_{linger}$ mit der hier vorgegebenen Fahrzeuganzahl weiter präzisiert werden konnte.
+Für die Simulation war dies ein glücklicher Zufall, da im speziellen $p_{linger}$ mit der hier vorgegebenen Fahrzeuganzahl weiter präzisiert werden konnte, siehe \cref{sec:adjust-linger}.
 
 
 
@@ -554,7 +554,6 @@ Für die Auswertung, ob eine Zellgröße/Zeitschrittlänge-Kombination für eine
 
 \paragraph*{Zellgröße 7,5 m}
 \hfill \\
-
 \begin{figure}[hptb]
   \centering 
    \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run1}\label{figure:run1}}\qquad 
@@ -594,7 +593,7 @@ Die Geschwindigkeit des langsameren Fahrzeuges lag in diesem Durchlauf im Vergle
   \label{figure:run7-9}
 \end{figure}
 
-Die Geschwindigkeitskurve des schnelleren Fahrzeugs weist in \cref{figure:run7} ein sägezahnähnliches Muster auf.
+Die Geschwindigkeitskurve des schnelleren Fahrzeugs weist in \cref{figure:run7} ein sä"-ge"-zahn"-ähn"-liches Muster auf.
 Dies resultiert aus den, im Vergleich zu den herbeigeführten Geschwindigkeitszuwächsen, großen Zellen.
 Ein Geschwindigkeitsunterschied von zehn bis 15 km/h reicht bei entsprechend zugrunde liegender Ausgangsgeschwindigkeit nicht aus, eine Verkürzung des Abstands herbeizuführen.
 Da sich die Abbrems- und Beschleunigungsmanöver identisch wiederholen, kommt es zu dieser Musterbildung.
@@ -605,7 +604,6 @@ Das Plot in \cref{figure:run8} zeigt ein Einordnen hinter dem langsameren Fahrze
 
 \paragraph*{Zellgröße 5,0 m}
 \hfill \\
-
 \begin{figure}[hptb]
   \centering 
    \subfigure[1. Durchlauf]{\includegraphics[width=0.3\textwidth]{speed_run14}\label{figure:run14}}\qquad 
@@ -674,7 +672,6 @@ Der reine Geschwindigkeitsvergleich wurde entfernt.
 
 \paragraph*{Zellgröße 2,5 m}
 \hfill \\
-
 Aufgrund der Veränderung in den Agentenplänen wurde die erneut verringerte Zellgröße ebenfalls mit den beiden noch verbliebenen Zeitschrittwerten simuliert.
 
 \begin{figure}[hptb]
@@ -708,7 +705,6 @@ Dabei wurde zweimal je eine Kollision beobachtet, die aber immer im Bereich der 
 \paragraph*{\texorpdfstring{Zellgröße $ < $ 2,5 m}%
                               {Zellgröße kleiner als 2,5 m}}
 \hfill \\
-
 Bei vorhergehenden Testläufen außerhalb dieser Reihe wurde festgestellt, dass es bei einer Zellgröße von weniger als 2,5 Meter zu Inkonsistenzen in den Beliefbases der Agenten kommt.
 Entscheidungen müssten dann aufgrund unterschiedlicher Voraussetzungen getroffen werden.
 Aus diesem Grund wurde auf den Einsatz von kleineren Zellgrößen verzichtet.
@@ -721,7 +717,7 @@ Aus diesem Grund wurde auf den Einsatz von kleineren Zellgrößen verzichtet.
 \subsection{Testläufe des Einspurszenarios}
 \label{sec:test-singlelane}
 
-Die Testläufe für den Einspurfall erfolgten mit folgenden Einstellungen:
+Die Testläufe für den Einspurfall sollten mit den folgenden Einstellungen erfolgen:
 \begin{itemize}
 	\itemsep0em
 	\item Simulationsdauer: 2 h
@@ -735,38 +731,50 @@ Die Testläufe für den Einspurfall erfolgten mit folgenden Einstellungen:
 	\item Verhalten bei Kollisionsereignis: abbremsen (kein Totalstop)
 \end{itemize}
 
+
 \paragraph*{Anpassung der Trödelwahrscheinlichkeit $p_{linger}$}
+\label{sec:adjust-linger}
 \hfill \\
-Der zuvor präferierte Wahrscheinlichkeitswert von 0,3 führte bei der Simulation mit 34 Fahrzeugen mehrfach zu keinem ordentliche Verkehrsfluss.
-Aus diesem Grund wurden mit einer auf eine Stunde verkürzten Simulationsdauer kleinere Werte und Änderungen am Szenario getestet.
+Da es sich bei den Statistikwerten in \cref{sec:fahrzeuganzahl} um Tagesdurchschnitte handelt, darf angenommen werden, dass die daraus berechnete Verkehrsdichte für das Teilstück der A7 zwar eine hohe, aber noch zu bewältigende Verkehrsmenge ist.
+In der Simulation sollte es also möglich sein, einen Verkehrsfluss zu generieren.
 
-Erst bei einem Wert deutlich unter 0,1 konnte fließender Verkehr simuliert werden.
-Hierbei wurde ebenfalls festgestellt, dass eine Homogenisierung der Geschwindigkeiten der Fahrzeuge auf bzw. über den max. Geschwindigkeitswert, eine Simulation ermöglicht.
+Der zuvor präferierte Wahrscheinlichkeitswert von 0,3 führte mit 34 Fahrzeugen allerdings mehrfach nicht zu einem ordentlichen Verkehrsfluss.
+Aus diesem Grund wurden mit einer auf eine Stunde verkürzten Simulationsdauer kleinere Werte und Veränderungen am Szenario getestet.
+
+Die folgenden Beobachtungen wurden dabei getätigt:
+\begin{enumerate}
+	\itemsep0em
+	\item bei Beseitigung der Geschwindigkeitsunterschiede (Anpassung des Geschwindigkeitsintervalls) waren Simulationsläufe mit dem angedachten $p_{linger}$-Wert möglich
+	\item bei Deaktivierung des \texttt{linger}-Planes (unter Beibehaltung o.g. des Geschwindigkeitsintervalles) kam es teilweise zu starken Abbremsvorgängen
+	\item erst bei einem $p_{linger}$-Wert von 0,1 oder darunter konnte fließender Verkehr simuliert werden
+\end{enumerate}
+
+\subparagraph*{zu 2.} Durch die Inhomogenität der für die Fahrzeuge möglichen Geschwindigkeiten existiert immer (mind.) ein langsamstes Fahrzeug, auf das aufgelaufen wird.
+Die Bremsreaktionen der Agenten in der Simulation scheinen zu einem vergleichbaren Verkehrsbild zu führen.
+
+\subparagraph*{zu 3.} Aufgrund dieser Feststellung werden die Testläufe mit einer Trödelwahrscheinlichkeit von 0,1 durchgeführt.
 
 
 
-\subsubsection{Szenario A7: 34 Fahrzeuge}
+\subsubsection{Verkehrsmenge A7: 34 Fahrzeuge}
 \label{sec:szenario-a7}
+
 \sa{own: content}
+Bei den Durchläufen 
 
-\subsubsection{Szenario A38: 15 Fahrzeuge}
-\label{sec:szenario-a38}
+
+\subsubsection{Verkehrsmenge A38: 15 Fahrzeuge und Verkehrsmenge A71: 8 Fahrzeuge}
+\label{sec:szenario-a38-a71}
+
 \sa{own: content}
-
-\subsubsection{Szenario A71: 8 Fahrzeuge}
-\label{sec:szenario-a71}
-\sa{own: content}
+Da die Simulationsläufe in \cref{sec:szenario-a7} zeigten, dass die Strecke mit den gewählten Einstellungen mehr als das Doppelte, bzw. Vierfache an Verkehr verarbeiten konnte, konnten aus den ausgeführten Durchläufen keine weiteren Erkenntnisse gewinnen.
 
 
-%Während bei der Entwicklung durchaus rückwärts laufenden Stauwellen beobachtet werden konnten, ist die Phase der Totalstopps, die dieses Verhalten hervorruft, bei der Simulation im allgemeinen nicht vorhanden.
-%Durch die feinere Ausführung der Bremsmanöver nähern nähern sich die Positionen der Fahrzeuge einander an und fächern sich, nachdem die Ursache (langsames Fahrzeug) beseitigt ist, wieder auf.
+\subsubsection{Beobachtungen}
 
+Während bei der Entwicklung durchaus rückwärts laufende Stauwellen beobachtet werden konnten, siehe z.B. \cref{figure:33veh-1km}, ist die Phase der Totalstopps, die dieses Verhalten hervorruft, bei der Simulation des fließenden Verkehrs im allgemeinen nicht vorhanden.
 
-
-
-
-
-
+Dadurch dass die Bremsmanöver feiner ausgeführt werden, nähern sich die Positionen der Fahrzeuge einander an und fächern sich dann aber, nachdem die Ursache für das Abbremsen beseitigt ist, wieder auf.
 
 
 

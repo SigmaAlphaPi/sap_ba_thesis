@@ -1,25 +1,41 @@
-\section{Fazit/Ausblick}
+\section{Fazit und Ausblick}
 \label{sec:fazit-ausblick}
 
+\subsection{Fazit}
+\label{sec:fazit}
+
+Das Ziel dieser Arbeit, das Agentenkonzept für die realistische Verkehrssimulation nutzen zu können, wurde erreicht.
 
 
 
 
+\subsection{Ausblick}
+\label{sec:ausblick}
+
+
+Für die Zukunft muss ein Weg gefunden werden, die Fahrzeuge innerhalb real möglicher Abstände so abzubremsen, dass keine Kollisionen entstehen. 
+Es sollte ein Weg gefunden werden, die Bremskräfte zu dosieren. 
+Wie in den Überlegunden für die Pull-out-Wahrscheinlichkeit (\cref{sec:pullout-pullin}) gezeigt, könnte sich auch hierfür eine Kombination aus Abstand und relativer Geschwindigkeit eignen.
+
+Wenn es die Weiterentwicklung von \enquote{LightJason} zulässt, sollte mit den in \cref{sec:ueberlegungen-multilane} getätigten Überlegungen geprüft werden, ob die Mehrspurversion des Agentenscriptes unter Belastung eingesetzt werden kann.
+
+
+Das Agentenmodell selbst kann ebenfalls noch erweitert werden.
 
 Im Jahr 2015 wurde bei einer Studie der London School of Economics and Political Science (LSE) im Auftrag des Reifenherstellers Goodyear, siehe \cite{fahrertyp}, festgestellt, dass man Autofahrer in sieben Typen einteilen kann.
 
 \begin{itemize}
 \itemsep0em
-	\item the \enquote{teacher}, der Lehrer: möchte, dass andere Fahrer wissen, was sie falsch gemacht haben und erwartet Anerkennung für seine Anstrenungen andere zu belehren
+	\item \enquote{the teacher}, der Lehrer: möchte, dass andere Fahrer wissen, was sie falsch gemacht haben und erwartet Anerkennung für seine Anstrenungen andere zu belehren
 	\item \enquote{the Know-it-all}, der Besserwisser: denkt, dass er von inkompetenten Schwachköpfen umgeben ist und schreit diese gelegentlich auch schon einmal an, während er sicher in seinem Auto sitzt
 	\item \enquote{the Competitor}, der Wettkämpfer: muss vor allen anderen Fahrern sein und reagiert verärgert, wenn sich diesem Ziel jemand entgegen stellt, beschleunigt evtl. falls jemand zu überholen versucht oder schließt die Lücke um ein Einfädeln unmöglich zu machen
 	\item \enquote{the Punisher}, der Bestrafer: möchte jeden anderen Fahrer für gefühltes Fehlverhalten bestrafen, steigt ggf. aus dem Auto aus, um andere Fahrer direkt zu konfrontieren
 	\item \enquote{the Philosopher}, der Philosophische: akzeptiert Fehlverhalten problemlos und versucht dieses rational zu erklären, versteht es seine Gefühle im Auto zu kontrollieren
 	\item \enquote{the Avoider}, der Vermeider: behandelt Fahrer, die sich daneben benehmen, unpersönlich, tut sie als Gefahr ab
-	\item \enquote{the Escapee}, der Flüchter: hört Musik oder spricht am Telefon, um sich zu isolieren, lenken sich mit ausgewählten sozialen Beziehungen ab, um nicht mit anderen Fahrern auf der Straße beschäftigen zu müssen, in erster Linie ist es aber eine Strategie, das Aufkommen von Frust zu vermeiden
+	\item \enquote{the Escapee}, der Flüchter: hört Musik oder spricht am Telefon, um sich zu isolieren, lenkt sich mit ausgewählten sozialen Beziehungen ab, um sich nicht mit anderen Fahrern auf der Straße beschäftigen zu müssen, in erster Linie ist es aber eine Strategie, das Aufkommen von Frust zu vermeiden
 \end{itemize}
 
-Für zukünftige Entwicklungen der Simulation könnte man für diese oder ähnliche Fahrertypen Profile ausarbeiten und anlegen, die sich auf Abstands-, Beschleunigungs- und Verzögerungsverhalten sowie die Risikobereitschaft beim Aus- und Einscheren auswirken.
+Für zukünftige Entwicklungen der Simulation könnte man für diese oder ähnliche Fahrertypen Profile ausarbeiten und anlegen, die sich auf Abstands-, Beschleunigungs- und Ver"-zö"-ge"-rungs"-ver"-hal"-ten sowie die Risikobereitschaft beim Aus- und Einscheren auswirken.
 So könnte noch eine weitere Komponente mit Hinsicht auf Realitätsnähe geschaffen werden. 
 
 Weiterhin könnte "Hupen" als Broadcast- oder Message-Ereignis festgelegt werden.
