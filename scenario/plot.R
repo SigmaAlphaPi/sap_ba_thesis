@@ -4,8 +4,8 @@
 setwd("~/Sven/Uni/BA/sap_ba_thesis/scenario")
 
 # read JSON file
-scenarioRawData <- jsonlite::read_json("scenario.json")
-# scenarioRawData <- jsonlite::read_json("test 7ko5km - 100kmh - 2h - lin0ko5 - stop - 25veh 1.json")
+# scenarioRawData <- jsonlite::read_json("scenario_38 2.json")
+scenarioRawData <- jsonlite::read_json("scenario_38 2 - multiple waves.json")
 
 # --- extract the data nodes ---
 vehicleData <- scenarioRawData[["vehicles"]]
@@ -125,11 +125,11 @@ labelAxisTime = paste( seq( timeFrom, timeTo, timeBy ), sep = ",", collapse = NU
 
 
 
-# --- plot for FUNDAMENTAL DIAGRAM ---
-plot(0.5, 0.5, xlab="Fahrzeugdichte (Fzge/Abschnitt / Zeit)", ylab="Verkehrsfluss (Fzge/Zeit)", ylim=c(0,0.2), xlim=c(0,0.1), type="n")
-for (i in 1:length(statisticsList[["fundamental"]])) {
-  points(statisticsList[["fundamental"]][[i]][2], statisticsList[["fundamental"]][[i]][1], pch=19, cex=0.25)
-}
+# # --- plot for FUNDAMENTAL DIAGRAM ---
+# plot(0.5, 0.5, xlab="Fahrzeugdichte (Fzge/Abschnitt / Zeit)", ylab="Verkehrsfluss (Fzge/Zeit)", ylim=c(0,0.5), xlim=c(0,0.5), type="n")
+# for (i in 1:length(statisticsList[["fundamental"]])) {
+#   points(statisticsList[["fundamental"]][[i]][2], statisticsList[["fundamental"]][[i]][1], pch=19, cex=0.25)
+# }
 
 
 # --- plot for POSITION ('movement') ---
