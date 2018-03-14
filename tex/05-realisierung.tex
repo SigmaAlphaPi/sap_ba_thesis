@@ -736,47 +736,64 @@ Die Testläufe für den Einspurfall sollten mit den folgenden Einstellungen erfo
 \label{sec:adjust-linger}
 \hfill \\
 Da es sich bei den Statistikwerten in \cref{sec:fahrzeuganzahl} um Tagesdurchschnitte handelt, darf angenommen werden, dass die daraus berechnete Verkehrsdichte für das Teilstück der A7 zwar eine hohe, aber noch zu bewältigende Verkehrsmenge ist.
-In der Simulation sollte es also möglich sein, einen Verkehrsfluss zu generieren.
+In der Simulation sollte es also möglich sein, fließenden Verkehr zu generieren.
 
-Der zuvor präferierte Wahrscheinlichkeitswert von 0,3 führte mit 34 Fahrzeugen allerdings mehrfach nicht zu einem ordentlichen Verkehrsfluss.
-Aus diesem Grund wurden mit einer auf eine Stunde verkürzten Simulationsdauer kleinere Werte und Veränderungen am Szenario getestet.
+Der zuvor präferierte Wahrscheinlichkeitswert von 0,3 führte mit 34 Fahrzeugen allerdings mehrfach zu Stockungen und damit nicht zu einem ordentlichen Verkehrsfluss.
+Aus diesem Grund wurden mit einer auf eine Stunde verkürzten Simulationsdauer kleinere Werte (erst 0,1-, dann 0,025-Schritte) und Veränderungen am Szenario getestet.
 
 Die folgenden Beobachtungen wurden dabei getätigt:
 \begin{enumerate}
 	\itemsep0em
 	\item bei Beseitigung der Geschwindigkeitsunterschiede (Anpassung des Geschwindigkeitsintervalls) waren Simulationsläufe mit dem angedachten $p_{linger}$-Wert möglich
 	\item bei Deaktivierung des \texttt{linger}-Planes (unter Beibehaltung o.g. des Geschwindigkeitsintervalles) kam es teilweise zu starken Abbremsvorgängen
-	\item erst bei einem $p_{linger}$-Wert von 0,1 oder darunter konnte fließender Verkehr simuliert werden
+	\item erst bei einem $p_{linger}$-Wert zwischen 0,125 und 0,1 oder darunter konnte fließender Verkehr simuliert werden
 \end{enumerate}
 
 \subparagraph*{zu 2.} Durch die Inhomogenität der für die Fahrzeuge möglichen Geschwindigkeiten existiert immer (mind.) ein langsamstes Fahrzeug, auf das aufgelaufen wird.
 Die Bremsreaktionen der Agenten in der Simulation scheinen zu einem vergleichbaren Verkehrsbild zu führen.
 
-\subparagraph*{zu 3.} Aufgrund dieser Feststellung werden die Testläufe mit einer Trödelwahrscheinlichkeit von 0,1 durchgeführt.
+\subparagraph*{zu 3.} Aufgrund dieser Feststellung werden die Testläufe mit einer Trödelwahrscheinlichkeit von 0,125 durchgeführt.
 
 
 
 \subsubsection{Verkehrsmenge A7: 34 Fahrzeuge}
 \label{sec:szenario-a7}
 
-\sa{own: content}
-Bei den Durchläufen 
+Mit dem o.g. Wert gelangen mehrere Durchläufe, bei denen fließender Verkehr mit Fluktuation der Geschwindigkeiten der Fahrzeuge simuliert werden konnte.
+
+\sa{own: change images}
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[Fahrzeugpositionen]{\includegraphics[width=0.45\textwidth]{speed_run27}\label{figure:testrun-34veh-7ko5km-position}}\qquad 
+   \subfigure[Geschwindigkeiten]{\includegraphics[width=0.45\textwidth]{speed_run28}\label{figure:testrun-34veh-7ko5km-speed}}
+  \caption{Testlauf: 34 Fahrzeuge, 7,5 km Strecke, 2 Stunden} 
+  \label{figure:testrun-34veh-7ko5km}
+\end{figure}
+
+\paragraph*{weitere Testläufe mit zunehmender Fahrzeuganzahl}
+
+Es wurde weiterhin mit einstündigen Simulationen getestet, ab welcher Fahrzeuganzahl das Szenario ins Stocken gerät.
+Es wurde festgestellt, dass dem Szenario noch \sa{own: add value} weitere Fahrzeuge hinzugefügt werden können, ohne den Verkehrsfluss deutlich zu beeinträchtigen.
+Erst ab insgesamt \sa{own: add value} Fahrzeugen auf der Strecke bringen die Wechselwirkungen untereinander die entstehende Fahrzeugschlange zum Stoppen.
+
+
 
 
 \subsubsection{Verkehrsmenge A38: 15 Fahrzeuge und Verkehrsmenge A71: 8 Fahrzeuge}
 \label{sec:szenario-a38-a71}
 
 \sa{own: content}
-Da die Simulationsläufe in \cref{sec:szenario-a7} zeigten, dass die Strecke mit den gewählten Einstellungen mehr als das Doppelte, bzw. Vierfache an Verkehr verarbeiten konnte, konnten aus den ausgeführten Durchläufen keine weiteren Erkenntnisse gewinnen.
+Da die Simulationsläufe in \cref{sec:szenario-a7} zeigten, dass die Strecke mit den gewählten Einstellungen mehr als das Doppelte, bzw. Vierfache an Verkehr verarbeiten konnte, waren aus den ausgeführten Durchläufen keine weiteren Erkenntnisse zu gewinnen.
+
 
 
 \subsubsection{Beobachtungen}
 
 Während bei der Entwicklung durchaus rückwärts laufende Stauwellen beobachtet werden konnten, siehe z.B. \cref{figure:33veh-1km}, ist die Phase der Totalstopps, die dieses Verhalten hervorruft, bei der Simulation des fließenden Verkehrs im allgemeinen nicht vorhanden.
-
+\\
 Dadurch dass die Bremsmanöver feiner ausgeführt werden, nähern sich die Positionen der Fahrzeuge einander an und fächern sich dann aber, nachdem die Ursache für das Abbremsen beseitigt ist, wieder auf.
 
-
+In den Positionsplots bilden sich in den meisten Fällen weiße Streifen aus. Dies sind Stellen auf der Strecke, an denen sich kein Fahrzeug befindet.
 
 
 
