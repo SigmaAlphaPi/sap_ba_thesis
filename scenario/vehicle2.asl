@@ -41,13 +41,31 @@
     !accelerate;
     !decelerate;
     !linger;
+    !pullinworkaround;
     
-//    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
+    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
     scenario/statistic( ID, CurrentLane );
     scenario/statistic( ID, CurrentCell );
     scenario/statistic( ID, CurrentSpeed );
     !cruise
 .
+
+
+
+// --- PULL-IN PLAN WORKAROUND ---
+// --- pull in, when NO TRAFFIC AT ALL on CurrentLane-1 --- 
++!pullinworkaround
+    :   // --- cond #1: not in rightmost lane ---
+        CurrentLane > 0
+        // --- cond #3a: no vehicle in sight in lane to pull into to the right ---
+        && ~>>( view/vehicle( _, data( _, static( lane( RightLane ), cell( RightCell ), speed( RightSpeed ), distance( RightDist ), direction( RightDir ) ) ) ),
+                math/floor( RightLane ) == CurrentLane-1 
+                )
+    <-
+        generic/print("IN    ", ID, " -> Pull-in attempt successful");
+        vehicle/pullin
+.
+
 
 
 // --- acceleration ---
@@ -94,6 +112,7 @@
     // --- (avoids unnecessary breaking down to 0 kph) ---
     : >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ), 
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
+            && math/floor( FwdLane ) == CurrentLane
 //            && FwdSpeed < CurrentSpeed
 //            && FwdSpeed-CurrentSpeed < 0.05*FwdSpeed
             && FwdDist < 1.5*CurrentSpeed

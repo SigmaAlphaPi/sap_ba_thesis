@@ -5,9 +5,6 @@ main:
     statistic: "descriptive"
 
     # simulated time
-    # 10^5 timesteps in multi-lane, roughly 166ish minutes
-    
-    #was 120
     simulationtime_in_minutes: 60
 
     # preetprint of the result json
@@ -43,14 +40,10 @@ main:
 environment:
 
     # number of lanes
-    lanes: 1
+    lanes: 2
 
     # length if the lane in kilometer
-    # 75 kms are about 10000 cells
-    
-    # was 25
     length_in_km: 7.5
-    #7.5 #2.5
 
 
 # agent vehicle configuration
@@ -59,7 +52,6 @@ agent:
     # global constants for all vehicles (constant name
     # must start with an upper-case letter)
     constant:
-        # 130, was max. possible speed in multi-lane
         AllowedSpeed: 100
 
     # all vehicle configuration, key is the filename of the filename
@@ -68,11 +60,8 @@ agent:
         vehicle.asl:
 
             # number of generated vehicles
-            # 10^3 cars in multi-lane
-            # was 400
-            
-            #was 34
-            count: 34
+            # was 34
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
@@ -90,8 +79,6 @@ agent:
             speed:
                 min: 80
                 max: 130
-#                min: 40
-#                max: 50
 
             # acceleration configuration (the value is
             # calculated by random)
@@ -109,7 +96,7 @@ agent:
         vehicle2.asl:
 
             # number of generated vehicles
-            count: 0
+            count: 1
 
             # show beliefs in each cycle
             showlog: false
@@ -127,8 +114,6 @@ agent:
             speed:
                 min: 70
                 max: 90
-#                min: 20
-#                max: 25
 
             # acceleration configuration (the value is
             # calculated by random)

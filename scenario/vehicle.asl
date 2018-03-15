@@ -50,7 +50,8 @@
     
 //    !pullout;
 //    !pullin;
-    !pulloutworkaround;
+    CorrectedLanes = Lanes-1;
+    !pulloutworkaround(CorrectedLanes);
     !pullinworkaround;
 
 //    generic/print( "      ", ID, " in lane", CurrentLane, "in cell", CurrentCell, "@", CurrentSpeed, "kph" );
@@ -75,7 +76,7 @@
                 && FwdSpeed < CurrentSpeed
             )
     <-
-//        generic/print( "ACC   ", ID, "accelerated");
+        // generic/print( "ACC   ", ID, "accelerated");
         vehicle/accelerate(0.5);
         !accelerate
 .
@@ -93,10 +94,10 @@
 
 
 // --- TEST SETUP FOR THE PULL-OUT CONDITIONS ---
-+!pullouttest <-
++!pullouttest(OverallLanes) <-
     // --- each condition has an output line for control purposes ---
 
-    Cond1 = CurrentLane < Lanes; 
+    Cond1 = CurrentLane < OverallLanes; 
     generic/print("vehicle is not on leftmost lane:", Cond1); 
 
     Cond2 = >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
@@ -135,14 +136,14 @@
 
 // --- PULL-OUT PLAN WORKAROUND ---
 // --- pull out, when NO TRAFFIC AT ALL on CurrentLane+1 --- 
-+!pulloutworkaround
++!pulloutworkaround(OverallLanes)
     :   // --- cond #1: not in leftmost lane ---
-        CurrentLane < Lanes 
+        CurrentLane < OverallLanes 
         // --- cond #2: vehicle infront in own lane is close ---
-        && >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
+        && >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ), 
                 bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
                 && math/floor( FwdLane ) == CurrentLane
-                && FwdDist < 110 
+                && FwdDist < 1.5*CurrentSpeed 
                 )
         // --- cond #4a: no other vehicle in sight in lane to pull into to the left ---
         && ~>>( view/vehicle( _, data( _, static( lane( LeftLane ), cell( LeftCell ), speed( LeftSpeed ), distance( LeftDist ), direction( LeftDir ) ) ) ),
@@ -158,9 +159,9 @@
 // --- pull-out, change lane to overtake ---
 // --- (maybe add "relative speed" condition ---
 // --- (overtaker speed (CurrentSpeed) must be higher than overtakee speed) ---
-+!pullout 
++!pullout(OverallLanes)
     :   // --- cond #1: not in leftmost lane ---
-        CurrentLane < Lanes 
+        CurrentLane < OverallLanes 
         // --- cond #2: vehicle infront in own lane is close ---
         && >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
                 bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
@@ -192,7 +193,7 @@
 */
     <-
         generic/print("OUT   ", ID, " -> Pull-out attempt successful");
-//        vehicle/pullout
+        vehicle/pullout
 .
 
 
@@ -201,7 +202,7 @@
 +!pullintest <-
     // --- each condition has an output line for control purposes ---
 
-    Cond1 = CurrentLane > 1;
+    Cond1 = CurrentLane > 0;
     generic/print("vehicle is not on rightmost lane:", Cond1);
 
     Cond2 = ~>>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
@@ -234,10 +235,10 @@
 // --- pull in, when NO TRAFFIC AT ALL on CurrentLane-1 --- 
 +!pullinworkaround
     :   // --- cond #1: not in rightmost lane ---
-        CurrentLane > 1
+        CurrentLane > 0
         // --- cond #3a: no vehicle in sight in lane to pull into to the right ---
         && ~>>( view/vehicle( _, data( _, static( lane( RightLane ), cell( RightCell ), speed( RightSpeed ), distance( RightDist ), direction( RightDir ) ) ) ),
-                bool/equal( generic/type/tostring( RightDir ), "right[]" ) 
+                math/floor( RightLane ) == CurrentLane-1 
                 )
     <-
         generic/print("IN    ", ID, " -> Pull-in attempt successful");
@@ -253,7 +254,7 @@
 // --- use +!pullinworkaround instead ---
 +!pullin
     :   // --- cond #1: not in rightmost lane ---
-        CurrentLane > 1
+        CurrentLane > 0
         // --- cond #2: space forward in lane to pull into ---
         // --- (no other vehicle in view range) ---
         && ~>>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
@@ -297,9 +298,9 @@
             && math/floor( FwdLane ) == CurrentLane
 //            && FwdSpeed < CurrentSpeed
 //            && FwdSpeed-CurrentSpeed < 0.05*FwdSpeed
-            && FwdDist < 1.5*CurrentSpeed
+            && FwdDist < CurrentSpeed
         ) <-
-//        generic/print( "TFC   ", ID, "has vehicle in front -> decelerate");
+        generic/print( "TFC   ", ID, "has vehicle in front -> decelerate");
         vehicle/decelerate(1);
         !decelerate
 .
