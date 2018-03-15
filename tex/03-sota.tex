@@ -3,11 +3,11 @@
 
 
 Den Straßenverkehr theoretisch abzubilden, ist fachübergreifend eine große Herausforderung in der Forschung.
-Hier ergeben sich u. a. Aufgaben im Bereich der Mathematik (Routenplanung z.B. durch graphentheoretische Ansätze), Psychologie (Erforschung menschlichen Verhaltens) und nicht zuletzt Informatik (Simulationen).
+Hier ergeben sich u. a. Aufgaben im Bereich der Mathematik (Routenplanung z.B. durch graphentheoretische Ansätze), der Psychologie (Erforschung menschlichen Verhaltens) und nicht zuletzt der Informatik (Simulationen).
 
-Die Simulation von Fahrverhalten ist aufgrund des unsicheren Faktors Mensch, der als Haupt"-entscheider nur durch Wahlmöglichkeiten mit vorgegebenen unterschiedlich hohen Wahrscheinlichkeiten modelliert werden kann, ein Bereich in dem seit den 1930er Jahren geforscht wird.
+Die Simulation von Fahrverhalten ist aufgrund des unsicheren Faktors Mensch, der als Haupt"-entscheider bisher nur durch Wahlmöglichkeiten mit vorgegebenen unterschiedlich hohen Wahrscheinlichkeiten modelliert werden kann, ein Bereich in dem seit den 1930er Jahren geforscht wird.
 
-In \cite{genealogy} wird ein umfassender Überblick über die verschiedenen Ansätze gegeben, die seit den ursprünglichen Annahmen der \enquote{fundamental relation} von Bruce D. Greenshields (1934/35) verfolgt wurden, siehe \cref{figure:family-tree}. 
+In \cite{genealogy} wird ein umfassender Überblick über die verschiedenen Ansätze gegeben, siehe \cref{figure:family-tree}, die seit den ursprünglichen Annahmen der \enquote{fundamental relation} von Bruce D. Greenshields (1934/35) verfolgt wurden. 
 Diese besagte, dass es einen Zusammenhang zwischen dem Abstand zwischen Fahrzeugen ($s$, genauer zweier Fahrzeugfronten) und deren Geschwindigkeit ($v$) geben muss.
 
 \begin{figure}[hptb]
@@ -19,7 +19,7 @@ Diese besagte, dass es einen Zusammenhang zwischen dem Abstand zwischen Fahrzeug
 \end{figure}
 
 \noindent
-Die Fundamentalrelation, heute bekannt als Fundamentaldiagramm, kann aber auch mit Hilfe anderer Variablen, wie z.B. der Verkehrsdichte ($\rho$, der durchschnittlichen Anzahl von Fahrzeugen auf einer bestimmten Strecke) und dem Verkehrsfluss ($q$, der durchschnittlichen Anzahl von Fahrzeugen pro Zeiteinheit) wiedergegeben werden, siehe \cref{figure:fundamental-relations}. 
+Die Fundamentalrelationen, heute bekannt als Ausprägungen des Fundamentaldiagramms, kann aber auch mit Hilfe anderer Variablen, wie z.B. der Verkehrsdichte ($\rho$, der durchschnittlichen Anzahl von Fahrzeugen auf einer bestimmten Strecke) und dem Verkehrsfluss ($q$, der durchschnittlichen Anzahl von Fahrzeugen pro Zeiteinheit) wiedergegeben werden, siehe \cref{figure:fundamental-relations}. 
 
 \begin{figure}[hptb]
  \centering
@@ -57,7 +57,7 @@ Dies führt schließlich zu einer gridbasierten Simulationsumgebung.
  \includegraphics[width=0.9\textwidth]{grid-umgebung}
  \caption[Beispiel für die Griddarstellung einer Straße]
  		{symbolische Griddarstellung einer Straße mit einer Fahrspur mit Fahrzeugen, nach \cite{multi-lane}}
-        {\footnotesize Quelle: Auto-Silhouette vecteezy.com}
+        {\footnotesize Quelle Auto-Silhouette: vecteezy.com}
  \label{figure:grid-umgebung}
 \end{figure} 
 
@@ -91,24 +91,25 @@ Jedes Fahrzeug hat eine ganzzahlige Geschwindigkeit zwischen null und $v_{max}$.
 \begin{tabular}{| c | c | c |}
 \hline 
 $v^{sim}$ in $\frac{\text{Zellen}}{\text{Zeitschritt}}$ & $\widehat{=}$ $v^{real}$ in $\frac{m}{s}$ & $=$ in $\frac{km}{h}$ \\ \hline 
-$1$ & 7,5 & 27 \\ \hline
-$2$ & 15 & 54 \\ \hline
-$3$ & 22,5 & 81 \\ \hline
-$4$ & 30 & 108 \\ \hline
-$5$ & 37,5 & 135 \\ \hline
-$6$ & 45 & 162 \\ \hline
+0 & 0 & 0 \\ \hline
+1 & 7,5 & 27 \\ \hline
+2 & 15 & 54 \\ \hline
+3 & 22,5 & 81 \\ \hline
+4 & 30 & 108 \\ \hline
+5 & 37,5 & 135 \\ \hline
+6 & 45 & 162 \\ \hline
 \end{tabular}
 }
-\caption{Umrechnung Geschwindigkeiten Gridwelt $\rightarrow$ reale Welt}
+\caption{Umrechnung der Geschwindigkeiten: Gridwelt $\rightarrow$ reale Welt}
 \end{center}
 \label{tab:umrechnung-zelle-kmh}
 \end{table}
 
 Die Simulation erfolgte unter Nutzung periodischer Randbedingungen. 
-Während bei offenen Randbedingungen an den Rändern ständig Fahrzeuge in das System strömen und es verlassen, bezeichnen periodische Randbedingungen eine zu einem Ring geschlossene Strecke, vgl.\cite[S. 6]{spahn-da}.
+Während bei offenen Randbedingungen an den Rändern ständig Fahrzeuge in das System strömen und es verlassen, bezeichnen periodische Randbedingungen eine zu einem Ring geschlossene Strecke, vgl. \cite[S. 6]{spahn-da}.
 %für die Umgebung von Pixeln\sa{bitte mal kontrollieren, ob man wirklich von Pixeln hier spricht, denn Pixel ist ein Element aus der Computergraphik, ein Fahrzeug in dem Bild ist aber mehr als ein Pixel} beschrieben, 
 Die Fahrzeuge werden somit vom \enquote*{Ende} der Gridstrecke wieder an den \enquote*{Anfang} eingesetzt. 
-Damit einstand die Möglichkeit einer kontinuierlich arbeitenden Simulationsumgebung, siehe \cref{figure:traffic-simulation}.
+Damit entstand die Möglichkeit einer kontinuierlich arbeitenden Simulationsumgebung, siehe \cref{figure:traffic-simulation}.
 
 \begin{figure}[hptb]
  \centering
@@ -131,9 +132,9 @@ Dies führte dazu, dass über den Durchlauf hinweg eine konstante Fahrzeugdichte
 \subparagraph{Erweiterung auf Mehrspurigkeit:}
 %\label{sec:multi-lane}
 
-Um Verkehr auf mehrspurigen Fahrbahnen zu simulieren, war das Originalmodell nicht geeignet. 
+Das Originalmodell war nicht geeignet, um Verkehr auf mehrspurigen Fahrbahnen zu simulieren. 
 1996 folgte deswegen eine Ausdehnung auf Mehrspurigkeit \cite{multi-lane} - zwei Spuren. 
-Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil kollisionsfreien, und nicht behindernden Spurwechsel ermöglichen, wurden hinzugefügt. Die Regeln 1--3 wurden übernommen. Nach Simulationsläufen, die unerwünschtes Verhalten zeigten, waren die finalen Regeln wie folgt:
+Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil kollisionsfreien, und nicht behindernden Spurwechsel ermöglichen, wurden hinzugefügt. Die Regeln 1--3 wurden übernommen. Nach Simulationsläufen, die unerwünschtes Verhalten zeigten, lauteten die finalen Regeln wie folgt:
 
 \textit{Hinweis:} $\Delta x$ $\widehat{=}$ dem Abstand zum vorausfahrenden Fahrzeug, die Indizes $b$ (\enquote*{behind} - für rückwärtigen Verkehr) und $o$ (\enquote*{other} - für Verkehr auf der Spur auf die gewechselt werden soll) können auch kombiniert werden. 
 
@@ -154,16 +155,14 @@ Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil
 	ausreichend Platz auf der rechten Spur, $v \leq \Delta x^{o}-1$
 \end{itemize}
 
-Wenn es die festgelegten Kriterien zulassen
 %\sa{es wäre sinnvoll genau diese Definition als Grundlage für das erste Mehrspurszenario in der Simulation zu nutzen und sich in der Arbeit darauf zu beziehen}
 % brauche ich nicht mehr, weil leider keine Mehrspurigkeit simuliert werden konnte
-, erfolgt der Spurwechsel auf die linke Spur immer, da dieser nicht an eine Wahrscheinlichkeit geknüpft ist.
+Wenn es die festgelegten Kriterien zulassen, erfolgt der Spurwechsel auf die linke Spur immer, da dieser nicht an eine Wahrscheinlichkeit geknüpft ist.
 Lediglich um die Überbevölkerung der Überholspur zu vermeiden, wurde eine Wahrscheinlichkeit $p_{l2r}$ für das Zurückwechseln eingeführt.
 
-Was dieser Modellierung fehlt
 %\sa{und hier genau dann als 'Case Study' für Deine Arbeit zu bezeichnen}
 % brauche ich nicht mehr, weil leider keine Mehrspurigkeit simuliert werden konnte
-, ist die Berücksichtigung irregulärer Verhaltensweisen der Fahrer - Unsicherheiten (z.B. Fehleinschätzungen oder Ängste), Ablenkungen (z.B. Gespräche mit anderen Fahrzeuginsassen, Telefonieren, Suche im Handschuhfach oder nach der fallen gelassenen Zigarette). 
+Was dieser Modellierung fehlt, ist die Berücksichtigung irregulärer Verhaltensweisen der Fahrer - Unsicherheiten (z.B. Fehleinschätzungen oder Ängste), Ablenkungen (z.B. Gespräche mit anderen Fahrzeuginsassen, Telefonieren, Suche im Handschuhfach oder nach der fallen gelassenen Zigarette). 
 
 Zusätzlich ist die Bremswirkung, wie auch im ursprünglichen Nagel-Schreckenberg-Modell, \enquote{über\-di\-men\-sio\-niert}. 
 Vollbremsungen aus Höchstgeschwindigkeit sind innerhalb kürzester Distanz möglich \cite{acc-free}.
@@ -173,8 +172,9 @@ Studien zufolge sind drei Viertel der Autofahrer abgelenkt, wenn sie am Steuer s
 Jeder zehnte Verkehrsunfall in Deutschland wird durch unaufmerksame Autofahrer verursacht. 
 In Österreich und der Schweiz geht man, aufgrund der Einordnung in eine eigene Kategorie für diese Art Unfälle, von einer Rate von etwa 30\% der Unfälle mit Personenschäden oder gar Toten aus. (vgl. \cite{dvr-studie})
 
-Laut Statistischem Bundesamt gab es 2016 auf Autobahnen 21193 Unfälle, davon 1435 innerhalb von Baustellen \cite{unf2016}. 
-Bei den etwa 13000 km Autobahn \cite{autob2016} entspricht dies durchschnittlich etwa einem Unfall pro 200 km Strecke pro Tag. 
+Laut Statistischem Bundesamt gab es 2016 auf Autobahnen 21193 Unfälle, davon 1435 innerhalb von Baustellen.\footnote{siehe \url{https://www.destatis.de/DE/Publikationen/Thematisch/TransportVerkehr/Verkehrsunfaelle/VerkehrsunfaelleZeitreihenPDF_5462403.pdf?__blob=publicationFile}, abgerufen am 01. Dezember 2017.} %\cite{unf2016}. 
+Bei den etwa 13000 km Autobahn\footnote{siehe \url{https://www.destatis.de/DE/Publikationen/StatistischesJahrbuch/TransportVerkehr.pdf?__blob=publicationFile}, abgerufen am 01. Dezember 2017.} %\cite{autob2016} 
+entspricht dies durchschnittlich etwa einem Unfall pro 200 km Strecke pro Tag. 
 In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittswert überschreiten, sodass an anderen Stellen unterdurchschnittlich viele Unfälle passieren.
 
 
@@ -185,7 +185,7 @@ In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittsw
 Es existieren Ansätze, die das mikroskopische Verhalten der Fahrzeugführer aus Realdaten  stochastisch modelliert haben, z.B. \cite{stoch-carfollow}. 
 Dort wurde in den aggregierten Daten eine Laplace-Verteilung der Beschleunigungswerte erkannt. 
 Ein daraus entwickeltes Modell wurde getestet. 
-Die Reproduktion von Sicherheitsparametern, wie Zeit bis zur Kollision (TTC, time to collision) und der Bremsrate um einen Unfall zu verhindern (DRAC, deceleration rate to avoid crash) gelang. 
+Die Reproduktion von Sicherheitsparametern, wie \enquote*{Zeit bis zur Kollision} (TTC, \enquote{time to collision}) und der \enquote*{Bremsrate um einen Unfall zu verhindern} (DRAC, \enquote{deceleration rate to avoid crash}) gelang. 
 Allerdings konnte das Fundamentaldiagramm nicht nachgestellt werden.
 
 Von \cite{multi-fuzzy} wird der Ansatz der Mehrspurigkeit in einem Multiagenten-Fuzzy-System integriert.
@@ -279,7 +279,7 @@ Dabei wird jeder Option ein Bereich (Slot) auf einem Rouletterad zugewiesen, wel
 Benötigt man z.B. auch in der Nachfolgegeneration vier Strings, würde das Rouletterad viermal gedreht.
 Das Individuum in dessen Slot die Kugel liegen bleibt, würde ausgewählt.
 
-Aufgrund der Größe der Slots von String 2 und String 4 ist es z.B. möglich, dass String 2 für die Kindgeneration zweimal und String 3 gar nicht ausgewählt wird.
+Aufgrund der Größe der Slots von String 2 und String 3 wäre es z.B. möglich, dass String 2 für die Kindgeneration zweimal und String 3 hingegen gar nicht ausgewählt wird.
 
 %%%%%
 
@@ -294,113 +294,5 @@ Es entsteht eine Ungewissheit, ob die wahrscheinlichste Alternative ausgewählt 
 
 \subparagraph{Möglichkeit von Kollisionen im Social-Force-Vehicle-Modell:}
 
-Da Kollisionen im Modell durch Ausweichen verhindert werden sollen, aber die \enquote{Bremskomponente} aus dem Ursprungsmodell entfernt wurde, ist in bestimmten Situationen ein Auffahrunfall denkbar.
+Da Kollisionen im Modell durch Ausweichen verhindert werden sollen, aber die \enquote{Bremskomponente} aus dem Ursprungsmodell entfernt wurde, sind in bestimmten Situationen Kollisionen (Auffahrunfälle) denkbar.
 
-
-
-%Bereits seit den 1950er Jahren wurden strömungsdynamische Ansätze für die Simulation von Verkehrsflüssen entwickelt. 
-%Außerdem gab es ab den 1980er Jahren auch boolsche Simulationsmodelle, die mit Gitter-Gas-Automaten Flüssigkeiten simulieren konnten.
-%Anfang der 1990er wurde von Kai Nagel und Michael Schreckenberg in \cite{na-sch} ein Verfahren vorgestellt, welches Autobahnverkehr basierend auf Zellularautomaten modelliert. 
-%
-%\begin{quote}
-%Ein zellulärer Automat ist eine regelmäßige Annordnung von Zellen. Jede Zelle kann eine endliche Zahl von Werten / Zuständen annehmen und hat eine  begrenzte Zahl von Nachbarzellen, die sie beeinflussen können. Das Muster des gesamten zellulären Automaten ändert sich in einzelnen Schritten, die durch eine Reihe von Übergangsregeln bestimmt werden, die für alle Zellen gelten. (aus \cite{cell-autom})
-%\end{quote}
-%
-%\noindent
-%Vereinfacht kann eine Fahrspur einer Straße als Aneinanderreihung vieler solcher Zellen gesehen werden. 
-%Dies führt schließlich zu einer gridbasierten Simulationsumgebung. 
-%In \cite{na-sch} wird die Rechenumgebung als eindimensionales Array mit $L$ Zellen definiert. 
-%Jede der Zellen kann entweder von einem Fahrzeug belegt oder frei sein. 
-%Eine Simulation in dieser Grid-Welt hat den Vorteil, dass die Erkenntnisse auf die reale Welt skaliert werden können. 
-%Es wird eine Zelllänge von 7,5\nolinebreak[4] m angenommen (vgl. \cite[S. 2227]{na-sch}), was ungefähr dem beanspruchten Platz eines Pkw - von Fahrzeugfront zu Fahrzeugfront - in einer Stausituation entspricht (Fahrzeuglänge + Abstand). 
-%Jedes Fahrzeug hat eine ganzzahlige Geschwindigkeit zwischen null und $v_{max}$.
-%
-%\begin{table}[ht]
-%\begin{center}
-%\setlength{\tabcolsep}{0.5em} % for the horizontal padding
-%{\renewcommand{\arraystretch}{1.2}% for the vertical padding
-%\begin{tabular}{| c | c | c |}
-%\hline 
-%$v^{sim}$ in $\frac{Zellen}{Zeitschritt}$ & $\widehat{=}$ $v^{real}$ in $\frac{m}{s}$ & $=$ in $\frac{km}{h}$ \\ \hline 
-%$1$ & 7,5 & 27 \\ \hline
-%$2$ & 15 & 54 \\ \hline
-%$3$ & 22,5 & 81 \\ \hline
-%$4$ & 30 & 108 \\ \hline
-%$5$ & 37,5 & 135 \\ \hline
-%$6$ & 45 & 162 \\ \hline
-%\end{tabular}
-%}
-%\caption{Umrechnung Geschwindigkeiten Gridwelt $\rightarrow$ reale Welt}
-%\end{center}
-%\label{tab:umrechnung-zelle-kmh}
-%\end{table}
-%
-%\noindent
-%Die beobachtete Durchschittsgeschwindigkeit von 4,5 Zellen/Zeitschritt, der als eine Sekunde angenommen wird, entspricht etwa der einer Geschwindigkeit von 120 km/h (vgl. \cite[S. 2227]{na-sch}). 
-%
-%In \cite{na-sch} war es erstmals gelungen, Wechselwirkungen zwischen Fahrzeugen im Einspurfall darzustellen und u. a. das Entstehen von Staus, ohne dass ein Grund dafür vorlag, zu modellieren. 
-%Mit drei Regeln, die auf jedes Fahrzeug gleichzeitig und gleichermaßen anzuwenden waren, wurde ein realistischer Verkehrsfluss generiert. 
-%Die folgenden Regeln, die die Kollisionsfreiheit sichern, sind die Grundlage für die, heute als \enquote{Nagel-Schreckenberg-Modell} bekannte, Modellierung:
-%
-%\begin{itemize}
-%\item \textit{Beschleunigung}: Solange ein Fahrzeug nicht seine max. Geschwindigkeit $v_{max}$ (Zellen/""Zeitschritt) erreicht hat und ein vorausfahrendes Fahrzeug weit genug entfernt ist, erhöht es die Geschwindigkeit um $1$, $v \rightarrow v+1$;
-%\item \textit{Abbremsen}: Hat ein Fahrzeug ein anderes Fahrzeug $j$ Zellen vor sich, dann reduziert es die Geschwindigkeit auf $j-1$, $v \rightarrow j-1$;
-%\item Zufallsgröße, auch \textit{\enquote*{Trödelwahrscheinlichkeit}}: Mit einer Wahrscheinlichkeit $p$ wird die Geschwindigkeit ($v > 0$) eines Fahrzeuges um $1$ reduziert, $v \rightarrow v-1$
-%\end{itemize}
-%
-%\noindent
-%Die Anweisungen werden in der angegebenen Reihenfolge - für alle Fahrzeuge gleichzeitig - ausgeführt und jedes Fahrzeug um die entsprechende Anzahl Zellen weiter gesetzt.
-%
-%Dehnt man dieses Modell aber auf mehrere Fahrspuren aus, stößt es an seine Grenzen, weil die Modellierung von Überholvorgängen, bzw. genauer gesagt für das \enquote{Ausscheren} und \enquote{Einscheren}, nicht Teil des ursprünglichen Modells ist. 
-%\cite{multi-lane} liefert eine \enquote*{multi-lane}-Betrachtung, wobei die ursprünglichen drei Regeln durch weitere ergänzt wurden, die zum einen ein Auffahren des Nachfolgeverkehrs auf den Spurwechsler und zum anderen auch des die Spur wechselnden auf vorausfahrende Fahrzeuge verhindern. \\
-%In der Betrachtung, ob die Aktualisierung der Fahrzeuge parallel oder sequentiell erfolgen soll, wurde erkannt, dass dies für das entwickelte Modell nur geringe Unterschiede macht, da die Rate der Spurwechsel mit den festgelegten Regeln eher gering ist. \\
-%Gleichzeitig wurde auch beobachtet, dass Fahrzeuge nicht wieder von der Überholspur in die Normalspur wechselten. Dies wurde mit weiteren Regeln und einer Spurwechselwahrscheinlichkeit abgestellt. Eine weitere Kalibrierung des Modells wurde in einer Folgearbeit durchgeführt. \\
-%Durch die Konstanthaltung der Anzahl generierter Fahrzeuge und die Veränderung der Systemgröße konnten verschiedene Verkehrsdichten simuliert werden.
-%
-%\cite{multi-lane} zeigt mehrere Diagramme. Eine Untersuchung von realen Spurwechselvorgängen ergab, dass eine Umkehr der Benutzungshäufigkeit der rechten und linken Spuren bei einem Verkehrsfluss $q_{12}$ von etwa 1200 (Fahrzeugen) pro Stunde auf beiden Spuren erfolgt.
-%
-%Die Simulation ergab, dass der Punkt, an dem beide Spuren gleichermaßen benutzt werden, deutlich unter dem Punkt liegt, an dem der maximale Verkehrsfluss erreicht wird, siehe \cref{figure:verkehrsfluss-spurnutzung}.
-%
-%\begin{figure}[hptb]
-% \centering
-% \includegraphics[width=0.7\textwidth]{verkehrsfluss-spurnutzung}
-% \caption[Verkehrsfluss und Spurnutzung als Funktion der Verkehrsdichte]{Verkehrsfluss und Spurnutzung als Funktion der Verkehrsdichte, aus \cite{multi-lane}}
-% \label{figure:verkehrsfluss-spurnutzung}
-%\end{figure}
-%
-%\noindent
-%Ein weiteres Resultat der Simulation ist eine mehrfache Umkehr der Nutzung der Fahrspuren abhängig von der Verkehrsdichte, wenn andere Parameter konstant gehalten werden, siehe \cref{figure:verkehrsfluss}.
-%
-%\begin{figure}[hptb]
-% \centering
-% \includegraphics[width=0.7\textwidth]{verkehrsfluss}
-% \caption[Verkehrsfluss als Funktion der durchschnittlichen Verkehrsdichte]{Verkehrsfluss auf den Fahrspuren als Funktion der durchschnittlichen Verkehrsdichte, aus \cite{multi-lane}}
-% \label{figure:verkehrsfluss}
-%\end{figure}
-%
-%\noindent
-%Die Festlegung einer Wahrscheinlichkeit für das Zurückwechseln von der linken auf die rechte Fahrspur führte zu einer unterschiedlichen Spurwechselfrequenz, siehe \cref{figure:spurwechselfrequenz}.
-%
-%\begin{figure}[hptb]
-% \centering
-% \includegraphics[width=0.7\textwidth]{spurwechselfrequenz}
-% \caption[Spurwechselfrequenz als Funktion der Verkehrsdichte]{Spurwechselfrequenz als Funktion der Verkehrsdichte für verschiedene Spurwechselwahrscheinlichkeiten, aus \cite{multi-lane}}
-% \label{figure:spurwechselfrequenz}
-%\end{figure}
-%
-%\pagebreak
-%In \cite{dat-ba} wurde mit dem \enquote{Social-Force-Vehicle-Modell} ein neuer Ansatz für die Simulation von Spurwechseln entwickelt.
-%Auch hier wird eine Grid-Umgebung verwendet.
-%Im Gegensatz zur ursprünglichen erdachten Nutzung der \enquote{Social Forces} für Fußgänger, wie z.B. in \cite{soc-for} beschrieben, wird dieses System auf die Gridzellen angewandt. Die Kräfte der Zellen, siehe \cref{figure:social-forces}, werden für jedes Fahrzeug zu jedem Zeitschritt $t$ berechnet, da seine Position zum Zeitpunkt $t + 1$ von der Position im vorhergehenden Zeitschritt abhängt.
-%Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsrichtung, nur die drei betrachtet werden, die sich in Fahrtrichtung befinden.
-%
-%\begin{figure}[hptb]
-% \centering
-% \includegraphics[width=0.7\textwidth]{social-forces}
-% \caption[\enquote{Social Forces} für Grid-Zellen]{Vorschlag der \enquote{Social Forces} für Grid-Zellen, aus \cite{dat-ba}}
-% \label{figure:social-forces}
-%\end{figure}
-%
-%\noindent
-%Die letztendliche Auswahl der Zielzelle wird mittels \enquote{Fitness-proportionate Selection} durchgeführt.
-%Entgegen des Zwangs zum Ausscheren und einer fest vorgegebenen Wahrscheinlichkeit wird eine stochastische Simulationsmöglichkeit der Neigung zum Spurwechsel aufgezeigt.

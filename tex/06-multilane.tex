@@ -26,7 +26,7 @@ Das Spurwechselverhalten wird in einem separaten Automaten abgebildet, siehe \cr
  \label{figure:fsm-pull}
 \end{figure}
 
-Der Startzustand des Automaten \texttt{KEEP} (keep lane/Spur halten) steht für das Verhalten, die aktuelle Spur beizubehalten.
+Der Startzustand des Automaten, \texttt{KEEP} (keep lane/Spur halten), steht für das Verhalten, die aktuelle Spur beizubehalten.
 
 Aus diesem Zustand heraus sind die Zustände \texttt{POA} (Pull-out attempt/Ausscherversuch) und \texttt{PIA} (Pull-in attempt/Einscherversuch) zu erreichen.
 Ein Ausscherversuch kann z.B. unternommen werden, wenn das Fahrzeug auf ein anderes Fahrzeug aufläuft.
@@ -52,7 +52,7 @@ Es müssen lediglich zwei Ziele für das Ausscheren (Pull-out) und das Einschere
 Dies wird durch die jeweiligen Pläne ergänzt.
 Für das komplette Agentenscript siehe \cref{lst:multi-lane}.
 
-Der Aufruf des jeweiligen Plans und die Abarbeitung der Bedingungen entspricht dabei dem Spurwechselversuch.
+Der Aufruf des jeweiligen Plans und das Abarbeiten der Bedingungen entspricht dabei dem Spurwechselversuch.
 Die Ausführung wird aus dem Agentenplan an die Simulationssoftware weiter geleitet.
 
 \begin{minipage}[hptb]{0.95\textwidth}
@@ -95,9 +95,9 @@ Der Plan für das Ausscheren ist mit insgesamt fünf Bedingungen versehen.
 	\itemsep0em
 	\item Befindet sich das Fahrzeug nicht auf der am weitesten linken Fahrspur?
 	\item Ist in der aktuellen Spur Verkehr voraus?
-	\item Ist Verkehr in der Spur, in die gewechselt werden soll, nicht näher?
-	\item Befindet sich kein Verkehr direkt links neben dem Fahrzeug?
-	\item Ist der rückwärtige Verkehr auf der Überholspur ausreichend weit entfernt?
+	\item Ist der Verkehr in der Spur, in die gewechselt werden soll, nicht näher?
+	\item Befindet sich kein Verkehr direkt links neben dem Fahrzeug in der Nachbarspur?
+	\item Ist der rückwärtige Verkehr auf der Zielspur nicht zu nah?
 \end{enumerate}
 
 Die erste Bedingung ist zwingend notwendig, da sonst keine Spur zum hineinwechseln vorhanden wäre.
@@ -117,15 +117,19 @@ Durch die Fehler im Framework ist die gleichzeitige Auswertung aller Bedingungen
 \\
 Bei keiner der Bedingungen ist es möglich, diese wegzulassen oder mit einer anderen zusammenzufassen, ohne dass unerwünschtes Verhalten auftritt.
 
-Würden zum Beispiel die Bedingungen 2 und 3 zusammengefasst und nur auf vorwärtigen Verkehr (in beiden Spuren) geprüft, so würde dies zwar der Bedingung \enquote{nicht schlechter} für die Überholspur genügen, aber jedes überholende Fahrzeug würde zum Auslösen der Bedingung bzw. des Überholvorganges führen.
+Würden zum Beispiel die Bedingungen 2 und 3 zusammengefasst und nur auf vorwärtigen Verkehr (in beiden Spuren) geprüft, so würde dies zwar der Bedingung \enquote{nicht schlechter} für die Überholspur genügen, aber jedes überholende Fahrzeug würde zum Auslösen dieser Bedingung führen.
 
 Eine Auslagerung der Bedingungen 1 und 2 in den \texttt{cruise}-Plan erscheint auch nicht sinnvoll, weil diese Kontrolle einen Zeitschritt vor Ausführung des Planes geschehen würde.
 Der Spurwechsel selbst würde dann mit noch einem Zeitschritt Verzögerung ausgeführt werden.
 \\
 Außerdem könnte es zu Inkonsistenzen bzgl. der aktuellen Fahrspur kommen.
 So könnte der Agent in einem Zeitschritt den Spurwechsel ausführen, gleichzeitig aber nochmals den \texttt{pullout}-Plan anstoßen.
-Dort würde dann nicht geprüft, in welcher Spur sich der Agent befindet.
+Dort würde dann nicht wieder geprüft, in welcher Spur sich der Agent befindet.
 Somit würde ein weiteres Ausschermanöver ausgeführt, ohne dass eine Zielspur vorhanden wäre.
+
+Ein \enquote{Workaround} wäre, Verkehr auf der Zielspur generell auszuschließen.
+Dieser Plan würde aber nicht optimal arbeiten. 
+
 
 
 \paragraph*{Der \texttt{pullin}-Plan}
@@ -136,8 +140,8 @@ Im Plan für das Einscheren sind vier Bedingungen zu beachten.
 	\itemsep0em
 	\item Befindet sich das Fahrzeug nicht auf der am weitesten rechten Fahrspur?
 	\item Ist in der Spur, in die gewechselt werden soll, genügend Abstand nach vorn?
-	\item Befindet sich kein Verkehr direkt rechts neben dem Fahrzeug?
-	\item Ist der rückwärtige Verkehr auf der Normalspur ausreichend weit entfernt?
+	\item Befindet sich kein Verkehr direkt rechts neben dem Fahrzeug in der Nachbarspur?
+	\item Ist der rückwärtige Verkehr auf der Zielspur ausreichend weit entfernt?
 \end{enumerate}
 
 Wie auch beim Ausscheren muss sich in Orientierungsrichtung mindestens eine weitere Spur befinden, da es sonst zum Auslösen des Kollisionsereignisses durch die Simulationssoftware kommt.
@@ -254,6 +258,7 @@ Eine Kombination der beiden Gleichungen und Normierung auf den Intervall $ [0; 1
 $ p_{po} = \frac{1}{2}(p_{po}(s) + p_{po}(v_{rel})) = \frac{1}{2}p_{po}(s) + \frac{1}{2}p_{po}(v_{rel}) $
 \end{center}
 liefert die Wahrscheinlichkeit für das Ausscheren $ p_{po} $.
+Hier wären die beiden Wahrscheinlichkeiten gleich gewichtet (Faktor $ \frac{1}{2} $). Eine unterschiedliche Gewichtung kann durch Faktoren, welche in Summe 1 ergeben müssen, herbeigeführt werden.
 
 Es ergibt sich eine Funktionskurve mit der Ausbildung von drei erkennbaren Plateaus um die Wahrscheinlichkeitswerte 0, 0,5 und 1, siehe \cref{figure:kurve-ueberholwahrscheinlichkeit}.
 %Die Darstellung erfolgt in den Intervallen  $ [0; 1] $ für die Wahrscheinlichkeit, $ [ 40; 120 ] $ für den Abstand und $ [ -5; 30 ] $ für die relative Geschwindigkeit.
@@ -267,7 +272,6 @@ Es ergibt sich eine Funktionskurve mit der Ausbildung von drei erkennbaren Plate
  \label{figure:kurve-ueberholwahrscheinlichkeit}
 \end{figure} 
 
-Hier wären die beiden Wahrscheinlichkeiten gleich gewichtet (Faktor $ \frac{1}{2} $). Eine unterschiedliche Gewichtung kann durch Faktoren, welche in Summe 1 ergeben müssen, herbeigeführt werden.
 
 \paragraph*{Wahrscheinlichkeit des Einscherens (Pull-in)} 
 \hfill \\
@@ -283,7 +287,7 @@ Aufgrund der fehlenden Möglichkeit eines Tests, wird hier nur das Konzept umris
     \item relative Geschwindigkeit $ T_{b} $ $ \nearrow $ $ \Longrightarrow $ Einscherdrang $ \nearrow $ (und umgekehrt)
 \end{itemize}
 
-Beim Zusammenfassung der entstehenden einzelnen Wahrscheinlichkeiten kann ebenfalls wieder über Faktoren eine individuelle Gewichtung vorgenommen werden.
+Beim Zusammenfassen der entstehenden einzelnen Wahrscheinlichkeiten kann ebenfalls wieder über Faktoren eine individuelle Gewichtung vorgenommen werden.
 
 
 
