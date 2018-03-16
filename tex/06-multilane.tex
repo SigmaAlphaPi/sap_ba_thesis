@@ -157,17 +157,26 @@ Dies ist jedoch bei Simulationen mit vielen Fahrzeugen nahezu unmöglich.
 
 
 
-%\subsection{Testläufe des Mehrspurmodells}
-%\label{test-multilane}
-%
-%Da die Ausführung der erdachten Logik nicht funktioniert, wurde überlegt, das Verhalten mit Alternativen/Workarounds herzustellen.
-%
-%Eine Idee war, die zweite und dritte Bedingung zusammenzufassen.
-%Dies hätte aber zur Folge, dass
-%
-%IDEE
-%Für den Zweispurfall könnte man die zweite und die dritte Bedingung zusammenfassen.
-%NO RISK, NO FUN -- try not looking left.
+\subsection{Testläufe des Mehrspurmodells}
+\label{test-multilane}
+
+Da die erdachte Logik nicht funktionierte, wurde überlegt, mit welchen Alternativen bzw. Workarounds dennoch ein Teil des Verhaltes getestet werden könnte.
+Die o.a. Alternativen wurden jew. in einem separeten Plan umgesetzt.
+
+Belastende Tests konnten mit diesen allerdings nicht durchgeführt werden.
+Z.B. funktionierte das Einscheren nicht mehr, wenn mehrere Fahrzeuge auf der Überholspur hintereinander herfuhren.
+
+\paragraph*{Spurwechsel/Überholmanöver}
+\hfill \\
+\begin{figure}[hptb]
+  \centering 
+   \subfigure[Spurnutzung, überholendes Fahrzeug]{\includegraphics[width=0.3\textwidth]{multi-overtake-lane}\label{figure:multi-overtake-lane}}\qquad 
+   \subfigure[Geschwindigkeit, beide Fahrzeuge]{\includegraphics[width=0.3\textwidth]{multi-overtake-speed}\label{figure:multi-overtake-speed}}\qquad 
+   \subfigure[Positionen, beide Fahrzeuge]{\includegraphics[width=0.3\textwidth]{multi-overtake-position}\label{figure:multi-overtake-position}}
+  \caption{Überholen im Multilane-Szenario} 
+  \label{figure:multi-overtake}
+\end{figure}
+
 
 
 
