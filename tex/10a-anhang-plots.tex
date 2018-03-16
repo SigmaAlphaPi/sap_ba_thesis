@@ -5,21 +5,38 @@
 \subsection{weitere Diagramme}
 
 
-\sa{own: Bild tauschen}
 \begin{figure}[hptb]
  \centering
- \includegraphics[width=0.95\textwidth]{speed_run27}
- \caption[kurzText]
- 		{Positionsdiagram}
+ \includegraphics[width=0.95\textwidth]{33veh-1km}
+ \caption{Positionsdiagramm mit rückwärts laufender Stauwelle}
  \label{figure:33veh-1km}
 \end{figure}
 
 \cref{figure:33veh-1km} entstand aufgrund einer Fehleinstellung in der Szenariodatei.
 Hier fuhren 33 Fahrzeuge auf einer Strecke von 1 km.
+Für diese kurze Strecke ist diese Anzahl Fahrzeuge nicht zu bewältigen.
 \\
 Zu Beginn sieht man aufgrund der enger werdenden Punktmuster, dass sich die Geschwindigkeit der Fahrzeuge nur verlangsamt. Dann kommt es zu einer länger anhaltenden Stillstandsphase der Fahrzeuge, die auch zu Simulationsende noch anhielt.
 \\
 Hier erkennt man die in den Versuchen in \cite{na-sch} erkannte Rückwärtsbewegung der Stauwelle.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{figure}[hptb]
+  \centering
+   \subfigure[34 Fzg]{\includegraphics[width=0.45\textwidth]{a7-34veh-position-2nd}\label{figure:a7-34veh-position-2nd}}\qquad 
+   \subfigure[34 Fzg]{\includegraphics[width=0.45\textwidth]{a7-34veh-position-3rd}\label{figure:a7-34veh-position-3rd}} \\
+   \subfigure[34 Ftg]{\includegraphics[width=0.95\textwidth]{a7-34veh-position-noflow}\label{figure:a7-34veh-position-noflow}}
+  \caption{weitere Simulationsläufe mit 34 Fahrzeugen, A7-Verkehrsmenge}
+  \label{figure:a7-34veh-more}
+\end{figure}
+
+Positionsplots weiterer Simulationsläufe mit der A7-Verkehrsmenge (siehe \cref{sec:szenario-a7}) zeigen, dass auch mit 34 Fahrzeugen Stockungen auftreten können.
+Oft passierte dies zu Beginn des Durchlaufes, pendelte sich dann aber ein.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
