@@ -891,11 +891,16 @@ In \cref{tab:restgeschw-abstand} sind die Mindestabstände für eine kollisionsf
 Zwischenschritte der Berechnung wurden jeweils aufgerundet.
 
 \noindent
-Anzahl zu setzender Zellen: $ x = \lceil \frac{\text{Geschwindigkeit}}{3,6} \times \frac{\text{Zeitschrittlänge}}{\text{Zellgröße}} \rceil $
-\\
-Mindestabstand: $ s_{min} = \lceil x \times \text{Zellgröße} \rceil $
-\\
-Fasste man beide Gleichungen zusammen, würde die Zellgröße aus der Gleichung entfernt.
+Anzahl zu setzender Zellen: 
+\begin{center}
+$ x = \lceil \frac{\text{Geschwindigkeit}}{3,6} \times \frac{\text{Zeitschrittlänge}}{\text{Zellgröße}} \rceil $
+\end{center}
+Mindestabstand: 
+\begin{center}
+$ s_{min} = \lceil x \times \text{Zellgröße} \rceil $
+\end{center}
+
+Fasste man die ungerundeten Gleichungen zusammen, würde die Zellgröße aus der Gleichung entfernt.
 
 \begin{table}[ht]
 \begin{center}
