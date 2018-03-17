@@ -105,7 +105,7 @@
 %    \include{tex/02-problemstellung}
     \include{tex/03-sota} 
 %    \include{tex/04-researchgap}
-	\include{tex/000-multiagentensysteme}
+    \include{tex/000-multiagentensysteme}
     \include{tex/05-realisierung}
     \include{tex/06-multilane}
     \include{tex/09-fazit}
@@ -113,10 +113,13 @@
     \setcounter{page}{0}
     \pagenumbering{alph}
     \setcounter{page}{1}
+    % --- reset figure counter, add "A" to figure number ---
+    \renewcommand{\thefigure}{A\arabic{figure}}
+    \setcounter{figure}{0}    
     
-	\include{tex/10-anhang-listings}
-	\include{tex/10a-anhang-plots}
-%	\include{tex/000-sigmoid}
+    \include{tex/10-anhang-listings}
+    \include{tex/10a-anhang-plots}
+%    \include{tex/000-sigmoid}
 %    \include{tex/000-runterschreiben}
 
     \bibliography{references}
