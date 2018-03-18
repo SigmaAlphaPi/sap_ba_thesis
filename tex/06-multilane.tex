@@ -7,6 +7,10 @@ Dennoch sind theoretische Überlegungen und in Teilen getestete praktische Vorar
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 
 \subsection{Veränderungen für die Mehrspurigkeit}
@@ -157,6 +161,12 @@ Dies ist jedoch bei Simulationen mit vielen Fahrzeugen nahezu unmöglich.
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 \subsection{Testläufe des Mehrspurmodells}
 \label{test-multilane}
 
@@ -179,9 +189,18 @@ Bereits bei drei Fahrzeugen im System kam es zu Situationen, bei denen das Einsc
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\subsection{Zufälligkeit des Aus- und Einscherens}
+
+\subsection{Zusätzliche Erweiterungsmöglichkeiten}
+\label{sec:additional-extensions}
+
+
+
+\subsubsection{Zufälligkeit des Aus- und Einscherens}
 \label{sec:pullout-pullin}
 
 Um unterschiedliche Verhaltensweisen beim Überholen im Autobahnverkehr abbilden zu können, benötigt man einen Mechanismus, Wahrscheinlichkeiten für jew. eine der Handlungen zu generieren.
@@ -300,10 +319,15 @@ Beim Zusammenfassen der entstehenden einzelnen Wahrscheinlichkeiten kann ebenfal
 
 
 
+\subsubsection{Dosiertes Abbremsen}
+
+In den zugrunde liegenden Tests wurde das Abbremsen mit maximal möglicher Intensität ausgeführt.
+Denkbar wäre auch hier die Verwendung der logistischen Funktion, um die Bremsstärke zu dosieren.
+Ähnlich wie beim Ausscheren scheinen Abstand und relative Geschwindigkeit als zu beachtende Größen sinnvoll.
 
 
 
-\subsection{Vermeidung des Rechts-Überholens}
+\subsubsection{Vermeidung des Rechts-Überholens}
 
 Um Fahrzeuge in der Simulation vom Überholen auf der rechten Seite abzuhalten ist nur eine einfache Bedingung im \texttt{decelerate}-Plan notwendig, siehe \cref{lst:multilane-rechts}.
 
@@ -330,6 +354,8 @@ Je weiter links eine Fahrspur ist, desto größer ist ihre Id.
 Befindet sich also im Sichtfeld von Fahrzeug A ein Fahrzeug B auf einer Fahrspur mit größerer Id, so wird von Fahrzeug A ein Bremsmanöver eingeleitet.
 \\
 Weitere Einschränkungen ergeben sich durch die Hinzunahme einer Geschwindigkeits- und einer Abstandskomponente.
+
+Außerdem ist eine Erweiterung im \texttt{accelerate}-Plan erforderlich, dass eine Beschleunigung auch bei vorausfahrendem Verkehr auf Spuren mit größerer Id ausbleiben kann.
 
 Das Verhalten, was diese Bedingung auslöst, konnte getestet werden, indem ein langsameres Fahrzeug auf der Überholspur fuhr und das schnellere auf der Normalspur aufschloss.
 Das schnellere Fahrzeug bremste ab und passte sich der Geschwindigkeit des langsameren Fahrzeugs an.

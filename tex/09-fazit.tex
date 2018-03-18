@@ -4,29 +4,40 @@
 \subsection{Fazit}
 \label{sec:fazit}
 
-Das Ziel dieser Arbeit, das Agentenkonzept für die realistische Verkehrssimulation nutzen zu können, wurde erreicht.
+Das Ziel dieser Arbeit, das Agentenkonzept für die realistische Verkehrssimulation nutzen zu können, konnte erreicht werden.
+Im Gegensatz zu anderen Arbeiten dient die Gridumgebung ausschließlich als Darstellung der Straße.
+Interaktionen zwischen den Agenten/Fahrzeugen finden ausschließlich aufgrund \enquote{realer} Größen wie Abstand und (relativer) Geschwindigkeit statt.
+Dies ist vergleichbar zur Situation im Straßenverkehr.
 
+Dadurch dass die Auslösung des Kollisionsereignisses bereits bei Unterschreitung eines Mindestabstandes stattfindet, gelang es nicht eine realistische Unfallhäufigkeit zu erreichen.
+
+Bei der Verkehrsfluss/Verkehrsdichte-Ebene des Fundamentaldiagrammes gelang nur die Darstellung des aufsteigenden Astes, die frei fließenden Verkehr bedeutet.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
 \subsection{Ausblick}
 \label{sec:ausblick}
 
-
 Für die Zukunft muss ein Weg gefunden werden, die Fahrzeuge innerhalb real möglicher Abstände so abzubremsen, dass keine Kollisionen entstehen. 
-Es sollte ein Weg gefunden werden, die Bremskräfte zu dosieren. 
-Wie in den Überlegunden für die Pull-out-Wahrscheinlichkeit (\cref{sec:pullout-pullin}) gezeigt, könnte sich auch hierfür eine Kombination aus Abstand und relativer Geschwindigkeit eignen.
+%Es sollte ein Weg gefunden werden, die Bremskräfte zu dosieren. 
+%Wie in den Überlegunden für die Pull-out-Wahrscheinlichkeit (\cref{sec:pullout-pullin}) gezeigt, könnte sich auch hierfür eine Kombination aus Abstand und relativer Geschwindigkeit eignen.
 
 Wenn es die Weiterentwicklung von \enquote{LightJason} zulässt, sollte mit den in \cref{sec:ueberlegungen-multilane} getätigten Überlegungen geprüft werden, ob die Mehrspurversion des Agentenscriptes unter Belastung eingesetzt werden kann.
 
+Das Agentenmodell selbst kann ebenfalls noch um Komponenten der Realität erweitert werden.
 
-Das Agentenmodell selbst kann ebenfalls noch erweitert werden.
-
+\paragraph*{Fahrertypen}
+\hfill \\
 Im Jahr 2015 wurde bei einer Studie der London School of Economics and Political Science (LSE) im Auftrag des Reifenherstellers Goodyear, siehe \cite{fahrertyp}, festgestellt, dass man Autofahrer in sieben Typen einteilen kann.
-
 \begin{itemize}
 \itemsep0em
-	\item \enquote{the teacher}, der Lehrer: möchte, dass andere Fahrer wissen, was sie falsch gemacht haben und erwartet Anerkennung für seine Anstrenungen andere zu belehren
+	\item \enquote{the teacher}, der Lehrer: möchte, dass andere Fahrer wissen, was sie falsch gemacht haben und erwartet Anerkennung für seine Anstrengungen andere zu belehren
 	\item \enquote{the Know-it-all}, der Besserwisser: denkt, dass er von inkompetenten Schwachköpfen umgeben ist und schreit diese gelegentlich auch schon einmal an, während er sicher in seinem Auto sitzt
 	\item \enquote{the Competitor}, der Wettkämpfer: muss vor allen anderen Fahrern sein und reagiert verärgert, wenn sich diesem Ziel jemand entgegen stellt, beschleunigt evtl. falls jemand zu überholen versucht oder schließt die Lücke um ein Einfädeln unmöglich zu machen
 	\item \enquote{the Punisher}, der Bestrafer: möchte jeden anderen Fahrer für gefühltes Fehlverhalten bestrafen, steigt ggf. aus dem Auto aus, um andere Fahrer direkt zu konfrontieren
@@ -38,34 +49,53 @@ Im Jahr 2015 wurde bei einer Studie der London School of Economics and Political
 Für zukünftige Entwicklungen der Simulation könnte man für diese oder ähnliche Fahrertypen Profile ausarbeiten und anlegen, die sich auf Abstands-, Beschleunigungs- und Ver"-zö"-ge"-rungs"-ver"-hal"-ten sowie die Risikobereitschaft beim Aus- und Einscheren auswirken.
 So könnte noch eine weitere Komponente mit Hinsicht auf Realitätsnähe geschaffen werden. 
 
-Weiterhin könnte "Hupen" als Broadcast- oder Message-Ereignis festgelegt werden.
-Dieses oder auch wiederholtes zu dichtes Auffahren und \enquote{geschnitten} werden, könnten sich auf eine Art Stresslevel auswirken, das als interner Belief im Agenten hinterlegt wird.
+\paragraph*{Stresslevel}
+\hfill \\
+Weiterhin könnte \enquote{Hupen} als Broadcast- oder Message-Ereignis festgelegt werden.
+Dies oder auch wiederholtes zu dichtes Auffahren und \enquote{geschnitten werden}, könnten sich auf eine Art Stresslevel auswirken, das als interner Belief im Agenten hinterlegt wird.
 \\
-Das Stresslevel wiederum könnte die Art und Weise, wie das Fahrzeug am Straßenverkehr teilnimmt, verändern. 
+Das Stresslevel wiederum könnte die Art und Weise verändern, wie das jeweilige Fahrzeug am Straßenverkehr teilnimmt. 
 Ggf. auch in unterschiedlicher Art und Weise, je nach Fahrertyp.
 \\
 Über eine gewisse Zeit, baut sich erworbener Stress wieder ab.
 
+\paragraph*{Außenwahrnehmung der Fahrzeuge}
+\hfill \\
 Die Außenwahrnehmung eines Fahrzeuges könnte durch einen öffentlichen Belief gesteuert werden. 
+
+Ist ein Fahrer betrunken, fällt dies anderen Fahrern normalerweise u.a. aufgrund der Fahrweise auffallen.
 Hier könnte z.B. der Hinweis, dass der Fahrer betrunken ist, andere Fahrzeuge vorsichtiger handeln lassen.
 
+Ein weiterer Aspekt könnte die Fahrtrichtungsanzeige sein.
+Blinkt ein Fahrzeug, um einen Spurwechsel anzuzeigen, wird ein nachfolgender Fahrer evtl. nicht weiter beschleunigen. 
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
+\subsection{Das NaSch-Modell in der Zukunft}
 
-\subsection{NaSch in der Zukunft}
+Wird das Nagel-Schreckenberg-Modell zukünftig noch von Bedeutung sein? 
+Viele Entwicklungen im Automobilbereich gehen aktuell in Richtung hochassitentes oder gar autonomes Fahren.
+Laut \cite{automation-level} kann neben dem manuallen Fahren in fünf Stufen der Automation unterschieden werden.
 
-Wird as Nagel-Schreckenberg-Modell zukünftig noch von Bedeutung sein? 
-Viele Entwicklungen im Automobilbereich gehen in Richtung hochassitentes oder gar autonomes Fahren.
+Zur Zeit befindet man sich am Übergang von Stufe 2 zu Stufe 3, ab der die Umwelt automatisiert überwacht wird.
+Dies findet durch sog. Assistenzsysteme statt.
+Diese können den Fahrer unterstützen - Notbremsassistenten, Spurhalteassistenten - entbinden diesen aber nicht von seiner Überwachungspflicht.
 
-bla bla bla Fehleinschätzungen können auch dem Rechner passieren bla bla bla
+Bei aktuell erhältlichen, serienmäßigen Fahrzeugen ist - zumindest durch die Gesetzgebung - ein menschlicher Fahrer als Rückfalloption nötig.
+Selbst die Firma Tesla, die das \enquote{Autopilot}-System auf ihrer Webseite mit \enquote{Full Self-Driving Capability}\footnote{siehe \url{https://www.tesla.com/autopilot}, abgerufen am 18. März 2018}/\enquote{Volles Potenzial für autonomes Fahren}\footnote{siehe \url{https://www.tesla.com/de_DE/autopilot}, abgerufen am 18. März 2018} anpreist, verweist bei Reaktionen auf Unfälle mit ihren Fahrzeugen darauf, dass der Fahrer selbst auf die Straße achten muss\footnote{siehe \url{http://money.cnn.com/2018/01/23/technology/tesla-fire-truck-crash/index.html}, abgerufen am 18. März 2018}.
 
-Sollten diese Systeme zu 100\% sicher funktionieren, kann man den Faktor Mensch, der meist die Unsicherheiten in das System Verkehr einbringt, aus der Gleichung entfernen.
-Wichtig wäre dann aber auch die Kommunikation der Fahrzeuge untereinander.
+Sollten diese Systeme in der Zukunft zu 100\% sicher funktionieren und gesetzlich erlaubt werden, kann man den Faktor Mensch, der meist die Unsicherheiten in das System Verkehr einbringt, aus der Gleichung entfernen.
+Von diesem Punkt ist die Technik aktuell noch ein Stück weit entfernt\footnote{siehe \url{www.sueddeutsche.de/auto/autonomes-fahren-der-entwicklungsaufwand-bei-selbstfahrenden-autos-ist-riesig-1.3838094}, abgerufen am 18. März 2018}, sodass der Mensch hinter dem Lenkrad wohl noch einige Zeit erhalten bleiben wird \ldots und sei es als Backup bei Fehleinschätzungen der Technik.
+Somit hat das Nagel-Schreckenberg-Modell auch zukünftig seine Berechtigung.
 
-Von diesem Punkt ist die Technik aktuell noch weit entfernt, siehe [www.sueddeutsche.de/auto/autonomes-fahren-der-entwicklungsaufwand-bei-selbstfahrenden-autos-ist-riesig-1.3838094], sodass der Mensch hinter dem Lenkrad wohl noch einige Zeit erhalten bleiben wird \dots und sei es als Backup bei Fehleinschätzungen der Technik.
-
-https://www.welt.de/wirtschaft/article168550776/Fuer-autonomes-Fahren-gibt-es-ein-grosses-Hindernis.html
+Und selbst im Falle der vollständigen Automation gelten für die Fahrzeuge die gleichen physikalischen Voraussetzungen.
+Da die Straßenfahrzeuge nicht untereinander gekoppelt werden, sind gewisse Verzögerungen und Abweichungen der Reaktionen nach wie vor vorhanden.
+\\
+Wichtig wäre die Kommunikation der Fahrzeuge untereinander.
+Dann könnte die Reaktionszeiten ggf. noch weiter gesenkt werden.

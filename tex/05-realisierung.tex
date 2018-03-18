@@ -17,6 +17,12 @@ Umfangreichere Codeänderungen erfolgten durch den Ersteller des Tools, Philipp 
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 \subsection{Entwicklung des Agentenverhaltens}%\sa{mit dem Kapitel beginnen und dann auf die Umwelt eingehen -> klar durch strukturieren, Du redest vorher schon von Agent, aber wie der jetzt bei Dir zum Nutzen kommt ist bis zu diesem Kapitel für den Leser nicht klar}
 \label{sec:entwicklung-agentenplan}
 
@@ -28,6 +34,7 @@ Die mathematischen Gleichungen in \cite{na-sch} beschreiben gut, welches Verhalt
 	\item zufällige Reduktion der Geschwindigkeit (Trödeln)
 	\item wenn nötig abbremsen
 \end{itemize}
+
 
 
 \subsubsection{Zustandsautomat}
@@ -67,6 +74,7 @@ Aus dem \texttt{DEC}-Zustand kann zufällig ein Übergang in den \texttt{LIN}-Zu
 Aus dem \texttt{LIN}-Zustand wird zwangsläufig wieder in den \texttt{DRI}-Zustand übergegangen.
 
 Ein Zeitschritt der Simulation entspricht dabei einem Zyklus vom Startzustand ausgehend bis zur Rückkehr dorthin.
+
 
 
 \subsubsection{Agentenpläne}
@@ -109,9 +117,9 @@ Mit der Erweiterung des Sichtfeldes, siehe \cref{sec:sichtweite}, wurde es nöti
 Um einen realen Folgeverkehr zu ermöglichen, wurde erlaubt, dass beschleunigt werden darf, solange die Geschwindigkeit des Vorausfahrenden höher ist.
 
 Der \texttt{linger}-Plan modelliert das zufällige Beibehalten bzw. Verringern der Geschwindigkeit. 
-Zunächst wurde das Trödeln mit einer Wahrscheinlichkeit von \mbox{10 $\%$} und einer Intensität von \mbox{50 $\%$} der Bremskraft ausgeführt.
+Zunächst wurde das Trödeln mit einer Wahrscheinlichkeit von \mbox{10$\%$} und einer Intensität von \mbox{50$\%$} der Bremskraft ausgeführt.
 Für die Dauertests wurden diese Werte später noch angepasst, siehe \cref{sec:lingersweetspot}.
-%Die Intensität der Verzögerung wurde nach einigen Tests, siehe \cref{sec:lingersweetspot}, auf den Wert \texttt{0,3}, was 30 $\%$ der Bremskraft entspricht, festgelegt.
+%Die Intensität der Verzögerung wurde nach einigen Tests, siehe \cref{sec:lingersweetspot}, auf den Wert \texttt{0,3}, was 30$\%$ der Bremskraft entspricht, festgelegt.
 
 Das Bremsverhalten des Agenten wird durch den \texttt{decelerate}-Plan gesteuert. 
 Dort wird die Verzögerung bei vorwärtigem Verkehr geregelt.
@@ -142,8 +150,17 @@ Es war wiederholbar zu testen, ob das Abbremsen bei vorwärtigem Verkehr funktio
   \label{figure:test-cell-speedcurves}
 \end{figure}
 
+Die Geschwindigkeiten werden in einem Zeit-Geschwindigkeits-Diagramm (\cref{figure:test-speedcurve}) dargestellt, die Bewegung in einem Positions-Zeit-Diagramm (\cref{figure:test-cellcurve}).
+\\
+Dort entspricht jede Zeile/jeder Punkt der Position der Fahrzeuge in einem Zeitschritt.
+Die Simulationszeit beginnt am oberen Ende der Zeitachse.
+Durch die Ringform der Strecke werden mehrere Durchläufe der Strecke dargestellt.
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -186,9 +203,6 @@ Für die Tests auf Leistungsfähigkeit wurde die Schrittlänge dann auf 0.025 mi
 \\
 Ausführlich siehe \cref{sec:cellsize-timesteplength}.
 
-
-%\subsubsection{Festlegen der Beschleunigungs-/Verzögerungswerte und der Sichtweite}
-
 \paragraph*{Beschleunigung/Verzögerung:}
 \label{beschl-verz}
 Das originale Modell von Nagel und Schreckenberg legt Beschleunigung, Verzögerung und Sichtweite sehr einfach fest.
@@ -230,12 +244,13 @@ Den Agenten sollte diese Strecke ausreichend Raum für Reaktionen geben.
 In den Agentenplänen wird schließlich die Handlung durch Bedingungen auf einen Bereich unter 110 m beschränkt.
 
 
+
 \subsubsection{Einstellmöglichkeiten im Agentenverhalten (Parameter)}
 
 \paragraph*{Beschleunigungs- und Verzögerungsraten:}
 \label{sec:acc-dec-rate}
 Die Beschleunigungs- und Verzögerungsraten können durch einen Wert zwischen Null und Eins angegeben werden.
-Im \texttt{ACC}-Plan wurde \texttt{0,5} gewählt, was \mbox{50 $\%$} der möglichen Beschleunigung entspricht.
+Im \texttt{ACC}-Plan wurde \texttt{0,5} gewählt, was \mbox{50$\%$} der möglichen Beschleunigung entspricht.
 Für die Verzögerung im \texttt{DEC}-Plan wurde der größtmögliche Wert \texttt{1} festgelegt. 
 Kleinere Werte führten nicht zu ausreichend großer Bremsleistung.
 
@@ -290,9 +305,13 @@ Bei einer max. möglichen Geschwindigkeit von 50 km/h erzeugt erst eine Wahrsche
 Bei Werten darüber hinaus wurde beobachtet, dass die Beschleunigung eines oder mehrerer Fahrzeuge so gehemmt wurde, dass ein Erreichen der möglichen Geschwindigkeiten für alle im System befindlichen Fahrzeuge nicht möglich war.
 
 Für die Dauertests mit einer max. möglichen Geschwindigkeit von 100 km/h wurden die Parameter im \texttt{linger}-Plan somit auf Wahrscheinlichkeit von \texttt{0,3} und eine Bremsintensität von \texttt{0,3} festgelegt.
-Dieser Werte musste allerding nochmals korrigiert werden.
+Der Wahrscheinlichkeitswert musste allerdings nochmals korrigiert werden (\cref{sec:adjust-linger}).
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -465,6 +484,10 @@ Der Fehler war durch die Verwendung der Methode \texttt{acos} entstanden. Es wur
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 
 \subsection{Setups für die Langzeittests}
@@ -517,9 +540,12 @@ Durchschnitt pro Stunde & 1.088 & 495 & 267 \\ \hline
 \noindent
 Bei der Berechnung der Durchschnitte wurde, wenn nötig, auf volle Fahrzeuge aufgerundet.
 
-Die o.a. Zahlen spiegeln eine Verkehrsstärke ($q$ in $ \frac{\text{Fahrzeuge}}{\text{Zeit}} $) wieder.
-Nach \cite{verkehrsplanung} kann diese mit Hilfe der mittleren momentanen Geschwindigkeit ($\overline{v}_{m}$) in eine Verkehrsdichte ($\rho$ in $ \frac{\text{Fahrzeuge}}{\text{Streckenabschnitt}} $) umgerechnet werden.
-Der Zusammenhang lautet: $ \rho = \frac{q}{\overline{v}_{m}} $.
+Die o.a. Zahlen spiegeln eine Verkehrsstärke $q$ (in $ \frac{\text{Fahrzeuge}}{\text{Zeit}} $) wieder.
+Nach \cite{verkehrsplanung} kann diese mit Hilfe der mittleren momentanen Geschwindigkeit $\overline{v}_{m}$ in eine Verkehrsdichte $\rho$ (in $ \frac{\text{Fahrzeuge}}{\text{Streckenabschnitt}} $) umgerechnet werden.
+Der Zusammenhang lautet: 
+\begin{center}
+$ \rho = \dfrac{q}{\overline{v}_{m}} $
+\end{center}
 
 Die weiteren Berechnungen erfolgten jeweils mit den Durchschnittswerten der beiden Fahrtrichtungen.
 Als $\overline{v}_{m}$ wird für Pkw 120 km/h angenommen.
@@ -545,7 +571,6 @@ Der Umbau hat im September 2017 begonnen\footnote{siehe \url{https://www.strasse
 Aufgrund seiner Lage zwischen zwei bereits dreispurig ausgebauten Teilstücken mussten hier sicherlich größere Verkehrslasten bewältigt werden als auf anderen zweispurigen Autobahnen.
 
 Für die Simulation war dies ein glücklicher Zufall, da im speziellen $p_{linger}$ mit der so vorgegebenen Fahrzeuganzahl weiter präzisiert werden konnte, siehe \cref{sec:adjust-linger}.
-
 
 
 
@@ -734,6 +759,9 @@ Aus diesem Grund wurde auf den Einsatz von kleineren Zellgrößen verzichtet.
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -807,7 +835,6 @@ Eine Erhöhung der Verkehrsdichte um ein Fahrzeug pro Kilometer macht demzufolge
 
 
 
-
 \subsubsection{Verkehrsmenge A38: 15 Fahrzeuge und Verkehrsmenge A71: 8 Fahrzeuge}
 \label{sec:szenario-a38-a71}
 
@@ -826,11 +853,16 @@ In den Positionsplots bilden sich in den meisten Fällen weiße Streifen aus. Di
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	NEW SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 
 \subsection{Erkenntnisse aus Entwicklung und Simulationsläufen}
 
 Durch die einerseits real simulierten Beschleunigungs-, Verzögerungs- und Geschwindigkeitswerte, andererseits aber \enquote{grob} unterteilten Zellgrößen und Zeitabschnitte kommt es in der Simulation zu Verhalten, welches durch diese Diskrepanz erklärbar ist.
+
 
 
 \subsubsection{Ursache Zellgröße}
@@ -844,7 +876,6 @@ Durch die unterschiedliche Ausprägung der Beschleunigungswerte und möglicher T
 Die Verkleinerung der Zellen schwächt dieses Verhalten ab.
 
 Im weiteren Verlauf der Simulation fällt es in der Weg-Zeit-Kurve nicht weiter auf, dass die Fahrzeuge an Zellen mit einer bestimmten Länge gebunden sind.
-
 
 
 \paragraph{schlechte Bremswirkung:}
@@ -877,6 +908,7 @@ Eine komplette Vermeidung der Kollisionsereignisse ist nicht gelungen, siehe auc
 %Zudem könnten Fahrzeugklassen auch in Sachen Platzbedarf realistisch dargestellt werden.
 
 
+
 \subsubsection{Ursache Zeitschrittlänge}
 
 \paragraph*{Worst Case-Analyse für Mindestabstände:}
@@ -893,7 +925,7 @@ Zwischenschritte der Berechnung wurden jeweils aufgerundet.
 \noindent
 Anzahl zu setzender Zellen: 
 \begin{center}
-$ x = \lceil \frac{\text{Geschwindigkeit}}{3,6} \times \frac{\text{Zeitschrittlänge}}{\text{Zellgröße}} \rceil $
+$ x = \left\lceil \frac{\text{Geschwindigkeit}}{3,6} \times \frac{\text{Zeitschrittlänge}}{\text{Zellgröße}} \right\rceil $
 \end{center}
 Mindestabstand: 
 \begin{center}
@@ -929,4 +961,3 @@ Da die Zellgröße bei entsprechender Umstellung der obigen Gleichung keinerlei 
 Es wird lediglich auf ein Vielfaches der Zellgröße gerundet.
 \\
 Durch die Entfernungen, die in einem längeren Zeitschritt zurückgelegt werden, erhöht sich durch eine Anhebung der Zeitschrittlänge auch der Mindestabstand entsprechend.
-
