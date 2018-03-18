@@ -1,4 +1,4 @@
-\section{Überlegungen für die Multilane-Szenarios}
+\section{Überlegungen für die Multilane-Szenarios}\sa{Einrückung und Linebreaks entfernen}
 \label{sec:ueberlegungen-multilane}
 
 Aufgrund zweier Fehler\footnote{siehe \url{https://github.com/LightJason/AgentSpeak/issues/47} und \url{https://github.com/LightJason/AgentSpeak/issues/50}} im Agenten-Framework, die bis zum Termin dieser Arbeit nicht behoben wurden, war es nicht möglich, auch belastende Tests für die Mehrspurszenarien durchzuführen.
@@ -9,11 +9,11 @@ Dennoch sind theoretische Überlegungen und in Teilen getestete praktische Vorar
 
 
 
-\subsection{Veränderungen für die Mehrspurigkeit}
+\subsection{Veränderungen für die Mehrspurigkeit}\sa{keine leeren Kapitel}
 \label{sec:multilane-change}
 
 
-\subsubsection{Zustandsautomat}
+\subsubsection{Zustandsautomat}\sa{Linereaks und Einrückungen entfernen}
 
 Für die Simulation mehrspuriger Fahrbahnen kann der ursprüngliche Zustandsautomat (\cref{figure:fsm-nasch}), der die Veränderung der Geschwindigkeit beinhaltet, unverändert bleiben.
 Das Spurwechselverhalten wird in einem separaten Automaten abgebildet, siehe \cref{figure:fsm-pull}.
@@ -44,7 +44,7 @@ Auch hier entspricht ein Zeitschritt der Simulation einem Zyklus vom Startzustan
 
 
 
-\subsubsection{Agentenverhalten}
+\subsubsection{Agentenverhalten}\sa{Einrücken und Linebreaks entferenen}
 \label{sec:agentplan-multilane}
 
 Die Veränderungen im Grundplan des Agentenverhaltens sind minimal. 
@@ -87,7 +87,7 @@ Die Ausführung wird aus dem Agentenplan an die Simulationssoftware weiter gelei
 .\end{lstlisting}
 \end{minipage}
 
-\paragraph*{Der \texttt{pullout}-Plan}
+\paragraph*{Der \texttt{pullout}-Plan}\sa{Überschrift wissenschaftliche benennen, Einrückung und Linebreaks entfernen}
 \hfill \\
 Der Plan für das Ausscheren ist mit insgesamt fünf Bedingungen versehen.
 
@@ -132,7 +132,7 @@ Dieser Plan würde aber nicht optimal arbeiten.
 
 
 
-\paragraph*{Der \texttt{pullin}-Plan} 
+\paragraph*{Der \texttt{pullin}-Plan}\sa{Linbreak und Einrückungen entfernen} 
 \hfill \\
 Im Plan für das Einscheren sind vier Bedingungen zu beachten.
 
@@ -166,7 +166,7 @@ Belastende Tests konnten mit diesen allerdings nicht durchgeführt werden.
 \\
 Bereits bei drei Fahrzeugen im System kam es zu Situationen, bei denen das Einscheren ausblieb.
 
-\paragraph*{Spurwechsel/Überholmanöver}
+\paragraph*{Spurwechsel/Überholmanöver}\sa{keine leeren Kapitel}
 \hfill \\
 \begin{figure}[hptb]
   \centering 
@@ -181,7 +181,7 @@ Bereits bei drei Fahrzeugen im System kam es zu Situationen, bei denen das Einsc
 
 
 
-\subsection{Zufälligkeit des Aus- und Einscherens}
+\subsection{Zufälligkeit des Aus- und Einscherens}\sa{Linebreaks und Einrückungen entfernen}
 \label{sec:pullout-pullin}
 
 Um unterschiedliche Verhaltensweisen beim Überholen im Autobahnverkehr abbilden zu können, benötigt man einen Mechanismus, Wahrscheinlichkeiten für jew. eine der Handlungen zu generieren.
@@ -248,7 +248,7 @@ $ p_{po}(s) = \frac{1}{1 + e^{-\frac{1}{2}f(s)}} $
 \noindent
 Für die relative Geschwindigkeit $ v_{rel} $ wurden die Grenzen bei 0 und 25 km/h festgelegt.
 Ab 0 km/h bzw. darunter ist kein Überholen mehr nötig.
-Für die obere Grenze wurde das Verhalten auf Landstraßen\footnote{siehe \url{https://www.adac.de/_mmm/pdf/fachdossier_ueberholen_auf_landstra\%C3\%9Fen_68414.pdf}, S. 27, abgerufen am 07. März 2018.}
+Für die obere Grenze wurde das Verhalten auf Landstraßen\sa{Referenz anstatt Fußnote}\footnote{siehe \url{https://www.adac.de/_mmm/pdf/fachdossier_ueberholen_auf_landstra\%C3\%9Fen_68414.pdf}, S. 27, abgerufen am 07. März 2018.}
 %, siehe \cite[S. 27]{ueberholgeschwindigkeit}, 
 auf den Autobahnverkehr übertragen.
 \\

@@ -11,6 +11,8 @@
 \usepackage{csquotes, titling, listings, subfigure}
 \usepackage[toc,page]{appendix}
 \usepackage[letterspace=150]{microtype}
+\usepackage[style=alphabetic]{biblatex}
+
 
 % WATERMARK ON PAGES
 \usepackage{draftwatermark}
@@ -22,7 +24,7 @@
 \usetikzlibrary{arrows}
 \graphicspath{{images/}}
 
-\bibliographystyle{alpha}
+\addbibresource{references.bib}
 
 \DeclareMathOperator{\e}{e}
 
@@ -123,7 +125,7 @@
     
     \begin{appendices}
     \renewcommand{\thesection}{\Alph{subsection}}
-    \bibliography{references}
+	\printbibliography[heading=subbibintoc]
     \include{tex/10-anhang-listings}
     %\include{tex/10a-anhang-plots}
 %    \include{tex/000-sigmoid}
