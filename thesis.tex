@@ -1,4 +1,5 @@
 \documentclass{tucplain}
+\newgeometry{left=2cm,right=3cm,top=0.5cm,bottom=0.5cm,includeheadfoot}
 
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -7,9 +8,8 @@
 \usepackage[nolist]{acronym}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[onehalfspacing]{setspace}
-\usepackage{csquotes, titling}
-\usepackage{subfigure} 
-\usepackage{listings}
+\usepackage{csquotes, titling, listings, subfigure}
+\usepackage[toc,page]{appendix}
 \usepackage[letterspace=150]{microtype}
 
 % WATERMARK ON PAGES
@@ -21,13 +21,15 @@
 
 \usetikzlibrary{arrows}
 \graphicspath{{images/}}
+
 \bibliographystyle{alpha}
-\newgeometry{left=2cm,right=3cm,top=0.5cm,bottom=0.5cm,includeheadfoot}
 
 \DeclareMathOperator{\e}{e}
 
 \newcommand*{\sa}[1]{\todo[color=yellow]{\footnotesize\textbf{@Sven:} #1}}
 \newcommand*{\pk}[1]{\todo[color=green]{\footnotesize\textbf{@Phil:} #1}}
+
+\renewcommand{\appendixpagename}{Anhang}
 
 % --- Code-Listing für AgentSpeak(L++) -----
 \definecolor{blue}{rgb}{0, 0, 0.9}
@@ -96,6 +98,8 @@
     \setcounter{page}{1}
     
     \include{tex/00-title}
+    \include{tex/00e-eid}
+    \include{tex/00e-einsichtnahme}
     
     \setcounter{page}{0}
     \pagenumbering{arabic}
@@ -110,21 +114,21 @@
     \include{tex/06-multilane}
     \include{tex/09-fazit}
     
-    \setcounter{page}{0}
-    \pagenumbering{alph}
-    \setcounter{page}{1}
+    %\setcounter{page}{0}
+    %\pagenumbering{alph}
+    %\setcounter{page}{1}
     % --- reset figure counter, add "A" to figure number ---
-    \renewcommand{\thefigure}{A\arabic{figure}}
-    \setcounter{figure}{0}    
+    %\renewcommand{\thefigure}{A\arabic{figure}}
+    %\setcounter{figure}{0}    
     
+    \begin{appendices}
+    \renewcommand{\thesection}{\Alph{subsection}}
+    \bibliography{references}
     \include{tex/10-anhang-listings}
-    \include{tex/10a-anhang-plots}
+    %\include{tex/10a-anhang-plots}
 %    \include{tex/000-sigmoid}
 %    \include{tex/000-runterschreiben}
-
-    \bibliography{references}
-    \include{tex/00e-einsichtnahme}
-    \include{tex/00e-eid}
+	\end{appendices}
 
 \end{document}
 
