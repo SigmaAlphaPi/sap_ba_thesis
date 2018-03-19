@@ -1,8 +1,8 @@
-\section{Realisierung}
+\section{Realisierung}\sa{Einrückung und Leerzeilen entfernen}
 \label{sec:realisierung}
 
 Die Entwicklung eines eigenen Simulationstools war nicht vorgesehen.
-Für die Simulationsläufe wurde die Abwandlung einer Software verwendet, die als \enquote{Traffic Simulation Game} für einen Workshop mit Doktoranden\footnote{\url{https://lightjason.github.io/news/2017-09-workshop/}} erstellt worden war.
+Für die Simulationsläufe wurde die Abwandlung einer Software verwendet, die als \enquote{Traffic Simulation Game} für einen Workshop mit Doktoranden\footnote{\url{https://lightjason.github.io/news/2017-09-workshop/}} erstellt worden war.\sa{klarer formulieren: Wieso war die Entwicklung nicht vorgesehen, aufgrund Deiner Szenarienbeschreibung hätte das System aus dem Workshop die Anforderungen nicht erfüllt, ebenso solltest Du hier noch einmal klar den Bzug zu dem Workshop beschreiben}
 
 In diesem Workshop mussten die Teilnehmer mit Hilfe der Agentensprache ein Fahrzeug steuern. Dieses sollte ein 50 km langes Straßenstück mit unterschiedlichen zufälligen Geschwindigkeitsbegrenzungen absolvieren. Ziel war es, wenige Verkehrsverstöße zu begehen und dennoch möglichst schnell zu sein.
 
@@ -10,7 +10,7 @@ Für die Zwecke dieser Arbeit musste die Software weiter angepasst werden.
 Dabei mussten während der Tests der ersten Agentenpläne Korrekturen vorgenommen werden, da eine fehlerfreie Simulation sonst nicht möglich gewesen wäre. 
 Mehr dazu nachfolgend in \cref{sec:anpassungen-probleme}.
 Fehlersuche und kleinere Anpassungen wurden dabei selbst geleistet.
-Umfangreichere Codeänderungen erfolgten durch den Ersteller des Tools, Philipp Kraus.
+Umfangreichere Codeänderungen erfolgten durch den Ersteller des Tools, Philipp Kraus.\sa{Das kannst Du so nicht formulieren. Du musst hier wissenschaftlicher schreiben, das ist zu "flach" beschrieben}
 
 %\pk{Kann, darf, soll, muss ich hier darauf hinweisen, dass die Programmierung nicht meine Aufgabe war und dass Du das gemacht hast?}
 %\sa{Das musst Du sogar machen, das war aber eine explizite Vorgabe für Deine Arbeit, Du solltest aber auch dazu schreiben, dass Du eben einige Anpassungen gemacht hast, da es nicht richtig funktioniert hat}
@@ -82,7 +82,7 @@ Ein Zeitschritt der Simulation entspricht dabei einem Zyklus vom Startzustand au
 Der o.g. Automat wurde in die Agentensprache \enquote{übersetzt}. 
 Die Agentenversion unterscheidet sich dabei leicht von der Automatenversion. 
 
-Der Agent beginnt im Plan \texttt{cruise}, von dem aus alle weiteren Pläne (\texttt{accelerate}, \texttt{linger}, \texttt{decelerate}) gestartet werden.
+Der Agent beginnt im Plan \texttt{cruise}, von dem aus alle weiteren Pläne (\texttt{accelerate}, \texttt{linger}, \texttt{decelerate}) gestartet werden.\sa{ein paar Sätze zum Ausführungsmodell des Agenten einfügen}
 Außerdem ruft sich der Plan selbst wieder auf.
 Bedingungen werden erst im jeweiligen Plan geprüft.
 \\
@@ -127,7 +127,7 @@ Auch hier wurden durch die bereits angemerkte Erweiterung des Sichtfelds Änderu
 Das Abbremsen sollte nicht übermäßig stark und die entstehende Lücke nicht zu groß ausfallen. 
 Diese Vorgaben konnten durch zusätzliche Bedingungen für die relative Geschwindigkeit und einen Mindestabstand erreicht werden.
 
-Die realistische Modellierung der Geschwindigkeitsänderungen macht es unmöglich, dass die Fahrzeuge in aufeinanderfolgenden Zellen hinterher fahren.
+Die realistische Modellierung\sa{Das solltest Du irgendwie stärker hervorheben, das ist ja schon ein Resultat} der Geschwindigkeitsänderungen macht es unmöglich, dass die Fahrzeuge in aufeinanderfolgenden Zellen hinterher fahren.
 Vielmehr muss, wie im realen Verkehr auch, ein gewisser Abstand, innerhalb dessen der Nachfolgeverkehr reagieren kann, eingehalten werden.
 Ein Wert von 100 m erschien in der Simulation sinnvoll, um die Kollisionshäufigkeit zu verringern. 
 Für eine Geschwindigkeit von 100 km/h entspricht diese Entfernung nach der Faustformel, die in Fahrschulen gelehrt wird, dem Bremsweg\footnote{siehe \url{https://www.jungesportal.de/fuehrerschein/faustformeln-fuer-die-theorie.php}, abgerufen am 25. Februar 2018}.
@@ -167,7 +167,7 @@ Durch die Ringform der Strecke werden mehrere Durchläufe der Strecke dargestell
 \subsection{Verfeinerung des Agentenverhaltens}
 \label{sec:verfeinerung-agentenplan}
 
-Das Szenario für die Simulation kann über eine YAML-Datei individuell festgelegt werden.
+Das Szenario für die Simulation kann über eine YAML-Datei\sa{das fällt hier jetzt vom Himmel, entweder allgemein beschreiben oder eben im Detail am besten an einer konkreten YAML Datei} individuell festgelegt werden.
 Es gibt u.a. die Möglichkeit, die Streckenlänge, die Simulationsdauer, die Zellgröße und die Zeitschrittgröße anzugeben. 
 Durch die Angabe von Intervallen können die Geschwindigkeit sowie die Beschleunigungs- und Verzögerungswerte der Fahrzeuge eingestellt werden.
 
@@ -201,7 +201,7 @@ Diese Länge erwies sich als nicht sinnvoll, da zwischen den einzelnen Entscheid
 Die Entwicklung der Agentenpläne wurde mit einer Schrittlänge von drei Sekunden, 0,05 min, durchgeführt. Diese Länge genügte für diesen Zweck völlig.
 Für die Tests auf Leistungsfähigkeit wurde die Schrittlänge dann auf 0.025 min, 1,5 Sekunden, reduziert.
 \\
-Ausführlich siehe \cref{sec:cellsize-timesteplength}.
+Ausführlich siehe \cref{sec:cellsize-timesteplength}.\sa{einfach \textit{siehe Kapitel XYZ}}
 
 \paragraph*{Beschleunigung/Verzögerung:}
 \label{beschl-verz}
@@ -499,7 +499,7 @@ Nachfolgend sind Festlegungen für das Szenario zu finden.
 
 
 
-\subsubsection{Fahrzeuganzahl}
+\subsubsection{Fahrzeuganzahl}\sa{Referenzen anstatt Footnotes}
 \label{sec:fahrzeuganzahl}
 
 Um einen Anhaltspunkt für die Anzahl der zu simulierenden Fahrzeuge zu erhalten, wurden reale Daten der Bundesanstalt für Straßenwesen aus dem Jahr 2016 für je eine automatische Dauerzählstelle auf den Autobahnen A7\footnote{siehe \url{http://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-verkehrszaehlung/Daten/2016_1/Jawe2016.html?nn=626916&cms_detail=4602&cms_map=0}, abgerufen am 09. März 2018}, A38\footnote{siehe \url{http://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-verkehrszaehlung/Daten/2016_1/Jawe2016.html?nn=626916&cms_detail=4372&cms_map=0}, abgerufen am 09. März 2018} und A71\footnote{siehe \url{http://www.bast.de/DE/Verkehrstechnik/Fachthemen/v2-verkehrszaehlung/Daten/2016_1/Jawe2016.html?nn=626916&cms_detail=4340&cms_map=0}, abgerufen am 09. März 2018} in der Harzregion herangezogen, siehe \cref{tab:reale-verkehrsdaten}. 
@@ -555,7 +555,7 @@ Aufgrund der Einspurigkeit muss dieser Wert für das Szenario halbiert werden.
 Die Anzahl der zu simulierenden Fahrzeuge erhält man dann durch Multiplikation mit der Streckenlänge.
 Die Rundung erfolgte zum nächsten ganzen Fahrzeug.
 
-Ausgangswerte für die Simulation einer 7,5 km langen Strecke sind die folgenden Fahrzeuganzahlen: 
+Ausgangswerte für die Simulation einer 7,5 km langen Strecke sind die folgenden Fahrzeuganzahlen:\sa{besser als Tabelle} 
 \begin{itemize}
 	\itemsep0em
 	\item 34 (A7)
@@ -563,7 +563,7 @@ Ausgangswerte für die Simulation einer 7,5 km langen Strecke sind die folgenden
 	\item 8 (A71)
 \end{itemize}
 
-\paragraph*{Anmerkung zum Teilstück auf der A7}
+\paragraph*{Anmerkung zum Teilstück auf der A7}\sa{Leerzeile \& Einrückung entfernen}
 \hfill \\
 Die Autobahn A7, im Bereich Niedersachsen, wurde in den vergangenen Jahren bereits an vielen Stellen auf drei Spuren je Fahrtrichtung verbreitert.
 Das Teilstück zwischen den Anschlussstellen Seesen und Nörten-Hardenberg war eines der letzten zweispurigen.
@@ -577,7 +577,7 @@ Für die Simulation war dies ein glücklicher Zufall, da im speziellen $p_{linge
 \subsubsection{Zellgröße und Zeitschrittgröße}
 \label{sec:cellsize-timesteplength}
 
-Den hier folgenden Ausführungen liegt das beschriebene Szenario zugrunde:
+Den hier folgenden Ausführungen liegt das beschriebene Szenario zugrunde:\sa{besser als Tabelle}
 \begin{itemize}
 \itemsep0em
 	\item Anzahl Lanes: 1
@@ -588,12 +588,12 @@ Den hier folgenden Ausführungen liegt das beschriebene Szenario zugrunde:
 	\item Trödelwahrscheinlichkeit: 0,1
 	\item Verhalten bei Kollision: Totalstopp
 \end{itemize}
-Mit dem bereits erwähnten Vorgehen - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung (schnelleres Fahrzeug (rote Kurve), $ v \in [80; 130] $ und langsameres Fahrzeug (schwarze Kurve), $ v \in [70; 90] $) - wurde das Verhalten der Agenten, ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert), in jew. drei Durchgängen getestet.
+Mit dem bereits erwähnten Vorgehen - identische Agentenpläne, unterschiedliches Geschwindigkeitsintervall bei der Initialisierung (schnelleres Fahrzeug (rote Kurve\sa{hier fehlt die Referenz auf welche Abbildung Du Dich beziehst}), $ v \in [80; 130] $ und langsameres Fahrzeug (schwarze Kurve), $ v \in [70; 90] $) - wurde das Verhalten der Agenten, ausgehend von einer Zellgröße von 7,5 Metern (in 2,5 m-Schritten absteigend) und einer Zeitschrittgröße von 0,1 Minuten (jew. halbiert), in jew. drei Durchgängen getestet.
 
 Für die Auswertung, ob eine Zellgröße/Zeitschrittlänge-Kombination für eine Simulationsdurchführung nutzbar ist, wurde der Geschwindigkeitsverlauf der beiden Fahrzeuge über die Simulationszeit genutzt.
 
 
-\paragraph*{Zellgröße 7,5 m} \hfill
+\paragraph*{Zellgröße 7,5 m}\sa{keine leeren Überschriften, Layout hier anpassen} \hfill
 \subparagraph*{Zeitschritt 0,1 min:}
 \begin{figure}[hptb]
   \centering 
@@ -768,7 +768,7 @@ Aus diesem Grund wurde auf den Einsatz von kleineren Zellgrößen verzichtet.
 \subsection{Testläufe des Einspurszenarios}
 \label{sec:test-singlelane}
 
-Die Testläufe für den Einspurfall sollten mit den folgenden Einstellungen erfolgen:
+Die Testläufe für den Einspurfall sollten mit den folgenden Einstellungen erfolgen:\sa{Tabelle aus den Inhalten}
 \begin{itemize}
 	\itemsep0em
 	\item Simulationsdauer: 2 h
@@ -783,7 +783,7 @@ Die Testläufe für den Einspurfall sollten mit den folgenden Einstellungen erfo
 \end{itemize}
 
 
-\paragraph*{Anpassung der Trödelwahrscheinlichkeit $p_{linger}$}
+\paragraph*{Anpassung der Trödelwahrscheinlichkeit $p_{linger}$}\sa{Absatzumbruch entfernen}
 \label{sec:adjust-linger}
 \hfill \\
 Da es sich bei den Statistikwerten in \cref{sec:fahrzeuganzahl} um Tagesdurchschnitte handelt, darf angenommen werden, dass die daraus berechnete Verkehrsdichte für das Teilstück der A7 zwar eine hohe, aber noch zu bewältigende Verkehrsmenge ist.
@@ -800,10 +800,10 @@ Die folgenden Beobachtungen wurden dabei getätigt:
 	\item erst bei einem $p_{linger}$-Wert ab 0,125 oder darunter konnte fließender Verkehr simuliert werden
 \end{enumerate}
 
-\subparagraph*{zu 2.} Durch die Inhomogenität der für die Fahrzeuge möglichen Geschwindigkeiten existiert immer (mind.) ein langsamstes Fahrzeug, auf das aufgelaufen wird.
+\subparagraph*{zu 2.}\sa{auf was bezieht sich das hier genau, richtige Referenz setzen, Layout sollte auch einheitlich gemacht werden} Durch die Inhomogenität der für die Fahrzeuge möglichen Geschwindigkeiten existiert immer (mind.) ein langsamstes Fahrzeug, auf das aufgelaufen wird.
 Die Bremsreaktionen der Agenten in der Simulation scheinen zu einem dem Resultat des Trödelns vergleichbaren Verkehrsbild zu führen.
 
-\subparagraph*{zu 3.} Aufgrund dieser Feststellung werden die Testläufe mit einer Trödelwahrscheinlichkeit von 0,125 durchgeführt.
+\subparagraph*{zu 3.}\sa{auf was bezieht sich das hier genau, richtige Referenz setzen, Layoutout sollte hier auch einheitlich sein und es sollte dann schon mehr als ein Satz sein, beide Paragraph zusammen fassen und mit Referenzen versehen} Aufgrund dieser Feststellung werden die Testläufe mit einer Trödelwahrscheinlichkeit von 0,125 durchgeführt.
 
 
 
@@ -812,7 +812,7 @@ Die Bremsreaktionen der Agenten in der Simulation scheinen zu einem dem Resultat
 
 Mit dem o.g. Wert gelangen mehrere Durchläufe, bei denen fließender Verkehr mit Fluktuation der Geschwindigkeiten der Fahrzeuge simuliert werden konnte.
 Die gefundenen Einstellungen scheinen das Verkehrsgeschehen abbilden zu können.
-\cref{figure:testrun-34veh-7ko5km}\sa{own: content}
+\cref{figure:testrun-34veh-7ko5km}\sa{own: content}\sa{Referenz funktioniert nicht}
 more \cref{figure:a7-34veh-more}
 
 \begin{figure}[hptb]
@@ -823,19 +823,19 @@ more \cref{figure:a7-34veh-more}
   \label{figure:testrun-34veh-7ko5km}
 \end{figure}
 
-\paragraph*{weitere Testläufe mit zunehmender Fahrzeuganzahl}
+\paragraph*{weitere Testläufe mit zunehmender Fahrzeuganzahl}\sa{Überschrift entfernen und in den Text übernehmen}
 \hfill \\
 
 Es wurde weiterhin mit einstündigen Simulationen getestet, ab welcher Fahrzeuganzahl das Szenario ins Stocken gerät.
 Dabei wurde festgestellt, dass dem Szenario noch 2-3 weitere Fahrzeuge hinzugefügt werden können, ohne den Verkehrsfluss deutlich zu beeinträchtigen.
-Erst ab insgesamt 38 Fahrzeugen auf der Strecke bringen die Wechselwirkungen untereinander die entstehende Fahrzeugschlange zum Stoppen. (siehe \cref{figure:short-a7})
+Erst ab insgesamt 38 Fahrzeugen auf der Strecke bringen die Wechselwirkungen untereinander die entstehende Fahrzeugschlange zum Stoppen. (siehe \cref{figure:short-a7})\sa{Referenz funktioniert nicht + Umbruch entfernen}
 
 Dies entspricht einer einer Verkehrsdichte von 5,066 Fahrzeugen pro Kilometer (auf einer Spur) - 10,13 für zwei Spuren.
 Eine Erhöhung der Verkehrsdichte um ein Fahrzeug pro Kilometer macht demzufolge hier den Unterschied.
 
 
 
-\subsubsection{Verkehrsmenge A38: 15 Fahrzeuge und Verkehrsmenge A71: 8 Fahrzeuge}
+\subsubsection{Verkehrsmenge A38: 15 Fahrzeuge und Verkehrsmenge A71: 8 Fahrzeuge}\sa{Absatz ist für diese Überschrift zu kurz ggf mit nächsten zusammen fassen}
 \label{sec:szenario-a38-a71}
 
 \sa{own: content}
@@ -843,9 +843,9 @@ Da die Simulationsläufe in \cref{sec:szenario-a7} zeigten, dass die Strecke mit
 
 
 
-\subsubsection{Beobachtungen}
+\subsubsection{Beobachtungen}\sa{Linebreaks entferenen}
 
-Während bei der Entwicklung durchaus rückwärts laufende Stauwellen beobachtet werden konnten, siehe z.B. \cref{figure:33veh-1km}, ist die Phase der Totalstopps, die dieses Verhalten hervorruft, bei der Simulation des fließenden Verkehrs im allgemeinen nicht vorhanden.
+Während bei der Entwicklung durchaus rückwärts laufende Stauwellen beobachtet werden konnten, siehe z.B. \cref{figure:33veh-1km}\sa{Referenz funktioniert nicht}, ist die Phase der Totalstopps, die dieses Verhalten hervorruft, bei der Simulation des fließenden Verkehrs im allgemeinen nicht vorhanden.
 \\
 Dadurch dass die Bremsmanöver feiner ausgeführt werden, nähern sich die Positionen der Fahrzeuge einander an und fächern sich dann aber, nachdem die Ursache für das Abbremsen beseitigt ist, wieder auf.
 
@@ -864,8 +864,8 @@ In den Positionsplots bilden sich in den meisten Fällen weiße Streifen aus. Di
 Durch die einerseits real simulierten Beschleunigungs-, Verzögerungs- und Geschwindigkeitswerte, andererseits aber \enquote{grob} unterteilten Zellgrößen und Zeitabschnitte kommt es in der Simulation zu Verhalten, welches durch diese Diskrepanz erklärbar ist.
 
 
+\subsubsection{Ursache Zellgröße}\sa{Überschrift ohne Text geht nicht, ggf mit Paragraphs zusammen fassen + Linebreaks entfernen}
 
-\subsubsection{Ursache Zellgröße}
 
 \paragraph{träges Anfahren:}
 \label{sec:accelerategroove}
@@ -899,7 +899,7 @@ Nachteilig ist zu sehen, dass ein Totalstillstand aufgrund der großen Geschwind
 % --- Diese beiden Absätze sind gut - Phil FB 27feb
 Die Schwierigkeiten beim Bremsen können durch Reduktion der Zellgröße bei ansonsten gleichen Voraussetzungen \enquote{behoben} werden.
 Eine Simulation mit reduzierten Zellgrößen führte in diesem Aspekt zu einem harmonischeren Verkehrsbild.
-Eine komplette Vermeidung der Kollisionsereignisse ist nicht gelungen, siehe auch nachfolgendes \cref{sec:mindestabstaende}.
+Eine komplette Vermeidung der Kollisionsereignisse ist nicht gelungen, siehe auch nachfolgendes \cref{sec:mindestabstaende}.\ss{Referenz auf nachfolgendes Kapitel entfernen}
 
 \sa{own: see source}
 %Für die weitere Entwicklung könnte für die Fahrzeuge bei der Initialisierung eine Fahrzeuglänge generiert werden.
@@ -908,10 +908,9 @@ Eine komplette Vermeidung der Kollisionsereignisse ist nicht gelungen, siehe auc
 %Zudem könnten Fahrzeugklassen auch in Sachen Platzbedarf realistisch dargestellt werden.
 
 
+\subsubsection{Ursache Zeitschrittlänge}\sa{Kapitel ohne Text entfernen oder mit nächste Paragraph zusammenfassen}
 
-\subsubsection{Ursache Zeitschrittlänge}
-
-\paragraph*{Worst Case-Analyse für Mindestabstände:}
+\paragraph*{Worst Case-Analyse für Mindestabstände:}\sa{Einruckung + Linebreaks entfernen}
 \label{sec:mindestabstaende}
 
 Das Kollisionsereignis wird nicht erst bei einer tatsächlichen Kollision ausgelöst, wenn sich also zwei Fahrzeuge in einer Zelle treffen, sondern bereits wenn der Platz nach vorn zum aktuellen Zeitpunkt nicht mehr zum Bewegen ausreichen würde.
@@ -923,7 +922,7 @@ In \cref{tab:restgeschw-abstand} sind die Mindestabstände für eine kollisionsf
 Zwischenschritte der Berechnung wurden jeweils aufgerundet.
 
 \noindent
-Anzahl zu setzender Zellen: 
+Anzahl zu setzender Zellen:\sa{Tabelle ist besser} 
 \begin{center}
 $ x = \left\lceil \frac{\text{Geschwindigkeit}}{3,6} \times \frac{\text{Zeitschrittlänge}}{\text{Zellgröße}} \right\rceil $
 \end{center}
