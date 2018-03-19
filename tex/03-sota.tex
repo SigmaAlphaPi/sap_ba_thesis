@@ -1,4 +1,4 @@
-\section{State-of-the-Art}\sa{Absätze und Leerzeilen zusammenfassen}
+\section{State-of-the-Art}
 \label{sec:sota}
 
 Den Straßenverkehr theoretisch abzubilden, ist fachübergreifend eine große Herausforderung in der Forschung.
@@ -17,7 +17,6 @@ Diese besagte, dass es einen Zusammenhang zwischen dem Abstand $s$ zwischen Fahr
  \label{figure:family-tree}
 \end{figure}
 
-\noindent
 Die Fundamentalrelationen, heute bekannt als Ausprägungen des Fundamentaldiagramms, kann aber auch mit Hilfe anderer Variablen, wie z.B. der Verkehrsdichte $\rho$, der durchschnittlichen Anzahl von Fahrzeugen auf einer bestimmten Strecke, und dem Verkehrsfluss $q$, der durchschnittlichen Anzahl von Fahrzeugen pro Zeiteinheit, wiedergegeben werden, siehe \cref{figure:fundamental-relations}. 
 
 \begin{figure}[hptb]
@@ -67,9 +66,9 @@ Dies führt schließlich zu einer gridbasierten Simulationsumgebung.
 \end{figure} 
 
 
-\subparagraph{Das Nagel-Schreckenberg-Modell:}\sa{Absatz Einrückung entfernen}
+\subparagraph{Das Nagel-Schreckenberg-Modell:}
 \label{sec:na-sch}
-
+\hfill \\
 Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahr\-zeug\-füh\-rers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für Autobahnverkehr realistisch darstellte. 
 Jedes Fahrzeug durchläuft in jedem Zeitschritt die folgenden Übergangsregeln, vgl. \cite{na-sch}. 
 
@@ -80,7 +79,6 @@ Jedes Fahrzeug durchläuft in jedem Zeitschritt die folgenden Übergangsregeln, 
 	\item \textit{Fahrzeugbewegung}: Jedes Fahrzeug wird um $v$ Zellen nach vorn gesetzt.
 \end{enumerate}
 
-\noindent
 Erstmals konnte das Entstehen von \enquote{Stau aus dem Nichts} und das Vorhandensein von \enquote{Stauwellen}, die sich rückwärts durch einen solchen Stau bewegen, simulatorisch dargestellt werden.
 
 Die Rechenumgebung wurde als eindimensionales Array mit $L$ Zellen definiert, $L$ ist dabei eine ganze Zahl. 
@@ -132,11 +130,9 @@ Dies führte dazu, dass über den Durchlauf hinweg eine konstante Fahrzeugdichte
 \end{equation}
 
 
-
-
-\subparagraph{Erweiterung auf Mehrspurigkeit:}\sa{Linebreaks und Einrückungen entfernen}
+\subparagraph{Erweiterung auf Mehrspurigkeit:}
 %\label{sec:multi-lane}
-
+\hfill \\
 Das Originalmodell war nicht geeignet, um Verkehr auf mehrspurigen Fahrbahnen zu simulieren. 
 1996 folgte deswegen eine Ausdehnung auf Mehrspurigkeit \cite{multi-lane} - zwei Spuren. 
 Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil kollisionsfreien, und nicht behindernden Spurwechsel ermöglichen, wurden hinzugefügt. Die Regeln 1--3 wurden übernommen. Nach Simulationsläufen, die unerwünschtes Verhalten zeigten, lauteten die finalen Regeln wie folgt:
@@ -177,8 +173,8 @@ Studien zufolge sind drei Viertel der Autofahrer abgelenkt, wenn sie am Steuer s
 Jeder zehnte Verkehrsunfall in Deutschland wird durch unaufmerksame Autofahrer verursacht. 
 In Österreich und der Schweiz geht man, aufgrund der Einordnung in eine eigene Kategorie für diese Art Unfälle, von einer Rate von etwa 30\% der Unfälle mit Personenschäden oder gar Toten aus. (vgl. \cite{dvr-studie})
 
-Laut Statistischem Bundesamt gab es 2016 auf Autobahnen 21193 Unfälle, davon 1435 innerhalb von Baustellen.\footnote{siehe \url{https://www.destatis.de/DE/Publikationen/Thematisch/TransportVerkehr/Verkehrsunfaelle/VerkehrsunfaelleZeitreihenPDF_5462403.pdf?__blob=publicationFile}, abgerufen am 01. Dezember 2017.}\sa{besser eine Referenz} %\cite{unf2016}. 
-Bei den etwa 13000 km Autobahn\footnote{siehe \url{https://www.destatis.de/DE/Publikationen/StatistischesJahrbuch/TransportVerkehr.pdf?__blob=publicationFile}, abgerufen am 01. Dezember 2017.}\sa{besser eine Referenz} %\cite{autob2016} 
+Laut Statistischem Bundesamt gab es 2016 auf Autobahnen 21.193 Unfälle, davon 1.435 innerhalb von Baustellen, siehe \cite[S. 94]{unf2016}. %\footnote{siehe \url{https://www.destatis.de/DE/Publikationen/Thematisch/TransportVerkehr/Verkehrsunfaelle/VerkehrsunfaelleZeitreihenPDF_5462403.pdf?__blob=publicationFile}, abgerufen am 01. Dezember 2017.}\sa{besser eine Referenz} 
+Bei den etwa 13000 km Autobahn (\cite[S. 607]{autob2016}) %\footnote{siehe \url{https://www.destatis.de/DE/Publikationen/StatistischesJahrbuch/TransportVerkehr.pdf?__blob=publicationFile}, abgerufen am 01. Dezember 2017.}\sa{besser eine Referenz} 
 entspricht dies durchschnittlich etwa einem Unfall pro 200 km Strecke pro Tag. 
 In Wirklichkeit wird es aber Unfallschwerpunkte geben, die diesen Durchschnittswert überschreiten, sodass an anderen Stellen unterdurchschnittlich viele Unfälle passieren.
 
@@ -298,8 +294,8 @@ Das Individuum in dessen Slot die Kugel liegen bleibt, würde ausgewählt.
 Aufgrund der Größe der Slots von String 2 und String 3 wäre es z.B. möglich, dass String 2 für die Kindgeneration zweimal und String 3 hingegen gar nicht ausgewählt wird.
 
 
-\subparagraph{Verwendung im Social-Force-Vehicle-Modell:}\sa{Einrückungen und Leerzeilen reduzieren}
-
+\subparagraph{Verwendung im Social-Force-Vehicle-Modell:}
+\hfill \\
 Im Social-Force-Vehicle-Modell gibt es zwei Möglichkeiten, aus denen gewählt werden kann. 
 Zum einen jeweils das Geradeausfahren, zum anderen die Möglichkeit aus- respektive einzuscheren.
 Für die Wahl der Alternative ist nur eine Entscheidung zwischen den jeweils zwei Möglichkeiten nötig.
@@ -309,6 +305,6 @@ Es entsteht eine Ungewissheit, ob die wahrscheinlichste Alternative ausgewählt 
 
 
 \subparagraph{Möglichkeit von Kollisionen im Social-Force-Vehicle-Modell:}
-
+\hfill \\
 Da Kollisionen im Modell durch Ausweichen verhindert werden sollen, aber die \enquote{Bremskomponente} aus dem Ursprungsmodell entfernt wurde, sind in bestimmten Situationen Kollisionen (Auffahrunfälle) denkbar.
 

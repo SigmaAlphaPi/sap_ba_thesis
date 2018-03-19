@@ -4,15 +4,18 @@
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath, amssymb, amsfonts}
-\usepackage[capitalise, noabbrev]{cleveref}
+\usepackage[capitalise, noabbrev, ngerman]{cleveref}
 \usepackage[nolist]{acronym}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[onehalfspacing]{setspace}
 \usepackage{csquotes, titling, listings, subfigure}
 \usepackage[toc,page]{appendix}
 \usepackage[letterspace=150]{microtype}
-\usepackage[style=alphabetic]{biblatex}
+\usepackage{parskip}% http://ctan.org/pkg/parskip
+\setlength{\parskip}{0.25em}
 
+% --- commented out, does not compile here ---
+\usepackage[style=alphabetic]{biblatex} % NEW
 
 % WATERMARK ON PAGES
 \usepackage{draftwatermark}
@@ -24,10 +27,13 @@
 \usetikzlibrary{arrows}
 \graphicspath{{images/}}
 
-\addbibresource{references.bib}
+% --- commented out, reverted to old, does not compile here ---
+%\bibliographystyle{alpha} % OLD
+\addbibresource{references.bib} % NEW
 
 \DeclareMathOperator{\e}{e}
 
+\newcommand*{\own}[1]{\todo[color=white]{\footnotesize\textbf{@own:} #1}}
 \newcommand*{\sa}[1]{\todo[color=yellow]{\footnotesize\textbf{@Sven:} #1}}
 \newcommand*{\pk}[1]{\todo[color=green]{\footnotesize\textbf{@Phil:} #1}}
 
@@ -67,13 +73,11 @@
     morecomment=[s]{/*}{*/}
 }
 
-
 \crefname{figure}{Abbildung}{Abbildungen}
 \crefname{section}{Kapitel}{Kapitel}
 \crefname{lstlisting}{Listing}{Listings}
 \crefname{table}{Tabelle}{Tabellen}
 
-\setlength{\parskip}{0.5em}
 
 \begin{acronym}
     \acro{NaSch-Modell}{Nagel-Schreckenberg-Modell}
@@ -125,11 +129,15 @@
     
     \begin{appendices}
     \renewcommand{\thesection}{\Alph{subsection}}
-	\printbibliography[heading=subbibintoc]
+    
+% --- commented out, reverted to old, does not compile here ---
+%    \bibliography{references} % OLD
+	\printbibliography[heading=subbibintoc] % NEW
+
     \include{tex/10-anhang-listings}
+% --- COMMENTED OUT, because PDF file gets too big ---
 %    \include{tex/10a-anhang-plots}
-%    \include{tex/000-sigmoid}
-%    \include{tex/000-runterschreiben}
+
 	\end{appendices}
 
 \end{document}

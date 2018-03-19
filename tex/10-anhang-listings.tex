@@ -6,6 +6,112 @@
 \addcontentsline{toc}{subsection}{Code-Listings}
 
 \begin{lstlisting}[style=asl, 
+                   keywords={cellsize_in_meter,timestep_in_minutes,simulationtime_in_minutes,length_in_km,lanes}, 
+                   keywords={[2]count,viewrange,speed,acceleration,deceleration}, 
+                   keywords={[3]}, 
+                   caption={Scenariovereinbarung},
+                   label={lst:scenariofile}]      
+# global section of configuration
+main:
+
+    # statistic result ("summary" = aggregated values, "descriptive" = aggregated & single values)
+    statistic: "descriptive"
+
+    # simulated time
+    simulationtime_in_minutes: 60
+
+    # prettyprint of the result json
+    prettyprint: true
+
+    # time in ms for printing a message to avoid CircleCI timeout (CircleCI time can be set to 480000)
+    alive: 0
+
+    # line breaker after each step
+    linebreak: "----- step {0} ----------------"
+
+    # runtime
+    runtime:
+
+        # type of the runtime, parameter is the thread number: ->synchronized<-, workstealing, fixedsize(T), cached, scheduled(T), single
+        type: "synchronized"
+
+        # number of threads of the runtime (fixedsize, scheduled)
+        threads: 1
+
+    # unit of the simulation
+    unit:
+
+        # cell size / size of a vehicle in meter
+        cellsize_in_meter: 2.5
+
+        # time of a single timestep in simulation
+        # 0.1 -> 6 sec, 0.05 -> 3 sec, 0.025 -> 1.5 sec, 0.0125 -> 0.75 sec
+        timestep_in_minutes: 0.025
+
+
+# environment / street setting
+environment:
+
+    # number of lanes
+    lanes: 1
+
+    # length if the lane in kilometer
+    length_in_km: 7.5
+
+
+# agent vehicle configuration
+agent:
+
+    # global constants for all vehicles (constant name
+    # must start with an upper-case letter)
+    constant:
+        AllowedSpeed: 100
+
+    # all vehicle configuration, key is the filename of the filename
+    # AgentSpeak(L++) script relative to configuration file
+    source:
+        vehicle.asl:
+
+            # number of generated vehicles
+            count: 34
+
+            # show beliefs in each cycle
+            showlog: false
+
+            # view range in meters around a vehicle 
+            # (should be greater than cell size)
+            viewrange: 250
+
+            # local constant values for this vehicle
+            costant:
+                LocalValue: "nothing"
+
+            # speed range configuration for initialize and maximum
+            # speed (maximum value will be set by random)
+            speed:
+                min: 80
+                max: 130
+
+            # acceleration configuration (the value is
+            # calculated by random)
+            acceleration:
+                min: 3.5
+                max: 7
+
+            # decceleration configuration (the value is
+            # calculated by random)
+            deceleration:
+                min: 8
+                max: 10
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{lstlisting}[style=asl, 
                    keywords={+!cruise,+!accelerate,+!linger,+!decelerate,+!vehicle/collision}, 
                    keywords={[2]}, 
                    keywords={[3]}, 
