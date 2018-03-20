@@ -562,8 +562,8 @@ Durchschnitt pro Stunde & 1.088 & 495 & 267 \\
 \noindent
 Bei der Berechnung der Durchschnitte wurde, wenn nötig, auf volle Fahrzeuge aufgerundet.
 
-Die o.a. Zahlen spiegeln eine Verkehrsstärke $q$ (in $ \frac{\text{Fahrzeuge}}{\text{Zeit}} $) wieder.
-Nach \cite{verkehrsplanung} kann diese mit Hilfe der mittleren momentanen Geschwindigkeit $\overline{v}_{m}$ in eine Verkehrsdichte $\rho$ (in $ \frac{\text{Fahrzeuge}}{\text{Streckenabschnitt}} $) umgerechnet werden.
+Die o.a. Zahlen spiegeln eine Verkehrsstärke $q$ (in Fahrzeuge pro Zeit) wieder.
+Nach \cite{verkehrsplanung} kann diese mit Hilfe der mittleren momentanen Geschwindigkeit $\overline{v}_{m}$ in eine Verkehrsdichte $\rho$ (in Fahrzeuge pro Streckenabschnitt) umgerechnet werden.
 Der Zusammenhang lautet: 
 \begin{center}
 $ \rho = \dfrac{q}{\overline{v}_{m}} $
@@ -571,7 +571,7 @@ $ \rho = \dfrac{q}{\overline{v}_{m}} $
 
 Die weiteren Berechnungen erfolgten jeweils mit den Durchschnittswerten der beiden Fahrtrichtungen.
 Als $\overline{v}_{m}$ wird für Pkw 120 km/h angenommen.
-Somit ergibt sich auf diesen Autobahnstücken eine Verkehrsdichte von 9,066 $\frac{\text{Fahrzeugen}}{\text{km}}$ für die A7, 4,125 für die A38 und 2,225 für die A71.
+Somit ergibt sich auf diesen Autobahnstücken eine Verkehrsdichte von 9,066 Fahrzeugen pro km für die A7, 4,125 für die A38 und 2,225 für die A71.
 \\
 Aufgrund der Einspurigkeit muss dieser Wert für das Szenario halbiert werden. 
 Die Anzahl der zu simulierenden Fahrzeuge erhält man dann durch Multiplikation mit der Streckenlänge.
@@ -894,9 +894,8 @@ Die Bremsreaktionen der Agenten in der Simulation scheinen zu einem dem Resultat
 
 Mit dem o.g. Wert gelangen mehrere Durchläufe, bei denen fließender Verkehr mit Fluktuation der Geschwindigkeiten der Fahrzeuge simuliert werden konnte.
 Die gefundenen Einstellungen scheinen das Verkehrsgeschehen abbilden zu können.
-
-\cref{figure:testrun-34veh-7ko5km}\own{content not finished yet}
-more \cref{figure:a7-34veh-more}\pk{Referenz funktioniert nicht, weil der Angang dafür auskommentiert ist. Dieser plustert das PDF aktuell unnötig auf.}
+\cref{figure:testrun-34veh-7ko5km} zeigt die Diagramme eines Durchlaufes, bei dem es nicht zu sichtbaren Stockungen des Verkehrs kam.
+Andere Testläufe, siehe \cref{figure:a7-34veh-more}, zeigen, dass das Agentenverhalten unter gleichen Voraussetzungen auch zu anderen Verkehrsbildern führen kann.\pk{Referenz funktioniert nicht, weil der Angang dafür auskommentiert ist. Dieser plustert das PDF aktuell unnötig auf.}
 
 \begin{figure}[hptb]
   \centering 
@@ -915,11 +914,12 @@ Eine Erhöhung der Verkehrsdichte um ein Fahrzeug pro Kilometer macht demzufolge
 
 
 
-\subsubsection{Verkehrsmenge A38: 15 Fahrzeuge und Verkehrsmenge A71: 8 Fahrzeuge}\sa{Absatz ist für diese Überschrift zu kurz ggf mit nächsten zusammen fassen}
+\subsubsection{Verkehrsmenge A38: 15 Fahrzeuge und Verkehrsmenge A71: 8 Fahrzeuge}
 \label{sec:szenario-a38-a71}
 
-\own{content not finished yet}
-Da die Simulationsläufe in \cref{sec:szenario-a7} zeigten, dass die Strecke mit den gewählten Einstellungen mehr als das Doppelte, bzw. Vierfache an Verkehr verarbeiten konnte, waren aus den ausgeführten Durchläufen keine weiteren Erkenntnisse zu gewinnen.
+Da die Simulationsläufe in mit der Verkehrsmenge der Messstelle auf der A7 zeigten, dass die Strecke mit den gewählten Einstellungen mehr als das Doppelte, bzw. Vierfache an Verkehr verarbeiten konnte, waren aus den ausgeführten Durchläufen keine weiteren Erkenntnisse zu gewinnen.
+
+In beiden Szenarien zeigte sich, dass sich schnellere Fahrzeuge mehrfach hinter jeweils langsameren Fahrzeugen \enquote{einordneten}, bis sich schließlich alle Fahrzeuge der Geschwindigkeit des langsamsten Fahrzeugs im System anpassten, siehe \cref{figure:a38-position-speed,figure:a71-position-speed}.
 
 
 
@@ -999,7 +999,7 @@ In \cref{tab:restgeschw-abstand} sind die Mindestabstände für eine kollisionsf
 Zwischenschritte der Berechnung wurden jeweils aufgerundet.
 
 \noindent
-Anzahl zu setzender Zellen:\sa{Tabelle ist besser} 
+Anzahl zu setzender Zellen:%\sa{Tabelle ist besser} 
 \begin{center}
 $ x = \left\lceil \frac{\text{Geschwindigkeit}}{3,6} \times \frac{\text{Zeitschrittlänge}}{\text{Zellgröße}} \right\rceil $
 \end{center}

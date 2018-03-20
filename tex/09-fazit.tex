@@ -1,15 +1,14 @@
-\section{Fazit und Ausblick}\sa{keine Leerüberschriften, zusammenfassen}
-\label{sec:fazit-ausblick}
-
-\subsection{Fazit}
+\section{Fazit}
 \label{sec:fazit}
 
 Das Ziel dieser Arbeit, das Agentenkonzept für die realistische Verkehrssimulation nutzen zu können, konnte erreicht werden.
 Im Gegensatz zu anderen Arbeiten dient die Gridumgebung ausschließlich als Darstellung der Straße.
+Die Zellgröße wurde gegenüber des ursprünglichen Nagel-Schreckenberg-Modells verkleinert.
+
 Interaktionen zwischen den Agenten/Fahrzeugen finden ausschließlich aufgrund \enquote{realer} Größen wie Abstand und (relativer) Geschwindigkeit statt.
 Dies ist vergleichbar zur Situation im Straßenverkehr.
 
-Dadurch dass die Auslösung des Kollisionsereignisses bereits bei Unterschreitung eines Mindestabstandes stattfindet, gelang es nicht eine realistische Unfallhäufigkeit zu erreichen.
+Dadurch dass die Auslösung des Kollisionsereignisses bereits bei Unterschreitung eines Mindestabstandes stattfindet, der abhängig von der aktuell gefahrenen Geschwindigkeit ist, gelang es nicht eine realistische Unfallhäufigkeit zu erreichen. Ebenso wurde die Möglichkeit einer engen Fahrzeugfolge dadurch beeinflusst.
 
 Bei der Verkehrsfluss/Verkehrsdichte-Ebene des Fundamentaldiagrammes gelang nur die Darstellung des aufsteigenden Astes, die frei fließenden Verkehr bedeutet.
 
@@ -24,16 +23,16 @@ Bei der Verkehrsfluss/Verkehrsdichte-Ebene des Fundamentaldiagrammes gelang nur 
 \subsection{Ausblick}
 \label{sec:ausblick}
 
+Durch eine weitere Reduzierung der Größe der Gridzellen und Verkleinerung der Zeitschritte ist die Diskretisierung der Simulationsumgebung möglich.
+Problematisch ist hier allerdings die aktuelle Entstehung von Inkonsistenzen in den Entscheidungsgrundlagen der Agenten zu sehen.
+
+Durch die Verkleinerung der Zellgröße wird es nötig sein, dass für Fahrzeuge bei der Initialisierung eine Fahrzeuglänge generiert wird.
+Diese würden dann mehrere dieser dann kleineren Zellen überdecken.
+Folge wäre ein diversifizierteres Fahrzeugbild (Fahrzeugklassen), das auch in Sachen Platzbedarf realistisch dargestellt werden kann.
+
 Für die Zukunft muss ein Weg gefunden werden, die Fahrzeuge innerhalb real möglicher Abstände so abzubremsen, dass keine Kollisionen entstehen. 
 %Es sollte ein Weg gefunden werden, die Bremskräfte zu dosieren. 
 %Wie in den Überlegunden für die Pull-out-Wahrscheinlichkeit (\cref{sec:pullout-pullin}) gezeigt, könnte sich auch hierfür eine Kombination aus Abstand und relativer Geschwindigkeit eignen.
-
-\own{see source}
-%Für die weitere Entwicklung könnte für die Fahrzeuge bei der Initialisierung eine Fahrzeuglänge generiert werden.
-%Dadurch würden diese mehrere dieser dann kleineren Zellen überdecken.
-%Dies hätte ein diversifizierteres Fahrzeugbild zur Folge und eröffnet die Möglichkeit präzisere Simulationen mit kleineren Zellen durchzuführen.
-%Zudem könnten Fahrzeugklassen auch in Sachen Platzbedarf realistisch dargestellt werden.
-
 
 Wenn es die Weiterentwicklung von \enquote{LightJason} zulässt, sollte mit den in \cref{sec:ueberlegungen-multilane} getätigten Überlegungen geprüft werden, ob die Mehrspurversion des Agentenscriptes unter Belastung eingesetzt werden kann.
 
@@ -83,24 +82,31 @@ Blinkt ein Fahrzeug, um einen Spurwechsel anzuzeigen, wird ein nachfolgender Fah
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\subsection{NaSch in der Zukunft}\sa{zieh hier ein Fazit zum Agentenverhalten, da man beim NaSch Modell einen zellulären Automaten hat, ist hier durch die Diskretisierung eine Verhaltensbeschreibung einfacher, als wenn man in einem kontinuierlichen System arbeiten muss}
+\subsection{Das NaSch-Modell in der Zukunft}
 Wird das Nagel-Schreckenberg-Modell zukünftig noch von Bedeutung sein? 
 Viele Entwicklungen im Automobilbereich gehen aktuell in Richtung hochassitentes oder gar autonomes Fahren.
-Laut \cite{automation-level} kann neben dem manuallen Fahren in fünf Stufen der Automation unterschieden werden.
+Wie wird man diese Art der individuellen Fortbewegung simulieren können?
 
+Laut \cite{automation-level} kann neben dem manuallen Fahren in fünf Stufen der Automation unterschieden werden.
 Zur Zeit befindet man sich am Übergang von Stufe 2 zu Stufe 3, ab der die Umwelt automatisiert überwacht wird.
 Dies findet durch sog. Assistenzsysteme statt.
-Diese können den Fahrer unterstützen - Notbremsassistenten, Spurhalteassistenten - entbinden diesen aber nicht von seiner Überwachungspflicht.
+Diese können den Fahrer unterstützen - Notbremsassistenten, Spurhalteassistenten - entbinden diesen aber nicht von seiner eigenen Sorgfaltspflicht.
+Zudem ist etwa ein Abbremsen eines Assistenzsystems abrupt und wesentlich stärker als das eines Menschen.
+Somit käme man wesentlich eher an den Punkt, an dem ein Fahrzeug so stark abbremsen muss, dass es still steht.
 
-Bei aktuell erhältlichen, serienmäßigen Fahrzeugen ist - zumindest durch die Gesetzgebung - ein menschlicher Fahrer als Rückfalloption nötig.
-Selbst die Firma Tesla, die das \enquote{Autopilot}-System auf ihrer Webseite mit \enquote{Full Self-Driving Capability}\footnote{siehe \url{https://www.tesla.com/autopilot}, abgerufen am 18. März 2018}/\enquote{Volles Potenzial für autonomes Fahren}\footnote{siehe \url{https://www.tesla.com/de_DE/autopilot}, abgerufen am 18. März 2018} anpreist, verweist bei Reaktionen auf Unfälle mit ihren Fahrzeugen darauf, dass der Fahrer selbst auf die Straße achten muss\footnote{siehe \url{http://money.cnn.com/2018/01/23/technology/tesla-fire-truck-crash/index.html}, abgerufen am 18. März 2018}.
+Bei aktuell erhältlichen, serienmäßigen Fahrzeugen ist - zumindest durch die Gesetzgebung - immer noch ein menschlicher Fahrer nötig.
+Selbst die Firma Tesla, die das \enquote{Autopilot}-System auf ihrer Webseite mit \enquote{Full Self-Driving Capability}/\enquote{Volles Potenzial für autonomes Fahren} anpreist (vgl. \cite{tesla-en} und \cite{tesla-de}), verweist in der eigenen Internetpräsentation und bei Reaktionen auf Unfälle mit ihren Fahrzeugen darauf, dass der Fahrer selbst auf die Straße achten muss. \cite{firetruck-accident}
+%\footnote{siehe \url{https://www.tesla.com/autopilot}, abgerufen am 18. März 2018}
+%\footnote{siehe \url{https://www.tesla.com/de_DE/autopilot}, abgerufen am 18. März 2018} 
+%\footnote{siehe \url{http://money.cnn.com/2018/01/23/technology/tesla-fire-truck-crash/index.html}, abgerufen am 18. März 2018}.
 
 Sollten diese Systeme in der Zukunft zu 100\% sicher funktionieren und gesetzlich erlaubt werden, kann man den Faktor Mensch, der meist die Unsicherheiten in das System Verkehr einbringt, aus der Gleichung entfernen.
-Von diesem Punkt ist die Technik aktuell noch ein Stück weit entfernt\footnote{siehe \url{www.sueddeutsche.de/auto/autonomes-fahren-der-entwicklungsaufwand-bei-selbstfahrenden-autos-ist-riesig-1.3838094}, abgerufen am 18. März 2018}, sodass der Mensch hinter dem Lenkrad wohl noch einige Zeit erhalten bleiben wird \ldots und sei es als Backup bei Fehleinschätzungen der Technik.
+Von diesem Punkt ist die Technik aktuell noch ein Stück weit entfernt (vgl. \cite{how-far-is-autonomous-driving}), sodass der Mensch hinter dem Lenkrad wohl noch einige Zeit erhalten bleiben wird \ldots und sei es als Backup bei Fehleinschätzungen der Technik.
+%\footnote{siehe \url{http://www.sueddeutsche.de/auto/verkehrssicherheit-so-weit-ist-das-autonome-fahren-1.3913983}, abgerufen am 20. März 2018}
 Somit hat das Nagel-Schreckenberg-Modell auch zukünftig seine Berechtigung.
 
 Und selbst im Falle der vollständigen Automation gelten für die Fahrzeuge die gleichen physikalischen Voraussetzungen.
 Da die Straßenfahrzeuge nicht untereinander gekoppelt werden, sind gewisse Verzögerungen und Abweichungen der Reaktionen nach wie vor vorhanden.
 \\
 Wichtig wäre die Kommunikation der Fahrzeuge untereinander.
-Dann könnte die Reaktionszeiten ggf. noch weiter gesenkt werden.
+Dann könnten Verzögerungen durch Reaktionszeiten ggf. noch weiter gesenkt werden.

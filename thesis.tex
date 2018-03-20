@@ -15,7 +15,7 @@
 \setlength{\parskip}{0.25em}
 
 % --- commented out, does not compile here ---
-\usepackage[style=alphabetic]{biblatex} % NEW
+%\usepackage[style=alphabetic]{biblatex} % NEW
 
 % WATERMARK ON PAGES
 \usepackage{draftwatermark}
@@ -28,12 +28,12 @@
 \graphicspath{{images/}}
 
 % --- commented out, reverted to old, does not compile here ---
-%\bibliographystyle{alpha} % OLD
-\addbibresource{references.bib} % NEW
+\bibliographystyle{alpha} % OLD
+%\addbibresource{references.bib} % NEW
 
 \DeclareMathOperator{\e}{e}
 
-\newcommand*{\own}[1]{\todo[color=white]{\footnotesize\textbf{@own:} #1}}
+\newcommand*{\own}[1]{\todo[color=orange]{\footnotesize\textbf{@own:} #1}}
 \newcommand*{\sa}[1]{\todo[color=yellow]{\footnotesize\textbf{@Sven:} #1}}
 \newcommand*{\pk}[1]{\todo[color=green]{\footnotesize\textbf{@Phil:} #1}}
 
@@ -131,8 +131,8 @@
     \renewcommand{\thesection}{\Alph{subsection}}
     
 % --- commented out, reverted to old, does not compile here ---
-%    \bibliography{references} % OLD
-	\printbibliography[heading=subbibintoc] % NEW
+    \bibliography{references} % OLD
+%	\printbibliography[heading=subbibintoc] % NEW
 
     \include{tex/10-anhang-listings}
 % --- COMMENTED OUT, because PDF file gets too big ---
