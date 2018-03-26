@@ -283,7 +283,7 @@ Kleinere Werte führten nicht zu ausreichend großer Bremsleistung.
 \paragraph*{Festlegen der Trödelparameter:}
 \label{sec:lingersweetspot}
 Im Originalmodell wird dem jeweiligen Fahrzeug im Trö"-del"-fall eine Geschwindigkeitseinheit wieder abgezogen. 
-In jenem Zeitschritt erfolgt somit keine Beschleunigung, bzw. bei Fahren mit max. möglicher Geschwindigkeit wird diese reduziert. 
+In jenem Zeitschritt erfolgt somit keine Beschleunigung bzw. bei Fahren mit max. möglicher Geschwindigkeit wird diese reduziert. 
 Für das Abbremsen hinter einem anderen Fahrzeug wirkt das Trödeln wie eine Art \enquote{Überbremsen}, da die Geschwindigkeit ohnehin an die Größe der vorhandenen Lücke angepasst wird.
 
 Für die Simulation musste ein Wert gefunden werden, der dieses Verhalten näherungsweise nachbildet.
@@ -366,6 +366,10 @@ In Zeitschritt 315 war das Fahrzeug \texttt{vehicle20} gerade noch in der letzte
 Die Beliefliste beider Fahrzeuge ist ab dem Schritt 316 leer.
 Erst vier Zeitschritte später befindet sich auch das Folgefahrzeug \texttt{vehicle0} am Anfang der Fahrspur und ist ab Zeitschritt 320 wieder für Fahrzeug \texttt{vehicle20} sichtbar (andersherum ebenso).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \footnotesize\begin{verbatim}
 ----- step 315 ----------------
       vehicle0   -> BELIEFLIST   [view/vehicle[id[vehicle20], ... direction[forward[]]]]]]
@@ -393,6 +397,7 @@ Erst vier Zeitschritte später befindet sich auch das Folgefahrzeug \texttt{vehi
       vehicle20   in lane 1 in cell 70.0 @ 88.65039571533352 kph
 \end{verbatim}
 \normalsize
+\vspace{1em}
 
 Für die Simulation mit mehreren Fahrzeugen stellte dies insbesondere ein Problem dar, weil eine Stauwelle, die sich in ihrer Rückwärtsbewegung dem Anfang der Strecke näherte, von Fahrzeugen am Ende der Strecke nicht erkannt werden konnte.
 Demzufolge gab es auch keine Reaktion auf das Hindernis.
@@ -481,6 +486,7 @@ In diesem Zeitschritt kam es dann zum Auslösen des Kollisionsereignisses, da de
 
 \textit{Anmerkung:} Gleichzeitig reagierte \texttt{vehicle0} korrekt auf das Hindernis direkt vor sich und leitete für den folgenden Zeitschritt einen Überholvorgang ein.
 
+\vspace{1em}
 \footnotesize\begin{verbatim}
 --- step 365 ----------------
          vehicle20   in lane   1   in cell   333.0   @   74.21582362319865   kph
@@ -498,6 +504,7 @@ OUT      vehicle0   -> Pull-out attempt successful
          vehicle1   in lane   1   in cell   97.0   @   130.64144521630223   kph
 \end{verbatim}
 \normalsize
+\vspace{1em}
 
 Das Sichtfeld der Fahrzeuge wurde daraufhin zu einem Vier-Sektoren-Modell abgewandelt, siehe \cref{figure:car-view-4sectors}, und die Pläne für Ein- und Ausscheren, der hiervon gleichermaßen betroffen sein dürfte, angepasst.
 Es werden nun jeweils die beiden Sektoren kontrolliert, die die Bewegungs- bzw. Orientierungsrichtung darstellen. 
@@ -924,7 +931,7 @@ Eine Erhöhung der Verkehrsdichte um ein Fahrzeug pro Kilometer macht demzufolge
 \subsubsection{Verkehrsmenge A38: 15 Fahrzeuge und Verkehrsmenge A71: 8 Fahrzeuge}
 \label{sec:szenario-a38-a71}
 
-Da die Simulationsläufe in mit der Verkehrsmenge der Messstelle auf der A7 zeigten, dass die Strecke mit den gewählten Einstellungen mehr als das Doppelte, bzw. Vierfache an Verkehr verarbeiten konnte, waren aus den ausgeführten Durchläufen keine weiteren Erkenntnisse zu gewinnen.
+Da die Simulationsläufe in mit der Verkehrsmenge der Messstelle auf der A7 zeigten, dass die Strecke mit den gewählten Einstellungen mehr als das Doppelte, bzw. Vierfache, an Verkehr verarbeiten konnte, waren aus den ausgeführten Durchläufen keine weiteren Erkenntnisse zu gewinnen.
 
 In beiden Szenarien zeigte sich, dass sich schnellere Fahrzeuge mehrfach hinter jeweils langsameren Fahrzeugen \enquote{einordneten}, bis sich schließlich alle Fahrzeuge der Geschwindigkeit des langsamsten Fahrzeugs im System anpassten, siehe \cref{figure:a38-position-speed,figure:a71-position-speed}.
 

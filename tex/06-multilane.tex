@@ -228,6 +228,7 @@ Für eine Bestimmung von Wahrscheinlichkeiten für diesen Zweck erscheint die lo
 $ f(x) = \frac{1}{1 + e^{-x}} $ 
 \end{center}
 siehe \cite{logistic-function}, eine Sigmoid-Funktion (auch S- oder Schwanenhalsfunktion), ein geeigneter Kandidat. 
+Diese wird gewöhnlich zur Simulierung von Wachstumsprozessen eingesetzt.
 Sie ist für alle Zahlen in $ \mathbb{R} $ definiert und ihr Wertebereich liegt zwischen 0 und 1.
 
 \begin{figure}[hptb]
@@ -347,7 +348,7 @@ Um Fahrzeuge in der Simulation vom Überholen auf der rechten Seite abzuhalten i
 // --- gekuerzt ---
     : >>( view/vehicle( _, data( _, static( lane( Lane ), cell( Cell ), speed( Speed ), distance( Dist ), direction( Dir ) ) ) ), 
             bool/equal( generic/type/tostring( Dir ), "forward[]" ) 
-            && math/floor(Lane) > CurrentLane
+            && math/floor( Lane ) > CurrentLane
             && Speed < CurrentSpeed
             && Dist < 1.5*CurrentSpeed
         ) <-
