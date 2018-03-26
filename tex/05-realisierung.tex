@@ -1,18 +1,25 @@
 \section{Realisierung}
 \label{sec:realisierung}
 
-Die Entwicklung eines eigenen Simulationstools war nicht vorgesehen.
-Für die Simulationsläufe wurde die Abwandlung einer Software verwendet, die als \enquote{Traffic Simulation Game} für einen Workshop mit Doktoranden\footnote{\url{https://lightjason.github.io/news/2017-09-workshop/}} erstellt worden war.
-\sa{klarer formulieren: Wieso war die Entwicklung nicht vorgesehen, aufgrund Deiner Szenarienbeschreibung hätte das System aus dem Workshop die Anforderungen nicht erfüllt, ebenso solltest Du hier noch einmal klar den Bzug zu dem Workshop beschreiben}
+Aufgrund enger zeitlicher Vorgaben wurde die Simulationssoftware nicht selbst entwickelt.
+%Durch die fehlende Programmierpraxis als Wirtschaftsinformatiker erschien es aus wirtschaftlicher Sicht sinnvoller ... bla bla bla
+Eine komplette Neuentwicklung wäre, auch aufgrund fehlender Programmierroutine, wesentlich aufwändiger gewesen, als auf ein bestehendes System aufzusetzen.
+In einer vom Betreuer dieser Arbeit für einen Workshop mit Doktoranden\footnote{\url{https://lightjason.github.io/news/2017-09-workshop/}} entwickelten Software waren einige der gewünschten Funktionalitäten für die Simulation im Verkehrsumfeld bereits vorhanden.
+
+%Die Entwicklung eines eigenen Simulationstools war nicht vorgesehen.
+%Für die Simulationsläufe wurde die Abwandlung einer Software verwendet, die als \enquote{Traffic Simulation Game} für einen Workshop mit Doktoranden\footnote{\url{https://lightjason.github.io/news/2017-09-workshop/}} erstellt worden war.
+%\sa{klarer formulieren: Wieso war die Entwicklung nicht vorgesehen, aufgrund Deiner Szenarienbeschreibung hätte das System aus dem Workshop die Anforderungen nicht erfüllt, ebenso solltest Du hier noch einmal klar den Bzug zu dem Workshop beschreiben}
 
 In diesem Workshop mussten die Teilnehmer mit Hilfe der Agentensprache ein Fahrzeug steuern. Dieses sollte ein 50 km langes Straßenstück mit unterschiedlichen zufälligen Geschwindigkeitsbegrenzungen absolvieren. Ziel war es, wenige Verkehrsverstöße zu begehen und dennoch möglichst schnell zu sein.
 
-Für die Zwecke dieser Arbeit musste die Software weiter angepasst werden.
-Dabei mussten während der Tests der ersten Agentenpläne Korrekturen vorgenommen werden, da eine fehlerfreie Simulation sonst nicht möglich gewesen wäre. 
+Aufgrund von Spezifikationsvorgaben für die Simulationsumgebung wurde vom ursprünglichen Entwickler eine Software entwickelt, die einen Teil der Architektur des Workshops übernehmen konnte, Teile, wie z.B. das User-Interface, ausschloss und neue Komponenten wie z.B. die Kreisform der Strecke realisierte.
+
+%Für die Zwecke dieser Arbeit musste die Software weiter angepasst werden.
+Während der Tests der ersten Agentenpläne mussten Korrekturen vorgenommen werden, da eine fehlerfreie Simulation sonst nicht möglich gewesen wäre. 
 Mehr dazu nachfolgend in \cref{sec:anpassungen-probleme}.
-Fehlersuche und kleinere Änderungen wurden dabei selbst geleistet.
-Umfangreichere Codeanpassungen erfolgten in enger Zusammenarbeit durch den Ersteller des Tools, Philipp Kraus.
-\sa{Das kannst Du so nicht formulieren. Du musst hier wissenschaftlicher schreiben, das ist zu "flach" beschrieben}
+Fehlersuche und kleinere Änderungen wurden dabei selbst durchgeführt.
+%Umfangreichere Codeanpassungen erfolgten in enger Zusammenarbeit durch den Ersteller des Tools, Philipp Kraus.
+%\sa{Das kannst Du so nicht formulieren. Du musst hier wissenschaftlicher schreiben, das ist zu "flach" beschrieben}
 
 %\pk{Kann, darf, soll, muss ich hier darauf hinweisen, dass die Programmierung nicht meine Aufgabe war und dass Du das gemacht hast?}
 %\sa{Das musst Du sogar machen, das war aber eine explizite Vorgabe für Deine Arbeit, Du solltest aber auch dazu schreiben, dass Du eben einige Anpassungen gemacht hast, da es nicht richtig funktioniert hat}
@@ -134,7 +141,7 @@ Das Abbremsen sollte nicht übermäßig stark und die entstehende Lücke nicht z
 Diese Vorgaben konnten durch zusätzliche Bedingungen für die relative Geschwindigkeit und einen Mindestabstand erreicht werden.
 
 Die realistische Modellierung 
-\sa{Das solltest Du irgendwie stärker hervorheben, das ist ja schon ein Resultat} 
+%\sa{Das solltest Du irgendwie stärker hervorheben, das ist ja schon ein Resultat} 
 der Geschwindigkeitsänderungen macht es unmöglich, dass die Fahrzeuge in aufeinanderfolgenden Zellen hinterher fahren.
 Vielmehr muss, wie im realen Verkehr auch, ein gewisser Abstand, innerhalb dessen der Nachfolgeverkehr reagieren kann, eingehalten werden.
 Ein Wert von 100 m erschien in der Simulation sinnvoll, um die Kollisionshäufigkeit zu verringern. 
@@ -895,7 +902,7 @@ Die Bremsreaktionen der Agenten in der Simulation scheinen zu einem dem Resultat
 Mit dem o.g. Wert gelangen mehrere Durchläufe, bei denen fließender Verkehr mit Fluktuation der Geschwindigkeiten der Fahrzeuge simuliert werden konnte.
 Die gefundenen Einstellungen scheinen das Verkehrsgeschehen abbilden zu können.
 \cref{figure:testrun-34veh-7ko5km} zeigt die Diagramme eines Durchlaufes, bei dem es nicht zu sichtbaren Stockungen des Verkehrs kam.
-Andere Testläufe, siehe \cref{figure:a7-34veh-more}, zeigen, dass das Agentenverhalten unter gleichen Voraussetzungen auch zu anderen Verkehrsbildern führen kann.\pk{Referenz funktioniert nicht, weil der Angang dafür auskommentiert ist. Dieser plustert das PDF aktuell unnötig auf.}
+Andere Testläufe, siehe \cref{figure:a7-34veh-more}, zeigen, dass das Agentenverhalten unter gleichen Voraussetzungen auch zu anderen Verkehrsbildern führen kann.%\pk{Referenz funktioniert nicht, weil der Angang dafür auskommentiert ist. Dieser plustert das PDF aktuell unnötig auf.}
 
 \begin{figure}[hptb]
   \centering 
@@ -910,7 +917,7 @@ Dabei wurde festgestellt, dass noch 2-3 weitere Fahrzeuge hinzugefügt werden k�
 Erst ab insgesamt 38 Fahrzeugen auf der Strecke bringen die Wechselwirkungen untereinander die entstehende Fahrzeugschlange zum Stoppen. (siehe \cref{figure:short-a7})
 
 Dies entspricht einer einer Verkehrsdichte von 5,066 Fahrzeugen pro Kilometer (auf einer Spur) - 10,13 für zwei Spuren.
-Eine Erhöhung der Verkehrsdichte um ein Fahrzeug pro Kilometer macht demzufolge hier den Unterschied.
+Eine Erhöhung der Verkehrsdichte um ein Fahrzeug pro Kilometer macht demzufolge bereits einen Unterschied.
 
 
 

@@ -33,9 +33,9 @@
 
 \DeclareMathOperator{\e}{e}
 
-\newcommand*{\own}[1]{\todo[color=orange]{\footnotesize\textbf{@own:} #1}}
-\newcommand*{\sa}[1]{\todo[color=yellow]{\footnotesize\textbf{@Sven:} #1}}
-\newcommand*{\pk}[1]{\todo[color=green]{\footnotesize\textbf{@Phil:} #1}}
+\newcommand*{\own}[1]{\todo[color=orange]{\footnotesize\textbf{@own:} #1}\hspace{0.15em}}
+\newcommand*{\sa}[1]{\todo[color=yellow]{\footnotesize\textbf{@Sven:} #1}\hspace{0.15em}}
+\newcommand*{\pk}[1]{\todo[color=green]{\footnotesize\textbf{@Phil:} #1}\hspace{0.15em}}
 
 \renewcommand{\appendixpagename}{Anhang}
 
@@ -88,7 +88,7 @@
 
 \title{\textbf{Eine agentenbasierte Erweiterung des Nagel-Schreckenberg-Fahrzeugfolgemodells}}
 \author{Sven Albert-Pedersen}
-\date{\today}
+%date{\today}
 
 
 \begin{document}
@@ -123,20 +123,22 @@
     %\setcounter{page}{0}
     %\pagenumbering{alph}
     %\setcounter{page}{1}
-    % --- reset figure counter, add "A" to figure number ---
-    %\renewcommand{\thefigure}{A\arabic{figure}}
-    %\setcounter{figure}{0}    
     
     \begin{appendices}
     \renewcommand{\thesection}{\Alph{subsection}}
-    
+    % --- reset figure/listing counter, add "A" to figure number ---
+    \renewcommand{\thefigure}{A\arabic{figure}}
+    \setcounter{figure}{0}
+    \renewcommand{\thelstlisting}{A\arabic{lstlisting}}
+    \setcounter{lstlisting}{0}
+        
 % --- commented out, reverted to old, does not compile here ---
     \bibliography{references} % OLD
 %	\printbibliography[heading=subbibintoc] % NEW
 
     \include{tex/10-anhang-listings}
 % --- COMMENTED OUT, because PDF file gets too big ---
-%    \include{tex/10a-anhang-plots}
+    \include{tex/10a-anhang-plots}
 
 	\end{appendices}
 
