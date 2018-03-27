@@ -30,7 +30,7 @@ Die Fundamentalrelationen, heute bekannt als Ausprägungen des Fundamentaldiagra
 Verschiedene Ansätze, Verkehrsflüsse zu simulieren, die auch unterschiedliche Sichtweisen auf Verkehr und Verkehrsteilnehmer ermöglichen, %- mikro- makro- und mesoskopisch, 
 wurden und werden verfolgt, vgl. \cite{dingding}.
 \begin{itemize}
-	\item \textit{Mikroskopische Modelle} simulieren einzelne Fahrzeug-Fahrer-Einheiten, basierend auf dem Fahrerverhalten. Zwei Modellierungsansätze können hier unterschieden werden: das Fahrzeugfolgemodell (\enquote{car-following model}) und das Zellularautomatenmodell. Zu letzterem später mehr.\sa{hier direkt den Verweis auf das Kapitel rein}
+	\item \textit{Mikroskopische Modelle} simulieren einzelne Fahrzeug-Fahrer-Einheiten, basierend auf dem Fahrerverhalten. Zwei Modellierungsansätze können hier unterschieden werden: das Fahrzeugfolgemodell (\enquote{car-following model}) und das Zellularautomatenmodell. Zu letzterem mehr in \cref{Zellularautomaten}.%\sa{hier direkt den Verweis auf das Kapitel rein}
 	\item \textit{Makroskopische Modelle}  konzentrieren sich auf Charakteristiken des Verkehrsflusses, wie mittlere Geschwindigkeit (\enquote{average velocity}), Verkehrsdichte, -fluss und Durchschnittsgeschwindigkeit des Verkehrsstromes (\enquote{mean speed of a traffic stream}).
 	\item \textit{Mesoskopische Modelle} kombinieren die beiden vorgenannten Modelle, simulieren die Fahrzeuge einzeln, nutzen aber die makroskopische Sicht, um deren Aktivitäten und Interaktionen zu beschreiben. Ein klassischer Vertreter ist das gaskinetische Modell.
 \end{itemize}
@@ -65,8 +65,11 @@ Dies führt schließlich zu einer gridbasierten Simulationsumgebung.
  \label{figure:grid-umgebung}
 \end{figure} 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subparagraph{Das Nagel-Schreckenberg-Modell:}\sa{Überschrift auf nächste Seite umbrechen}
+\subparagraph{Das Nagel-Schreckenberg-Modell:}%\sa{Überschrift auf nächste Seite umbrechen}
 \label{sec:na-sch}
 \hfill \\
 Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahr\-zeug\-füh\-rers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für Autobahnverkehr realistisch darstellte. 
@@ -130,7 +133,7 @@ Dies führte dazu, dass über den Durchlauf hinweg eine konstante Fahrzeugdichte
 \end{equation}
 
 
-\subparagraph{Erweiterung auf Mehrspurigkeit:}\sa{auf nächste Seite umbrechen}
+\subparagraph{Erweiterung auf Mehrspurigkeit:}%\sa{auf nächste Seite umbrechen}
 %\label{sec:multi-lane}
 \hfill \\
 Das Originalmodell war nicht geeignet, um Verkehr auf mehrspurigen Fahrbahnen zu simulieren. 
