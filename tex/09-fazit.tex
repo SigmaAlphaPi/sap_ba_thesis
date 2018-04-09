@@ -1,14 +1,23 @@
 \section{Fazit}
 \label{sec:fazit}
 
-Das Ziel dieser Arbeit, das Agentenkonzept für die realistische Verkehrssimulation nutzen zu können, konnte erreicht werden.
-Im Gegensatz zu anderen Arbeiten dient die Gridumgebung ausschließlich als Darstellung der Straße.
-Die Zellgröße wurde gegenüber des ursprünglichen Nagel-Schreckenberg-Modells verkleinert.
+%Das Ziel dieser Arbeit, das Agentenkonzept für die realistische Verkehrssimulation nutzen zu können, konnte erreicht werden.
+Anders als bei den Simulationen zur ursprünglichen Arbeit von Nagel und Schreckenberg \cite{na-sch} konnte mit dem Agentenkonzept eine Simulation von Verkehr mit Werten durchgeführt werden, die ähnlich den real auftretenden sind.
+Die Interaktionen zwischen den Agenten/Fahrzeugen finden ausschließlich aufgrund von Größen wie Abstand und (relativer) Geschwindigkeit statt.
+Dies ist vergleichbar zur Situation im realen Straßenverkehr.
 
-Interaktionen zwischen den Agenten/Fahrzeugen finden ausschließlich aufgrund \enquote{realer} Größen wie Abstand und (relativer) Geschwindigkeit statt.
-Dies ist vergleichbar zur Situation im Straßenverkehr.
+Die Gridumgebung dient ausschließlich als Darstellung der Straße.
+\\
+Die Fahrspuren sind, auch bei Mehrspurigkeit, anders als bei \cite{multi-fuzzy}, keine miteinander kommunizierenden Automaten, sondern die Zellen darauf \enquote{Verankerungspunkte} für die Fahrzeuge.
+Zwischen den Fahrspuren kann hin und her gewechselt werden.
+Die Verantwortung für die Einhaltung von Vorgaben liegt bei jedem Agenten.
+\\
+Die Zellgröße wurde gegenüber dem ursprünglichen Nagel-Schreckenberg-Modell verkleinert.
+Eine weitere Verkleinerung scheint möglich, wenn die Inkonsistenzen in den Beliefbases abgestellt werden können.
 
-Dadurch dass die Auslösung des Kollisionsereignisses bereits bei Unterschreitung eines Mindestabstandes stattfindet, der abhängig von der aktuell gefahrenen Geschwindigkeit ist, gelang es nicht eine realistische Unfallhäufigkeit zu erreichen. Ebenso wurde die Möglichkeit einer engen Fahrzeugfolge dadurch beeinflusst.
+Die Kollisionsfreiheit des Originalmodells konnte bei zu großen Geschwindigkeitsunterschieden nicht dargestellt werden.
+Dadurch dass die Auslösung des Kollisionsereignisses bereits bei Unterschreitung eines Mindestabstandes stattfindet, der abhängig von der aktuell gefahrenen Geschwindigkeit ist, gelang es ebenfalls nicht, eine realistische Unfallhäufigkeit zu erreichen.
+Ebenso wurde die Möglichkeit einer engen Fahrzeugfolge dadurch beeinflusst.
 
 Bei der Verkehrsfluss/Verkehrsdichte-Ebene des Fundamentaldiagrammes gelang nur die Darstellung des aufsteigenden Astes, die frei fließenden Verkehr bedeutet.
 

@@ -14,6 +14,10 @@ In diesem Workshop mussten die Teilnehmer mit Hilfe der Agentensprache ein Fahrz
 
 Aufgrund von Spezifikationsvorgaben für die Simulationsumgebung wurde vom ursprünglichen Entwickler eine Software realisiert, die einen Teil der Architektur des Workshops übernehmen konnte, Teile, wie z.B. das User-Interface, ausschloss und neue Komponenten wie z.B. die Kreisform der Strecke implementierte.
 
+Hauptaugenmerk lag auf der Herstellung des Fahrzeugverhaltens.
+So wurden u.a. die Zustandsautomaten in \cref{sec:zustandsautomat,sec:zustandsautomat-multi} entwickelt und die Feinabstimmung der Szenariodatei (\cref{lst:scenariofile}) vorgenommen.
+Außerdem wurde das Agentenverhalten in den Agentenplänen (\cref{lst:nasch,lst:multi-lane}) definiert.
+
 %Für die Zwecke dieser Arbeit musste die Software weiter angepasst werden.
 Während der Tests der ersten Agentenpläne mussten Korrekturen vorgenommen werden, da eine fehlerfreie Simulation sonst nicht möglich gewesen wäre. 
 Mehr dazu nachfolgend in \cref{sec:anpassungen-probleme}.
@@ -47,6 +51,7 @@ Die mathematischen Gleichungen in \cite{na-sch} beschreiben gut, welches Verhalt
 
 
 \subsubsection{Zustandsautomat}
+\label{sec:zustandsautomat}
 
 Das oben beschriebene Verhalten wurde zuerst mit Hilfe eines endlichen Automaten beschrieben, siehe \cref{figure:fsm-nasch}.
 

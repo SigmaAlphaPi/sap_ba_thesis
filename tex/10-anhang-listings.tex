@@ -140,7 +140,7 @@ agent:
         CurrentSpeed < AllowedSpeed
         && ~>>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ),
                 bool/equal( generic/type/tostring( FwdDir ), "forward[]" )
-                && FwdDist < CurrentSpeed
+                && FwdDist < 1.5*CurrentSpeed
                 && FwdSpeed < CurrentSpeed
             )
     <-
@@ -168,7 +168,7 @@ agent:
     // --- and own speed is higher than distance ---
     : >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ), 
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
-            && FwdDist < CurrentSpeed
+            && FwdDist < 1.5*CurrentSpeed
         ) <-
         vehicle/decelerate(1);
         !decelerate
@@ -189,9 +189,9 @@ agent:
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\own{Listing kommentare entfernen etc.}
+
 \begin{lstlisting}[style=asl, 
-                   keywords={+!cruise,+!accelerate,+!linger,+!decelerate,+!vehicle/collision}, 
+                   keywords={+!cruise,+!accelerate,+!linger,+!decelerate,+!vehicle/collision,+!pulloutworkaround,+!pullinworkaround}, 
                    keywords={[2]}, 
                    keywords={[3]}, 
                    caption={Agentenscript: NaSch-Modell, mehrspurig},
@@ -204,12 +204,12 @@ agent:
 
 // --- start all other plans ---
 +!cruise <-
+    CorrectedLanes = Lanes-1;
     !accelerate;
     !decelerate;
     !linger;
-//    !pullout;
+//    !pullout(CorrectedLanes);
 //    !pullin;
-    CorrectedLanes = Lanes-1;
     !pulloutworkaround(CorrectedLanes);
     !pullinworkaround;
     !cruise
@@ -259,8 +259,6 @@ agent:
 .
 
 // --- pull-out, change lane to overtake ---
-// --- (maybe add "relative speed" condition ---
-// --- (overtaker speed (CurrentSpeed) must be higher than overtakee speed) ---
 // --- should work, but doesn't ---
 // --- BUG in framework
 // --- use + !pulloutworkaround instead ---
@@ -350,15 +348,12 @@ agent:
         vehicle/decelerate(0.05);
         !decelerate
 */
-    // --- if traffic is ahead only decelerate if  ---
-    // --- CurrentSpeed is higher than speed of traffic ahead ---
-    // --- (avoids unnecessary breaking down to 0 kph) ---
+    // --- decelerate if traffic is ahead ---
+    // --- and own speed is higher than distance ---
     : >>( view/vehicle( _, data( _, static( lane( FwdLane ), cell( FwdCell ), speed( FwdSpeed ), distance( FwdDist ), direction( FwdDir ) ) ) ), 
             bool/equal( generic/type/tostring( FwdDir ), "forward[]" ) 
             && math/floor( FwdLane ) == CurrentLane
-//            && FwdSpeed < CurrentSpeed
-//            && FwdSpeed-CurrentSpeed < 0.05*FwdSpeed
-            && FwdDist < CurrentSpeed
+            && FwdDist < 1.5*CurrentSpeed
         ) <-
         vehicle/decelerate(1);
         !decelerate
