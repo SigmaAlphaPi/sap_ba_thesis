@@ -13,7 +13,7 @@ Diese besagte, dass es einen Zusammenhang zwischen dem Abstand $s$ zwischen Fahr
  \centering
  \includegraphics[width=0.9\textwidth]{family-tree}
  \caption[Überblick über die Entwicklung der Verkehrsflussmodelle]
- 		{\enquote{Stammbaum} der Verkehrsflussmodelle, aus \cite{genealogy}}
+ 		{\enquote{Stammbaum} der Verkehrsflussmodelle, aus \cite[Fig. 2]{genealogy}}
  \label{figure:family-tree}
 \end{figure}
 
@@ -23,14 +23,14 @@ Die Fundamentalrelationen, heute bekannt als Ausprägungen des Fundamentaldiagra
  \centering
  \includegraphics[width=0.9\textwidth]{fundamental-relations}
  \caption[Fundamentalrelationen in verschiedenen Ebenen]
- 		{Fundamentalrelationen in verschiedenen Ebenen, aus \cite{genealogy}}
+ 		{Fundamentalrelationen in verschiedenen Ebenen, aus \cite[Fig. 3]{genealogy}}
  \label{figure:fundamental-relations}
 \end{figure}
 
 Verschiedene Ansätze, Verkehrsflüsse zu simulieren, die auch unterschiedliche Sichtweisen auf Verkehr und Verkehrsteilnehmer ermöglichen, %- mikro- makro- und mesoskopisch, 
 wurden und werden verfolgt, vgl. \cite{dingding}.
 \begin{itemize}
-	\item \textit{Mikroskopische Modelle} simulieren einzelne Fahrzeug-Fahrer-Einheiten, basierend auf dem Fahrerverhalten. Zwei Modellierungsansätze können hier unterschieden werden: das Fahrzeugfolgemodell (\enquote{car-following model}) und das Zellularautomatenmodell. Zu letzterem mehr in \cref{Zellularautomaten}.%\sa{hier direkt den Verweis auf das Kapitel rein}
+	\item \textit{Mikroskopische Modelle} simulieren einzelne Fahrzeug-Fahrer-Einheiten, basierend auf dem Fahrerverhalten. Zwei Modellierungsansätze können hier unterschieden werden: das Fahrzeugfolgemodell (\enquote{car-following model}) und das Zellularautomatenmodell. Zu letzterem mehr in \cref{sec:ca}.%\sa{hier direkt den Verweis auf das Kapitel rein}
 	\item \textit{Makroskopische Modelle}  konzentrieren sich auf Charakteristiken des Verkehrsflusses, wie mittlere Geschwindigkeit (\enquote{average velocity}), Verkehrsdichte, -fluss und Durchschnittsgeschwindigkeit des Verkehrsstromes (\enquote{mean speed of a traffic stream}).
 	\item \textit{Mesoskopische Modelle} kombinieren die beiden vorgenannten Modelle, simulieren die Fahrzeuge einzeln, nutzen aber die makroskopische Sicht, um deren Aktivitäten und Interaktionen zu beschreiben. Ein klassischer Vertreter ist das gaskinetische Modell.
 \end{itemize}
@@ -47,7 +47,7 @@ wurden und werden verfolgt, vgl. \cite{dingding}.
 %\addcontentsline{toc}{subsection}{Zellularautomaten}
 \label{sec:ca}
 
-Zellularautomaten werden seit etwa 25--30 Jahren für die Verkehrssimulation verwendet.
+Zellularautomaten (oder zelluläre Automaten) werden seit etwa 25--30 Jahren für die Verkehrssimulation verwendet.
 
 \begin{quote}
 Ein zellulärer Automat ist eine regelmäßige Annordnung von Zellen. Jede Zelle kann eine endliche Zahl von Werten / Zuständen annehmen und hat eine  begrenzte Zahl von Nachbarzellen, die sie beeinflussen können. Das Muster des gesamten zellulären Automaten ändert sich in einzelnen Schritten, die durch eine Reihe von Übergangsregeln bestimmt werden, die für alle Zellen gelten. (aus \cite{cell-autom})
@@ -72,7 +72,7 @@ Dies führt schließlich zu einer gridbasierten Simulationsumgebung.
 \subparagraph{Das Nagel-Schreckenberg-Modell:}%\sa{Überschrift auf nächste Seite umbrechen}
 \label{sec:na-sch}
 \hfill \\
-Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahr\-zeug\-füh\-rers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für Autobahnverkehr realistisch darstellte. 
+Nagel und Schreckenberg war es 1992 gelungen, auf Basis solcher Automaten mit einfachen Regeln das mikroskopische Verhalten jedes Fahr\-zeug\-füh\-rers so abzubilden, dass sich die makroskopische Sicht auf den Verkehrsfluss als für den Autobahnverkehr realistisch darstellte. 
 Jedes Fahrzeug durchläuft in jedem Zeitschritt die folgenden Übergangsregeln, vgl. \cite{na-sch}. 
 
 \begin{enumerate}
@@ -126,7 +126,7 @@ Damit entstand die Möglichkeit einer kontinuierlich arbeitenden Simulationsumge
 \end{figure} 
 
 Zu Beginn eines Simulationslaufes wurden $N$ Fahrzeuge zufällig auf die $L$ Zellen verteilt.
-Dies führte dazu, dass über den Durchlauf hinweg eine konstante Fahrzeugdichte $\rho$ im System garantiert werden konnte:
+Dies führte dazu, dass über den Durchlauf hinweg im System eine konstante Fahrzeugdichte $\rho$ garantiert werden konnte:
 \begin{equation}
 \rho = \dfrac{N}{L} = \dfrac{\text{Anzahl der Fahrzeuge im System}}{\text{Anzahl der Zellen des Systems}}
 \nonumber
@@ -145,7 +145,7 @@ Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil
 \begin{itemize}
 	\item \textit{Sicherheitsbedingung}: 
 	\\	
-	die Geschwindigkeit des Fahrzeugs auf der Spur auf die gewechselt werden soll, darf nicht größer als der Abstand des Fahrzeugs sein (keine Behinderung des Nachfolgeverkehrs), $v^{o,b} \leq \Delta x^{o,b}-1$;
+	die Geschwindigkeit des Fahrzeugs auf der Spur auf die gewechselt werden soll, darf nicht größer als der Abstand zu jenen Fahrzeug sein (keine Behinderung des Nachfolgeverkehrs), $v^{o,b} \leq \Delta x^{o,b}-1$;
 	\item \textit{Intention zum Spurwechsel}: 
 	\\
 	Fahrzeug kann nicht so schnell fahren, wie es möchte, $v_{max} > \Delta x-1$ \\
@@ -156,7 +156,7 @@ Regeln, die prüfen, ob ein Spurwechsel vorteilhaft ist und einen sicheren, weil
 	(diese Regeln werden mit einer gewissen Wahrscheinlichkeit $p_{l2r}$ (\enquote{Zu"-rück"-wech"-sel"-wahr"-schein"-lich"-keit}) ausgeführt) \\
 	ausreichend großer Abstand zum hinteren Fahrzeug auf der rechten Spur, $v^{o,b}_{max} \leq \Delta x^{o,b}-1$ \\
 	UND \\
-	ausreichend Platz auf der rechten Spur, $v \leq \Delta x^{o}-1$
+	ausreichend Platz nach vorn auf der rechten Spur, $v \leq \Delta x^{o}-1$
 \end{itemize}
 
 %\sa{es wäre sinnvoll genau diese Definition als Grundlage für das erste Mehrspurszenario in der Simulation zu nutzen und sich in der Arbeit darauf zu beziehen}
@@ -169,7 +169,7 @@ Lediglich um die Überbevölkerung der Überholspur zu vermeiden, wurde eine Wah
 Was dieser Modellierung fehlt, ist die Berücksichtigung irregulärer Verhaltensweisen der Fahrer - Unsicherheiten (z.B. Fehleinschätzungen oder Ängste), Ablenkungen (z.B. Gespräche mit anderen Fahrzeuginsassen, Telefonieren, Suche im Handschuhfach oder nach der fallen gelassenen Zigarette). 
 
 Zusätzlich ist die Bremswirkung, wie auch im ursprünglichen Nagel-Schreckenberg-Modell, \enquote{über\-di\-men\-sio\-niert}. 
-Vollbremsungen aus Höchstgeschwindigkeit sind innerhalb kürzester Distanz möglich \cite{acc-free}.
+Vollbremsungen aus Höchstgeschwindigkeit sind innerhalb kürzester Distanzen und Zeiträume möglich \cite{acc-free}.
 Daraus ergibt sich eine weitere fehlende Komponente der Realität.
 Denn auch Unfälle gehören zum Verkehrsgeschehen. \\
 Studien zufolge sind drei Viertel der Autofahrer abgelenkt, wenn sie am Steuer sitzen. 
@@ -226,7 +226,7 @@ Von den ein Fahrzeug umgebenden acht Zellen müssen, aufgrund der Bewegungsricht
 \begin{figure}[hptb]
  \centering
  \includegraphics[width=0.7\textwidth]{social-forces}
- \caption[\enquote{Social Forces} für Grid-Zellen]{Vorschlag der \enquote{Social Forces} für Grid-Zellen (Fahrzeug auf Normalspur), aus \cite{dat-ba}}
+ \caption[\enquote{Social Forces} für Grid-Zellen]{Vorschlag der \enquote{Social Forces} für Grid-Zellen (Fahrzeug auf Normalspur), aus \cite[Abb. 22]{dat-ba}}
  \label{figure:social-forces}
 \end{figure}
 \noindent
