@@ -1,10 +1,11 @@
 \section{Die Simulationsumgebung und \enquote{LightJason}}
 \label{sec:simulationsumgebung}
 
-Als Simulationsumgebung für die geplanten Tests der Modelle wurde eine modifizierte Version einer Java-Software benutzt, welche im September 2017 für einen Workshop\footnote{siehe \url{https://lightjason.github.io/news/2017-09-workshop/}} mit Doktoranden genutzt wurde.
+Als Simulationsumgebung für die geplanten Tests der Modelle wurde eine %modifizierte Version
+Software verwendet, die Elemente einer Java-Software nutzt, welche als \enquote{Traffic Simulation Game} im September 2017 für einen Workshop\footnote{siehe \url{https://lightjason.github.io/news/2017-09-workshop/}} mit Doktoranden entwickelt wurde.
 Die Steuerung des Agentenverhaltens wird dabei von LightJason, vorgestellt in \cite{lightjason}, übernommen.
 
-Es handelt sich um ein paralleles BDI-Multi-Agenten-Framework zum Erstellen von Multiagentensystemen mit Java. 
+Es handelt sich bei LightJason um ein BDI-Multi-Agenten-Framework zum Erstellen von Multiagentensystemen mit Java, welches nebenläufige Ausführung unterstützt. 
 Dabei wurde versucht einen Rahmen zu schaffen, der es ermöglicht, AI-Algorithmen zu einer bestehenden Softwarearchitektur hinzuzufügen. 
 Das Framework kombiniert klassische Methoden der Künstlichen Intelligenz mit Optimierungs- und Fuzzy-Logik-Konzepten.
 (nach \cite{lightjason-web})
@@ -41,7 +42,7 @@ Für eine Interaktion müssen die Agenten die Fähigkeit haben, zu kooperieren, 
  \centering
  \includegraphics[width=0.9\textwidth]{intelligent-agent}
  \caption[ein Agent in seiner Umwelt]
- 		{ein Agent in seiner Umwelt, aus \cite{multiagent}}
+ 		{ein Agent in seiner Umwelt, aus \cite[Figure 2.1]{multiagent}}
  \label{figure:intelligent-agent}
 \end{figure}
 \noindent
@@ -79,7 +80,7 @@ Ein intelligenter Agent zeigt in der Regel drei Arten von Verhalten: Reaktivitä
 Da sich die die Umwelt des Agenten  mit großer Wahrscheinlichkeit ständig verändert, muss er in der Lage sein, diese Änderungen aufzunehmen und in angemessener Zeit darauf zu reagieren, um seine vorgegebenen Ziele zu erreichen.
 
 \paragraph*{Proaktivität:} 
-Das Verhalten der Agenten ist nicht auf pure Reaktion beschränkt, sondern soll auch eigenes zielführendes Verhalten zeigen. 
+Das Verhalten des Agenten ist nicht auf pure Reaktion beschränkt, sondern soll auch eigenes zielführendes Verhalten zeigen. 
 Er soll die Initiative übernehmen, um sein Ziel zu erreichen.
 
 \paragraph*{soziale Fähigkeit:} 
