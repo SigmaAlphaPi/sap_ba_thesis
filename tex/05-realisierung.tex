@@ -63,7 +63,9 @@ Das oben beschriebene Verhalten wurde zuerst mit Hilfe eines endlichen Automaten
  \label{figure:fsm-nasch}
 \end{figure}
 
-\noindent
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Erläuterungen zu \cref{figure:fsm-nasch}:
 \begin{enumerate}
 \itemsep0em
@@ -273,9 +275,6 @@ Dieser trifft die o.g. Vorgabe.
 Den Agenten sollte diese Strecke ausreichend Raum für Reaktionen geben. 
 In den Agentenplänen wird schließlich die Handlung durch Bedingungen auf einen Bereich unter 110 m beschränkt.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsection{Einstellmöglichkeiten im Agentenverhalten (Parameter)}%\sa{auf nächste Seite umbrechen}
 
@@ -374,10 +373,7 @@ In Zeitschritt 315 war das Fahrzeug \texttt{vehicle20} gerade noch in der letzte
 Die Beliefliste beider Fahrzeuge ist somit ab dem Schritt 316 leer.
 Erst vier Zeitschritte später befindet sich auch das Folgefahrzeug \texttt{vehicle0} am Anfang der Fahrspur und ist ab Zeitschritt 320 wieder für Fahrzeug \texttt{vehicle20} sichtbar (andersherum ebenso).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\vspace{1em}
 \footnotesize\begin{verbatim}
 ----- step 315 ----------------
       vehicle0   -> BELIEFLIST   [view/vehicle[id[vehicle20], ... direction[forward[]]]]]]
@@ -495,7 +491,10 @@ In diesem Zeitschritt kam es dann zum Auslösen des Kollisionsereignisses, da de
 
 \textit{Anmerkung:} Gleichzeitig reagierte \texttt{vehicle0} korrekt auf das Hindernis direkt vor sich und leitete für den folgenden Zeitschritt einen Überholvorgang ein.
 
-\vspace{1em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \footnotesize\begin{verbatim}
 --- step 365 ----------------
          vehicle20   in lane   1   in cell   333.0   @   74.21582362319865   kph
